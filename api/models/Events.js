@@ -24,7 +24,7 @@ const Events = sequelize.define('events', {
         allowNull: false
     },
     map: {
-        type: DataTypes.GEOGRAPHY, //buscar
+        type: DataTypes.STRING, //buscar
     },
     image: {
         type: DataTypes.STRING,
