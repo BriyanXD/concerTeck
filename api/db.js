@@ -6,7 +6,8 @@ const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`
 );
 
-const { Events, Productor, Ticket, Usuario } = sequelize.models
-console.log(sequelize.models)
+const { Events, Productor, Ticked, Usuario } = sequelize.models;
+console.log(sequelize.models);
+
 
 module.exports = sequelize;
