@@ -1,4 +1,5 @@
 const Usuario = require("../models/Usuario");
+//prueba
 require("../db.js");
 
 function getUser(req, res) {
