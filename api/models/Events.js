@@ -26,7 +26,7 @@ const Events = sequelize.define(
       allowNull: false,
     },
     map: {
-      type: DataTypes.STRING, //buscar
+      type: DataTypes.STRING,
     },
     image: {
       type: DataTypes.STRING,
