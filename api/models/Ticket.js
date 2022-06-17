@@ -1,14 +1,14 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../db");
 
-const Ticked = sequelize.define('ticked', {
+const Ticket = sequelize.define('ticket', {
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true
       },
   name: {
-      type: DataTypes.ENUM("estandar", "striming", "bronce", "silver", "golden", "premium"),
+      type: DataTypes.ENUM("estandar", "streaming", "bronce", "silver", "golden", "premium"),
       allowNull: false
   },
   price: {
@@ -17,7 +17,7 @@ const Ticked = sequelize.define('ticked', {
   }
 },{timestamps: false});
 
-module.exports = Ticked
+module.exports = Ticket
 
 // module.exports = (sequelize) => {
 //     sequelize.define('ticked', {

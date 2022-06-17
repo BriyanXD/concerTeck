@@ -7,7 +7,7 @@ const app = express();
 require("./models/Productor");
 require("./models/Usuario");
 require("./models/Events");
-require("./models/Ticked");
+require("./models/Ticket");
 
 app.use(express.json());
 
