@@ -3,9 +3,9 @@ const sequelize = require("../db");
 
 const Ticket = sequelize.define('ticket', {
     id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
       },
   name: {
       type: DataTypes.ENUM("estandar", "streaming", "bronce", "silver", "golden", "premium"),
