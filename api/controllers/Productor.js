@@ -39,14 +39,35 @@ async function getProductor(req,res){
 
 
 async function putProductor(req, res){
+  const { id, cuit_cuil, email, cbu, telephone, company } = req.body
   try {
-    const { cuit_cuil, mail, cbu, telephone, company } = req.body
-    const producer = await Productor.findByPk(id) 
-  } catch (error) {
-    res.status(404).send(error)
+    if(!cuit_cuil || !email || cbu || !telephone || !company){
+      res.status(404).send("No se recibieron los parámetros necesarios para actualizar")
+    }else{
+      const upload = await Productor.findByPk(id) 
+      if(upload){
+        const producer = await Productor.update({
+          cuit_cuil: cuit_cuil,
+          email: email,
+          cbu: cbu,
+          telephone: telephone,
+          company: company
+        },
+        {where:
+          {
+            id: id
+          }
+        }
+      )
+      res.send("Campos actualizados con exito")
+    }
   }
+ } catch (error) {
+    res.status(404).send(error)
+}
 }
 module.exports={
   createProductor,
-  getProductor
+  getProductor,
+  putProductor
 }
