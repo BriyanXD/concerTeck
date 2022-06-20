@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../db");
+const Productor = require("./Productor");
 
 const Events = sequelize.define(
   "events",
@@ -17,16 +18,17 @@ const Events = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+
     genre:{
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM('Rock', 'Reggae', 'Hip Hop', 'Rap', 'Clasica', 'Metal', 'Reggaeton', 'Pop', 'Electronica', 'Jazz', 'Trap'),
       allowNull: false,
     },
     schedule: {
-      type: DataTypes.TIME,
+      type: DataTypes.DATETIME,
       allowNull: false,
     },
     map: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
     },
     image: {
       type: DataTypes.STRING,
@@ -39,40 +41,7 @@ const Events = sequelize.define(
   { timestamps: false }
 );
 
-module.exports = Events;
+Productor.hasMany(Events);
+Events.belongsTo(Productor);
 
-// module.exports = (sequelize) => {
-//     sequelize.define('events', {
-//       id: {
-//         type: DataTypes.INTEGER,
-//         allowNull: false,
-//         primaryKey: true
-//       },
-//       name: {
-//           type: DataTypes.STRING,
-//           allowNull: false
-//       },
-//       direction: {
-//           type: DataTypes.STRING,
-//           allowNull: false
-//       },
-//       time: {
-//           type: DataTypes.TIME,
-//           allowNull: false
-//       },
-//       cuit_cuil: {
-//           type: DataTypes.INTEGER,
-//           allowNull: false
-//       },
-//       map: {
-//           type: DataTypes.GEOGRAPHY, //buscar
-//       },
-//       image: {
-//           type: DataTypes.STRING,
-//           allowNull: false
-//       },
-//       description: {
-//           type: DataTypes.TEXT,
-//       }
-//     },{timestamps: false})
-//   };
+module.exports = Events;
