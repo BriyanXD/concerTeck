@@ -15,7 +15,7 @@ const Productor = sequelize.define('productor', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  user: {
+  username: {
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -23,7 +23,7 @@ const Productor = sequelize.define('productor', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  mail: { 
+  email: {
     type: DataTypes.STRING,
     allowNull: false
   },
