@@ -13,7 +13,7 @@ const Events = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    direction: {
+    adress: {
       type: DataTypes.STRING,
       allowNull: false,
     },
