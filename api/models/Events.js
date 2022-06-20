@@ -5,24 +5,24 @@ const Events = sequelize.define(
   "events",
   {
     id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    direction: {
+    address: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    time: {
-      type: DataTypes.TIME,
+    genre:{
+      type: DataTypes.STRING,
       allowNull: false,
     },
-    cuit_cuil: {
-      type: DataTypes.INTEGER,
+    schedule: {
+      type: DataTypes.TIME,
       allowNull: false,
     },
     map: {
