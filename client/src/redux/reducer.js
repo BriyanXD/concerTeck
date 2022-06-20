@@ -1,9 +1,12 @@
 const initialState = {
-  stateEj: 0,
+  Events: [],
+  BigEvents: [],
+  Detail: {},
+
 };
 
-function reducers(state = initialState, action) {
-  switch (action.type) {
+function reducers(state = initialState, {type, payload}) {
+  switch (type) {
     default:
       return state;
   }
