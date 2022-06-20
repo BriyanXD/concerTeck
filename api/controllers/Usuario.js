@@ -53,11 +53,12 @@ async function putUser(req, res) {
             },
           }
         );
-        return res.send(user);
+
+        return res.send("Usuario Actualizado con exitos");
       }
     }
   } catch (error) {
-    res.status(404).send(error);
+    res.status(404).send({ error: error.message });
   }
 }
 
