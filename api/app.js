@@ -29,7 +29,7 @@ app.use("/api", routes);
 
 async function main() {
   try {
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: false });
     console.log("Conection DB succesful");
     app.listen(3001, () => {
       console.log("App listen on port 3001");
