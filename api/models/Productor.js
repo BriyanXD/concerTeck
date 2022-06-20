@@ -3,9 +3,9 @@ const sequelize = require("../db");
 
 const Productor = sequelize.define('productor', {
   id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    primaryKey: true
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
   },
   name: {
     type: DataTypes.STRING,
@@ -22,6 +22,10 @@ const Productor = sequelize.define('productor', {
   user: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  cuit_cuil: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
   },
   mail: {
     type: DataTypes.STRING,
@@ -41,7 +45,7 @@ const Productor = sequelize.define('productor', {
   },
   company: {
     type: DataTypes.STRING,
-  }
+  },
 },{timestamps: false});
 
 module.exports = Productor;
