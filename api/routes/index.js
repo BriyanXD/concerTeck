@@ -5,7 +5,8 @@ const {deleteEvent, deleteProductor, deleteUsuario} = require("../controllers/ru
 const routes = Router();
 
 routes.post("/user",createUser);
-routers.put("/user", putUser);
+routes.get("/user",getUser);
+// routes.put("/user", putUser);
 routes.get("/productor",getProductor);
 routes.post("/productor",createProductor);
 
