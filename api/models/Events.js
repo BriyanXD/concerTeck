@@ -13,7 +13,7 @@ const Events = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    direction: {
+    address: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -21,10 +21,7 @@ const Events = sequelize.define(
       type: DataTypes.TIME,
       allowNull: false,
     },
-    cuit_cuil: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+   
     map: {
       type: DataTypes.STRING,
     },
