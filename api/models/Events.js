@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../db");
+const Productor = require("./Productor");
 
 const Events = sequelize.define(
   "events",
@@ -17,7 +18,7 @@ const Events = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    genre:{
+    genre: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -38,6 +39,9 @@ const Events = sequelize.define(
   },
   { timestamps: false }
 );
+
+Productor.hasMany(Events);
+Events.belongsTo(Productor);
 
 module.exports = Events;
 
