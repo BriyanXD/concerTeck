@@ -20,7 +20,9 @@ PASOS DE GIT CADA DIA:
     - "git push orgin develop"
     (siempre recordando que todo este andando OK)
 
+7) Estando en el GitHub hacer un pull request marcando el "origen:develop" "compare: feature_diaria"
 
+8) Borrar la rama "feature_diaria" una vez ya subido todo para evitar lios
 
 LINKS DE INTERES Y REFERENCIA:
 
