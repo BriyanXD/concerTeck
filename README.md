@@ -19,6 +19,8 @@ PASOS DE GIT CADA DIA:
     - "git add ."
     - "git commit -m "(mensaje)" "
     - "git push orgin feature"
+        (en caso de no poder hacer un push y salte una alerta de cartel rojo o amarillo:
+         hacer un "git pull origin develop" para trar los ultimos cambios y poder realizar el push)
     - "git status" (para chequear que todo este OK)
     (siempre recordando que todo este andando OK)
 
