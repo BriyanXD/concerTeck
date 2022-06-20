@@ -62,7 +62,7 @@ async function putUser(req, res) {
   }
 }
 
-// async function setUser(req, res) {
+
 //   const { name } = req.params;
 //   try {
 //     const user = await Usuario.create({
