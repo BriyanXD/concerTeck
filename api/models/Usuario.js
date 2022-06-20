@@ -2,6 +2,7 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../db");
 const Ticket = require("./Ticket");
 
+<<<<<<< HEAD
 const Usuario = sequelize.define(
   "usuario",
   {
@@ -29,6 +30,27 @@ const Usuario = sequelize.define(
 //
 Usuario.hasMany(Ticket);
 Ticket.belongsTo(Usuario);
+=======
+const Usuario = sequelize.define('usuario', {
+  id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+  },
+  user: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
+},{timestamps: false});
+>>>>>>> develop
 
 module.exports = Usuario;
 

@@ -6,6 +6,7 @@ const Ticket = sequelize.define(
   "ticket",
   {
     id: {
+<<<<<<< HEAD
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
@@ -22,6 +23,17 @@ const Ticket = sequelize.define(
       allowNull: false,
     },
     price: {
+=======
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+  name: {
+      type: DataTypes.ENUM("estandar", "streaming", "bronce", "silver", "golden", "premium"),
+      allowNull: false
+  },
+  price: {
+>>>>>>> develop
       type: DataTypes.FLOAT,
       allowNull: false,
     },
