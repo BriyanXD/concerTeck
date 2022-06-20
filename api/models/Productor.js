@@ -15,19 +15,15 @@ const Productor = sequelize.define('productor', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  cuit_cuil: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
   user: {
     type: DataTypes.STRING,
     allowNull: false
   },
-  cuit_cuil: {
+  cuit_cuil: { 
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  mail: {
+  mail: { 
     type: DataTypes.STRING,
     allowNull: false
   },

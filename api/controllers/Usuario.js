@@ -33,6 +33,32 @@ async function getUser(req, res) {
 }
 
 
+async function putUser(req, res) {
+  const { id , email, password } = req.body
+  try {
+    if(!id || !email || !password){
+      return res.status(404).send( "No se recibieron los parámetros necesarios para actualizar")
+    }else{
+      const upload = await Usuario.findByPk(id)
+      if(upload){
+        const user = await Usuario.update({
+            email: email,
+            password: password
+        },
+          {where: 
+          {
+            id: id
+          }
+        }
+        );
+    return res.send(user)
+      }
+  }
+} catch (error){
+  res.status(404).send(error)
+  }
+}
+
 // async function setUser(req, res) {
 //   const { name } = req.params;
 //   try {
@@ -48,4 +74,5 @@ async function getUser(req, res) {
 module.exports = {
   getUser,
   createUser,
+  putUser
 };
