@@ -26,6 +26,7 @@ const Usuario = sequelize.define(
   { timestamps: false }
 );
 
+//Relacion db
 Usuario.hasMany(Ticket);
 Ticket.belongsTo(Usuario);
 
