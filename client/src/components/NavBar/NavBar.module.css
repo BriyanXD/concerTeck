@@ -1,0 +1,29 @@
+.containerNav{
+    display: flex;
+    background-color: #334756;
+    justify-content: space-between;
+    align-items: center;
+    border: solid 1px;
+    width: 100vw;
+    height: 8vh;
+}
+
+.logo{
+    margin-left:10px
+}
+
+.containerGenreAndSearch{
+    display:flex;
+    position: relative;
+    left: -25%;
+}
+
+.logoUser{
+    position: relative;
+    margin-right:10px;
+}
+.buttonRegister{
+    position: relative;
+    background-color: #FF4C29;
+    margin-right: 10px;
+}
