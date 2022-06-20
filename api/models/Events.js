@@ -5,8 +5,8 @@ const Events = sequelize.define(
   "events",
   {
     id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
     name: {
@@ -17,11 +17,14 @@ const Events = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    time: {
+    genre:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    schedule: {
       type: DataTypes.TIME,
       allowNull: false,
     },
-   
     map: {
       type: DataTypes.STRING,
     },
