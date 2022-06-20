@@ -13,12 +13,16 @@ const Events = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    genre:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     address: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     time: {
-      type: DataTypes.TIME,
+      type: DataTypes.STRING,
       allowNull: false,
     },
    
