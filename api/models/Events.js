@@ -23,15 +23,15 @@ const Events = sequelize.define(
     },
 
     genre:{
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM('Rock', 'Reggae', 'Hip Hop', 'Rap', 'Clasica', 'Metal', 'Reggaeton', 'Pop', 'Electronica', 'Jazz', 'Trap'),
       allowNull: false,
     },
     schedule: {
-      type: DataTypes.TIME,
+      type: DataTypes.DATETIME,
       allowNull: false,
     },
     map: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
     },
     image: {
       type: DataTypes.STRING,
