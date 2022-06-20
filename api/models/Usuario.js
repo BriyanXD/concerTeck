@@ -1,25 +1,33 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../db");
+const Ticket = require("./Ticket");
 
-const Usuario = sequelize.define('usuario', {
-  id: {
+const Usuario = sequelize.define(
+  "usuario",
+  {
+    id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
+    },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
-  username: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false
-  }
-},{timestamps: false});
+  { timestamps: false }
+);
+
+Usuario.hasMany(Ticket);
+Ticket.belongsTo(Usuario);
 
 module.exports = Usuario;
 
