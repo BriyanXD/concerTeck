@@ -4,15 +4,15 @@ require("../db.js");
 
 async function createProductor(req,res){
   const{user,password,mail,telephone,name,lastname,cbu,company,cuit_cuil} = req.body;
-  if(!user || !password || !mail || !telephone || !name || !lastname || !cbu || !cuit_cuil/* || !company */){
+  if(!username || !password || !email || !telephone || !name || !lastname || !cbu || !cuit_cuil/* || !company */){
     res.status(404).send("Faltan completar Campos obligatorios")
   }else{
   try {
     let create = await Productor.findOrCreate({
       where:{
-        user:user,
+        username:username,
         password:password,
-        mail:mail,
+        email:email,
         telephone:telephone,
         name:name,
         lastname:lastname,

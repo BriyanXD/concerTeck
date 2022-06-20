@@ -4,16 +4,16 @@ const Usuario = require("../models/Usuario");
 require("../db.js");
 
 async function createUser(req,res){
-  const{user,password,mail} = req.body;
-  if(!user || !password |!mail){
+  const{username,password,email} = req.body;
+  if(!username || !password |!email){
     res.status(404).send("Faltan completar Campos obligatorios")
   }else{
   try {
     let create = await Usuario.findOrCreate({
       where:{
-        user:user,
+        username:username,
         password:password,
-        mail:mail
+        email:email
       }
     })
     res.json(create)
