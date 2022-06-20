@@ -1,23 +1,39 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../db");
+const Events = require("./Events");
 
-const Ticket = sequelize.define('ticket', {
+const Ticket = sequelize.define(
+  "ticket",
+  {
     id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
-      },
-  name: {
-      type: DataTypes.ENUM("estandar", "streaming", "bronce", "silver", "golden", "premium"),
-      allowNull: false
-  },
-  price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+    },
+    name: {
+      type: DataTypes.ENUM(
+        "estandar",
+        "streaming",
+        "bronce",
+        "silver",
+        "golden",
+        "premium"
+      ),
+      allowNull: false,
+    },
+    price: {
       type: DataTypes.FLOAT,
-      allowNull: false
-  }
-},{timestamps: false});
+      allowNull: false,
+    },
+  },
+  { timestamps: false }
+);
 
-module.exports = Ticket
+//
+Events.hasMany(Ticket);
+Ticket.belongsTo(Events);
+
+module.exports = Ticket;
 
 // module.exports = (sequelize) => {
 //     sequelize.define('ticked', {

@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../db");
+const Productor = require("./Productor");
 
 const Events = sequelize.define(
   "events",
@@ -40,6 +41,10 @@ const Events = sequelize.define(
 );
 
 module.exports = Events;
+
+// realacion de la tabla Evento con Productor
+Productor.hasMany(Events);
+Events.belongsTo(Productor);
 
 // module.exports = (sequelize) => {
 //     sequelize.define('events', {
