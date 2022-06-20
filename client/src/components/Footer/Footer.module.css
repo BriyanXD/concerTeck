@@ -9,6 +9,7 @@
 }
 .letra{
     color: white;
+    cursor: pointer;
 }
 .info{
     display: flex;
