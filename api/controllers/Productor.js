@@ -3,7 +3,7 @@ const Productor = require("../models/Productor");
 require("../db.js");
 
 async function createProductor(req,res){
-  const{user,password,mail,telephone,name,lastname,cbu,company,cuit_cuil} = req.body;
+  const{user, password, mail, telephone, name, lastname, cbu, company, cuit_cuil} = req.body;
   if(!user || !password || !mail || !telephone || !name || !lastname || !cbu || !cuit_cuil/* || !company */){
     res.status(404).send("Faltan completar Campos obligatorios")
   }else{
@@ -36,6 +36,16 @@ async function getProductor(req,res){
   }
 }
 // "No se ha logrado crear el Productor"
+
+
+async function putProductor(req, res){
+  try {
+    const { cuit_cuil, mail, cbu, telephone, company } = req.body
+    const producer = await Productor.findByPk(id) 
+  } catch (error) {
+    res.status(404).send(error)
+  }
+}
 module.exports={
   createProductor,
   getProductor
