@@ -8,8 +8,14 @@
     height: 8vh;
 }
 
+.Containerlogo{
+    margin-left:10px;
+}
+
 .logo{
-    margin-left:10px
+    position:relative;
+    width: 120px;
+    height: 50px
 }
 
 .containerGenreAndSearch{
@@ -26,4 +32,6 @@
     position: relative;
     background-color: #FF4C29;
     margin-right: 10px;
+    width: 120px;
+    height: 50px;
 }
