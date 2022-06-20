@@ -8,7 +8,7 @@ const Ticket = sequelize.define('ticket', {
         primaryKey: true,
       },
   name: {
-      type: DataTypes.ENUM("estandar", "streaming", "bronce", "silver", "golden", "premium"),
+      type: DataTypes.ENUM("streaming", "campo", "vip", "campo lateral"),
       allowNull: false
   },
   price: {
@@ -19,20 +19,3 @@ const Ticket = sequelize.define('ticket', {
 
 module.exports = Ticket
 
-// module.exports = (sequelize) => {
-//     sequelize.define('ticked', {
-//         id: {
-//             type: DataTypes.INTEGER,
-//             allowNull: false,
-//             primaryKey: true
-//           },
-//       name: {
-//           type: DataTypes.ENUM("estandar", "striming", "bronce", "silver", "golden", "premium"),
-//           allowNull: false
-//       },
-//       price: {
-//           type: DataTypes.FLOAT,
-//           allowNull: false
-//       }
-//     },{timestamps: false})
-//   };
