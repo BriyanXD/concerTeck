@@ -4,5 +4,6 @@ const routes = Router();
 
 routes.get("/user", getUser);
 routes.post("/user/:name", setUser);
+routers.put("/user")
 
 module.exports = routes;

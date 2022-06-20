@@ -1,0 +1,34 @@
+{
+    "genres": [
+        {
+            "name": "Trap"
+        },
+        {
+            "name": "Rock"
+        },
+        {
+            "name": "Pop"
+        },
+        {
+            "name": "Jazz"
+        },
+        {
+            "name": "Electronica"
+        },
+        {
+            "name": "Reggaeton"
+        },
+        {
+            "name": "Metal"
+        },
+        {
+            "name": "Musica clasica"
+        },
+        {
+            "name": "Rap"
+        },
+        {
+            "name": "Hip Hop"
+        }
+    ]
+}
