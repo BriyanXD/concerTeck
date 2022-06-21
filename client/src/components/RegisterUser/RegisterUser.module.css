@@ -1,0 +1,30 @@
+.containerRegisterUser{
+    width: 50vw;
+    height: 60vh;
+    background-color: grey;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.containerForm{
+    height: 30vh;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.containerSocialRegister{
+    height: 8vh;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.title{
+    margin-top: 0px;
+    margin-bottom:0px;
+}
