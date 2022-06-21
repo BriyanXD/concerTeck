@@ -19,12 +19,24 @@ const Events = sequelize.define(
       allowNull: false,
     },
 
-    genre:{
-      type: DataTypes.ENUM('Rock', 'Reggae', 'Hip Hop', 'Rap', 'Clasica', 'Metal', 'Reggaeton', 'Pop', 'Electronica', 'Jazz', 'Trap'),
+    genre: {
+      type: DataTypes.ENUM(
+        "Rock",
+        "Reggae",
+        "Hip Hop",
+        "Rap",
+        "Clasica",
+        "Metal",
+        "Reggaeton",
+        "Pop",
+        "Electronica",
+        "Jazz",
+        "Trap"
+      ),
       allowNull: false,
     },
     schedule: {
-      type: DataTypes.DATETIME,
+      type: DataTypes.DATE,
       allowNull: false,
     },
     map: {
