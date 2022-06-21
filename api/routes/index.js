@@ -21,6 +21,8 @@ const {
   deleteEvent,
 } = require("../controllers/Events");
 
+const { getTicketByID, postTicket } = require("../controllers/Tickets");
+
 routes.post("/user", createUser);
 routes.get("/user", getUser);
 routes.put("/user", putUser);
@@ -36,5 +38,8 @@ routes.get("/events", loadEventsAndGetEvents);
 routes.post("/events", postEvents);
 routes.put("/events", putEvents);
 routes.delete("/events", deleteEvent);
+
+routes.get("/ticket", getTicketByID);
+routes.post("/ticket", postTicket);
 
 module.exports = routes;
