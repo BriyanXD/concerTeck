@@ -53,7 +53,6 @@ async function putUser(req, res) {
             },
           }
         );
-
         return res.send("Usuario Actualizado con exitos");
       }
     }
@@ -62,17 +61,6 @@ async function putUser(req, res) {
   }
 }
 
-
-//   const { name } = req.params;
-//   try {
-//     const user = await Usuario.create({
-//       name,
-//     });
-//     res.send(user);
-//   } catch (error) {
-//     return res.status(400).send({ error: error.message });
-//   }
-// }
 
 module.exports = {
   getUser,

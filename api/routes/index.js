@@ -7,7 +7,6 @@ const routes = Router();
 
 routes.get("/user", getUser);
 routes.post("/user",createUser);
-routes.get("/user",getUser);
 routes.put("/user", putUser);
 
 routes.get("/productor",getProductor);
