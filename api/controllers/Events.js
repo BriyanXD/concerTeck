@@ -12,8 +12,8 @@ async function loadEventsAndGetEvents(req, res) {
             address: event.address,
             schedule: event.schedule,
             map: event.map,
-            performerImage: performerImage,
-            placeImage: placeImage,
+            performerImage: event.performerImage,
+            placeImage: event.placeImage ,
             description: event.description,
           },
         });
@@ -133,6 +133,7 @@ async function putEvents(req, res) {
 }
 async function deleteEvent(req, res) {
   try {
+<<<<<<< HEAD
     const { id } = req.body; //req.params.id
     const event = await Events.findByPk(id);
     if (!id) {
@@ -149,6 +150,22 @@ async function deleteEvent(req, res) {
     }
   } catch (err) {
     return res.status(404).send(err);
+=======
+      const { id } = req.body //req.params.id
+      const event = await Event.findByPk(id);
+      if(!id){
+          return res.status(404).send("El ID solicitado no existe")
+      }
+      if(!event){
+          return res.status(404).send("No se a encontrado un Evento que corresponda a lo solicitado")
+      }
+      const destoyed = await event.destroy()
+      if(destoyed){
+          return res.status(201).send("El evento a sido eliminado con exito")
+      }
+  } catch(err){
+      return res.status(404).send(err)
+>>>>>>> 6d7961475284b47966488e11ff043c7728e4701b
   }
 }
 

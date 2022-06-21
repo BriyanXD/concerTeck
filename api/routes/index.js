@@ -36,7 +36,6 @@ routes.put("/producer", putProducer);
 routes.delete("/producer", deleteProducer);
 
 routes.get("/events", loadEventsAndGetEvents);
-// routes.get("/events:name", getEvents);
 routes.post("/events", postEvents);
 routes.put("/events", putEvents);
 routes.delete("/events", deleteEvent);
