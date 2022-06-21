@@ -51,9 +51,24 @@ async function loadEventsAndGetEvents(req, res) {
 
 async function postEvents(req, res) {
   try {
-    const { name, address, genre, schedule, map, performerImage,placeImage ,description } =
-      req.body;
-    if (!name || !address || !genre || !schedule || !performerImage || !placeImage) {
+    const {
+      name,
+      address,
+      genre,
+      schedule,
+      map,
+      performerImage,
+      placeImage,
+      description,
+    } = req.body;
+    if (
+      !name ||
+      !address ||
+      !genre ||
+      !schedule ||
+      !performerImage ||
+      !placeImage
+    ) {
       return res.status(404).send("Faltan datos obligatorios");
     } else {
       const event = await Event.findOrCreate({
@@ -82,8 +97,17 @@ async function postEvents(req, res) {
 
 async function putEvents(req, res) {
   try {
-    const { id, name, address, genre, schedule, map, performerImage,placeImage ,description } =
-      req.body;
+    const {
+      id,
+      name,
+      address,
+      genre,
+      schedule,
+      map,
+      performerImage,
+      placeImage,
+      description,
+    } = req.body;
     const upload = await Event.findByPk(id);
     if (upload) {
       const event = await Event.update(
@@ -107,33 +131,31 @@ async function putEvents(req, res) {
     return res.status(404).send(err);
   }
 }
-async function deleteEvent(req, res){
+async function deleteEvent(req, res) {
   try {
-      const { id } = req.body //req.params.id
-      const event = await Events.findByPk(id);
-      if(!id){
-          return res.status(404).send("El ID solicitado no existe")
-      }
-      if(!event){
-          return res.status(404).send("No se a encontrado un Evento que corresponda a lo solicitado")
-      }
-      const destoyed = await event.destroy()
-      if(destoyed){
-          return res.status(201).send("El evento a sido eliminado con exito")
-      }
-  } catch(err){
-      return res.status(404).send(err)
+    const { id } = req.body; //req.params.id
+    const event = await Events.findByPk(id);
+    if (!id) {
+      return res.status(404).send("El ID solicitado no existe");
+    }
+    if (!event) {
+      return res
+        .status(404)
+        .send("No se a encontrado un Evento que corresponda a lo solicitado");
+    }
+    const destoyed = await event.destroy();
+    if (destoyed) {
+      return res.status(201).send("El evento a sido eliminado con exito");
+    }
+  } catch (err) {
+    return res.status(404).send(err);
   }
 }
 
-
 module.exports = {
-<<<<<<< HEAD
-=======
   // getAllEvents,
   deleteEvent,
   // getEvents,
->>>>>>> fb3183930ba42fa71bca478f2d831a99c4c59166
   postEvents,
   putEvents,
   loadEventsAndGetEvents,
