@@ -1,6 +1,7 @@
 const initialState = {
   Events: [],
   BigEvents: [],
+  Genres: [],
   Detail: {},
 
 };

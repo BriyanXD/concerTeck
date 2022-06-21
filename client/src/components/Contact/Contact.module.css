@@ -1,0 +1,13 @@
+.containerContact{
+    display:flex;
+    background-color: grey;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30vw;
+    height: 30vh;
+}
+
+.textarea{
+    overflow: scroll;
+    resize: none;
+}
