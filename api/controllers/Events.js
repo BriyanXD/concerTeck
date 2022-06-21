@@ -38,7 +38,7 @@ async function loadEventsAndGetAllEvents(req, res) {
 async function getEvents(req, res) {
   try {
     const { name } = req.query;
-    const eventsDB = await Events.findAll();
+    const eventsDB = await Event.findAll();
     if (name) {
       //const eventName = await Events.findOne({where:{name:name}})
       const eventName = eventsDB.filter((n) =>
@@ -65,7 +65,7 @@ async function postEvents(req, res) {
     if (!name || !address || !genre || !schedule || !image) {
       return res.status(404).send("Faltan datos obligatorios");
     } else {
-      const event = await Events.findOrCreate({
+      const event = await Event.findOrCreate({
         where: {
           name: name,
           address: address,
@@ -92,9 +92,9 @@ async function putEvents(req, res) {
   try {
     const { id, name, address, genre, schedule, map, image, description } =
       req.body;
-    const upload = await Events.findByPk(id);
+    const upload = await Event.findByPk(id);
     if (upload) {
-      const event = await Events.update(
+      const event = await Event.update(
         {
           name: name,
           address: address,
