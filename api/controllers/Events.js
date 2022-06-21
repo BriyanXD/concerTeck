@@ -12,8 +12,8 @@ async function loadEventsAndGetEvents(req, res) {
             address: event.address,
             schedule: event.schedule,
             map: event.map,
-            performerImage: performerImage,
-            placeImage: placeImage,
+            performerImage: event.performerImage,
+            placeImage: event.placeImage ,
             description: event.description,
           },
         });
@@ -110,7 +110,7 @@ async function putEvents(req, res) {
 async function deleteEvent(req, res){
   try {
       const { id } = req.body //req.params.id
-      const event = await Events.findByPk(id);
+      const event = await Event.findByPk(id);
       if(!id){
           return res.status(404).send("El ID solicitado no existe")
       }
