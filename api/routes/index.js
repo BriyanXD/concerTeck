@@ -1,10 +1,12 @@
 const { Router } = require("express");
+
 const {
   getUser,
   createUser,
   putUser,
   deleteUser,
 } = require("../controllers/User");
+const { getAllGenres } = require("../controllers/Genres");
 const {
   createProducer,
   getProducer,
@@ -41,5 +43,7 @@ routes.delete("/events", deleteEvent);
 
 routes.get("/ticket", getTicketByID);
 routes.post("/ticket", postTicket);
+
+routes.get("/genres", getAllGenres);
 
 module.exports = routes;

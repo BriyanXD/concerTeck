@@ -1,4 +1,3 @@
-const { where } = require("sequelize/types");
 const Ticket = require("../models/Ticket");
 
 async function getTicketByID(req, res) {

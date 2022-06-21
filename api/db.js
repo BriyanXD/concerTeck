@@ -6,7 +6,7 @@ const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`
 );
 
-const { Events, Productor, Ticket, Usuario } = sequelize.models;
+const { Events, Producer, Ticket, User } = sequelize.models;
 //console.log(sequelize.models);
 
 
