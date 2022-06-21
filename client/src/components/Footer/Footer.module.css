@@ -1,0 +1,29 @@
+.containerFooter{
+    display: flex;
+    background-color: #334756;
+    justify-content: space-evenly;
+    align-items: center;
+    border: solid 1px;
+    width: 100vw;
+    height: 8vh;
+}
+.letra{
+    color: white;
+    cursor: pointer;
+}
+.info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-size: 18px;
+}
+
+.redes{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-left: 300px;
+    align-items: center;
+    width: 200px;
+}
+
