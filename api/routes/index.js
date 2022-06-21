@@ -1,39 +1,36 @@
 const { Router } = require("express");
-const { getUser, createUser, putUser } = require("../controllers/Usuario");
+const { getUser, createUser, putUser,deleteUser } = require("../controllers/User");
 const {
-  createProductor,
-  getProductor,
-  putProductor,
-} = require("../controllers/Productor");
-const {
-  deleteEvent,
-  deleteProductor,
-  deleteUsuario,
-} = require("../controllers/rutas-Delete");
+  createProducer,
+  getProducer,
+  putProducer,
+  deleteProducer,
+} = require("../controllers/Producer");
 const routes = Router();
 
 const {
-  loadEventsAndGetAllEvents,
-  getEvents,
+  loadEventsAndGetEvents,
+  // getEvents,
   postEvents,
   putEvents,
+  deleteEvent,
 } = require("../controllers/Events");
 
-routes.get("/user", getUser);
-routes.post("/user", createUser);
-routes.get("/user", getUser);
+routes.post("/user",createUser);
+routes.get("/user",getUser);
 routes.put("/user", putUser);
-routes.delete("/user", deleteUsuario);
+routes.delete("/user", deleteUser);
 
-routes.get("/productor", getProductor);
-routes.post("/productor", createProductor);
-routes.put("/productor", putProductor);
-routes.delete("/productor", deleteProductor);
+routes.get("/producer", getProducer);
+routes.post("/producer", createProducer);
+routes.put("/producer", putProducer);
+routes.delete("/producer", deleteProducer);
 
-routes.delete("/events", deleteEvent);
-routes.get("/events:name", loadEventsAndGetAllEvents);
-routes.get("/events:name", getEvents);
+routes.get("/events", loadEventsAndGetEvents);
+// routes.get("/events:name", getEvents);
 routes.post("/events", postEvents);
 routes.put("/events", putEvents);
+routes.delete("/events", deleteEvent);
 
 module.exports = routes;
+

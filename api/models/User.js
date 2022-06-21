@@ -2,8 +2,8 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../db");
 const Ticket = require("./Ticket");
 
-const Usuario = sequelize.define(
-  "usuario",
+const User = sequelize.define(
+  "user",
   {
     id: {
       type: DataTypes.UUID,
@@ -31,10 +31,10 @@ const Usuario = sequelize.define(
 );
 
 //Relacion db
-Usuario.hasMany(Ticket);
-Ticket.belongsTo(Usuario);
+User.hasMany(Ticket);
+Ticket.belongsTo(User);
 
-module.exports = Usuario;
+module.exports = User;
 
 // module.exports = (sequelize) => {
 //   sequelize.define('usuario', {

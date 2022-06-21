@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../db");
-const Productor = require("./Productor");
+const Producer = require("./Producer");
 
 const Events = sequelize.define(
   "events",
@@ -31,7 +31,8 @@ const Events = sequelize.define(
         "Pop",
         "Electronica",
         "Jazz",
-        "Trap"
+        "Trap",
+        "Otros"
       ),
       allowNull: false,
     },
@@ -41,9 +42,14 @@ const Events = sequelize.define(
     },
     map: {
       type: DataTypes.TEXT,
+      allowNull: false,
     },
-    image: {
-      type: DataTypes.STRING,
+    performerImage: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    placeImage:{
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     description: {
@@ -53,7 +59,7 @@ const Events = sequelize.define(
   { timestamps: false }
 );
 
-Productor.hasMany(Events);
-Events.belongsTo(Productor);
+Producer.hasMany(Events);
+Events.belongsTo(Producer);
 
 module.exports = Events;
