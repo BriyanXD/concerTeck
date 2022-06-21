@@ -4,15 +4,14 @@ import Footer from '../Footer/Footer'
 import style from './Home.module.css'
 import CardEvent from '../CardEvent/CardEvent'
 import CardBigEvent from '../CardBigEvent/CardBigEvent'
+import Carrousel from '../Carousel/Carousel'
 
 export default function Home() {
 
   return (
     <div className={style.container}>
       <NavBar/>
-      <div>
-        Carrousel
-      </div>
+      <Carrousel/>
       <div className={style.eventcontainer}>
         <div>
           <CardBigEvent 
