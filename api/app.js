@@ -4,8 +4,8 @@ const sequelize = require("./db");
 const morgan = require("morgan");
 const app = express();
 
-require("./models/Productor");
-require("./models/Usuario");
+require("./models/Producer");
+require("./models/User");
 require("./models/Events");
 require("./models/Ticket");
 

@@ -1,10 +1,10 @@
-const archivoEventos = require("../db_event_genre/db_events.json");
+const eventsFiles = require("../db_event_genre/db_events.json");
 const Event = require("../models/Events");
 async function loadEventsAndGetEvents(req, res) {
   const { name, id } = req.query;
   try {
-    for (let typeEvent in archivoEventos) {
-      archivoEventos[typeEvent].map(async (event) => {
+    for (let typeEvent in eventsFiles) {
+      eventsFiles[typeEvent].map(async (event) => {
         return await Event.findOrCreate({
           where: {
             name: event.name,
@@ -12,7 +12,8 @@ async function loadEventsAndGetEvents(req, res) {
             address: event.address,
             schedule: event.schedule,
             map: event.map,
-            image: event.image,
+            performerImage: performerImage,
+            placeImage: placeImage,
             description: event.description,
           },
         });
@@ -50,9 +51,9 @@ async function loadEventsAndGetEvents(req, res) {
 
 async function postEvents(req, res) {
   try {
-    const { name, address, genre, schedule, map, image, description } =
+    const { name, address, genre, schedule, map, performerImage,placeImage ,description } =
       req.body;
-    if (!name || !address || !genre || !schedule || !image) {
+    if (!name || !address || !genre || !schedule || !performerImage || !placeImage) {
       return res.status(404).send("Faltan datos obligatorios");
     } else {
       const event = await Event.findOrCreate({
@@ -62,7 +63,8 @@ async function postEvents(req, res) {
           genre: genre,
           schedule: schedule,
           map: map,
-          image: image,
+          performerImage: performerImage,
+          placeImage: placeImage,
           description: description,
         },
       });
@@ -80,7 +82,7 @@ async function postEvents(req, res) {
 
 async function putEvents(req, res) {
   try {
-    const { id, name, address, genre, schedule, map, image, description } =
+    const { id, name, address, genre, schedule, map, performerImage,placeImage ,description } =
       req.body;
     const upload = await Event.findByPk(id);
     if (upload) {
@@ -91,7 +93,8 @@ async function putEvents(req, res) {
           genre: genre,
           schedule: schedule,
           map: map,
-          image: image,
+          performerImage: performerImage,
+          placeImage: placeImage,
           description: description,
         },
         { where: { id: id } }
@@ -104,8 +107,33 @@ async function putEvents(req, res) {
     return res.status(404).send(err);
   }
 }
+async function deleteEvent(req, res){
+  try {
+      const { id } = req.body //req.params.id
+      const event = await Events.findByPk(id);
+      if(!id){
+          return res.status(404).send("El ID solicitado no existe")
+      }
+      if(!event){
+          return res.status(404).send("No se a encontrado un Evento que corresponda a lo solicitado")
+      }
+      const destoyed = await event.destroy()
+      if(destoyed){
+          return res.status(201).send("El evento a sido eliminado con exito")
+      }
+  } catch(err){
+      return res.status(404).send(err)
+  }
+}
+
 
 module.exports = {
+<<<<<<< HEAD
+=======
+  // getAllEvents,
+  deleteEvent,
+  // getEvents,
+>>>>>>> fb3183930ba42fa71bca478f2d831a99c4c59166
   postEvents,
   putEvents,
   loadEventsAndGetEvents,

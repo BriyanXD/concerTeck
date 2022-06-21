@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../db");
 
-const Productor = sequelize.define('productor', {
+const Producer = sequelize.define('producer', {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -44,7 +44,7 @@ const Productor = sequelize.define('productor', {
   },
 },{timestamps: false});
 
-module.exports = Productor;
+module.exports = Producer;
 
 // module.exports = (sequelize) => {
 //   sequelize.define('productor', {
