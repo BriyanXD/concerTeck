@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { getUser, createUser, putUser,deleteUser } = require("../controllers/User");
+const {getAllGenres} = require("../controllers/Genres")
 const {
   createProducer,
   getProducer,
@@ -31,6 +32,9 @@ routes.get("/events", loadEventsAndGetEvents);
 routes.post("/events", postEvents);
 routes.put("/events", putEvents);
 routes.delete("/events", deleteEvent);
+
+routes.get("/genres",getAllGenres);
+// routes.get("/genres?name",getGenresByName)
 
 module.exports = routes;
 
