@@ -35,7 +35,7 @@ async function getUser(req, res) {
 async function putUser(req, res) {
   const { id, email, password } = req.body;
   try {
-    if (!id || !email || !password) {
+    if (!id && !email && !password) {
       return res
         .status(404)
         .send("No se recibieron los parámetros necesarios para actualizar");
