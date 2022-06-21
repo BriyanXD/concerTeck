@@ -44,11 +44,13 @@ async function loadEventsAndGetEvents(req, res) {
           .json({ error: "No se encontro Eventos con ese ID" });
       }
     } else if (schedule) {
+      console.log(schedule);
       //const eventName = await Events.findOne({where:{name:name}})
-      const eventByDate = allEvents.filter((n) =>
-        n.schedule.includes(schedule)
-      );
-      if (eventName.length >= 1) {
+      const eventByDate = allEvents.filter((eventDate) => {
+        if (Date.parse(eventDate.schedule) === Date.parse(schedule))
+          return eventDate;
+      });
+      if (eventByDate.length >= 1) {
         return res.send(eventByDate);
       } else {
         return res
