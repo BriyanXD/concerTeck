@@ -11,7 +11,13 @@ const Ticket = sequelize.define(
       primaryKey: true,
     },
     name: {
-      type: DataTypes.ENUM("streaming", "campo", "vip", "campo lateral"),
+      type: DataTypes.ENUM(
+        "streaming",
+        "vip",
+        "general lateral",
+        "general",
+        "palco"
+      ),
       allowNull: false,
     },
     price: {

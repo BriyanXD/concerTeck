@@ -23,7 +23,11 @@ const {
   deleteEvent,
 } = require("../controllers/Events");
 
-const { getTicketByID, postTicket } = require("../controllers/Tickets");
+const {
+  getTicketByID,
+  postTicket,
+  deleteTicket,
+} = require("../controllers/Tickets");
 
 routes.post("/user", createUser);
 routes.get("/user", getUser);
@@ -42,6 +46,7 @@ routes.delete("/events", deleteEvent);
 
 routes.get("/ticket", getTicketByID);
 routes.post("/ticket", postTicket);
+routes.delete("/ticket", deleteTicket);
 
 routes.get("/genres", getAllGenres);
 
