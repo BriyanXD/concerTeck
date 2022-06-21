@@ -1,4 +1,5 @@
 const { Router } = require("express");
+
 const { getUser, createUser, putUser } = require("../controllers/Usuario");
 const {
   createProductor,
@@ -10,14 +11,13 @@ const {
   deleteProductor,
   deleteUsuario,
 } = require("../controllers/rutas-Delete");
-const routes = Router();
-
 const {
-  loadEventsAndGetAllEvents,
-  getEvents,
+  loadEventsAndGetEvents,
   postEvents,
   putEvents,
 } = require("../controllers/Events");
+
+const routes = Router();
 
 routes.get("/user", getUser);
 routes.post("/user", createUser);
@@ -31,8 +31,7 @@ routes.put("/productor", putProductor);
 routes.delete("/productor", deleteProductor);
 
 routes.delete("/events", deleteEvent);
-routes.get("/events", loadEventsAndGetAllEvents);
-routes.get("/events:name", getEvents);
+routes.get("/events", loadEventsAndGetEvents);
 routes.post("/events", postEvents);
 routes.put("/events", putEvents);
 

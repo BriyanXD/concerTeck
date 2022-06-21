@@ -1,60 +1,50 @@
 const archivoEventos = require("../db_event_genre/db_events.json");
 const Event = require("../models/Events");
-async function loadEventsAndGetAllEvents(req, res) {
+async function loadEventsAndGetEvents(req, res) {
+  const { name, id } = req.query;
   try {
-    archivoEventos.BigEvents.map(async (event) => {
-      return await Event.findOrCreate({
-        where: {
-          name: event.name,
-          genre: event.genre,
-          address: event.address,
-          schedule: event.schedule,
-          map: event.map,
-          image: event.image,
-          description: event.description,
-        },
+    for (let typeEvent in archivoEventos) {
+      archivoEventos[typeEvent].map(async (event) => {
+        return await Event.findOrCreate({
+          where: {
+            name: event.name,
+            genre: event.genre,
+            address: event.address,
+            schedule: event.schedule,
+            map: event.map,
+            image: event.image,
+            description: event.description,
+          },
+        });
       });
-    });
-    archivoEventos.Events.map(async (event) => {
-      return await Event.findOrCreate({
-        where: {
-          name: event.name,
-          genre: event.genre,
-          address: event.address,
-          schedule: event.schedule,
-          map: event.map,
-          image: event.image,
-          description: event.description,
-        },
-      });
-    });
-    const eventos = await Event.findAll();
-    res.json(eventos);
-  } catch (error) {
-    res.status(404).json({ error: error.message });
-  }
-}
-
-async function getEvents(req, res) {
-  try {
-    const { name } = req.query;
-    const eventsDB = await Event.findAll();
+    }
+    const allEvents = await Event.findAll();
     if (name) {
       //const eventName = await Events.findOne({where:{name:name}})
-      const eventName = eventsDB.filter((n) =>
+      const eventName = allEvents.filter((n) =>
         n.name.toLowerCase().includes(name.toLowerCase())
       );
-      if (eventName) {
+      if (eventName.length >= 1) {
         return res.send(eventName);
       } else {
         return res
           .status(404)
-          .send("No se a encontrado Eventos con ese nombre");
+          .json({ error: "No se encontro Eventos con ese Nombre" });
+      }
+    } else if (id) {
+      console.log(id);
+      const eventId = await Event.findByPk(id);
+      if (eventId) {
+        return res.send(eventId);
+      } else {
+        return res
+          .status(404)
+          .json({ error: "No se encontro Eventos con ese ID" });
       }
     }
-    return res.send(eventsDB);
-  } catch (err) {
-    return res.status(404).send(err);
+    res.json(allEvents);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
   }
 }
 
@@ -116,9 +106,7 @@ async function putEvents(req, res) {
 }
 
 module.exports = {
-  getAllEvents,
-  getEvents,
   postEvents,
   putEvents,
-  loadEventsAndGetAllEvents,
+  loadEventsAndGetEvents,
 };
