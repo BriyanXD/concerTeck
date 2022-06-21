@@ -41,7 +41,7 @@ async function getProducer(req,res){
 async function putProducer(req, res){
   const { id, cuit_cuil, email, cbu, telephone, company } = req.body
   try {
-    if(!cuit_cuil || !email || cbu || !telephone || !company){
+    if(!cuit_cuil && !email && cbu && !telephone && !company){
       res.status(404).send("No se recibieron los parámetros necesarios para actualizar")
     }else{
       const upload = await Producer.findByPk(id) 
