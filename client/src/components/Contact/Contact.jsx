@@ -4,13 +4,17 @@ import style from './Contact.module.css';
 export default function Contact() {
   return (
     <div className={style.containerContact}>
-      <label>Nombre o Razón Social:  <input type="text"/></label>
+      <form action='https://formsubmit.co/concerteck@gmail.com' method='POST'>
+      <label>Nombre o Razón Social:  <input name='name' type='text'/></label>
       <br/>
-      <label>Mail: <input type="email" /></label>
+      <label>Mail: <input name='email' type='email' /></label>
       <br/>
-      <label>Teléfono: <input type="number"/></label>
+      <label>Teléfono: <input name='telephone' type='number'/></label>
       <br/>
-      <label>Motivo de Contacto <textarea className={style.textarea} rows="5" cols="50"></textarea></label>
+      <label>Motivo de Contacto <textarea name='message' type='message' className={style.textarea} rows='5' cols='50'></textarea></label>
+      <br />
+      <button type='submit'>Enviar</button>
+      </form>
     </div>
   )
 }
