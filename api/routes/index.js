@@ -12,7 +12,12 @@ const {
 } = require("../controllers/rutas-Delete");
 const routes = Router();
 
-const { loadEventsAndGetAllEvents } = require("../controllers/Events");
+const {
+  loadEventsAndGetAllEvents,
+  getEvents,
+  postEvents,
+  putEvents,
+} = require("../controllers/Events");
 
 routes.post("/user",createUser);
 routes.get("/user",getUser);
@@ -25,7 +30,10 @@ routes.put("/productor", putProductor);
 routes.delete("/productor", deleteProductor);
 
 routes.delete("/events", deleteEvent);
-routes.get("/events", loadEventsAndGetAllEvents);
+routes.get("/events:name", loadEventsAndGetAllEvents);
+routes.get("/events:name", getEvents);
+routes.post("/events", postEvents);
+routes.put("/events", putEvents);
 
 module.exports = routes;
 
