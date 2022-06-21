@@ -3,8 +3,9 @@
     background-color: grey;
     flex-direction: column;
     justify-content: space-around;
-    width: 30vw;
+    width: 40vw;
     height: 30vh;
+    margin-top: 40px;
 }
 
 .textarea{
