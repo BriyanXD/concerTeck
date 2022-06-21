@@ -24,7 +24,7 @@ const Events = sequelize.define(
       allowNull: false,
     },
     schedule: {
-      type: DataTypes.DATETIME,
+      type: DataTypes.DATE,
       allowNull: false,
     },
     map: {

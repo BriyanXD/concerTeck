@@ -5,7 +5,7 @@ const {deleteEvent, deleteProductor, deleteUsuario} = require("../controllers/ru
 const routes = Router();
 
 
-routes.get("/user", getUser);
+// routes.get("/user", getUser);
 routes.post("/user",createUser);
 routes.get("/user",getUser);
 routes.put("/user", putUser);
@@ -20,3 +20,4 @@ routes.delete("/user", deleteUsuario);
 routes.delete("/productor", deleteProductor);
 
 module.exports = routes;
+
