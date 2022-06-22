@@ -16,6 +16,7 @@ async function loadEventsAndGetEvents(req, res) {
             performerImage: event.performerImage,
             placeImage: event.placeImage,
             description: event.description,
+            isBigEvent: event.isBigEvent,
           },
         });
       });
