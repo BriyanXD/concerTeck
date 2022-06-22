@@ -18,6 +18,7 @@ export default function Home() {
   useEffect(()=>{
     dispatch(getEvents())
        },[dispatch]);
+       
 
   return (
     <div className={style.container}>

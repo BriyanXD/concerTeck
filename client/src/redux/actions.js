@@ -15,7 +15,6 @@ export function getEvents() {
     }
 }
 
-
 export function searchEvent (name){
     return async function (dispatch) {
         try{
