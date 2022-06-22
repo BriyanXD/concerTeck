@@ -1,5 +1,5 @@
 import React from 'react'
-import {EventById} from '../../redux/actions'
+import {EventById,ClearDetail} from '../../redux/actions'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import NavBar from '../NavBar/NavBar';
@@ -15,6 +15,9 @@ export default function Detail() {
   const dispatch =  useDispatch()
   useEffect(()=>{
     dispatch(EventById(id))
+    return ()=>{
+      dispatch(ClearDetail())
+  }
   },[dispatch, id])
 
   const event = useSelector((state)=> state.Detail)
