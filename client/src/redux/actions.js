@@ -54,6 +54,20 @@ export function CreateEvent (value){
     }
 }
 
+export function GetGenres (){
+    return async function(dispatch){
+        try{
+            const genres = await axios.get("http://localhost:3001/api/genres")
+            return dispatch({
+                type:'GET_GENRES',
+                payload: genres.data
+            })
+        }catch(error){
+            console.log(error.message);
+        }
+    }
+}
+
 export function ClearDetail (){
     return function (){
         return { type:'CLEAR_DETAIL'}

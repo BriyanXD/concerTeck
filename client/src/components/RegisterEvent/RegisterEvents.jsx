@@ -2,10 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //import style from './RegisterUser.module.css';
-import { CreateEvent } from '../../redux/actions';
+import { CreateEvent, GetGenres } from '../../redux/actions';
+
 
 export default function RegisterEvent(){
     const dispatch = useDispatch()
+    //const [image, setImage] = useState("")
     const [event, setEvent] = useState({
         name: "",
         artist: "",
@@ -30,6 +32,10 @@ export default function RegisterEvent(){
         placeImage: "",
         description: "",
     })
+
+    useEffect(()=>{
+        dispatch(GetGenres())  
+    }, [dispatch]) 
 
     const handleChange = (e) => {
         setEvent({
@@ -153,12 +159,12 @@ export default function RegisterEvent(){
 
         //validar genero
         if(e.target.name === "genre"){
-            if(e.target.value === ""){
+            if(event.genre.length === 0){
                 setErrors({
                     ...errors,
                     [e.target.name]: "Ingrese el genero del Evento"
                 })
-            }else if (e.target.value.length > 1){
+            }else if (event.genre.length > 1){
                 setErrors({
                     ...errors,
                     [e.target.name]: "El Evento solo deve pertenecer a un solo genero"
@@ -271,7 +277,7 @@ export default function RegisterEvent(){
         if(e.target.checked){           
             setEvent({                  
                 ...event,
-                genre:[e.target.value]  
+                genre: event.genre  
             })
         }
     };
@@ -285,6 +291,22 @@ export default function RegisterEvent(){
         }
     };
 
+    //k484vqmp codigo carpeta clodinari
+    const uploadImage = async (e) => {
+        //console.log(e.target.id)
+        const files = e.target.files;
+        const data = new FormData();
+        data.append("file", files[0]);
+        data.append("upload_preset", "k484vqmp");
+        const res = await fetch(
+          "https://api.cloudinary.com/v1_1/dqrirzlrv/image/upload",
+          { method: "POST", body: data }
+        );
+        const file = await res.json();
+        setEvent({...event, [e.target.id]:file.secure_url });
+      };
+
+    //console.log(event)
 
     return (<div>
         <h2>Crear Evento</h2>
@@ -298,8 +320,8 @@ export default function RegisterEvent(){
             </div>
 
             <div>
-                <label> <input type="checkbox" name="Rock" value="Rock" onChange={(e)=>handleCheck(e)}/>Rock</label>
-                <label> <input type="checkbox" name="Reggae" value="Reggae" onChange={(e)=>handleCheck(e)}/>Reggae</label>
+                <label> <input type="checkbox" name="Rock" value="Rock" onChange={(e)=>handleCheck(e)} onBlur={handleBlur}/>Rock</label>
+                <label> <input type="checkbox" name="Reggae" value="Reggae" onChange={(e)=>handleCheck(e)} onBlur={handleBlur}/>Reggae</label>
                 <label> <input type="checkbox" name="Hip Hop" value="Hip Hop" onChange={(e)=>handleCheck(e)}/>Hip Hop</label>
                 <label> <input type="checkbox" name="Rap" value="Rap" onChange={(e)=>handleCheck(e)}/>Rap</label>
                 <label> <input type="checkbox" name="Clasica" value="Clasica" onChange={(e)=>handleCheck(e)}/>Clasica</label>
@@ -312,11 +334,32 @@ export default function RegisterEvent(){
                 <label> <input type="checkbox" name= "Otros" value= "Otros" onChange={(e)=>handleCheck(e)}/>Otros</label>
                 {errors.genre && <label>{errors.genre}</label>}
             </div>
+
+            {/* <label>Tipo de dieta: </label>
+          <div className={style.diets}>
+          {tipos.map((tipo, i) => (
+            <>
+              <input
+                key={i}
+                className={style.diet}
+                type="checkbox"
+                name="diet"
+                id={tipo.name}
+                value={tipo.name}
+                onChange={handleDiet}
+                onBlur={handleBlur}
+              />
+              <label className={style.check} htmlFor={tipo.name}>{tipo.name}</label>
+              <br />
+            </>
+          ))}
+          {errors.diet && <p className={style.error}>{errors.diet}</p>}
+          </div> */}
             
             <div> <input name="schedule" value={event.schedule}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Hora y Fecha" /> {errors.schedule && <label>{errors.schedule}</label>}</div>
             <div> <input name="map" value={event.map}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Ubicacion" /> {errors.map && <label>{errors.map}</label>}</div>
-            <div> <input name="performerImage" value={event.performerImage}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Imagen del artista" /> {errors.performerImage && <label>{errors.performerImage}</label>}</div>
-            <div> <input name="placeImage" value={event.placeImage}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Imagen del lugar" /> {errors.placeImage && <label>{errors.placeImage}</label>}</div>
+            <div> <input id="performerImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del artista" /> {errors.performerImage && <label>{errors.performerImage}</label>}</div>
+            <div> <input id="placeImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del lugar" /> {errors.placeImage && <label>{errors.placeImage}</label>}</div>
             <div> <input name="description" value={event.description}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Descripcion" /> {errors.description && <label>{errors.description}</label>}</div>
             <button type="submit">Crear</button>
         </form>
