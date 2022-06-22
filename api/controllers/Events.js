@@ -195,7 +195,7 @@ async function deleteEvent(req, res) {
 }
 
 module.exports = {
-  // getAllEvents,
+  chargeEvents,
   deleteEvent,
   // getEvents,
   postEvents,
