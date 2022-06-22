@@ -1,30 +1,34 @@
 import React, { useState } from 'react'
+import { useDispatch} from 'react-redux';
+import { filterByGenres } from '../../../redux/actions';
 import style from './Genre.module.css';
 
 export default function Genre() {
-
+  const dispatch = useDispatch()
   const [genre, setGenre] = useState("")
-
-  const handleChange = (e) =>  {
-    setGenre(e.target.value);
+  
+  const HandleFilterByGenres = (e) =>  {
+    e.preventDefault()
+    dispatch(filterByGenres(e.target.value))
+    setGenre(`${e.target.value}`);
   }
 
   return (
     <div>
-      <select onChange={handleChange} className={style.selectGenre} name="" id="">
-        <option default >Generos</option>
-        <option value="rock">Rock</option>
-        <option value="reggae">Reggae</option>
-        <option value="hip hop">Hip Hop</option>
-        <option value="rap">Rap</option>
-        <option value="clasica">Clasica</option>
-        <option value="metal">Metal</option>
-        <option value="reggaeton">Reggaeton</option>
-        <option value="pop">Pop</option>
-        <option value="eletronica">Electronica</option>
-        <option value="jazz">Jazz</option>
-        <option value="trap">Trap</option>
-        <option value="otros">Otros</option>
+      <select onChange={e =>{ HandleFilterByGenres(e)}} className={style.selectGenre} name="" id="">
+        <option value='all' >Generos</option>
+        <option value="Rock">Rock</option>
+        <option value="Reggae">Reggae</option>
+        <option value="Hip Hop">Hip Hop</option>
+        <option value="Rap">Rap</option>
+        <option value="Clasica">Clasica</option>
+        <option value="Metal">Metal</option>
+        <option value="Reggaeton">Reggaeton</option>
+        <option value="Pop">Pop</option>
+        <option value="Electronica">Electronica</option>
+        <option value="Jazz">Jazz</option>
+        <option value="Trap">Trap</option>
+        <option value="Otros">Otros</option>
       </select>
     </div>
   )

@@ -26,23 +26,10 @@ const Events = sequelize.define(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    genre: {
-      type: DataTypes.ENUM(
-        "Rock",
-        "Reggae",
-        "Hip Hop",
-        "Rap",
-        "Clasica",
-        "Metal",
-        "Reggaeton",
-        "Pop",
-        "Electronica",
-        "Jazz",
-        "Trap",
-        "Otros"
-      ),
+    /* genre: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-    },
+    }, */
     schedule: {
       type: DataTypes.DATE,
       allowNull: false,

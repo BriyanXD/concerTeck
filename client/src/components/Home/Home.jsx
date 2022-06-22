@@ -15,8 +15,7 @@ import PaginadoEvents from '../Paginado/PaginadoEvents'
 export default function Home() {
 
   const dispatch = useDispatch();
-  const {BigEvents, Events} = useSelector(state => state);
-
+  
   const allEventsPagination = useSelector((state) => {return state.BigEvents})
   const [currentPag, setCurrenPag] = useState(1)
   const [eventsPerPag, setEventsPerPage] = useState(2)
@@ -50,12 +49,13 @@ const pagination2 = (numberPage2) =>{
       <NavBar/>
       <Carrousel/>
       <div className={style.eventcontainer}>
-        <div>
+        <div className={style.midcontainer}>
         <PaginadoBigEvents
           eventsPerPag = {eventsPerPag}
           allEventsPagination = {allEventsPagination.length}
           pagination = {pagination}
           />
+          <div className={style.bigcontainer}>
           {currentBigEvents?.map(el => {
           return(
           <div key={el.id}>
@@ -65,12 +65,15 @@ const pagination2 = (numberPage2) =>{
         
           </div>
           )})}
+
+          </div>
         </div>
-        <div>
+        <div className={style.midcontainer}>
         <PaginadoEvents
           eventPerPage = {eventPerPage}
           allSmallEventsPagination = {allSmallEventsPagination.length}
-          pagination2 = {pagination2}/>
+          pagination = {pagination2}/>
+          <div className={style.litlecontainer}>
           {currentEvents?.map(el => {
           return(
           <div key={el.id}>
@@ -80,6 +83,8 @@ const pagination2 = (numberPage2) =>{
           </Link>
           </div>
           )})}
+
+          </div>
 
         </div>
       </div>
