@@ -1,34 +1,38 @@
 const eventsFiles = require("../db_event_genre/db_events.json");
 const Event = require("../models/Events");
 const Genre = require("../models/Genre");
+
+async function chargeEvents() {
+  for (let typeEvent in eventsFiles) {
+    eventsFiles[typeEvent].map(async (event) => {
+      const saveGenre = await Genre.findOne({
+        where: { name: event.genre.toLowerCase() },
+      });
+      if (saveGenre) {
+        return await Event.findOrCreate({
+          where: {
+            name: event.name,
+            artist: event.artist,
+            genreId: saveGenre.id,
+            address: event.address,
+            schedule: event.schedule,
+            map: event.map,
+            performerImage: event.performerImage,
+            placeImage: event.placeImage,
+            description: event.description,
+            isBigEvent: event.isBigEvent === true ? true : false,
+          },
+        });
+      } else {
+        console.log("id o nombre no encontrados");
+      }
+    });
+  }
+}
+
 async function loadEventsAndGetEvents(req, res) {
   const { name, id, schedule } = req.query;
   try {
-    for (let typeEvent in eventsFiles) {
-      eventsFiles[typeEvent].map(async (event) => {
-        const saveGenre = await Genre.findOne({
-          where: { name: event.genre.toLowerCase() },
-        });
-        if (saveGenre) {
-          return await Event.findOrCreate({
-            where: {
-              name: event.name,
-              artist: event.artist,
-              genreId: saveGenre.id,
-              address: event.address,
-              schedule: event.schedule,
-              map: event.map,
-              performerImage: event.performerImage,
-              placeImage: event.placeImage,
-              description: event.description,
-              isBigEvent: event.isBigEvent === true ? true : false,
-            },
-          });
-        } else {
-          console.log("id o nombre no encontrados");
-        }
-      });
-    }
     const allEvents = await Event.findAll();
     if (name) {
       //const eventName = await Events.findOne({where:{name:name}})
@@ -96,10 +100,14 @@ async function postEvents(req, res) {
     ) {
       return res.status(404).send("Faltan datos obligatorios");
     } else {
-      const allGenres = await Genre.findAll();
-      const findGenres = allGenres.find(
-        (genre) => genre.name.toLowerCase() === genre.toLowerCase()
-      );
+      let saveGenre = await Genre.findOne({
+        where: { name: event.genre.toLowerCase() },
+      });
+      if (!saveGenre) {
+        saveGenre = await Genre.findOrCreate({
+          where: { name: genre.toLowerCase() },
+        });
+      }
       const event = await Event.findOrCreate({
         where: {
           name: name,
