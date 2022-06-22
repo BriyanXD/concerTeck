@@ -27,20 +27,7 @@ const Events = sequelize.define(
       defaultValue: false,
     },
     genre: {
-      type: DataTypes.ENUM(
-        "Rock",
-        "Reggae",
-        "Hip Hop",
-        "Rap",
-        "Clasica",
-        "Metal",
-        "Reggaeton",
-        "Pop",
-        "Electronica",
-        "Jazz",
-        "Trap",
-        "Otros"
-      ),
+      type: DataTypes.STRING,
       allowNull: false,
     },
     schedule: {

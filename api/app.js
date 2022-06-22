@@ -8,6 +8,7 @@ require("./models/Producer");
 require("./models/User");
 require("./models/Events");
 require("./models/Ticket");
+require("./models/Genre");
 
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.json({ limit: "50mb" }));
