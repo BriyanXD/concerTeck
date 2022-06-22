@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import style from './RegisterUser.module.css';
-import { register } from '../../redux/actions';
+//import style from './RegisterUser.module.css';
+import { CreateEvent } from '../../redux/actions';
 
 export default function RegisterEvent(){
     const dispatch = useDispatch()
@@ -265,7 +265,26 @@ export default function RegisterEvent(){
                 })
             }
           }
-    }
+    };
+
+    function handleCheck(e){
+        if(e.target.checked){           
+            setEvent({                  
+                ...event,
+                genre:[e.target.value]  
+            })
+        }
+    };
+
+    function handleBigEvent(e){
+        if(e.target.checked){
+            setEvent({
+                ...event,
+                isBigEvent: true
+            })
+        }
+    };
+
 
     return (<div>
         <h2>Crear Evento</h2>
@@ -275,7 +294,23 @@ export default function RegisterEvent(){
             <div> <input name="address" value={event.address}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Direccion" /> {errors.address && <label>{errors.address}</label>}</div>
             
             <div>
-                <label> <input type="checkbox"/></label>
+                <label> <input type="checkbox" name="isBigEvent" value="isBigEvent" onChange={(e)=>handleBigEvent(e)}/>Gran Evento ?:</label>
+            </div>
+
+            <div>
+                <label> <input type="checkbox" name="Rock" value="Rock" onChange={(e)=>handleCheck(e)}/>Rock</label>
+                <label> <input type="checkbox" name="Reggae" value="Reggae" onChange={(e)=>handleCheck(e)}/>Reggae</label>
+                <label> <input type="checkbox" name="Hip Hop" value="Hip Hop" onChange={(e)=>handleCheck(e)}/>Hip Hop</label>
+                <label> <input type="checkbox" name="Rap" value="Rap" onChange={(e)=>handleCheck(e)}/>Rap</label>
+                <label> <input type="checkbox" name="Clasica" value="Clasica" onChange={(e)=>handleCheck(e)}/>Clasica</label>
+                <label> <input type="checkbox" name="Metal" value="Metal" onChange={(e)=>handleCheck(e)}/>Metal</label>
+                <label> <input type="checkbox" name="Reggaeton" value="Reggaeton" onChange={(e)=>handleCheck(e)}/>Reggaeton</label>
+                <label> <input type="checkbox" name="Pop" value="Pop" onChange={(e)=>handleCheck(e)}/>Pop</label>
+                <label> <input type="checkbox" name="Electronica" value="Electronica" onChange={(e)=>handleCheck(e)}/>Electronica</label>
+                <label> <input type="checkbox" name="Jazz" value="Jazz" onChange={(e)=>handleCheck(e)}/>Jazz</label>
+                <label> <input type="checkbox" name="Trap" value="Trap" onChange={(e)=>handleCheck(e)}/>Trap</label>
+                <label> <input type="checkbox" name= "Otros" value= "Otros" onChange={(e)=>handleCheck(e)}/>Otros</label>
+                {errors.genre && <label>{errors.genre}</label>}
             </div>
             
             <div> <input name="schedule" value={event.schedule}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Hora y Fecha" /> {errors.schedule && <label>{errors.schedule}</label>}</div>
