@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import NavBar from '../NavBar/NavBar'
 import Footer from '../Footer/Footer'
@@ -9,12 +9,36 @@ import Carrousel from '../Carousel/Carousel'
 import {useDispatch, useSelector} from 'react-redux'
 import { getEvents } from '../../redux/actions'
 import {Link} from 'react-router-dom';
+import PaginadoBigEvents from '../Paginado/PaginadoBigEvents'
+import PaginadoEvents from '../Paginado/PaginadoEvents'
 
 
 export default function Home() {
 
   const dispatch = useDispatch();
   const {BigEvents, Events} = useSelector(state => state);
+
+  const allEventsPagination = useSelector((state) => {return state.BigEvents})
+  const [currentPag, setCurrenPag] = useState(1)
+  const [eventsPerPag, setEventsPerPage] = useState(2)
+  const indexLastEvent = currentPag * eventsPerPag
+  const indexFirstEvent = indexLastEvent - eventsPerPag
+  const currentBigEvents = allEventsPagination.slice(indexFirstEvent, indexLastEvent)
+
+  const allSmallEventsPagination = useSelector((state) => {return state.Events})
+  const [currentpage, setCurrentPage] = useState(1)
+  const [eventPerPage, setEventPerPage] = useState(4)
+  const indexLastEventt = currentpage * eventPerPage
+  const indexfirstEventt = indexLastEventt - eventPerPage
+  const currentEvents = allSmallEventsPagination.slice(indexfirstEventt, indexLastEventt)
+
+  const pagination = (numberPage) =>{
+    setCurrenPag(numberPage)
+}
+
+const pagination2 = (numberPage2) =>{
+  setCurrentPage(numberPage2)
+}
 
   useEffect(()=>{
     dispatch(getEvents())
@@ -27,18 +51,27 @@ export default function Home() {
       <Carrousel/>
       <div className={style.eventcontainer}>
         <div>
-          {BigEvents?.map(el => {
+        <PaginadoBigEvents
+          eventsPerPag = {eventsPerPag}
+          allEventsPagination = {allEventsPagination.length}
+          pagination = {pagination}
+          />
+          {currentBigEvents?.map(el => {
           return(
           <div key={el.id}>
-            
           <Link to= {`/${el.id}`}>
           <CardBigEvent name={el.name} genre={el.genre} image={el.performerImage} schedule={el.schedule}/>
           </Link>
+        
           </div>
           )})}
         </div>
         <div>
-          {Events?.map(el => {
+        <PaginadoEvents
+          eventPerPage = {eventPerPage}
+          allSmallEventsPagination = {allSmallEventsPagination.length}
+          pagination = {pagination2}/>
+          {currentEvents?.map(el => {
           return(
           <div key={el.id}>
             
@@ -47,11 +80,16 @@ export default function Home() {
           </Link>
           </div>
           )})}
+
         </div>
       </div>
       <div>
         Calendario
       </div>
+
+    <div>
+
+    </div>
       <Footer/>
 
     </div>
