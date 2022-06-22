@@ -10,6 +10,7 @@ function reducers(state = initialState, {type, payload}) {
   switch (type) {
     case "GET_EVENTS":
       console.log(payload)
+      const bigEvents = bigEvents 
       return {
         ...state,
         AllEvents: payload,

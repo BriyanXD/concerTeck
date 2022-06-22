@@ -62,12 +62,8 @@ async function putUser(req, res) {
             },
           }
         );
-<<<<<<< HEAD
-        return res.send("Usuario Actualizado con exitos");
-=======
 
         return res.json({ error: "Usuario Actualizado con exitos" });
->>>>>>> d28e30f384576992b9246f90ce59105c0b3fb166
       }
     }
   } catch (error) {
@@ -99,8 +95,6 @@ async function deleteUser(req, res) {
   }
 }
 
-<<<<<<< HEAD
-=======
 //   const { name } = req.params;
 //   try {
 //     const user = await Usuario.create({
@@ -111,7 +105,6 @@ async function deleteUser(req, res) {
 //     return res.status(400).send({ error: error.message });
 //   }
 // }
->>>>>>> d28e30f384576992b9246f90ce59105c0b3fb166
 
 module.exports = {
   getUser,
