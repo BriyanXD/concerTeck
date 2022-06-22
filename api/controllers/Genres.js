@@ -45,4 +45,4 @@ async function postOneGenre(req, res) {
   }
 }
 
-module.exports = { getAllGenres, postOneGenre };
+module.exports = { getAllGenres, postOneGenre, chargeGenres };
