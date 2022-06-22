@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-
 import NavBar from '../NavBar/NavBar'
 import Footer from '../Footer/Footer'
 import style from './Home.module.css'
@@ -24,6 +23,7 @@ export default function Home() {
   const indexLastEvent = currentPag * eventsPerPag
   const indexFirstEvent = indexLastEvent - eventsPerPag
   const currentBigEvents = allEventsPagination.slice(indexFirstEvent, indexLastEvent)
+
 
   const allSmallEventsPagination = useSelector((state) => {return state.Events})
   const [currentpage, setCurrentPage] = useState(1)
@@ -70,7 +70,7 @@ const pagination2 = (numberPage2) =>{
         <PaginadoEvents
           eventPerPage = {eventPerPage}
           allSmallEventsPagination = {allSmallEventsPagination.length}
-          pagination = {pagination2}/>
+          pagination2 = {pagination2}/>
           {currentEvents?.map(el => {
           return(
           <div key={el.id}>
