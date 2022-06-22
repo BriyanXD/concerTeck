@@ -9,12 +9,16 @@ const initialState = {
 function reducers(state = initialState, {type, payload}) {
   switch (type) {
     case "GET_EVENTS":
-      console.log(payload)
+      // console.log(payload)
+      const BigE = payload.filter(e => e.isBigEvent === true)
+      // console.log(BigE);
+      const Eve = payload.filter(e => e.isBigEvent === false)
+      console.log(Eve);
       return {
         ...state,
         AllEvents: payload,
-        BigEvents: payload,
-        Events: payload,
+        BigEvents: BigE,
+        Events: Eve,
         
       }
     

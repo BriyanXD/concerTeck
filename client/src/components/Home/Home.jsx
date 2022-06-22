@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import { getEvents } from '../../redux/actions'
 import {Link} from 'react-router-dom';
 
+
 export default function Home() {
 
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ export default function Home() {
           <div key={el.id}>
             
           <Link to= {`/${el.id}`}>
-          <CardBigEvent name={el.name} genre={el.genre} image={el.image} schedule={el.schedule}/>
+          <CardBigEvent name={el.name} genre={el.genre} image={el.performerImage} schedule={el.schedule}/>
           </Link>
           </div>
           )})}
@@ -42,7 +43,7 @@ export default function Home() {
           <div key={el.id}>
             
           <Link to= {`/${el.id}`}>
-          <CardEvent name={el.name} genre={el.genre} image={el.image} schedule={el.schedule}/>
+          <CardEvent name={el.name} genre={el.genre} image={el.performerImage} schedule={el.schedule}/>
           </Link>
           </div>
           )})}
