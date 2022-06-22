@@ -31,8 +31,8 @@ export default function Home() {
           ></CardEvent>
         </div>
       </div>
-      <div>
-        Calendario
+      <div><br />
+      <iframe src="https://calendar.google.com/calendar/embed?height=200&wkst=2&bgcolor=%23ffffff&ctz=America%2FArgentina%2FBuenos_Aires&showTitle=0&showPrint=0&mode=MONTH&showTabs=1&showCalendars=1&showNav=1&title&src=anJmOG81bGhzYW40MzkzNHF1ZDlzNXA1Mm9AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%23616161" width="600" height="400"></iframe>
       </div>
       <Footer/>
 
