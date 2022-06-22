@@ -21,7 +21,6 @@ function reducers(state = initialState, {type, payload}) {
         ...state,
 
         AllEvents: payload,
-
         AllBigEvents:BigE,
         BigEvents: BigE,
         AllLitleEvents:Eve,
