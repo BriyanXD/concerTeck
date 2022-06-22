@@ -5,6 +5,7 @@ import style from './Home.module.css'
 import CardEvent from '../CardEvent/CardEvent'
 import CardBigEvent from '../CardBigEvent/CardBigEvent'
 
+
 export default function Home() {
 
   return (
@@ -34,6 +35,10 @@ export default function Home() {
       <div>
         Calendario
       </div>
+
+    <div>
+
+    </div>
       <Footer/>
 
     </div>
