@@ -1,19 +1,20 @@
 const eventsFiles = require("../db_event_genre/db_events.json");
 const Event = require("../models/Events");
 async function loadEventsAndGetEvents(req, res) {
-  const { name, id } = req.query;
+  const { name, id, schedule } = req.query;
   try {
     for (let typeEvent in eventsFiles) {
       eventsFiles[typeEvent].map(async (event) => {
         return await Event.findOrCreate({
           where: {
             name: event.name,
+            artist: event.artist,
             genre: event.genre,
             address: event.address,
             schedule: event.schedule,
             map: event.map,
             performerImage: event.performerImage,
-            placeImage: event.placeImage ,
+            placeImage: event.placeImage,
             description: event.description,
           },
         });
@@ -42,6 +43,20 @@ async function loadEventsAndGetEvents(req, res) {
           .status(404)
           .json({ error: "No se encontro Eventos con ese ID" });
       }
+    } else if (schedule) {
+      console.log(schedule);
+      //const eventName = await Events.findOne({where:{name:name}})
+      const eventByDate = allEvents.filter((eventDate) => {
+        if (Date.parse(eventDate.schedule) === Date.parse(schedule))
+          return eventDate;
+      });
+      if (eventByDate.length >= 1) {
+        return res.send(eventByDate);
+      } else {
+        return res
+          .status(404)
+          .json({ error: "No se encontro Eventos con esa fecha" });
+      }
     }
     res.json(allEvents);
   } catch (error) {
@@ -51,14 +66,32 @@ async function loadEventsAndGetEvents(req, res) {
 
 async function postEvents(req, res) {
   try {
-    const { name, address, genre, schedule, map, performerImage,placeImage ,description } =
-      req.body;
-    if (!name || !address || !genre || !schedule || !performerImage || !placeImage) {
+    const {
+      name,
+      artist,
+      address,
+      genre,
+      schedule,
+      map,
+      performerImage,
+      placeImage,
+      description,
+    } = req.body;
+    if (
+      !name ||
+      !address ||
+      !genre ||
+      !schedule ||
+      !performerImage ||
+      !placeImage ||
+      !artist
+    ) {
       return res.status(404).send("Faltan datos obligatorios");
     } else {
       const event = await Event.findOrCreate({
         where: {
           name: name,
+          artist: artist,
           address: address,
           genre: genre,
           schedule: schedule,
@@ -82,13 +115,25 @@ async function postEvents(req, res) {
 
 async function putEvents(req, res) {
   try {
-    const { id, name, address, genre, schedule, map, performerImage,placeImage ,description } =
-      req.body;
+    const {
+      id,
+      name,
+      artist,
+      address,
+      genre,
+      schedule,
+      map,
+      performerImage,
+      placeImage,
+      description,
+      producerId,
+    } = req.body;
     const upload = await Event.findByPk(id);
     if (upload) {
       const event = await Event.update(
         {
           name: name,
+          artist: artist,
           address: address,
           genre: genre,
           schedule: schedule,
@@ -96,6 +141,7 @@ async function putEvents(req, res) {
           performerImage: performerImage,
           placeImage: placeImage,
           description: description,
+          producerId: producerId,
         },
         { where: { id: id } }
       );
@@ -107,25 +153,26 @@ async function putEvents(req, res) {
     return res.status(404).send(err);
   }
 }
-async function deleteEvent(req, res){
+async function deleteEvent(req, res) {
   try {
-      const { id } = req.body //req.params.id
-      const event = await Event.findByPk(id);
-      if(!id){
-          return res.status(404).send("El ID solicitado no existe")
-      }
-      if(!event){
-          return res.status(404).send("No se a encontrado un Evento que corresponda a lo solicitado")
-      }
-      const destoyed = await event.destroy()
-      if(destoyed){
-          return res.status(201).send("El evento a sido eliminado con exito")
-      }
-  } catch(err){
-      return res.status(404).send(err)
+    const { id } = req.body; //req.params.id
+    const event = await Event.findByPk(id);
+    if (!id) {
+      return res.status(404).send("El ID solicitado no existe");
+    }
+    if (!event) {
+      return res
+        .status(404)
+        .send("No se a encontrado un Evento que corresponda a lo solicitado");
+    }
+    const destoyed = await event.destroy();
+    if (destoyed) {
+      return res.status(201).send("El evento a sido eliminado con exito");
+    }
+  } catch (err) {
+    return res.status(404).send(err);
   }
 }
-
 
 module.exports = {
   // getAllEvents,

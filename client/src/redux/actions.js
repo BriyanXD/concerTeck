@@ -4,7 +4,7 @@ import axios from 'axios';
 export function getEvents() {
     return async function (dispatch) {
         try{
-            var events = await axios.get("http://localhost:3001/events");
+            let events = await axios.get("http://localhost:3001/api/events");
             return dispatch({
                 type:'GET_EVENTS',
                 payload: events.data
@@ -15,11 +15,10 @@ export function getEvents() {
     }
 }
 
-
 export function searchEvent (name){
     return async function (dispatch) {
         try{
-            const events = await axios.get(`http://localhost:3001/events?name=${name}`);
+            const events = await axios.get(`http://localhost:3001/api/events?name=${name}`);
             return dispatch({
                 type:'GET_EVENT_BY_NAME',
                 payload: events.data
@@ -50,10 +49,10 @@ export function ClearDetail (){
     }
 } 
 
-export function RegisterUser (user,value) {
+export function register (user,value) {
     return async function (dispatch){
         try{
-            const register = await axios.post(`http://localhost:3001/${user}`, value);
+            const register = await axios.post(`http://localhost:3001/api/${user}`, value);
             return register;
         }catch(error){
             console.log(error.message);
@@ -64,7 +63,7 @@ export function RegisterUser (user,value) {
 export function LoginUser (value){
     return async function (dispatch){
         try{
-            const getUser = await axios.get("http://localhost:3001/", value);
+            const getUser = await axios.get("http://localhost:3001/api/login", value);
             return dispatch({
                 type: "LOGIN_USER",
                 payload: getUser.data,

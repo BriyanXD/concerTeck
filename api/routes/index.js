@@ -1,6 +1,12 @@
 const { Router } = require("express");
-const { getUser, createUser, putUser,deleteUser } = require("../controllers/User");
-const {getAllGenres} = require("../controllers/Genres")
+
+const {
+  getUser,
+  createUser,
+  putUser,
+  deleteUser,
+} = require("../controllers/User");
+const { getAllGenres } = require("../controllers/Genres");
 const {
   createProducer,
   getProducer,
@@ -17,8 +23,14 @@ const {
   deleteEvent,
 } = require("../controllers/Events");
 
-routes.post("/user",createUser);
-routes.get("/user",getUser);
+const {
+  getTicketByID,
+  postTicket,
+  deleteTicket,
+} = require("../controllers/Tickets");
+
+routes.post("/user", createUser);
+routes.get("/user", getUser);
 routes.put("/user", putUser);
 routes.delete("/user", deleteUser);
 
@@ -32,8 +44,10 @@ routes.post("/events", postEvents);
 routes.put("/events", putEvents);
 routes.delete("/events", deleteEvent);
 
-routes.get("/genres",getAllGenres);
-// routes.get("/genres?name",getGenresByName)
+routes.get("/ticket", getTicketByID);
+routes.post("/ticket", postTicket);
+routes.delete("/ticket", deleteTicket);
+
+routes.get("/genres", getAllGenres);
 
 module.exports = routes;
-
