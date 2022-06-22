@@ -26,10 +26,10 @@ const Events = sequelize.define(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    genre: {
-      type: DataTypes.STRING,
+    /* genre: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-    },
+    }, */
     schedule: {
       type: DataTypes.DATE,
       allowNull: false,
