@@ -14,11 +14,18 @@ const Events = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    artist: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     address: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-
+    isBigEvent: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
     genre: {
       type: DataTypes.ENUM(
         "Rock",
@@ -48,12 +55,27 @@ const Events = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    placeImage:{
+    placeImage: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
     description: {
       type: DataTypes.TEXT,
+    },
+    stockStreaming: {
+      type: DataTypes.INTEGER,
+    },
+    stockVIP: {
+      type: DataTypes.INTEGER,
+    },
+    stockGeneralLateral: {
+      type: DataTypes.INTEGER,
+    },
+    stockGeneral: {
+      type: DataTypes.INTEGER,
+    },
+    stockPalco: {
+      type: DataTypes.INTEGER,
     },
   },
   { timestamps: false }
