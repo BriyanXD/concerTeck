@@ -74,3 +74,11 @@ export function LoginUser (value){
         }
     }
 }   
+
+export function filterByGenres (payload){
+    console.log(payload)
+    return{
+        type:'FILTER_GENRES',
+        payload
+    }
+}
