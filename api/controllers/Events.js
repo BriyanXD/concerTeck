@@ -100,32 +100,39 @@ async function postEvents(req, res) {
     ) {
       return res.status(404).send("Faltan datos obligatorios");
     } else {
-      const allGenres = await Genre.findAll();
-      const findGenres = allGenres.find(
-        (genre) => genre.name.toLowerCase() === genre.toLowerCase()
-      );
-      const event = await Event.findOrCreate({
-        where: {
-          name: name,
-          artist: artist,
-          address: address,
-          genreId: findGenres.id,
-          schedule: schedule,
-          map: map,
-          performerImage: performerImage,
-          placeImage: placeImage,
-          description: description,
-        },
+      await Genre.findOrCreate({
+        where: { name: genre.toLowerCase() },
       });
-      if (event) {
-        console.log(event);
-        return res.status(201).send("Evento creado con exito");
+      let saveGenre = await Genre.findOne({
+        where: { name: genre.toLowerCase() },
+      });
+      if (saveGenre) {
+        const event = await Event.findOrCreate({
+          where: {
+            name: name,
+            artist: artist,
+            address: address,
+            genreId: saveGenre.id,
+            schedule: schedule,
+            map: map,
+            performerImage: performerImage,
+            placeImage: placeImage,
+            description: description,
+          },
+        });
+        if (event) {
+          return res.status(201).json({ message: "Evento creado con exito" });
+        } else {
+          return res.status(404).json({ error: "No se puedo crear el evento" });
+        }
       } else {
-        return res.status(404).send("Hubo un error en la creacion del evento");
+        return res
+          .status(404)
+          .json({ error: "No se puedo crear el genero para el evento" });
       }
     }
-  } catch (err) {
-    return res.status(404).send(err);
+  } catch (error) {
+    return res.status(404).json({ error: error.message });
   }
 }
 
@@ -165,8 +172,8 @@ async function putEvents(req, res) {
         return res.send(event);
       }
     }
-  } catch (err) {
-    return res.status(404).send(err);
+  } catch (error) {
+    return res.status(404).json({ error: error.message });
   }
 }
 async function deleteEvent(req, res) {
@@ -174,19 +181,21 @@ async function deleteEvent(req, res) {
     const { id } = req.body; //req.params.id
     const event = await Event.findByPk(id);
     if (!id) {
-      return res.status(404).send("El ID solicitado no existe");
+      return res.status(404).json({ error: "El ID solicitado no existe" });
     }
     if (!event) {
-      return res
-        .status(404)
-        .send("No se a encontrado un Evento que corresponda a lo solicitado");
+      return res.status(404).json({
+        error: "No se a encontrado un Evento que corresponda a lo solicitado",
+      });
     }
     const destoyed = await event.destroy();
     if (destoyed) {
-      return res.status(201).send("El evento a sido eliminado con exito");
+      return res
+        .status(201)
+        .json({ message: "El evento a sido eliminado con exito" });
     }
-  } catch (err) {
-    return res.status(404).send(err);
+  } catch (error) {
+    return res.status(404).json({ error: error.message });
   }
 }
 
