@@ -2,13 +2,33 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100vh;
     width:100vw;
     align-items: center;
-    background-color: aquamarine;
+    background: url(../../img/bk.jpg);
 }
 .eventcontainer{
     display: flex;
     justify-content: space-around;
+    background-color: aqua;
 
+}
+.bigcontainer{
+    display: flex;
+    flex-wrap: wrap;
+    width: 50vw;
+    background-color: blueviolet;
+    justify-content: space-evenly;
+}
+.litlecontainer{
+    display: flex;
+    flex-wrap: wrap;
+    width: 50vw;
+    background-color: brown;
+    justify-content: space-evenly;
+}
+.midcontainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 }
