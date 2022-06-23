@@ -42,14 +42,14 @@ function reducers(state = initialState, {type, payload}) {
     
      case "GET_EVENT_BY_NAME":{
       
-      // const bigEvents = payload.filter(eve => eve.isBigEvent === true)
-      // console.log(big)
-      // const smallEvents = payload.filter(eve => eve.isBigEvent === false)
+      const bigEvents = payload.filter(e => e.venue.isBigEvent === true)
+      console.log(payload)
+      const smallEvents = payload.filter(e => e.venue.isBigEvent === false)
 
       return{
         ...state,
-        BigEvents: payload,
-        Events: payload
+        BigEvents: bigEvents,
+        Events: smallEvents
 
  
       }
