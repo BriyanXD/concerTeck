@@ -1,0 +1,57 @@
+{
+    "Venues": [
+        {
+            "name": "Luna Park",
+            "address": "Av. Eduardo Madero 470, CABA",
+            "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.079297213908!2d-58.37060498494778!3d-34.602156280459944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a335325f19f9a3%3A0xfd34b93fba734a98!2sLuna%20Park!5e0!3m2!1ses!2sar!4v1655748286338!5m2!1ses!2sar",
+            "maxStockStreaming": 5000,
+            "maxStockVIP": 200,
+            "maxStockGeneralLateral": 5000,
+            "maxStockGeneral": 11000,
+            "maxStockPalco": 0,
+            "isBigEvent": true
+        },
+        {
+            "name": "Estadio Monumental",
+            "address": "Av. Pres. Figueroa Alcorta 7597, CABA",
+            "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3286.3257724032214!2d-58.449774899999994!3d-34.5453062!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb43ae6018ddf%3A0x3d7f60a75bfa308a!2sEstadio%20Monumental%20Antonio%20Vespucio%20Liberti!5e0!3m2!1ses!2sar!4v1655748621752!5m2!1ses!2sar",
+            "maxStockStreaming": 15000,
+            "maxStockVIP": 5000,
+            "maxStockGeneralLateral": 25000,
+            "maxStockGeneral": 50000,
+            "maxStockPalco": 0,
+            "isBigEvent": true
+        },
+        {
+            "name": "Teatro Colón",
+            "address": "Cerrito 628, CABA",
+            "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.1234153060627!2d-58.383078600000005!3d-34.6010406!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccac630121623%3A0x53386f2ac88991a9!2sTeatro%20Col%C3%B3n!5e0!3m2!1ses!2sar!4v1655748724613!5m2!1ses!2sar",
+            "maxStockStreaming": 3000,
+            "maxStockVIP": 0,
+            "maxStockGeneralLateral": 500,
+            "maxStockGeneral": 8000,
+            "maxStockPalco": 500,
+            "isBigEvent": true
+        },
+        {
+            "name": "Teatro de Flores",
+            "address": "Av. Rivadavia 7806, CABA",
+            "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.8816050778278!2d-58.47463510000001!3d-34.632432099999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcc990290a5895%3A0x3bce05eaa2070c9d!2sEl%20Teatro%20Flores!5e0!3m2!1ses!2sar!4v1655748452285!5m2!1ses!2sar",
+            "maxStockStreaming": 3000,
+            "maxStockVIP": 50,
+            "maxStockGeneralLateral": 200,
+            "maxStockGeneral": 2000,
+            "maxStockPalco": 0
+        },
+        {
+            "name": "La Trastienda",
+            "address": "Balcarce 460, C1064 CABA",
+            "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.6459899171746!2d-58.370474!3d-34.6131123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a3352ab8cb957f%3A0xa593c52c61dd7353!2sLa%20Trastienda!5e0!3m2!1ses!2sar!4v1655748544114!5m2!1ses!2sar",
+            "maxStockStreaming": 2000,
+            "maxStockVIP": 50,
+            "maxStockGeneralLateral": 0,
+            "maxStockGeneral": 700,
+            "maxStockPalco": 0
+        }
+    ]
+}

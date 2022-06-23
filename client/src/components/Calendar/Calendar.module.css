@@ -1,0 +1,18 @@
+.calendar{
+    background-color: dimgray;
+    border: 1px solid  black;
+    height: 520px;
+    width: 600px;
+    border-radius: 3px;
+}
+
+.fc .fc-col-header-cell-cushion {
+    display: inline-block;
+    padding: 10px 10px;
+    
+}
+
+.fc .fc-col-header-cell-cushion { /* needs to be same precedence */
+    padding-top: 2px; /* an override! */
+    padding-bottom: 2px; /* an override! */
+  }

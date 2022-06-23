@@ -18,24 +18,8 @@ const Events = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    address: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    isBigEvent: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
-    /* genre: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    }, */
     schedule: {
       type: DataTypes.DATE,
-      allowNull: false,
-    },
-    map: {
-      type: DataTypes.TEXT,
       allowNull: false,
     },
     performerImage: {
@@ -48,21 +32,6 @@ const Events = sequelize.define(
     },
     description: {
       type: DataTypes.TEXT,
-    },
-    stockStreaming: {
-      type: DataTypes.INTEGER,
-    },
-    stockVIP: {
-      type: DataTypes.INTEGER,
-    },
-    stockGeneralLateral: {
-      type: DataTypes.INTEGER,
-    },
-    stockGeneral: {
-      type: DataTypes.INTEGER,
-    },
-    stockPalco: {
-      type: DataTypes.INTEGER,
     },
   },
   { timestamps: false }
