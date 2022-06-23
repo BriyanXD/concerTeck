@@ -17,7 +17,7 @@ export default function NavBar({setCurrenPag,setCurrentPage}) {
       </div>
       <div className={style.containerGenreAndSearch}>
        <Genre setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage}/>
-       <SearchBar/>
+       <SearchBar setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage}/>
        <Date setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage}/>
       </div>
       <div>
