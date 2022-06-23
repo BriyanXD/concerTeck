@@ -25,7 +25,11 @@ async function chargeEvents() {
             stockId: event.stockId,
             /* isBigEvent: event.isBigEvent === true ? true : false, */
           },
-        });
+        })
+          .then((response) => {})
+          .catch((error) => {
+            console.log(error.message);
+          });
       } else {
         console.log("id o nombre no encontrados");
       }
@@ -107,6 +111,10 @@ async function postEvents(req, res) {
     ) {
       return res.status(404).send("Faltan datos obligatorios");
     } else {
+      if (!Number.isInteger(venueId))
+        return res.status(400).json({ error: "venueId debe ser un numero" });
+      if (!Number.isInteger(stockId))
+        return res.status(400).json({ error: "stockId debe ser un numero" });
       await Genre.findOrCreate({
         where: { name: genre.toLowerCase() },
       });
@@ -114,7 +122,7 @@ async function postEvents(req, res) {
         where: { name: genre.toLowerCase() },
       });
       if (saveGenre) {
-        const event = await Event.findOrCreate({
+        await Event.findOrCreate({
           where: {
             name: name,
             artist: artist,
@@ -126,12 +134,15 @@ async function postEvents(req, res) {
             venueId: venueId,
             stockId: stockId,
           },
-        });
-        if (event) {
-          return res.status(201).json({ message: "Evento creado con exito" });
-        } else {
-          return res.status(404).json({ error: "No se puedo crear el evento" });
-        }
+        })
+          .then((response) => {
+            return res.status(201).json({ message: "Evento creado con exito" });
+          })
+          .catch((error) => {
+            return res
+              .status(404)
+              .json({ error: "No se puedo crear el evento" });
+          });
       } else {
         return res
           .status(404)
@@ -154,7 +165,6 @@ async function putEvents(req, res) {
       performerImage,
       placeImage,
       description,
-      producerId,
       venueId,
       stockId,
     } = req.body;
@@ -169,7 +179,6 @@ async function putEvents(req, res) {
           performerImage: performerImage,
           placeImage: placeImage,
           description: description,
-          producerId: producerId,
           venueId: venueId,
           stockId: stockId,
         },
