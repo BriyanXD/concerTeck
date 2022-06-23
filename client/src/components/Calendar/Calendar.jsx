@@ -15,6 +15,8 @@ export default function Calendar() {
 
 
 function handleDateClick(arg){ 
+    // alert('Date: ' + arg.dateStr)
+    // alert('Coordinates: ' + arg.jsEvent.pageX + ',' + arg.jsEvent.pageY)
     alert('Date: ' + arg.dateStr)
 }
 
