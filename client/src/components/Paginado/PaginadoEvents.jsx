@@ -12,11 +12,11 @@ export default function PaginadoEvents({allSmallEventsPagination, eventPerPage, 
     }
 
     return(
-        <div>
+        <div className={style.pagination}>
             {
                 pageNumber && pageNumber.map(n =>{
                     return <button className={style.button} key = {n} 
-                    onClick = {() => pagination2(n)}>{n}</button>
+                    onClick = {() => pagination2(n)}></button>
                 })
             }
         </div>
