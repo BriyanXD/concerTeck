@@ -18,6 +18,6 @@
 }
 
 .fc .fc-col-header-cell-cushion { /* needs to be same precedence */
-    padding-top: 2px; /* an override! */
-    padding-bottom: 2px; /* an override! */
+    padding-top: 10px; /* an override! */
+    padding-bottom: 10px; /* an override! */
   }
