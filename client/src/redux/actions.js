@@ -64,7 +64,7 @@ export function register (user,value) {
 export function LoginUser (value){
     return async function (dispatch){
         try{
-            const getUser = await axios.get("http://localhost:3001/api/login", value);
+            const getUser = await axios.get("http://localhost:3001/api/user", value);
             return dispatch({
                 type: "LOGIN_USER",
                 payload: getUser.data,
