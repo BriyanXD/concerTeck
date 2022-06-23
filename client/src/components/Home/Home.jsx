@@ -51,7 +51,7 @@ const pagination2 = (numberPage2) =>{
       <Carrousel/>
       <div className={style.eventcontainer}>
         <div className={style.midcontainer}>
-        <PaginadoBigEvents
+        <PaginadoBigEvents 
           eventsPerPag = {eventsPerPag}
           allEventsPagination = {allEventsPagination.length}
           pagination = {pagination}
