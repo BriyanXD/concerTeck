@@ -7,6 +7,7 @@ const initialState = {
   BigEvents:[],
   Events:[],
   // Genres:[],
+  Pagination: []
 };
 
 function reducers(state = initialState, {type, payload}) {
