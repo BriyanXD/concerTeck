@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useParams, useNavigate } from 'react-router-dom';
 import style from './RegisterUser.module.css';
 import { register } from '../../redux/actions';
 
 export default function RegisterUser () {
     const { usuario } = useParams();
+    const navigate = useNavigate()
     console.log(usuario)
     const dispatch = useDispatch()
-
     //Estado local que maneja la información del usuario a registrar
     const [user, setUser] = useState({
         name:"",
@@ -383,6 +383,7 @@ export default function RegisterUser () {
                 <button>Registrarse con Google</button>
                 <button>Registrarse con Facebook</button>
             </div>
+            <button onClick={() => navigate('/login')}>Volver</button>
         </div>
     )
 }
