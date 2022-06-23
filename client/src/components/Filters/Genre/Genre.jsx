@@ -17,18 +17,18 @@ export default function Genre() {
     <div>
       <select onChange={e =>{ HandleFilterByGenres(e)}} className={style.selectGenre} name="" id="">
         <option value='all' >Generos</option>
-        <option value="Rock">Rock</option>
-        <option value="Reggae">Reggae</option>
-        <option value="Hip Hop">Hip Hop</option>
-        <option value="Rap">Rap</option>
-        <option value="Clasica">Clasica</option>
-        <option value="Metal">Metal</option>
-        <option value="Reggaeton">Reggaeton</option>
-        <option value="Pop">Pop</option>
-        <option value="Electronica">Electronica</option>
-        <option value="Jazz">Jazz</option>
-        <option value="Trap">Trap</option>
-        <option value="Otros">Otros</option>
+        <option value="1">Trap</option>
+        <option value="2">Rock</option>
+        <option value="3">Pop</option>
+        <option value="4">Jazz</option>
+        <option value="5">Electronica</option>
+        <option value="6">Reggaeton</option>
+        <option value="7">Metal</option>
+        <option value="8">Clasica</option>
+        <option value="9">Rap</option>
+        <option value="10">Hip Hop</option>
+        <option value="11">Reggae</option>
+        <option value="12">Otros</option>
       </select>
     </div>
   )
