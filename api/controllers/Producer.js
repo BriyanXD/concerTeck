@@ -48,18 +48,18 @@ async function createProducer(req, res) {
   }
 }
 async function getProducer(req, res) {
-  const { username, password } = req.body;
+  /* const { username, password } = req.body; */
   try {
     const DBproducer = await Producer.findAll({
       include: { model: Events, attributes: ["id", "name", "schedule"] },
     });
-    if (username && password) {
+    /*  if (username && password) {
       const producerFound = DBproducer.find((producer) => {
         if (producer.username === username && producer.password === password)
           return producer;
       });
       return res.send(producerFound);
-    }
+    } */
     return res.send(DBproducer);
   } catch (error) {
     return res.status(404).send({ error: error.message });
@@ -75,24 +75,28 @@ async function putProducer(req, res) {
         .status(404)
         .send("No se recibieron los parámetros necesarios para actualizar");
     } else {
-      const upload = await Producer.findByPk(id);
-      if (upload) {
-        const producer = await Producer.update(
-          {
-            cuit_cuil: cuit_cuil,
-            email: email,
-            cbu: cbu,
-            telephone: telephone,
-            company: company,
+      await Producer.update(
+        {
+          cuit_cuil: cuit_cuil,
+          email: email,
+          cbu: cbu,
+          telephone: telephone,
+          company: company,
+        },
+        {
+          where: {
+            id: id,
           },
-          {
-            where: {
-              id: id,
-            },
-          }
-        );
-        res.send("Campos actualizados con exito");
-      }
+        }
+      )
+        .then((response) => {
+          Producer.findByPk(id).then((resp) => {
+            res.json({ message: "Campos actualizados con exito", resp });
+          });
+        })
+        .catch((error) => {
+          res.status(400).json({ error: "Error al actualizar los campos" });
+        });
     }
   } catch (error) {
     res.status(404).send(error);
@@ -103,21 +107,22 @@ async function deleteProducer(req, res) {
     const { id } = req.body; //req.params.id
     const producer = await Producer.findByPk(id);
     if (!id) {
-      return res.status(404).send("El ID solicitado no existe");
+      return res.status(404).json({ error: "El ID solicitado no existe" });
     }
     if (!Producer) {
-      return res
-        .status(404)
-        .send(
-          "No se a encontrado un Productor/ra que corresponda a lo solicitado"
-        );
+      return res.status(404).json({
+        error:
+          "No se a encontrado un Productor/ra que corresponda a lo solicitado",
+      });
     }
     const destoyed = await producer.destroy();
     if (destoyed) {
-      return res.status(201).send("El Productor/ra a sido eliminado con exito");
+      return res
+        .status(201)
+        .json({ message: "El Productor/ra a sido eliminado con exito" });
     }
-  } catch (err) {
-    return res.status(404).send(err);
+  } catch (error) {
+    return res.status(404).json({ error: message.error });
   }
 }
 module.exports = {
