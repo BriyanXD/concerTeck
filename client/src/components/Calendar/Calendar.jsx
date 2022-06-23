@@ -16,13 +16,17 @@ export default function Calendar() {
 
 function handleDateClick(arg){ 
     alert('Date: ' + arg.dateStr)
+    alert('Coordinates: ' + arg.jsEvent.pageX + ',' + arg.jsEvent.pageY);
+    alert('View: ' + arg.view.type);
+
+
 }
 
       return (
         <div className={s.calendar}>
         {
             AllEvents?.map((e)=>{
-                events.push({title:e.name, date:e.schedule.split('T')[0]})
+                events.push({title:e.name, date:e.schedule.split('T')[0], })
             })
             
         }

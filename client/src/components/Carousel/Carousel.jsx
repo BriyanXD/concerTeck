@@ -11,7 +11,7 @@ const {AllBigEvents} = useSelector(state => state)
     <div className={style.container}>
         <Carousel autoPlay={true} infiniteLoop={true} showArrows={true} dynamicHeight={true} showThumbs={false}  centerMode={true}>
             {
-              AllBigEvents?.map(e => {return(
+              AllBigEvents?.map((e) => {return(
                 <div>
                   <img className={style.img} alt='' src={e.performerImage}/>
                   <p className={styles.legend}> {e.artist} </p>

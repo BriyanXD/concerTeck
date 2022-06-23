@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-
 import NavBar from '../NavBar/NavBar'
 import Footer from '../Footer/Footer'
 import style from './Home.module.css'
@@ -25,6 +24,7 @@ export default function Home() {
   const indexFirstEvent = indexLastEvent - eventsPerPag
   const currentBigEvents = allEventsPagination.slice(indexFirstEvent, indexLastEvent)
 
+
   const allSmallEventsPagination = useSelector((state) => {return state.Events})
   const [currentpage, setCurrentPage] = useState(1)
   const [eventPerPage, setEventPerPage] = useState(4)
@@ -47,11 +47,11 @@ const pagination2 = (numberPage2) =>{
 
   return (
     <div className={style.container}>
-      <NavBar/>
+      <NavBar setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage}/>
       <Carrousel/>
       <div className={style.eventcontainer}>
         <div className={style.midcontainer}>
-        <PaginadoBigEvents
+        <PaginadoBigEvents 
           eventsPerPag = {eventsPerPag}
           allEventsPagination = {allEventsPagination.length}
           pagination = {pagination}
@@ -60,7 +60,7 @@ const pagination2 = (numberPage2) =>{
           {currentBigEvents?.map(el => {
           return(
           <div key={el.id}>
-          <Link to= {`/${el.id}`}>
+          <Link style={{textDecoration:'none'}} to= {`/${el.id}`}>
           <CardBigEvent name={el.name} genre={el.genre} image={el.performerImage} schedule={el.schedule}/>
           </Link>
         
@@ -73,13 +73,13 @@ const pagination2 = (numberPage2) =>{
         <PaginadoEvents
           eventPerPage = {eventPerPage}
           allSmallEventsPagination = {allSmallEventsPagination.length}
-          pagination = {pagination2}/>
+          pagination2 = {pagination2}/>
           <div className={style.litlecontainer}>
           {currentEvents?.map(el => {
           return(
           <div key={el.id}>
             
-          <Link to= {`/${el.id}`}>
+          <Link style={{textDecoration:'none'}} to= {`/${el.id}`}>
           <CardEvent name={el.name} genre={el.genre} image={el.performerImage} schedule={el.schedule}/>
           </Link>
           </div>
