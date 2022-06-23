@@ -13,7 +13,7 @@ const {AllBigEvents} = useSelector(state => state)
             {
               AllBigEvents?.map(e => {return(
                 <div>
-                  <img className={style.img} alt='' src={e.placeImage}/>
+                  <img className={style.img} alt='' src={e.performerImage}/>
                   <p className={styles.legend}> {e.artist} </p>
                 </div>
               )})
