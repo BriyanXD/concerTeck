@@ -3,14 +3,16 @@ import { useDispatch} from 'react-redux';
 import { filterByGenres } from '../../../redux/actions';
 import style from './Genre.module.css';
 
-export default function Genre() {
+export default function Genre({setCurrenPag,setCurrentPage}) {
   const dispatch = useDispatch()
   const [genre, setGenre] = useState("")
   
   const HandleFilterByGenres = (e) =>  {
     e.preventDefault()
     dispatch(filterByGenres(e.target.value))
-    setGenre(`${e.target.value}`);
+    setGenre(`${e.target.value}`)
+    setCurrenPag(1)
+    setCurrentPage(1)
   }
 
   return (
