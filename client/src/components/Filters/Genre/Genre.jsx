@@ -7,7 +7,8 @@ import { useSelector } from 'react-redux';
 export default function Genre({setCurrenPag,setCurrentPage}) {
   const dispatch = useDispatch()
   const [genre, setGenre] = useState("")
-  const {Genres} = useSelector(state => state);
+  // const {Genres} = useSelector(state => state);
+  // const {AllEvents} = useSelector(state => state);
   
   const HandleFilterByGenres = (e) =>  {
     e.preventDefault()
@@ -22,8 +23,8 @@ export default function Genre({setCurrenPag,setCurrentPage}) {
       <select onChange={e =>{ HandleFilterByGenres(e)}} className={style.selectGenre} name="" id="">
         <option value='all' >Generos</option>
         {/* {
-          Genres.map(e => {return(
-            <option value={e.id}>{e.name}</option>
+          AllEvents.map(e => {return(
+            <option value={e.genreId}>{e.genreId}</option>
           )})
         } */}
         <option value="1">Trap</option>

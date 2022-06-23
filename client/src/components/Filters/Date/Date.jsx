@@ -15,10 +15,10 @@ export default function Date(setCurrenPag,setCurrentPage) {
   }
   return (
        <div>
-            <label htmlFor="">Ordenado Por Fecha</label><br/>
             <select name="" id="" onChange={e =>{ handleOrderByReleased(e)}}>
-                <option value="asc">Orden Ascendente</option>
-                <option value='des'>Orden Descendente</option>
+                <option>Orden Por Fecha</option>
+                <option value="asc">Eventos más Proximos</option>
+                <option value='des'>Ultimos Eventos</option>
             </select> 
         </div> 
       
