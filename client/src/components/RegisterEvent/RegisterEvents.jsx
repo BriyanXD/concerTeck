@@ -2,13 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //import style from './RegisterUser.module.css';
-import { CreateEvent, GetGenres } from '../../redux/actions';
+import { CreateEvent, GetGenres, CreateGenre } from '../../redux/actions';
 
 
 export default function RegisterEvent(){
     const dispatch = useDispatch()
     //const [image, setImage] = useState("")
     const genres = useSelector((state)=> state.Genres);
+    const [postGenre, setPostGenre] = useState({
+        name: ""
+    })
     const [event, setEvent] = useState({
         name: "",
         artist: "",
@@ -42,6 +45,13 @@ export default function RegisterEvent(){
         setEvent({
             ...event,
             [e.target.name]: e.target.value
+        })
+    };
+
+    const handleGenreSubmit = (e) => {
+        dispatch(CreateGenre(postGenre));
+        setPostGenre({
+            name:""
         })
     };
 
@@ -337,7 +347,7 @@ export default function RegisterEvent(){
             </div> */}
 
             <div>
-                <label>Seleccionar Genero: </label>
+                <label>Seleccionar genero existente: </label>
                 <div>
                     {genres.map((typeGenre, index) => (
                         <> <input
@@ -351,6 +361,12 @@ export default function RegisterEvent(){
                         /> <label htmlFor={typeGenre.name}>{typeGenre.name}</label> <br/> </>
                     ))}
                     {errors.genre && <label>{errors.genre}</label>}
+                </div>
+                <div>
+                    <form onSubmit={handleGenreSubmit}>
+                        <div> <input name="genre" value={typeGenre.name} onChange={(e)=>handleCheck(e)} onBlur={handleBlur} type="text" placeholder="Nuevo genero"/> {errors.genre && <label>{errors.genre}</label>}</div>
+                        <button type="submit">Crear genero</button>
+                    </form>
                 </div>
             </div>
 
