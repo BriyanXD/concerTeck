@@ -7,7 +7,7 @@ const initialState = {
   // TodosEvents:[],
   BigEvents:[],
   Events:[],
-  // Genres:[],
+  Genres:[],
 };
 
 function reducers(state = initialState, {type, payload}) {
@@ -29,7 +29,13 @@ function reducers(state = initialState, {type, payload}) {
         BigEvents: BigE,
         AllLitleEvents:Eve,
         Events: Eve,
-        
+      }
+      case 'GET_GENRES':{
+        console.log(payload)
+        return{
+          ...state,
+          Genres:payload
+        }
       }
     
     // case "GET_EVENT_BY_NAME":{
