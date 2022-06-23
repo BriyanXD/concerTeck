@@ -1,22 +1,19 @@
 
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-//import style from './RegisterUser.module.css';
+//import style from './RegisterEvent.module.css';
 import { CreateEvent, GetGenres, CreateGenre, GetVenues } from '../../redux/actions';
-
-//       name,
-//       artist,
-//       genre,
-//       schedule,
-//       performerImage,
-//       placeImage,
-//       description,
-//       venueId,
-//       stockId,
+import { Link } from "react-router-dom";
+//import { LocalizationProvider } from '@mui/x-date-pickers';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { Stack, TextField } from '@mui/material';
+//import { DateTimePicker } from '@mui/x-date-pickers';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 
 export default function RegisterEvent(){
-    const dispatch = useDispatch()
-    //const [image, setImage] = useState("")
+    const dispatch = useDispatch();
+    const [dateTime, setDateTime] = useState(null)
     const genres = useSelector((state)=> state.Genres);
     const venues = useSelector((state) => state.Venues);
     const [postGenre, setPostGenre] = useState({
@@ -25,24 +22,24 @@ export default function RegisterEvent(){
     const [event, setEvent] = useState({
         name: "",
         artist: "",
-        genre: null,
+        genre: "",
         schedule: "",
         performerImage: "",
         placeImage: "",
         description: "",
-        venueId: null,
+        venueId: 0,
 //      stockId: "",
     })
 
     const [errors, setErrors] = useState({
         name: "",
         artist: "",
-        genre: null,
+        genre: "",
         schedule: "",
         performerImage: "",
         placeImage: "",
         description: "",
-        venueId: null,
+        venueId: 0,
 //      stockId: "",
     })
 
@@ -69,31 +66,31 @@ export default function RegisterEvent(){
         e.preventDefault();
         if( errors.name !== "" ||
         errors.artist !== "" ||
-        //errors.genre !== [] ||
+        errors.genre !== "" ||
         errors.schedule !== "" ||
         errors.performerImage !== "" ||
         errors.placeImage !== "" ||
-        errors.description !== "" ){
-        //errors.venueId !== [] ){
+        errors.description !== "" ||
+        errors.venueId !== 0 ){
             alert("Para poder registrar el Evento deben solucionarse los errores");
         }
         if ( event.name !== "" ||
         event.artist !== "" ||
-        //event.genre !== [] ||
+        event.genre !== "" ||
         event.schedule !== "" ||
         event.performerImage !== "" ||
         event.placeImage !== "" ||
-        event.description !== ""){
-        //errors.venueId !== [] ){
+        event.description !== "" ||
+        errors.venueId !== 0 ){
             setErrors({
                 name: event.name === "" ? "Ingrese el nombre del Evento" : "",
                 artist: event.artist === "" ? "Ingrese el nombre del artista del Evento" : "",
-                //genre: event.genre === [] ? "Ingrese el genero del Evento" : event.genre.length > 1 ? "El Evento solo deve pertenecer a un solo genero" : "",
+                genre: event.genre === "" ? "Ingrese el genero del Evento" : "",
                 schedule: event.schedule === "" ? "Ingrese la fecha y hora del Evento" : "",
                 performerImage: event.performerImage === "" ? "Ingrese la imagen del artista" : "",
                 placeImage: event.placeImage === "" ? "Ingrese la imagen del lugar del Evento" : "",
                 description: "",
-                //venueId: event.venueId === [] ? "Ingrese el lugar del evento" : event.venueId.length > 1 ? "El Evento no puede pertenecer a mas de un lugar" : ""
+                venueId: event.venueId === 0 ? "Ingrese el lugar del evento" : 0
             });
             return
         }
@@ -102,14 +99,15 @@ export default function RegisterEvent(){
         setEvent({
             name: "",
             artist: "",
-            genre: null,
+            genre: "",
             schedule: "",
             performerImage: "",
             placeImage: "",
             description: "",
-            venueId: null,
+            venueId: 0,
     //      stockId: "",
         });
+        //history.push("/home")
     };
 
     const handleBlur = (e) => {
@@ -155,24 +153,19 @@ export default function RegisterEvent(){
         }
 
         //validar genero
-        // if(e.target.name === "genre"){
-        //     if(event.genre.length === 0){
-        //         setErrors({
-        //             ...errors,
-        //             [e.target.name]: "Ingrese el genero del Evento"
-        //         })
-        //     }else if (event.genre.length > 1){
-        //         setErrors({
-        //             ...errors,
-        //             [e.target.name]: "El Evento solo deve pertenecer a un solo genero"
-        //         })
-        //     } else {
-        //         setErrors({
-        //             ...errors,
-        //             [e.target.name]: ""
-        //         })
-        //     }    
-        // }
+        if(e.target.name === "genre"){
+            if(e.target.value === ""){
+                setErrors({
+                    ...errors,
+                    [e.target.name]: "Ingrese el genero del Evento"
+                })
+            } else {
+                setErrors({
+                    ...errors,
+                    [e.target.name]: ""
+                })
+            }    
+        }
 
         //validar fecha/calendario
         if(e.target.name === "schedule"){
@@ -235,24 +228,19 @@ export default function RegisterEvent(){
         }
 
         //validar Lugar/Venue
-        // if(e.target.name === "venueId"){
-        //     if(event.venueId.length === 0){
-        //         setErrors({
-        //             ...errors,
-        //             [e.target.name]: "Ingrese el lugar del evento"
-        //         })
-        //     }else if (event.venueId.length > 1){
-        //         setErrors({
-        //             ...errors,
-        //             [e.target.name]: "El Evento no puede pertenecer a mas de un lugar"
-        //         })
-        //     } else {
-        //         setErrors({
-        //             ...errors,
-        //             [e.target.name]: ""
-        //         })
-        //     }    
-        // }
+        if(e.target.name === "venueId"){
+            if(e.target.value === 0){
+                setErrors({
+                    ...errors,
+                    [e.target.name]: "Ingrese el lugar del evento"
+                })
+            } else {
+                setErrors({
+                    ...errors,
+                    [e.target.name]: ""
+                })
+            }    
+        }
     };
 
     function handleCheck(e){
@@ -284,14 +272,14 @@ export default function RegisterEvent(){
     function handleVenueSelect(e){
         setEvent({
             ...event,
-            venueId:event.venueId
+            venueId: e.target.value //event.venueId
         })
     };
 
     function handleGenreSelect(e){
         setEvent({
             ...event,
-            genre:event.genre
+            genre: e.target.value //event.genre
         })
     };
 
@@ -306,44 +294,32 @@ export default function RegisterEvent(){
     console.log(event)
 
     return (<div>
-        <h2>Crear Evento</h2>
+        <Link to='/'><button >Go home</button></Link>
+        <div><h2>Crear Evento</h2></div>
         <form onSubmit={handleSubmit}>
             <div> <input name="name" value={event.name}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Nombre" /> {errors.name && <label>{errors.name}</label>}</div>
             <div> <input name="artist" value={event.artist}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Artista" /> {errors.artist && <label>{errors.artist}</label>}</div>
-
-            {/* <div>
-                <label>Seleccionar genero existente: </label>
-                <div>
-                    {genres.map((typeGenre, index) => (
-                        <> <input
-                            key={index}
-                            type="checkbox"
-                            name="genre"
-                            id={typeGenre.name}
-                            value={typeGenre.name}
-                            onChange={(e)=>handleCheck(e)}
-                            onBlur={handleBlur}
-                        /> <label htmlFor={typeGenre.name}>{typeGenre.name}</label> <br/> </>
-                    ))}
-                </div>
-                    {errors.genre && <label>{errors.genre}</label>}
-                <div>
-                    <form onSubmit={handleGenreSubmit}>
-                        <div> <input name="name" value={event.genre} onChange={(e)=>handleCheck(e)} onBlur={handleBlur} type="text" placeholder="Nuevo genero"/> {errors.genre && <label>{errors.genre}</label>}</div>
-                        <button type="submit">Crear genero</button>
-                    </form>
-                </div>
-            </div> */}
 
             <div>
                 <label>Seleccionar genero existente: </label>
                 <select onChange={handleGenreSelect}>
                     {genres.map(g =>(<option key={g.id} value={g.name}>{g.name}</option>))}
                 </select>
-                {/* {errors.genre && <label>{errors.genre}</label>} */}
+                {errors.genre && <label>{errors.genre}</label>}
             </div>
             
             <div> <input name="schedule" value={event.schedule}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Hora y Fecha" /> {errors.schedule && <label>{errors.schedule}</label>}</div>
+            <div>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <Stack spacing={4} sx={{ width: '250px'}}/>
+            <DateTimePicker
+                //label='Date Time Picker'
+                renderInput={(params) => <TextField {...params}/>}
+                value={dateTime}
+                onChange={(e)=>{setDateTime(e)}}
+            /> </LocalizationProvider>
+            </div>
+
             <div> <input id="performerImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del artista" /> {errors.performerImage && <label>{errors.performerImage}</label>}</div>
             <div> <input id="placeImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del lugar" /> {errors.placeImage && <label>{errors.placeImage}</label>}</div>
             <div> <input name="description" value={event.description}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Descripcion" /> {errors.description && <label>{errors.description}</label>}</div>
@@ -351,9 +327,9 @@ export default function RegisterEvent(){
             <div>
                 <label>Seleccionar lugar del evento: </label>
                 <select onChange={handleVenueSelect}>
-                    {venues.map(v =>(<option key={v.id} value={v.name}>{v.name}</option>))}
+                    {venues.map(v =>(<option key={v.id} value={v.id}>{v.name}</option>))}
                 </select>
-                {/* {errors.venueId && <label>{errors.venueId}</label>} */}
+                {errors.venueId && <label>{errors.venueId}</label>}
             </div>
             
             <button type="submit">Crear</button>
