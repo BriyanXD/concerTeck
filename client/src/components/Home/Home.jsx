@@ -73,7 +73,7 @@ const pagination2 = (numberPage2) =>{
         <PaginadoEvents
           eventPerPage = {eventPerPage}
           allSmallEventsPagination = {allSmallEventsPagination.length}
-          pagination = {pagination2}/>
+          pagination2 = {pagination2}/>
           <div className={style.litlecontainer}>
           {currentEvents?.map(el => {
           return(
