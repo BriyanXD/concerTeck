@@ -69,6 +69,32 @@ export function GetGenres (){
     }
 }
 
+export function CreateGenre (value){
+    return async function (dispatch){
+        try{
+            const creation = await axios.post(`http://localhost:3001/api/genres`, value)
+            return creation;
+        }catch(error){
+            console.log(error.message);
+        }
+    }
+}
+
+
+export function GetVenues (){
+    return async function(dispatch){
+        try{
+            const venues = await axios.get("http://localhost:3001/api/venues")
+            return dispatch({
+                type:'GET_VENUES',
+                payload: venues.data
+            })
+        }catch(error){
+            console.log(error.message);
+        }
+    }
+}
+
 export function ClearDetail (){
     return function (){
         return { type:'CLEAR_DETAIL'}
