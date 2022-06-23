@@ -13,11 +13,11 @@ export default function PaginadoBigEvents({allEventsPagination, eventsPerPag, pa
     }
 
     return(
-        <div>
+        <div className={style.pagination}>
             {
                 pageNumber && pageNumber.map(n =>{
                     return <button className={style.button} key = {n} 
-                    onClick = {() => pagination(n)}>{n}</button>
+                    onClick = {() => pagination(n)}></button>
                 })
             }
         </div>

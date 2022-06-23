@@ -10,20 +10,20 @@
     display: flex;
     justify-content: space-around;
     
+    
 
 }
 .bigcontainer{
     display: flex;
     flex-wrap: wrap;
     width: 50vw;
-   
+    
     justify-content: space-evenly;
 }
 .litlecontainer{
     display: flex;
     flex-wrap: wrap;
     width: 50vw;
-  
     justify-content: space-evenly;
 }
 .midcontainer{
@@ -31,4 +31,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+}
+.pagination{
+    margin-top: 3%;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    
 }
