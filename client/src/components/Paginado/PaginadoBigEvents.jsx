@@ -6,8 +6,8 @@ export default function PaginadoBigEvents({allEventsPagination, eventsPerPag, pa
 
     const pageNumber = []
 
-    for (let i = 0; i <= Math.ceil(allEventsPagination/eventsPerPag); i++) {
-        pageNumber.push(i+1)
+    for (let i = 1; i <= Math.ceil(allEventsPagination/eventsPerPag); i++) {
+        pageNumber.push(i)
         
     }
 

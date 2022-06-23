@@ -5,15 +5,15 @@ export default function Contact() {
   return (
     <div className={style.containerContact}>
       <form action='https://formsubmit.co/concerteck@gmail.com' method='POST'>
-      <label>Nombre o Razón Social:  <input name='name' type='text'/></label>
+      <label className={style.labelNameContact}>Nombre o Razón Social:  <input name='name' className={style.nameContact} type='text'/></label>
       <br/>
-      <label>Mail: <input name='email' type='email' /></label>
+      <label className={style.labelMailContact}>Mail: <input name='email' className={style.mailContact} type='email' /></label>
       <br/>
-      <label>Teléfono: <input name='telephone' type='number'/></label>
+      <label className={style.labelPhoneContact}>Teléfono: <input name='telephone' className={style.phoneContact} type='text'/></label>
       <br/>
-      <label>Motivo de Contacto <textarea name='message' type='message' className={style.textarea} rows='5' cols='50'></textarea></label>
       <br />
-      <button type='submit'>Enviar</button>
+      <label className={style.labelReasonContact}>Motivo de Contacto: <textarea name='message' className={style.reasonContact} type='message'  rows='5' cols='50'></textarea></label>
+      <button type='submit' className={style.btnSend}>Enviar</button>
       </form>
     </div>
   )
