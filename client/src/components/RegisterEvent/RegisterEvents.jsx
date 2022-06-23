@@ -2,43 +2,53 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //import style from './RegisterUser.module.css';
-import { CreateEvent, GetGenres, CreateGenre } from '../../redux/actions';
+import { CreateEvent, GetGenres, CreateGenre, GetVenues } from '../../redux/actions';
 
+//       name,
+//       artist,
+//       genre,
+//       schedule,
+//       performerImage,
+//       placeImage,
+//       description,
+//       venueId,
+//       stockId,
 
 export default function RegisterEvent(){
     const dispatch = useDispatch()
     //const [image, setImage] = useState("")
     const genres = useSelector((state)=> state.Genres);
+    const venues = useSelector((state) => state.Venues);
     const [postGenre, setPostGenre] = useState({
         name: ""
     })
     const [event, setEvent] = useState({
         name: "",
         artist: "",
-        address: "",
-        isBigEvent: false,
-        genre: [],
+        genre: null,
         schedule: "",
-        map: "",
         performerImage: "",
         placeImage: "",
         description: "",
+        venueId: null,
+//      stockId: "",
     })
 
     const [errors, setErrors] = useState({
         name: "",
         artist: "",
-        address: "",
-        genre: [],
+        genre: null,
         schedule: "",
-        map: "",
         performerImage: "",
         placeImage: "",
         description: "",
+        venueId: null,
+//      stockId: "",
     })
 
     useEffect(()=>{
-        dispatch(GetGenres())  
+        dispatch(GetGenres());
+        dispatch(GetVenues());  
     }, [dispatch]) 
 
     const handleChange = (e) => {
@@ -59,34 +69,31 @@ export default function RegisterEvent(){
         e.preventDefault();
         if( errors.name !== "" ||
         errors.artist !== "" ||
-        errors.address !== "" ||
-        errors.genre !== [] ||
+        //errors.genre !== [] ||
         errors.schedule !== "" ||
-        errors.map !== "" ||
         errors.performerImage !== "" ||
         errors.placeImage !== "" ||
-        errors.description !== ""){
+        errors.description !== "" ){
+        //errors.venueId !== [] ){
             alert("Para poder registrar el Evento deben solucionarse los errores");
         }
         if ( event.name !== "" ||
         event.artist !== "" ||
-        event.address !== "" ||
-        event.genre !== [] ||
+        //event.genre !== [] ||
         event.schedule !== "" ||
-        event.map !== "" ||
         event.performerImage !== "" ||
         event.placeImage !== "" ||
-        event.description !== "" ){
+        event.description !== ""){
+        //errors.venueId !== [] ){
             setErrors({
                 name: event.name === "" ? "Ingrese el nombre del Evento" : "",
                 artist: event.artist === "" ? "Ingrese el nombre del artista del Evento" : "",
-                address: event.address === "" ? "Ingrese la direccion del Evento": "",
-                genre: event.genre === [] ? "Ingrese el genero del Evento" : event.genre.length > 1 ? "El Evento solo deve pertenecer a un solo genero" : "",
+                //genre: event.genre === [] ? "Ingrese el genero del Evento" : event.genre.length > 1 ? "El Evento solo deve pertenecer a un solo genero" : "",
                 schedule: event.schedule === "" ? "Ingrese la fecha y hora del Evento" : "",
-                map: event.map === "" ? "Ingrese la ubicacion del Evento" : "",
                 performerImage: event.performerImage === "" ? "Ingrese la imagen del artista" : "",
                 placeImage: event.placeImage === "" ? "Ingrese la imagen del lugar del Evento" : "",
                 description: "",
+                //venueId: event.venueId === [] ? "Ingrese el lugar del evento" : event.venueId.length > 1 ? "El Evento no puede pertenecer a mas de un lugar" : ""
             });
             return
         }
@@ -95,14 +102,13 @@ export default function RegisterEvent(){
         setEvent({
             name: "",
             artist: "",
-            address: "",
-            isBigEvent: false,
-            genre: [],
+            genre: null,
             schedule: "",
-            map: "",
             performerImage: "",
             placeImage: "",
             description: "",
+            venueId: null,
+    //      stockId: "",
         });
     };
 
@@ -148,45 +154,25 @@ export default function RegisterEvent(){
             }    
         }
 
-        //validar direccion
-        if(e.target.name === "address"){
-            if(e.target.value === ""){
-                setErrors({
-                    ...errors,
-                    [e.target.name]: "Ingrese la direccion del Evento"
-                })
-            // }else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(e.target.value)){
-            //     setErrors({
-            //         ...errors,
-            //         [e.target.name]: "Ingrese un nombre sin numeros o caracteres especiales"
-            //     })
-            } else {
-                setErrors({
-                    ...errors,
-                    [e.target.name]: ""
-                })
-            }    
-        }
-
         //validar genero
-        if(e.target.name === "genre"){
-            if(event.genre.length === 0){
-                setErrors({
-                    ...errors,
-                    [e.target.name]: "Ingrese el genero del Evento"
-                })
-            }else if (event.genre.length > 1){
-                setErrors({
-                    ...errors,
-                    [e.target.name]: "El Evento solo deve pertenecer a un solo genero"
-                })
-            } else {
-                setErrors({
-                    ...errors,
-                    [e.target.name]: ""
-                })
-            }    
-        }
+        // if(e.target.name === "genre"){
+        //     if(event.genre.length === 0){
+        //         setErrors({
+        //             ...errors,
+        //             [e.target.name]: "Ingrese el genero del Evento"
+        //         })
+        //     }else if (event.genre.length > 1){
+        //         setErrors({
+        //             ...errors,
+        //             [e.target.name]: "El Evento solo deve pertenecer a un solo genero"
+        //         })
+        //     } else {
+        //         setErrors({
+        //             ...errors,
+        //             [e.target.name]: ""
+        //         })
+        //     }    
+        // }
 
         //validar fecha/calendario
         if(e.target.name === "schedule"){
@@ -195,37 +181,12 @@ export default function RegisterEvent(){
                     ...errors,
                     [e.target.name]: "Ingrese la fecha y hora del Evento"
                 })
-            // } else if(!/^([0-9])*$/.test(e.target.value)){
-            //     setErrors({
-            //         ...errors,
-            //         [e.target.name]: "Por favor los caracteres ingresados deben ser numeros"
-            //     })
             } else {
                 setErrors({
                     ...errors,
                     [e.target.name]: ""
                 })
             }
-        }
-
-        //validar mapa/ubicacion
-        if(e.target.name === "map"){
-            if(e.target.value === ""){
-                setErrors({
-                    ...errors,
-                    [e.target.name]: "Ingrese la ubicacion del Evento"
-                })
-            // }else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(e.target.value)){
-            //     setErrors({
-            //         ...errors,
-            //         [e.target.name]: "Ingrese un nombre sin numeros o caracteres especiales"
-            //     })
-            } else {
-                setErrors({
-                    ...errors,
-                    [e.target.name]: ""
-                })
-            }    
         }
 
         //validar imagen del artista
@@ -235,11 +196,6 @@ export default function RegisterEvent(){
                     ...errors,
                     [e.target.name]: "Ingrese la imagen del artista"
                 })
-            // }else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(e.target.value)){
-            //     setErrors({
-            //         ...errors,
-            //         [e.target.name]: "Ingrese un nombre sin numeros o caracteres especiales"
-            //     })
             } else {
                 setErrors({
                     ...errors,
@@ -255,11 +211,6 @@ export default function RegisterEvent(){
                     ...errors,
                     [e.target.name]: "Ingrese la imagen del lugar del Evento"
                 })
-            // }else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(e.target.value)){
-            //     setErrors({
-            //         ...errors,
-            //         [e.target.name]: "Ingrese un nombre sin numeros o caracteres especiales"
-            //     })
             } else {
                 setErrors({
                     ...errors,
@@ -281,7 +232,27 @@ export default function RegisterEvent(){
                     [e.target.name]: ""
                 })
             }
-          }
+        }
+
+        //validar Lugar/Venue
+        // if(e.target.name === "venueId"){
+        //     if(event.venueId.length === 0){
+        //         setErrors({
+        //             ...errors,
+        //             [e.target.name]: "Ingrese el lugar del evento"
+        //         })
+        //     }else if (event.venueId.length > 1){
+        //         setErrors({
+        //             ...errors,
+        //             [e.target.name]: "El Evento no puede pertenecer a mas de un lugar"
+        //         })
+        //     } else {
+        //         setErrors({
+        //             ...errors,
+        //             [e.target.name]: ""
+        //         })
+        //     }    
+        // }
     };
 
     function handleCheck(e){
@@ -293,14 +264,6 @@ export default function RegisterEvent(){
         }
     };
 
-    function handleBigEvent(e){
-        if(e.target.checked){
-            setEvent({
-                ...event,
-                isBigEvent: true
-            })
-        }
-    };
 
     //k484vqmp codigo carpeta clodinari
     const uploadImage = async (e) => {
@@ -317,36 +280,38 @@ export default function RegisterEvent(){
         setEvent({...event, [e.target.id]:file.secure_url });
       };
 
-    //console.log(event)
+
+    function handleVenueSelect(e){
+        setEvent({
+            ...event,
+            venueId:event.venueId
+        })
+    };
+
+    function handleGenreSelect(e){
+        setEvent({
+            ...event,
+            genre:event.genre
+        })
+    };
+
+    // function handleDelete(e){
+    //     setInput({                  
+    //         ...input,
+    //         tipoDietas: input.tipoDietas.filter(d => d !== e) 
+    //     })
+    // };
+
+    //console.log para chequear lo que se esta guardando
+    console.log(event)
 
     return (<div>
         <h2>Crear Evento</h2>
         <form onSubmit={handleSubmit}>
             <div> <input name="name" value={event.name}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Nombre" /> {errors.name && <label>{errors.name}</label>}</div>
             <div> <input name="artist" value={event.artist}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Artista" /> {errors.artist && <label>{errors.artist}</label>}</div>
-            <div> <input name="address" value={event.address}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Direccion" /> {errors.address && <label>{errors.address}</label>}</div>
-            
-            <div>
-                <label> <input type="checkbox" name="isBigEvent" value="isBigEvent" onChange={(e)=>handleBigEvent(e)}/>Gran Evento ?:</label>
-            </div>
 
             {/* <div>
-                <label> <input type="checkbox" name="Rock" value="Rock" onChange={(e)=>handleCheck(e)} onBlur={handleBlur}/>Rock</label>
-                <label> <input type="checkbox" name="Reggae" value="Reggae" onChange={(e)=>handleCheck(e)} onBlur={handleBlur}/>Reggae</label>
-                <label> <input type="checkbox" name="Hip Hop" value="Hip Hop" onChange={(e)=>handleCheck(e)}/>Hip Hop</label>
-                <label> <input type="checkbox" name="Rap" value="Rap" onChange={(e)=>handleCheck(e)}/>Rap</label>
-                <label> <input type="checkbox" name="Clasica" value="Clasica" onChange={(e)=>handleCheck(e)}/>Clasica</label>
-                <label> <input type="checkbox" name="Metal" value="Metal" onChange={(e)=>handleCheck(e)}/>Metal</label>
-                <label> <input type="checkbox" name="Reggaeton" value="Reggaeton" onChange={(e)=>handleCheck(e)}/>Reggaeton</label>
-                <label> <input type="checkbox" name="Pop" value="Pop" onChange={(e)=>handleCheck(e)}/>Pop</label>
-                <label> <input type="checkbox" name="Electronica" value="Electronica" onChange={(e)=>handleCheck(e)}/>Electronica</label>
-                <label> <input type="checkbox" name="Jazz" value="Jazz" onChange={(e)=>handleCheck(e)}/>Jazz</label>
-                <label> <input type="checkbox" name="Trap" value="Trap" onChange={(e)=>handleCheck(e)}/>Trap</label>
-                <label> <input type="checkbox" name= "Otros" value= "Otros" onChange={(e)=>handleCheck(e)}/>Otros</label>
-                {errors.genre && <label>{errors.genre}</label>}
-            </div> */}
-
-            <div>
                 <label>Seleccionar genero existente: </label>
                 <div>
                     {genres.map((typeGenre, index) => (
@@ -360,42 +325,37 @@ export default function RegisterEvent(){
                             onBlur={handleBlur}
                         /> <label htmlFor={typeGenre.name}>{typeGenre.name}</label> <br/> </>
                     ))}
-                    {errors.genre && <label>{errors.genre}</label>}
                 </div>
+                    {errors.genre && <label>{errors.genre}</label>}
                 <div>
                     <form onSubmit={handleGenreSubmit}>
-                        <div> <input name="genre" value={typeGenre.name} onChange={(e)=>handleCheck(e)} onBlur={handleBlur} type="text" placeholder="Nuevo genero"/> {errors.genre && <label>{errors.genre}</label>}</div>
+                        <div> <input name="name" value={event.genre} onChange={(e)=>handleCheck(e)} onBlur={handleBlur} type="text" placeholder="Nuevo genero"/> {errors.genre && <label>{errors.genre}</label>}</div>
                         <button type="submit">Crear genero</button>
                     </form>
                 </div>
-            </div>
+            </div> */}
 
-            {/* <label>Tipo de dieta: </label>
-          <div className={style.diets}>
-          {tipos.map((tipo, i) => (
-            <>
-              <input
-                key={i}
-                className={style.diet}
-                type="checkbox"
-                name="diet"
-                id={tipo.name}
-                value={tipo.name}
-                onChange={handleDiet}
-                onBlur={handleBlur}
-              />
-              <label className={style.check} htmlFor={tipo.name}>{tipo.name}</label>
-              <br />
-            </>
-          ))}
-          {errors.diet && <p className={style.error}>{errors.diet}</p>}
-          </div> */}
+            <div>
+                <label>Seleccionar genero existente: </label>
+                <select onChange={handleGenreSelect}>
+                    {genres.map(g =>(<option key={g.id} value={g.name}>{g.name}</option>))}
+                </select>
+                {/* {errors.genre && <label>{errors.genre}</label>} */}
+            </div>
             
             <div> <input name="schedule" value={event.schedule}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Hora y Fecha" /> {errors.schedule && <label>{errors.schedule}</label>}</div>
-            <div> <input name="map" value={event.map}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Ubicacion" /> {errors.map && <label>{errors.map}</label>}</div>
             <div> <input id="performerImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del artista" /> {errors.performerImage && <label>{errors.performerImage}</label>}</div>
             <div> <input id="placeImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del lugar" /> {errors.placeImage && <label>{errors.placeImage}</label>}</div>
             <div> <input name="description" value={event.description}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Descripcion" /> {errors.description && <label>{errors.description}</label>}</div>
+            
+            <div>
+                <label>Seleccionar lugar del evento: </label>
+                <select onChange={handleVenueSelect}>
+                    {venues.map(v =>(<option key={v.id} value={v.name}>{v.name}</option>))}
+                </select>
+                {/* {errors.venueId && <label>{errors.venueId}</label>} */}
+            </div>
+            
             <button type="submit">Crear</button>
         </form>
     </div>)

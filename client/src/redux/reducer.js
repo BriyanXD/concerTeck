@@ -7,7 +7,8 @@ const initialState = {
   // TodosEvents:[],
   BigEvents:[],
   Events:[],
-  // Genres:[],
+  Genres:[],
+  Venues:[],
 };
 
 function reducers(state = initialState, {type, payload}) {
@@ -109,6 +110,20 @@ function reducers(state = initialState, {type, payload}) {
     //     User:{}
     //   }
     // }
+    case "POST_EVENT": return {
+      ...state
+    }
+    case "GET_GENRES": return {
+        ...state,
+        Genres: payload
+    }
+    case "POST_GENRE": return {
+      ...state
+    }
+    case "GET_VENUES": return {
+        ...state,
+        Venues: payload
+    }
   
     default:
       return state;
