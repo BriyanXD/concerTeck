@@ -47,7 +47,7 @@ const pagination2 = (numberPage2) =>{
 
   return (
     <div className={style.container}>
-      <NavBar/>
+      <NavBar setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage}/>
       <Carrousel/>
       <div className={style.eventcontainer}>
         <div className={style.midcontainer}>
