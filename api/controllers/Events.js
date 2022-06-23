@@ -1,26 +1,47 @@
 const eventsFiles = require("../db_event_genre/db_events.json");
 const Event = require("../models/Events");
-async function loadEventsAndGetEvents(req, res) {
-  const { name, id, schedule } = req.query;
-  try {
-    for (let typeEvent in eventsFiles) {
-      eventsFiles[typeEvent].map(async (event) => {
+const Genre = require("../models/Genre");
+const Venue = require("../models/Venue");
+const TicketStock = require("../models/TicketStock");
+const e = require("express");
+
+async function chargeEvents() {
+  for (let typeEvent in eventsFiles) {
+    eventsFiles[typeEvent].map(async (event) => {
+      const saveGenre = await Genre.findOne({
+        where: { name: event.genre.toLowerCase() },
+      });
+      if (saveGenre) {
         return await Event.findOrCreate({
           where: {
             name: event.name,
             artist: event.artist,
-            genre: event.genre,
-            address: event.address,
+            genreId: saveGenre.id,
             schedule: event.schedule,
-            map: event.map,
             performerImage: event.performerImage,
             placeImage: event.placeImage,
             description: event.description,
+            venueId: event.venueId,
+            stockId: event.stockId,
+            /* isBigEvent: event.isBigEvent === true ? true : false, */
           },
         });
-      });
-    }
-    const allEvents = await Event.findAll();
+      } else {
+        console.log("id o nombre no encontrados");
+      }
+    });
+  }
+}
+
+async function loadEventsAndGetEvents(req, res) {
+  const { name, id, schedule } = req.query;
+  try {
+    const allEvents = await Event.findAll({
+      include: [
+        { model: Venue, as: "venue" },
+        { model: TicketStock, as: "stock" },
+      ],
+    });
     if (name) {
       //const eventName = await Events.findOne({where:{name:name}})
       const eventName = allEvents.filter((n) =>
@@ -34,7 +55,6 @@ async function loadEventsAndGetEvents(req, res) {
           .json({ error: "No se encontro Eventos con ese Nombre" });
       }
     } else if (id) {
-      console.log(id);
       const eventId = await Event.findByPk(id);
       if (eventId) {
         return res.send(eventId);
@@ -69,17 +89,16 @@ async function postEvents(req, res) {
     const {
       name,
       artist,
-      address,
       genre,
       schedule,
-      map,
       performerImage,
       placeImage,
       description,
+      venueId,
+      stockId,
     } = req.body;
     if (
       !name ||
-      !address ||
       !genre ||
       !schedule ||
       !performerImage ||
@@ -88,28 +107,39 @@ async function postEvents(req, res) {
     ) {
       return res.status(404).send("Faltan datos obligatorios");
     } else {
-      const event = await Event.findOrCreate({
-        where: {
-          name: name,
-          artist: artist,
-          address: address,
-          genre: genre,
-          schedule: schedule,
-          map: map,
-          performerImage: performerImage,
-          placeImage: placeImage,
-          description: description,
-        },
+      await Genre.findOrCreate({
+        where: { name: genre.toLowerCase() },
       });
-      if (event) {
-        console.log(event);
-        return res.status(201).send("Evento creado con exito");
+      let saveGenre = await Genre.findOne({
+        where: { name: genre.toLowerCase() },
+      });
+      if (saveGenre) {
+        const event = await Event.findOrCreate({
+          where: {
+            name: name,
+            artist: artist,
+            genreId: saveGenre.id,
+            schedule: schedule,
+            performerImage: performerImage,
+            placeImage: placeImage,
+            description: description,
+            venueId: venueId,
+            stockId: stockId,
+          },
+        });
+        if (event) {
+          return res.status(201).json({ message: "Evento creado con exito" });
+        } else {
+          return res.status(404).json({ error: "No se puedo crear el evento" });
+        }
       } else {
-        return res.status(404).send("Hubo un error en la creacion del evento");
+        return res
+          .status(404)
+          .json({ error: "No se puedo crear el genero para el evento" });
       }
     }
-  } catch (err) {
-    return res.status(404).send(err);
+  } catch (error) {
+    return res.status(404).json({ error: error.message });
   }
 }
 
@@ -119,14 +149,14 @@ async function putEvents(req, res) {
       id,
       name,
       artist,
-      address,
       genre,
       schedule,
-      map,
       performerImage,
       placeImage,
       description,
       producerId,
+      venueId,
+      stockId,
     } = req.body;
     const upload = await Event.findByPk(id);
     if (upload) {
@@ -134,14 +164,14 @@ async function putEvents(req, res) {
         {
           name: name,
           artist: artist,
-          address: address,
-          genre: genre,
+          genreId: genre,
           schedule: schedule,
-          map: map,
           performerImage: performerImage,
           placeImage: placeImage,
           description: description,
           producerId: producerId,
+          venueId: venueId,
+          stockId: stockId,
         },
         { where: { id: id } }
       );
@@ -149,8 +179,8 @@ async function putEvents(req, res) {
         return res.send(event);
       }
     }
-  } catch (err) {
-    return res.status(404).send(err);
+  } catch (error) {
+    return res.status(404).json({ error: error.message });
   }
 }
 async function deleteEvent(req, res) {
@@ -158,24 +188,26 @@ async function deleteEvent(req, res) {
     const { id } = req.body; //req.params.id
     const event = await Event.findByPk(id);
     if (!id) {
-      return res.status(404).send("El ID solicitado no existe");
+      return res.status(404).json({ error: "El ID solicitado no existe" });
     }
     if (!event) {
-      return res
-        .status(404)
-        .send("No se a encontrado un Evento que corresponda a lo solicitado");
+      return res.status(404).json({
+        error: "No se a encontrado un Evento que corresponda a lo solicitado",
+      });
     }
     const destoyed = await event.destroy();
     if (destoyed) {
-      return res.status(201).send("El evento a sido eliminado con exito");
+      return res
+        .status(201)
+        .json({ message: "El evento a sido eliminado con exito" });
     }
-  } catch (err) {
-    return res.status(404).send(err);
+  } catch (error) {
+    return res.status(404).json({ error: error.message });
   }
 }
 
 module.exports = {
-  // getAllEvents,
+  chargeEvents,
   deleteEvent,
   // getEvents,
   postEvents,

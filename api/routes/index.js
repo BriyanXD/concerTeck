@@ -6,7 +6,7 @@ const {
   putUser,
   deleteUser,
 } = require("../controllers/User");
-const { getAllGenres } = require("../controllers/Genres");
+const { getAllGenres, postOneGenre } = require("../controllers/Genres");
 const {
   createProducer,
   getProducer,
@@ -29,6 +29,9 @@ const {
   deleteTicket,
 } = require("../controllers/Tickets");
 
+const { getVenues } = require("../controllers/Venue");
+const { getTicketStock } = require("../controllers/TicketStock");
+
 routes.post("/user", createUser);
 routes.get("/user", getUser);
 routes.put("/user", putUser);
@@ -49,5 +52,10 @@ routes.post("/ticket", postTicket);
 routes.delete("/ticket", deleteTicket);
 
 routes.get("/genres", getAllGenres);
+routes.post("/genres", postOneGenre);
+
+routes.get("/venues", getVenues);
+
+routes.get("/ticketstock", getTicketStock);
 
 module.exports = routes;
