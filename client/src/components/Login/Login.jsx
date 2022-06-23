@@ -135,6 +135,7 @@ export default function Login() {
           <Link to={`/registrar/producer`}>Crear cuenta</Link> para productores
         </span>
       </div>
+      <button onClick={() => navigate('/')}>Volver</button>
     </div>
   );
 }

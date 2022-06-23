@@ -1,9 +1,10 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Home from './components/Home/Home.jsx';
-import Detail from './components/Detail/Detail.jsx';
 import Login from './components/Login/Login';
 import RegisterUser from './components/RegisterUser/RegisterUser.jsx';
+import RegisterEvent from './components/RegisterEvent/RegisterEvents';
+import Detail from './components/Detail/Detail';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
             <Route path='/login' element={<Login/>}/>
             {/* <Route exact path='' element= {<Ruta/>}/> 
             <Route exact path='' element= {<Ruta/>}/>  */} 
+            <Route exact path='/events' element={<RegisterEvent/>}/>
           </Routes>
       </div>
     </BrowserRouter>

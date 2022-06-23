@@ -7,10 +7,10 @@ export default function CardEvent({name, genre, schedule, image}) {
 
         <div className = {style.container}>
           <div>
-            <div>{name}</div>
             <img className={style.image} src={image} alt='Event'/>
-            <div>{genre}</div>
-            <div>{schedule}</div>
+            <div className={style.name}>{name}</div>
+            <div className={style.info}>{genre}</div>
+            <div className={style.info}>{schedule}</div>
           </div>
         </div>
     </div>
