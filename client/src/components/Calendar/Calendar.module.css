@@ -1,9 +1,14 @@
+@import url(../../index.css);
+
+
 .calendar{
     background-color: dimgray;
     border: 1px solid  black;
     height: 520px;
     width: 600px;
     border-radius: 3px;
+    background-color: var(--fc-page-bg-color);
+    color: var(--color4);
 }
 
 .fc .fc-col-header-cell-cushion {

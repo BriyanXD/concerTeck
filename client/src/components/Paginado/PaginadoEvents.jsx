@@ -1,7 +1,7 @@
 import React from "react";
 
 
-export default function PaginadoEvents({allSmallEventsPagination, eventPerPage, pagination}){
+export default function PaginadoEvents({allSmallEventsPagination, eventPerPage, pagination2}){
 
 
     const pageNumber = []
@@ -15,7 +15,7 @@ export default function PaginadoEvents({allSmallEventsPagination, eventPerPage, 
             {
                 pageNumber && pageNumber.map(n =>{
                     return <button key = {n} 
-                    onClick = {() => pagination(n)}>{n}</button>
+                    onClick = {() => pagination2(n)}>{n}</button>
                 })
             }
         </div>
