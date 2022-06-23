@@ -13,9 +13,11 @@ function reducers(state = initialState, {type, payload}) {
   switch (type) {
     case "GET_EVENTS":
       // console.log(payload)
-      const BigE = payload.filter(e => e.isBigEvent === true)
+      const BigE = payload.filter(e => e.venue.isBigEvent === true)  
+      // (e => e.isBigEvent === true)
       // console.log(BigE);
-      const Eve = payload.filter(e => e.isBigEvent === false)
+      const Eve = payload.filter(e => e.venue.isBigEvent === false)
+      // payload.filter(e => e.isBigEvent === false)
       // console.log(Eve);
       return {
         ...state,
@@ -61,15 +63,21 @@ function reducers(state = initialState, {type, payload}) {
       }
     }
     case "FILTER_GENRES":{
-        const generos = payload === 'all'? state.AllBigEvents: state.AllBigEvents.filter(e => e.genre.includes(payload))
-        const generoso = payload === 'all'? state.AllLitleEvents: state.AllLitleEvents.filter(e => e.genre.includes(payload))
-        console.log(generos);
-        return{
-          ...state,
-          BigEvents: generos,
-          Events: generoso
-        }
+      
+      return {
+
+      }
     }
+    // case "FILTER_GENRES":{
+    //     const generos = payload === 'all'? state.AllBigEvents: state.AllBigEvents.filter(e => e.genre.includes(payload))
+    //     const generoso = payload === 'all'? state.AllLitleEvents: state.AllLitleEvents.filter(e => e.genre.includes(payload))
+    //     console.log(generos);
+    //     return{
+    //       ...state,
+    //       BigEvents: generos,
+    //       Events: generoso
+    //     }
+    // }
 
     // case "LOGOUT":{
     //   return {

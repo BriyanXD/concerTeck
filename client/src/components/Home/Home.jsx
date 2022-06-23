@@ -8,6 +8,7 @@ import Carrousel from '../Carousel/Carousel'
 import {useDispatch, useSelector} from 'react-redux'
 import { getEvents } from '../../redux/actions'
 import {Link} from 'react-router-dom';
+import Calendar from '../Calendar/Calendar'
 import PaginadoBigEvents from '../Paginado/PaginadoBigEvents'
 import PaginadoEvents from '../Paginado/PaginadoEvents'
 
@@ -42,7 +43,7 @@ const pagination2 = (numberPage2) =>{
   useEffect(()=>{
     dispatch(getEvents())
        },[dispatch]);
-       
+  
 
   return (
     <div className={style.container}>
@@ -87,17 +88,12 @@ const pagination2 = (numberPage2) =>{
           </div>
 
         </div>
-      </div>
+      </div><br />
       <div>
-        Calendario
-      </div>
-
-    <div>
-
-    </div>
+        <Calendar/>
+      </div><br />
       <Footer/>
 
     </div>
   )
 }
-
