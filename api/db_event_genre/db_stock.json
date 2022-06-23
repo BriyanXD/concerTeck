@@ -1,6 +1,5 @@
 {
     "StockSale":[
-        
             {
                 "stockStreaming": 5000,
                 "stockVIP": 200,
@@ -11,8 +10,8 @@
                 "vipPrice": 1000,
                 "generalLateralPrice": 400,
                 "generalPrice": 700,
-                "palcoPrice": 1000
-
+                "palcoPrice": 1000,
+                "venueId":1
             },
             {
                 "stockStreaming": 15000,
@@ -24,7 +23,8 @@
                 "vipPrice": 1000,
                 "generalLateralPrice": 400,
                 "generalPrice": 700,
-                "palcoPrice": 1000
+                "palcoPrice": 1000,
+                "venueId":1
             },
             {
                 "stockStreaming": 3000,
@@ -36,7 +36,8 @@
                 "vipPrice": 1000,
                 "generalLateralPrice": 400,
                 "generalPrice": 700,
-                "palcoPrice": 1000
+                "palcoPrice": 1000,
+                "venueId":1
             },
             {
                 "stockStreaming": 3000,
@@ -48,7 +49,8 @@
                 "vipPrice": 1000,
                 "generalLateralPrice": 400,
                 "generalPrice": 700,
-                "palcoPrice": 1000
+                "palcoPrice": 1000,
+                "venueId":1
             },
             {
                 "stockStreaming": 2000,
@@ -60,7 +62,8 @@
                 "vipPrice": 1000,
                 "generalLateralPrice": 400,
                 "generalPrice": 700,
-                "palcoPrice": 1000
+                "palcoPrice": 1000,
+                "venueId":1
             }
     ]
 }

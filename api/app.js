@@ -3,14 +3,18 @@ const routes = require("./routes/index");
 const sequelize = require("./db");
 const morgan = require("morgan");
 const app = express();
-const { chargeGenres } = require("./controllers/Genres")
-const { chargeEvents } = require("./controllers/Events")
+const { chargeGenres } = require("./controllers/Genres");
+const { chargeEvents } = require("./controllers/Events");
+const { chargeVenue } = require("./controllers/Venue");
+const { chargeTicketStock } = require("./controllers/TicketStock");
 
 require("./models/Producer");
 require("./models/User");
 require("./models/Events");
 require("./models/Ticket");
 require("./models/Genre");
+require("./models/Venue");
+require("./models/TicketStock");
 
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.json({ limit: "50mb" }));
@@ -36,7 +40,9 @@ async function main() {
       console.log("App listen on port 3001");
     });
     await chargeGenres();
-    await chargeEvents()
+    await chargeEvents();
+    await chargeVenue();
+    await chargeTicketStock();
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }
