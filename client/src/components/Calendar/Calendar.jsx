@@ -17,10 +17,11 @@ export default function Calendar() {
 
 
 function handleDateClick(arg){ 
-  AllEvents?.map((event) => {
-    events2.push({title: event.name})
-  })
-    alert('Horario ' + arg.events2)
+    alert('Date: ' + arg.dateStr)
+    alert('Coordinates: ' + arg.jsEvent.pageX + ',' + arg.jsEvent.pageY);
+    alert('View: ' + arg.view.type);
+
+
 }
 
       return (

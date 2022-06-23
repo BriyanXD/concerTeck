@@ -1,4 +1,5 @@
 import React from "react";
+import style from './PaginadoEvents.module.css'
 
 
 export default function PaginadoEvents({allSmallEventsPagination, eventPerPage, pagination2}){
@@ -11,11 +12,11 @@ export default function PaginadoEvents({allSmallEventsPagination, eventPerPage, 
     }
 
     return(
-        <div>
+        <div className={style.pagination}>
             {
                 pageNumber && pageNumber.map(n =>{
-                    return <button key = {n} 
-                    onClick = {() => pagination2(n)}>{n}</button>
+                    return <button className={style.button} key = {n} 
+                    onClick = {() => pagination2(n)}></button>
                 })
             }
         </div>

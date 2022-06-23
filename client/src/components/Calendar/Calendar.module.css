@@ -4,8 +4,8 @@
 .calendar{
     background-color: dimgray;
     border: 1px solid  black;
-    height: 520px;
-    width: 600px;
+    height: 550px;
+    width: 650px;
     border-radius: 3px;
     background-color: var(--fc-page-bg-color);
     color: var(--color4);
@@ -18,6 +18,10 @@
 }
 
 .fc .fc-col-header-cell-cushion { /* needs to be same precedence */
-    padding-top: 10px; /* an override! */
-    padding-bottom: 10px; /* an override! */
+    padding-top: 2px; /* an override! */
+    padding-bottom: 2px; /* an override! */
   }
+
+.fc-scrollgrid-sync-inner{
+    width: 120px;
+}
