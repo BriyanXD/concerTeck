@@ -8,6 +8,8 @@ const initialState = {
   BigEvents:[],
   Events:[],
   Genres:[],
+  Venues:[],
+
 };
 
 function reducers(state = initialState, {type, payload}) {
@@ -38,9 +40,20 @@ function reducers(state = initialState, {type, payload}) {
         }
       }
     
-    // case "GET_EVENT_BY_NAME":{
+     case "GET_EVENT_BY_NAME":{
+      
+      // const bigEvents = payload.filter(eve => eve.isBigEvent === true)
+      // console.log(big)
+      // const smallEvents = payload.filter(eve => eve.isBigEvent === false)
 
-    // }
+      return{
+        ...state,
+        BigEvents: payload,
+        Events: payload
+
+ 
+      }
+     }
     case "GET_EVENT_DETAIL": return {
       ...state,
       Detail: payload
@@ -115,6 +128,20 @@ function reducers(state = initialState, {type, payload}) {
     //     User:{}
     //   }
     // }
+    case "POST_EVENT": return {
+      ...state
+    }
+    case "GET_GENRES": return {
+        ...state,
+        Genres: payload
+    }
+    case "POST_GENRE": return {
+      ...state
+    }
+    case "GET_VENUES": return {
+        ...state,
+        Venues: payload
+    }
   
     default:
       return state;
