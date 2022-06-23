@@ -8,6 +8,7 @@ import { CreateEvent, GetGenres } from '../../redux/actions';
 export default function RegisterEvent(){
     const dispatch = useDispatch()
     //const [image, setImage] = useState("")
+    const genres = useSelector((state)=> state.Genres);
     const [event, setEvent] = useState({
         name: "",
         artist: "",
@@ -319,7 +320,7 @@ export default function RegisterEvent(){
                 <label> <input type="checkbox" name="isBigEvent" value="isBigEvent" onChange={(e)=>handleBigEvent(e)}/>Gran Evento ?:</label>
             </div>
 
-            <div>
+            {/* <div>
                 <label> <input type="checkbox" name="Rock" value="Rock" onChange={(e)=>handleCheck(e)} onBlur={handleBlur}/>Rock</label>
                 <label> <input type="checkbox" name="Reggae" value="Reggae" onChange={(e)=>handleCheck(e)} onBlur={handleBlur}/>Reggae</label>
                 <label> <input type="checkbox" name="Hip Hop" value="Hip Hop" onChange={(e)=>handleCheck(e)}/>Hip Hop</label>
@@ -333,6 +334,24 @@ export default function RegisterEvent(){
                 <label> <input type="checkbox" name="Trap" value="Trap" onChange={(e)=>handleCheck(e)}/>Trap</label>
                 <label> <input type="checkbox" name= "Otros" value= "Otros" onChange={(e)=>handleCheck(e)}/>Otros</label>
                 {errors.genre && <label>{errors.genre}</label>}
+            </div> */}
+
+            <div>
+                <label>Seleccionar Genero: </label>
+                <div>
+                    {genres.map((typeGenre, index) => (
+                        <> <input
+                            key={index}
+                            type="checkbox"
+                            name="genre"
+                            id={typeGenre.name}
+                            value={typeGenre.name}
+                            onChange={(e)=>handleCheck(e)}
+                            onBlur={handleBlur}
+                        /> <label htmlFor={typeGenre.name}>{typeGenre.name}</label> <br/> </>
+                    ))}
+                    {errors.genre && <label>{errors.genre}</label>}
+                </div>
             </div>
 
             {/* <label>Tipo de dieta: </label>
