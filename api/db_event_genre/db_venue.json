@@ -1,5 +1,5 @@
 {
-    "Stadium": [
+    "Venues": [
         {
             "name": "Luna Park",
             "address": "Av. Eduardo Madero 470, CABA",
@@ -32,9 +32,7 @@
             "maxStockGeneral": 8000,
             "maxStockPalco": 500,
             "isBigEvent": true
-        }
-    ],
-    "Theater":[
+        },
         {
             "name": "Teatro de Flores",
             "address": "Av. Rivadavia 7806, CABA",

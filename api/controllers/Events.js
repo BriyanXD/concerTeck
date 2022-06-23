@@ -1,6 +1,9 @@
 const eventsFiles = require("../db_event_genre/db_events.json");
 const Event = require("../models/Events");
 const Genre = require("../models/Genre");
+const Venue = require("../models/Venue");
+const TicketStock = require("../models/TicketStock");
+const e = require("express");
 
 async function chargeEvents() {
   for (let typeEvent in eventsFiles) {
@@ -14,13 +17,13 @@ async function chargeEvents() {
             name: event.name,
             artist: event.artist,
             genreId: saveGenre.id,
-            address: event.address,
             schedule: event.schedule,
-            map: event.map,
             performerImage: event.performerImage,
             placeImage: event.placeImage,
             description: event.description,
-            isBigEvent: event.isBigEvent === true ? true : false,
+            venueId: event.venueId,
+            stockId: event.stockId,
+            /* isBigEvent: event.isBigEvent === true ? true : false, */
           },
         });
       } else {
@@ -33,7 +36,12 @@ async function chargeEvents() {
 async function loadEventsAndGetEvents(req, res) {
   const { name, id, schedule } = req.query;
   try {
-    const allEvents = await Event.findAll();
+    const allEvents = await Event.findAll({
+      include: [
+        { model: Venue, as: "venue" },
+        { model: TicketStock, as: "stock" },
+      ],
+    });
     if (name) {
       //const eventName = await Events.findOne({where:{name:name}})
       const eventName = allEvents.filter((n) =>
@@ -81,17 +89,16 @@ async function postEvents(req, res) {
     const {
       name,
       artist,
-      address,
       genre,
       schedule,
-      map,
       performerImage,
       placeImage,
       description,
+      venueId,
+      stockId,
     } = req.body;
     if (
       !name ||
-      !address ||
       !genre ||
       !schedule ||
       !performerImage ||
@@ -111,13 +118,13 @@ async function postEvents(req, res) {
           where: {
             name: name,
             artist: artist,
-            address: address,
             genreId: saveGenre.id,
             schedule: schedule,
-            map: map,
             performerImage: performerImage,
             placeImage: placeImage,
             description: description,
+            venueId: venueId,
+            stockId: stockId,
           },
         });
         if (event) {
@@ -142,14 +149,14 @@ async function putEvents(req, res) {
       id,
       name,
       artist,
-      address,
       genre,
       schedule,
-      map,
       performerImage,
       placeImage,
       description,
       producerId,
+      venueId,
+      stockId,
     } = req.body;
     const upload = await Event.findByPk(id);
     if (upload) {
@@ -157,14 +164,14 @@ async function putEvents(req, res) {
         {
           name: name,
           artist: artist,
-          address: address,
           genreId: genre,
           schedule: schedule,
-          map: map,
           performerImage: performerImage,
           placeImage: placeImage,
           description: description,
           producerId: producerId,
+          venueId: venueId,
+          stockId: stockId,
         },
         { where: { id: id } }
       );
