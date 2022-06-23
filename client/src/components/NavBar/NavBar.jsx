@@ -4,6 +4,7 @@ import style from './NavBar.module.css';
 import Genre from '../Filters/Genre/Genre';
 import SearchBar from '../SearchBar/SearchBar';
 import logo from '../../assets/concerteck.jpeg'
+import Date from '../Filters/Date/Date';
 
 export default function NavBar() {
   return (
@@ -17,6 +18,7 @@ export default function NavBar() {
       <div className={style.containerGenreAndSearch}>
        <Genre/>
        <SearchBar/>
+       <Date/>
       </div>
       <div>
       <button className={style.buttonRegister} type="button">Registro</button>
