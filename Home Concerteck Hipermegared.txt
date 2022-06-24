@@ -1,0 +1,40 @@
+gmail: concerteck@gmail.com contra: Grupo004
+Face: concerteck@gmail.com contra Grupo004
+instagram: entrar con face. Usuario concerteck01 // Grupo004
+Twitter aún no me permitió crearla
+
+Home cuenta con el header, carrousel, eventos, calendario y footer
+
+Header:
+	Logo Concerteck: haciendo click, refresh a Home (siempre)
+
+	Filtro Género: extiende barra con géneros. Que pasa cuando le hago
+			click.
+
+	SearchBar: Busca por query. Abre en la misma pág? o en otra?
+		   si es en otra, se abre encima del home o como otra pestaña?
+
+	Registro Usuario: me lleva a pág registro usuario. Encima del home o
+				en otra pestaña?
+
+	Registro Productora: me lleva a pág registro usuario. Encima del home
+				 o en otra pestaña?
+
+Carrousel: muestra 5 fotos.
+	     Cuenta con flecha adelante y atrás?
+	     debajo de imagen van 5 redondeles (una por imagen)
+	     Frenado con los puntos? click en la imagen? o un botoncito de
+			frenar?
+
+Flyer eventos: hacer cards en dos divs distintos.
+		   al hacer click en una imagen te lleva al detalle del mismo.
+
+Calendario: Hago click en la fecha de mi interes y muestro eventos del día
+		se abre aparte o encima del home?
+
+Footer: Contactate con nosotros te lleva al formulario. encima del home
+	  
+	  redes sociales, al hacer click que me abra en otra pestaña la cta
+
+	
+
