@@ -61,6 +61,7 @@ export default function Home() {
     view= true;
   }
 
+  
 
   return (
     <div className={style.container}>
@@ -80,7 +81,7 @@ export default function Home() {
                     <Link style={{ textDecoration: "none" }} to={`/${el.id}`}>
                       <CardBigEvent
                         name={el.name}
-                        genre={el.genre}
+                        genreId={el.genreId}
                         image={el.performerImage}
                         schedule={el.schedule}
                       />
@@ -103,7 +104,6 @@ export default function Home() {
                     <Link style={{ textDecoration: "none" }} to={`/${el.id}`}>
                       <CardEvent
                         name={el.name}
-                        genre={el.genre}
                         image={el.performerImage}
                         schedule={el.schedule}
                       />
