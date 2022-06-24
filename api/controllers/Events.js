@@ -88,7 +88,7 @@ async function loadEventsAndGetEvents(req, res) {
     res.status(404).json({ error: error.message });
   }
 }
-
+// Modificando eventos
 async function postEvents(req, res) {
   try {
     const {
