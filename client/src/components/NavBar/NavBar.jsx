@@ -16,15 +16,15 @@ export default function NavBar({setCurrenPag,setCurrentPage}) {
       </Link>
       </div>
       <div className={style.containerGenreAndSearch}>
-       <Genre setCurrenPag={setCurrenPag} className={style.genre} setCurrentPage={setCurrentPage}/>
+       <Genre setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage}/>
        <SearchBar setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage}/>
        <Date setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage}/>
       </div>
-      <div>
-      <button className={style.buttonRegister} type="button">Registro</button>
-      <span className={style.logoUser}>User</span>
+      <div className={style.registerAndLogin}>
+      <button className={style.btnRegister} type="button">Crear Evento</button>
+      {/* <button className={style.btnRegister} type="button">Registro</button> */}
+      {/* <span className={style.logoUser}>User</span> */}
       </div>
-
     </div>
   )
 }

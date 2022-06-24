@@ -11,12 +11,15 @@
     border-top-style: solid;
     border-width: 1px;
     border-color: rgba(255, 255, 255, 0.3);
+    vertical-align: bottom;
+    line-height: 0;
+    
     
 }
 .facebook{
     color: #ffffff;
     font-size: 2.5vw;
-    margin-bottom: 5px    
+    margin-bottom: 2px    
 }
 
 .instagram{
@@ -31,7 +34,7 @@
         #515ecf);
        border-radius: 30%;
        position: relative;
-       margin-bottom: 3px;
+       margin-bottom: 2px;
 }
 
 .instagram:before{
