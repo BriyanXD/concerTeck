@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //import style from './RegisterUser.module.css';
 import { CreateEvent, GetGenres, CreateGenre, GetVenues } from '../../redux/actions';
+import NavBar from '../NavBar/NavBar'
+import Footer from '../Footer/Footer'
+import style from './RegisterEvents.module.css'
 
 //       name,
 //       artist,
@@ -305,11 +308,13 @@ export default function RegisterEvent(){
     //console.log para chequear lo que se esta guardando
     console.log(event)
 
-    return (<div>
-        <h2>Crear Evento</h2>
-        <form onSubmit={handleSubmit}>
-            <div> <input name="name" value={event.name}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Nombre" /> {errors.name && <label>{errors.name}</label>}</div>
-            <div> <input name="artist" value={event.artist}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Artista" /> {errors.artist && <label>{errors.artist}</label>}</div>
+    return (<div className={style.container}>
+        <NavBar/>
+        <div className={style.card}>
+        <h2 className={style.h2}>Crear Evento</h2>
+        <form onSubmit={handleSubmit} className={style.form}>
+            <div> <input name="name" value={event.name}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Nombre" /> {errors.name && <label className={style.error}>{errors.name}</label>}</div>
+            <div> <input name="artist" value={event.artist}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Artista" /> {errors.artist && <label className={style.error}>{errors.artist}</label>}</div>
 
             {/* <div>
                 <label>Seleccionar genero existente: </label>
@@ -336,20 +341,20 @@ export default function RegisterEvent(){
             </div> */}
 
             <div>
-                <label>Seleccionar genero existente: </label>
+                <label className={style.label}>Seleccionar genero existente: </label>
                 <select onChange={handleGenreSelect}>
                     {genres.map(g =>(<option key={g.id} value={g.name}>{g.name}</option>))}
                 </select>
                 {/* {errors.genre && <label>{errors.genre}</label>} */}
             </div>
             
-            <div> <input name="schedule" value={event.schedule}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Hora y Fecha" /> {errors.schedule && <label>{errors.schedule}</label>}</div>
-            <div> <input id="performerImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del artista" /> {errors.performerImage && <label>{errors.performerImage}</label>}</div>
-            <div> <input id="placeImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del lugar" /> {errors.placeImage && <label>{errors.placeImage}</label>}</div>
-            <div> <input name="description" value={event.description}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Descripcion" /> {errors.description && <label>{errors.description}</label>}</div>
+            <div> <input name="schedule" value={event.schedule}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Hora y Fecha" /> {errors.schedule && <label className={style.error}>{errors.schedule}</label>}</div>
+            <div> <input id="performerImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del artista" /> {errors.performerImage && <label className={style.error}>{errors.performerImage}</label>}</div>
+            <div> <input id="placeImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del lugar" /> {errors.placeImage && <label className={style.error}>{errors.placeImage}</label>}</div>
+            <div> <input name="description" value={event.description}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Descripcion" /> {errors.description && <label className={style.error}>{errors.description}</label>}</div>
             
             <div>
-                <label>Seleccionar lugar del evento: </label>
+                <label className={style.label}>Seleccionar lugar del evento: </label>
                 <select onChange={handleVenueSelect}>
                     {venues.map(v =>(<option key={v.id} value={v.name}>{v.name}</option>))}
                 </select>
@@ -358,5 +363,9 @@ export default function RegisterEvent(){
             
             <button type="submit">Crear</button>
         </form>
+        </div>
+        <div className={style.footer}>
+        <Footer/>
+        </div>
     </div>)
 };

@@ -51,9 +51,7 @@ function reducers(state = initialState, {type, payload}) {
       return{
         ...state,
         BigEvents: bigEvents,
-        Events: smallEvents
-
- 
+        Events: smallEvents 
       }
      }
     case "GET_EVENT_DETAIL": return {
