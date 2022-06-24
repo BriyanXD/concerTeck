@@ -25,7 +25,11 @@ async function chargeEvents() {
             stockId: event.stockId,
             /* isBigEvent: event.isBigEvent === true ? true : false, */
           },
-        });
+        })
+          .then((response) => {})
+          .catch((error) => {
+            console.log(error.message);
+          });
       } else {
         console.log("id o nombre no encontrados");
       }
@@ -43,7 +47,7 @@ async function loadEventsAndGetEvents(req, res) {
       ],
     });
     if (name) {
-      //const eventName = await Events.findOne({where:{name:name}})
+      // const eventName = await Events.findOne({where:{name:name}})
       const eventName = allEvents.filter((n) =>
         n.name.toLowerCase().includes(name.toLowerCase())
       );
@@ -64,10 +68,11 @@ async function loadEventsAndGetEvents(req, res) {
           .json({ error: "No se encontro Eventos con ese ID" });
       }
     } else if (schedule) {
-      console.log(schedule);
       //const eventName = await Events.findOne({where:{name:name}})
       const eventByDate = allEvents.filter((eventDate) => {
         if (Date.parse(eventDate.schedule) === Date.parse(schedule))
+          /* console.log("fecha db", Date.parse(eventDate.schedule));
+        console.log("fecha arg", Date.parse(schedule)); */
           return eventDate;
       });
       if (eventByDate.length >= 1) {
@@ -89,7 +94,7 @@ async function postEvents(req, res) {
     const {
       name,
       artist,
-      genre,
+      genreId,
       schedule,
       performerImage,
       placeImage,
@@ -99,22 +104,28 @@ async function postEvents(req, res) {
     } = req.body;
     if (
       !name ||
-      !genre ||
+      !genreId ||
       !schedule ||
       !performerImage ||
       !placeImage ||
-      !artist
+      !artist ||
+      !venueId ||
+      !stockId
     ) {
       return res.status(404).send("Faltan datos obligatorios");
     } else {
+      if (!Number.isInteger(venueId))
+        return res.status(400).json({ error: "venueId debe ser un numero" });
+      if (!Number.isInteger(stockId))
+        return res.status(400).json({ error: "stockId debe ser un numero" });
       await Genre.findOrCreate({
-        where: { name: genre.toLowerCase() },
+        where: { name: genreId.toLowerCase() },
       });
       let saveGenre = await Genre.findOne({
-        where: { name: genre.toLowerCase() },
+        where: { name: genreId.toLowerCase() },
       });
       if (saveGenre) {
-        const event = await Event.findOrCreate({
+        await Event.findOrCreate({
           where: {
             name: name,
             artist: artist,
@@ -126,12 +137,15 @@ async function postEvents(req, res) {
             venueId: venueId,
             stockId: stockId,
           },
-        });
-        if (event) {
-          return res.status(201).json({ message: "Evento creado con exito" });
-        } else {
-          return res.status(404).json({ error: "No se puedo crear el evento" });
-        }
+        })
+          .then((response) => {
+            return res.status(201).json({ message: "Evento creado con exito" });
+          })
+          .catch((error) => {
+            return res
+              .status(404)
+              .json({ error: "No se puedo crear el evento" });
+          });
       } else {
         return res
           .status(404)
@@ -154,7 +168,6 @@ async function putEvents(req, res) {
       performerImage,
       placeImage,
       description,
-      producerId,
       venueId,
       stockId,
     } = req.body;
@@ -169,7 +182,6 @@ async function putEvents(req, res) {
           performerImage: performerImage,
           placeImage: placeImage,
           description: description,
-          producerId: producerId,
           venueId: venueId,
           stockId: stockId,
         },

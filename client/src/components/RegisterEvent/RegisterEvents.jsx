@@ -60,7 +60,8 @@ export default function RegisterEvent(){
         setEvent({
             ...event,
             schedule: value,
-            stockId: event.venueId,
+            venueId: parseInt(event.venueId),
+            stockId: parseInt(event.venueId),
             [e.target.name]: e.target.value
         })
     };
@@ -288,7 +289,7 @@ export default function RegisterEvent(){
     function handleGenreSelect(e){
         setEvent({
             ...event,
-            genre: e.target.value //event.genre
+            genreId: e.target.value //event.genre
         })
     };
 
@@ -338,7 +339,6 @@ export default function RegisterEvent(){
 
             <div> <input id="performerImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del artista" /> {errors.performerImage && <label>{errors.performerImage}</label>}</div>
             <div> <input id="placeImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del lugar" /> {errors.placeImage && <label>{errors.placeImage}</label>}</div>
-            <div> <input name="description" value={event.description}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Descripcion" /> {errors.description && <label>{errors.description}</label>}</div>
             
             <div>
                 <label>Seleccionar lugar del evento: </label>
@@ -348,6 +348,8 @@ export default function RegisterEvent(){
                 </select>
                 {errors.venueId && <label>{errors.venueId}</label>}
             </div>
+            
+            <div> <input name="description" value={event.description}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Descripcion" /> {errors.description && <label>{errors.description}</label>}</div>
             
             <button type="submit">Crear</button>
         </form>

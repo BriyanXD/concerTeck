@@ -1,5 +1,5 @@
 import React from 'react'
-import {EventById,ClearDetail} from '../../redux/actions'
+import {EventById,ClearDetail,GetVenues,GetGenres} from '../../redux/actions'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import NavBar from '../NavBar/NavBar';
@@ -19,22 +19,39 @@ export default function Detail() {
       dispatch(ClearDetail())
   }
   },[dispatch, id])
+  
+  useEffect(()=>{
+    dispatch(GetVenues())
+  },[dispatch])
 
-  const event = useSelector((state)=> state.Detail)
+  // useEffect(()=>{
+  //   dispatch(GetGenres())
+  // },[])
+
+  const {Detail} = useSelector((state)=> state)
+  // console.log(Detail)
+  const {Venues} = useSelector((state => state))
+  
+  let prueba =''
+  if(Detail && Venues){
+    prueba = Venues.find(e => e.id === Detail.venueId)
+    console.log(prueba)
+  }
   return (
-    <div>
+    <div className={style.container}>
       <NavBar/>
         <div className={style.card}>
-          <img src = {event.placeImage} height='300' width='300' alt={event.name}/>
+          <img src = {Detail.performerImage} height='300' width='400'  alt={Detail.name} className={style.img}/>
           <br />
-          <img src = {event.performerImage} height='300' width='300'  alt={event.name}/>
-          <div>{event.name}</div>
-          <div>{event.genre}</div>
-          <div>{event.schedule}</div>
-          <div>{event.address}</div>
-          <div>{event.description}</div>
+          <img src = {Detail.placeImage} height='300' width='400' alt={Detail.name} className={style.img}/>
+          <div className={style.name}>{Detail.name}</div>
+          <div className={style.genre}>{Detail.genre}</div>
+          <div className={style.schedule}>{Detail.schedule}</div>
+          <div className={style.venue}>{Venues.id}</div>
+          <div className={style.prueba}>{prueba !== undefined ? prueba.name : null}</div>
+          <div className={style.description}>{Detail.description}</div>
           <Link to='/'>
-            <button>Go Home</button>
+            <button className={style.button}>Go Home</button>
           </Link>
         </div>
       <Footer/>

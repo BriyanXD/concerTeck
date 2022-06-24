@@ -33,7 +33,19 @@ async function getTicketStock(req, res) {
   }
 }
 
+async function putTicketStock() {
+  try {
+    const allTicketStock = await TicketStock.findAll({
+      include: { model: Venue },
+    });
+    res.json(allTicketStock);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+}
+
 module.exports = {
   chargeTicketStock,
   getTicketStock,
+  putTicketStock,
 };
