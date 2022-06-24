@@ -114,7 +114,6 @@ export function register (user,value) {
 }
 
 export function LoginUser (value){
-    console.log(value)
     return async function (dispatch){
         try{
             const getUser = await axios.post(`http://localhost:3001/api/login`, value);
@@ -170,7 +169,6 @@ export function ValidationEmail (value){
 }
 
 export function ValidationUsername (value){
-    console.log(value, "el value de username")
     return async function (dispatch){
         try{
             const username = await axios.post(`http://localhost:3001/api/validation/username`, {username:value});

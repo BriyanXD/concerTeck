@@ -26,11 +26,6 @@
 
 .containerGenreAndSearch{
     display:flex;
-<<<<<<< HEAD
-    width: 400px;
-    justify-content: space-around;
-    align-items: center;
-=======
     width: 80%;
     left: -25%;
     margin-right: 10px;
@@ -39,7 +34,6 @@
     margin-left: 14vw;
 
     
->>>>>>> 2a542f76effc87f734f34e8dc77934568d6e916a
 }
 
 .logoUser{
@@ -60,13 +54,8 @@
     margin-right: 35px;
 }
 
-<<<<<<< HEAD
 .containerUserNavBar{
     position: relative;
     left: -15px;
 }
-=======
-
-
->>>>>>> 2a542f76effc87f734f34e8dc77934568d6e916a
 

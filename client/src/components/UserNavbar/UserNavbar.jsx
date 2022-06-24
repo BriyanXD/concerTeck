@@ -8,7 +8,6 @@ export default function UserNavBar() {
 
     const dispatch = useDispatch()
     const user = useSelector(state => state.User)
-    console.log(user)
     const [menuOpen, setMenuOpen] = useState(false);
 
   //Function toma la accion de click si el id es distinto a menu
