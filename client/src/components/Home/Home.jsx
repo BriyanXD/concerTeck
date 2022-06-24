@@ -11,6 +11,7 @@ import {Link} from 'react-router-dom';
 import Calendar from '../Calendar/Calendar'
 import PaginadoBigEvents from '../Paginado/PaginadoBigEvents'
 import PaginadoEvents from '../Paginado/PaginadoEvents'
+import ModalCalendar from '../ModalCalendar/ModalCalendar'
 
 
 export default function Home() {
@@ -47,6 +48,7 @@ const pagination2 = (numberPage2) =>{
 
   return (
     <div className={style.container}>
+
       <NavBar setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage}/>
       <Carrousel/>
       <div className={style.eventcontainer}>
@@ -84,7 +86,6 @@ const pagination2 = (numberPage2) =>{
           </Link>
           </div>
           )})}
-
           </div>
 
         </div>
@@ -93,7 +94,7 @@ const pagination2 = (numberPage2) =>{
         <Calendar/>
       </div><br />
       <Footer/>
-
+      <ModalCalendar/>
     </div>
   )
 }

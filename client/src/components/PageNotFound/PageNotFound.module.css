@@ -1,5 +1,5 @@
 .imagen{
-    background-image: url('./PageNotFound.jpg');
+    background-image: url('../../img/PageNotFound.jpg');
     height: 100vh;
     background-size: cover;
 }
