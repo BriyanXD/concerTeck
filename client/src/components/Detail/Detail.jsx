@@ -31,9 +31,12 @@ export default function Detail() {
   const {Detail} = useSelector((state)=> state)
   // console.log(Detail)
   const {Venues} = useSelector((state => state))
-  // console.log(Venues)
-  const prueba = Venues.filter(e => e.id === Detail.venueId)
-  console.log(prueba)
+  
+  let prueba =''
+  if(Detail && Venues){
+    prueba = Venues.find(e => e.id === Detail.venueId)
+    console.log(prueba)
+  }
   return (
     <div>
       <NavBar/>
@@ -45,8 +48,7 @@ export default function Detail() {
           <div>{Detail.genre}</div>
           <div>{Detail.schedule}</div>
           <div>{Venues.id}</div>
-          <div>{prueba[0].name}</div>
-          {/* <div>{Detail.venueId === Venues.id ? Venues.name : 'no se encontro el recinto'}</div> */}
+          <div>{prueba !== undefined ? prueba.name : null}</div>
           <div>{Detail.description}</div>
           <Link to='/'>
             <button>Go Home</button>
