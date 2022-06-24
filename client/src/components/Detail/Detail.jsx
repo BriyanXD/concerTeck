@@ -22,7 +22,7 @@ export default function Detail() {
   
   useEffect(()=>{
     dispatch(GetVenues())
-  },[])
+  },[dispatch])
 
   // useEffect(()=>{
   //   dispatch(GetGenres())
@@ -36,8 +36,8 @@ export default function Detail() {
   console.log(prueba)
   return (
     <div>
-      <NavBar/>
         <div className={style.card}>
+      <NavBar/>
           <img src = {Detail.placeImage} height='300' width='300' alt={Detail.name}/>
           <br />
           <img src = {Detail.performerImage} height='300' width='300'  alt={Detail.name}/>
@@ -45,14 +45,14 @@ export default function Detail() {
           <div>{Detail.genre}</div>
           <div>{Detail.schedule}</div>
           <div>{Venues.id}</div>
-          <div>{prueba[0].name}</div>
+          {/* <div>{prueba[0].name}</div> */}
           {/* <div>{Detail.venueId === Venues.id ? Venues.name : 'no se encontro el recinto'}</div> */}
           <div>{Detail.description}</div>
           <Link to='/'>
             <button>Go Home</button>
           </Link>
-        </div>
       <Footer/>
+        </div>
     </div>
   )
 }

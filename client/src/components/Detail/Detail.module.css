@@ -1,0 +1,6 @@
+@import url(../../index.css);
+/* @import url(../Home/Home.module.css); */
+.card{
+background-color: var(--color2);
+}
+
