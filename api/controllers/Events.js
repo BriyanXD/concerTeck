@@ -68,10 +68,11 @@ async function loadEventsAndGetEvents(req, res) {
           .json({ error: "No se encontro Eventos con ese ID" });
       }
     } else if (schedule) {
-      console.log(schedule);
       //const eventName = await Events.findOne({where:{name:name}})
       const eventByDate = allEvents.filter((eventDate) => {
         if (Date.parse(eventDate.schedule) === Date.parse(schedule))
+          /* console.log("fecha db", Date.parse(eventDate.schedule));
+        console.log("fecha arg", Date.parse(schedule)); */
           return eventDate;
       });
       if (eventByDate.length >= 1) {

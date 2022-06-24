@@ -3,25 +3,29 @@ const initialState = {
   AllBigEvents: [],
   AllLitleEvents: [],
   Detail: {},
-  User:"",
+  User: "",
   // TodosEvents:[],
-  BigEvents:[],
-  Events:[],
-  Genres:[],
-  Venues:[],
+  BigEvents: [],
+  Events: [],
+  Genres: [],
+  Venues: [],
   userValidation: "",
   emailValidation: "",
-  usernameValidation: ""
+  usernameValidation: "",
+  stateModalCalendar: {
+    isVisbleModal: false,
+    eventsForCalendar: [],
+  },
 };
 
-function reducers(state = initialState, {type, payload}) {
+function reducers(state = initialState, { type, payload }) {
   switch (type) {
     case "GET_EVENTS":
       // console.log(payload)
-      const BigE = payload.filter(e => e.venue.isBigEvent === true)  
+      const BigE = payload.filter((e) => e.venue.isBigEvent === true);
       // (e => e.isBigEvent === true)
       // console.log(BigE);
-      const Eve = payload.filter(e => e.venue.isBigEvent === false)
+      const Eve = payload.filter((e) => e.venue.isBigEvent === false);
       // payload.filter(e => e.isBigEvent === false)
       // console.log(Eve);
       return {
@@ -29,106 +33,118 @@ function reducers(state = initialState, {type, payload}) {
 
         AllEvents: payload,
         // TodosEvents:payload,
-        AllBigEvents:BigE,
+        AllBigEvents: BigE,
         BigEvents: BigE,
-        AllLitleEvents:Eve,
+        AllLitleEvents: Eve,
         Events: Eve,
-      }
-      case 'GET_GENRES':{
-        // console.log(payload)
-        return{
-          ...state,
-          Genres:payload
-        }
-      }
-    
-     case "GET_EVENT_BY_NAME":{
-      
-      const bigEvents = payload.filter(e => e.venue.isBigEvent === true)
+      };
+    case "GET_GENRES": {
       // console.log(payload)
-      const smallEvents = payload.filter(e => e.venue.isBigEvent === false)
-
-      return{
-        ...state,
-        BigEvents: bigEvents,
-        Events: smallEvents
-      }
-     }
-    case "GET_EVENT_DETAIL": return {
-      ...state,
-      Detail: payload
-    }
-
-    case "CLEAR_DETAIL":{
       return {
         ...state,
-        Detail:{}
-      }
+        Genres: payload,
+      };
+    }
+    case "GET_EVENT_BY_NAME": {
+      const bigEvents = payload.filter((e) => e.venue.isBigEvent === true);
+      const smallEvents = payload.filter((e) => e.venue.isBigEvent === false);
+
+      return {
+        ...state,
+        BigEvents: bigEvents,
+        Events: smallEvents,
+      };
+    }
+    case "GET_EVENT_DETAIL":
+      return {
+        ...state,
+        Detail: payload,
+      };
+
+    case "CLEAR_DETAIL": {
+      return {
+        ...state,
+        Detail: {},
+      };
     }
 
-    case "LOGIN_USER":{
+    case "LOGIN_USER": {
       return {
         ...state,
         User: payload,
-        userValidation:""
-      }
+        userValidation: "",
+      };
     }
 
-    case "LOGOUT_USER":{
+    case "LOGOUT_USER": {
       return {
         ...state,
-        User: ""
-      }
+        User: "",
+      };
     }
     // case "FILTER_GENRES":{
     //   return {
     //   }
     // }
-    case "FILTER_GENRES":{
+    case "FILTER_GENRES": {
       // console.log(state.AllEvents)
       // console.log(payload)
-        const generos = payload === 'all'? state.AllBigEvents: state.AllBigEvents.filter(e => parseInt(e.genreId) === parseInt(payload))
-        // console.log(generos)
-        const generoso = payload === 'all'? state.AllLitleEvents: state.AllLitleEvents.filter(e =>  parseInt(e.genreId) === parseInt(payload))
-        // console.log(generoso);
-        // const prueba = state.AllLitleEvents.filter(e => e.name === e.name)
-        // console.log(prueba)
-        return{
-          ...state,
-          BigEvents: generos,
-          Events: generoso
-        }
+      const generos =
+        payload === "all"
+          ? state.AllBigEvents
+          : state.AllBigEvents.filter(
+              (e) => parseInt(e.genreId) === parseInt(payload)
+            );
+      // console.log(generos)
+      const generoso =
+        payload === "all"
+          ? state.AllLitleEvents
+          : state.AllLitleEvents.filter(
+              (e) => parseInt(e.genreId) === parseInt(payload)
+            );
+      // console.log(generoso);
+      // const prueba = state.AllLitleEvents.filter(e => e.name === e.name)
+      // console.log(prueba)
+      return {
+        ...state,
+        BigEvents: generos,
+        Events: generoso,
+      };
     }
-    case 'ORDER_BY_DATE':
-        // if(state.AllEvents.venue.isBigEvent === true){
-            let reubicacionByDate = payload === 'asc' ?
-            state.AllEvents.sort(function(a, b){
-                if(a.schedule > b.schedule){
-                    return 1;
-                }
-                if(b.schedule > a.schedule){
-                    return -1;
-                }
-                    return 0;
-                }) 
-                : 
-            state.AllEvents.sort(function(a, b){
-                if(a.schedule > b.schedule){
-                    return -1;
-                }
-                if(b.schedule > a.schedule){
-                    return 1;
-                }
-                    return 0;
-                }) 
-                // console.log(reubicacionByDate)
-                return {
-                      ...state,
-                      Events: reubicacionByDate.filter(e => e.venue.isBigEvent === false) ? reubicacionByDate.filter(e => e.venue.isBigEvent === false) : state.AllLitleEvents,
-                      BigEvents: reubicacionByDate.filter(e => e.venue.isBigEvent === true) ? reubicacionByDate.filter(e => e.venue.isBigEvent === true) : state.AllBigEvents,
-                    // ...state,
-                    // AllEvents: payload === 'all'?  state.TodosEvents  : reubicaciónByDate
-                }
+    case "ORDER_BY_DATE":
+      // if(state.AllEvents.venue.isBigEvent === true){
+      let reubicacionByDate =
+        payload === "asc"
+          ? state.AllEvents.sort(function (a, b) {
+              if (a.schedule > b.schedule) {
+                return 1;
+              }
+              if (b.schedule > a.schedule) {
+                return -1;
+              }
+              return 0;
+            })
+          : state.AllEvents.sort(function (a, b) {
+              if (a.schedule > b.schedule) {
+                return -1;
+              }
+              if (b.schedule > a.schedule) {
+                return 1;
+              }
+              return 0;
+            });
+      // console.log(reubicacionByDate)
+      return {
+        ...state,
+        Events: reubicacionByDate.filter((e) => e.venue.isBigEvent === false)
+          ? reubicacionByDate.filter((e) => e.venue.isBigEvent === false)
+          : state.AllLitleEvents,
+        BigEvents: reubicacionByDate.filter((e) => e.venue.isBigEvent === true)
+          ? reubicacionByDate.filter((e) => e.venue.isBigEvent === true)
+          : state.AllBigEvents,
+        // ...state,
+        // AllEvents: payload === 'all'?  state.TodosEvents  : reubicaciónByDate
+      };
 
     // case "LOGOUT":{
     //   return {
@@ -136,36 +152,66 @@ function reducers(state = initialState, {type, payload}) {
     //     User:{}
     //   }
     // }
-    case "POST_EVENT": return {
-      ...state
-    }
-    case "GET_GENRES": return {
+    case "POST_EVENT":
+      return {
         ...state,
-        Genres: payload
-    }
-    case "POST_GENRE": return {
-      ...state
-    }
-    case "GET_VENUES": console.log(payload)
-     return {
+        Genres: payload,
+      };
+    case "POST_GENRE":
+      return {
         ...state,
-        Venues: payload
-    }
-    case "VALIDATION_LOGIN": return{
-      ...state,
-      userValidation: payload
-    }
-    case "VALIDATION_EMAIL": return{
-      ...state,
-      emailValidation: payload
-    }
-    case "VALIDATION_USERNAME": return{
-      ...state,
-      usernameValidation: payload
-    }
-  
+      };
+    case "GET_VENUES":
+      return {
+        ...state,
+        Venues: payload,
+      };
+    case "VALIDATION_LOGIN":
+      return {
+        ...state,
+        userValidation: payload,
+      };
+    case "VALIDATION_EMAIL":
+      return {
+        ...state,
+        emailValidation: payload,
+      };
+    case "VALIDATION_USERNAME":
+      return {
+        ...state,
+        usernameValidation: payload,
+      };
+    case "MODAL_CALENDAR_VISIBLE":
+      return {
+        ...state,
+        stateModalCalendar: {
+          isVisbleModal: payload.visibleModal,
+          eventsForCalendar: searchEventForCalendar(
+            state.AllEvents,
+            payload.dateForSearch,
+            payload.visibleModal
+          ),
+        },
+      };
+
     default:
       return state;
   }
 }
+
+function searchEventForCalendar(allEvents, dateForCalendar, visibleMod) {
+  if (visibleMod) {
+    console.log("argumento", dateForCalendar);
+    const EventSaved = allEvents.filter((e) => {
+      const dateCurrent = e.schedule.split("T")[0];
+      console.log("convertido", dateCurrent);
+      if (dateCurrent === dateForCalendar) return e;
+      else return null;
+    });
+    return EventSaved;
+  } else {
+    return dateForCalendar;
+  }
+}
+
 export default reducers;
