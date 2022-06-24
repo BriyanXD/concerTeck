@@ -8,13 +8,13 @@ import {ModalCalendarVisible} from "../../redux/actions"
 
 
 
+
 export default function Calendar() {
 
-  const events = []
-
-  const dispatch = useDispatch()
-  const { AllEvents } = useSelector(state => state);
-  /* const { stateModalCalendar } = useSelector(state => state); */
+    const events = []
+    const dispatch = useDispatch()
+    const {AllEvents} = useSelector(state => state)
+    // console.log('eventos:',AllEvents)
 
   // console.log('eventos:',AllEvents)
 

@@ -45,10 +45,8 @@ function reducers(state = initialState, { type, payload }) {
         Genres: payload,
       };
     }
-
     case "GET_EVENT_BY_NAME": {
       const bigEvents = payload.filter((e) => e.venue.isBigEvent === true);
-      console.log(payload);
       const smallEvents = payload.filter((e) => e.venue.isBigEvent === false);
 
       return {
@@ -90,21 +88,21 @@ function reducers(state = initialState, { type, payload }) {
     // }
     case "FILTER_GENRES": {
       // console.log(state.AllEvents)
-      console.log(payload);
+      // console.log(payload)
       const generos =
         payload === "all"
           ? state.AllBigEvents
           : state.AllBigEvents.filter(
               (e) => parseInt(e.genreId) === parseInt(payload)
             );
-      console.log(generos);
+      // console.log(generos)
       const generoso =
         payload === "all"
           ? state.AllLitleEvents
           : state.AllLitleEvents.filter(
               (e) => parseInt(e.genreId) === parseInt(payload)
             );
-      console.log(generoso);
+      // console.log(generoso);
       // const prueba = state.AllLitleEvents.filter(e => e.name === e.name)
       // console.log(prueba)
       return {
@@ -135,7 +133,7 @@ function reducers(state = initialState, { type, payload }) {
               }
               return 0;
             });
-      console.log(reubicacionByDate);
+      // console.log(reubicacionByDate)
       return {
         ...state,
         Events: reubicacionByDate.filter((e) => e.venue.isBigEvent === false)
@@ -155,10 +153,6 @@ function reducers(state = initialState, { type, payload }) {
     //   }
     // }
     case "POST_EVENT":
-      return {
-        ...state,
-      };
-    case "GET_GENRES":
       return {
         ...state,
         Genres: payload,

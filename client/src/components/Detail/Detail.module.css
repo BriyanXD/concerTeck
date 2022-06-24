@@ -1,0 +1,37 @@
+@import url(../../index.css);
+/* @import url(../Home/Home.module.css); */
+
+.container{
+    background-color: var(--color2);
+}
+
+.card{
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+.name, .genre, .schedule, .venue, .prueba, .description{
+    color: var(--color4);
+    padding: 3px;
+}
+
+.button{
+    background-color: #FF4C29;
+    width: 8vw;
+    height: 2vw;
+    text-align: center;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    font-size: 15px;
+    margin-right: 35px;
+    border-color: #FF4C29;
+    margin: 13px;
+    cursor: pointer;
+}
+
+.img{
+    margin-top: 15px;
+    border-radius: 3px;
+}

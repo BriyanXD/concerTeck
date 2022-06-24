@@ -47,7 +47,7 @@ async function loadEventsAndGetEvents(req, res) {
       ],
     });
     if (name) {
-      //const eventName = await Events.findOne({where:{name:name}})
+      // const eventName = await Events.findOne({where:{name:name}})
       const eventName = allEvents.filter((n) =>
         n.name.toLowerCase().includes(name.toLowerCase())
       );

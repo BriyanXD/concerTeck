@@ -25,7 +25,12 @@ export function searchEvent(name) {
         payload: events.data,
       });
     } catch (error) {
-      console.log(error.message);
+      // alert('NO SE ENCONTRO EL EVENTO')
+      return dispatch({
+        type: "GET_EVENT_BY_NAME",
+        payload: [],
+      });
+      // console.log(error.message);
     }
   };
 }
@@ -36,7 +41,7 @@ export function EventById(id) {
       const event = await axios.get(
         `http://localhost:3001/api/events?id=${id}`
       );
-      console.log(id);
+      // console.log(id)
       return dispatch({
         type: "GET_EVENT_DETAIL",
         payload: event.data,
