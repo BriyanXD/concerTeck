@@ -9,7 +9,7 @@
     height: 43vh;
     margin-top: 1px;
     box-shadow:  5px 5px 14px rgba(0, 0, 0, 0.32);
-    border-radius: 3% 3% 3% 3%;
+    border-radius: 10px;
     border: solid 1px rgba(255, 255, 255, 0.3);
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import {EventById,ClearDetail} from '../../redux/actions'
+import {EventById,ClearDetail,GetVenues,GetGenres} from '../../redux/actions'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import NavBar from '../NavBar/NavBar';
@@ -19,20 +19,35 @@ export default function Detail() {
       dispatch(ClearDetail())
   }
   },[dispatch, id])
+  
+  useEffect(()=>{
+    dispatch(GetVenues())
+  },[])
 
-  const event = useSelector((state)=> state.Detail)
+  // useEffect(()=>{
+  //   dispatch(GetGenres())
+  // },[])
+
+  const {Detail} = useSelector((state)=> state)
+  // console.log(Detail)
+  const {Venues} = useSelector((state => state))
+  // console.log(Venues)
+  const prueba = Venues.filter(e => e.id === Detail.venueId)
+  console.log(prueba)
   return (
     <div>
       <NavBar/>
         <div className={style.card}>
-          <img src = {event.placeImage} height='300' width='300' alt={event.name}/>
+          <img src = {Detail.placeImage} height='300' width='300' alt={Detail.name}/>
           <br />
-          <img src = {event.performerImage} height='300' width='300'  alt={event.name}/>
-          <div>{event.name}</div>
-          <div>{event.genre}</div>
-          <div>{event.schedule}</div>
-          <div>{event.address}</div>
-          <div>{event.description}</div>
+          <img src = {Detail.performerImage} height='300' width='300'  alt={Detail.name}/>
+          <div>{Detail.name}</div>
+          <div>{Detail.genre}</div>
+          <div>{Detail.schedule}</div>
+          <div>{Venues.id}</div>
+          <div>{prueba[0].name}</div>
+          {/* <div>{Detail.venueId === Venues.id ? Venues.name : 'no se encontro el recinto'}</div> */}
+          <div>{Detail.description}</div>
           <Link to='/'>
             <button>Go Home</button>
           </Link>
