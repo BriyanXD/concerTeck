@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { OrderByDate } from '../../../redux/actions'
+import style from './Date.module.css';
 
 export default function Date(setCurrenPag,setCurrentPage) {
   const dispatch = useDispatch()
@@ -15,10 +16,10 @@ export default function Date(setCurrenPag,setCurrentPage) {
   }
   return (
        <div>
-            <label htmlFor="">Ordenado Por Fecha</label><br/>
-            <select name="" id="" onChange={e =>{ handleOrderByReleased(e)}}>
-                <option value="asc">Orden Ascendente</option>
-                <option value='des'>Orden Descendente</option>
+            <select name="" id="" className={style.date} onChange={e =>{ handleOrderByReleased(e)}}>
+                <option className={style.option}>Orden Por Fecha</option>
+                <option value="asc" className={style.option}>Eventos más Proximos</option>
+                <option value='des' className={style.option}>Ultimos Eventos</option>
             </select> 
         </div> 
       

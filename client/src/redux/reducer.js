@@ -35,7 +35,7 @@ function reducers(state = initialState, {type, payload}) {
         Events: Eve,
       }
       case 'GET_GENRES':{
-        console.log(payload)
+        // console.log(payload)
         return{
           ...state,
           Genres:payload

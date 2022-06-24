@@ -65,10 +65,8 @@ routes.get("/venues", getVenues);
 
 routes.get("/ticketstock", getTicketStock);
 
-routes.post("/login", LoginUser);
 
 routes.post("/validation/login", ValidationUser);
 routes.post("/validation/username",   ValidationUsername);
 routes.post("/validation/email", ValidationEmail);
 
-module.exports = routes;

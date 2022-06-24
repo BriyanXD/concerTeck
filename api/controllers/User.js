@@ -26,15 +26,15 @@ async function createUser(req, res) {
 // "No se ha logrado crear el usuario"
 async function getUser(req, res) {
   const DBusers = await User.findAll({ include: { model: Ticket } });
-  const { username, password } = req.body;
+  /* const { username, password } = req.body; */
   try {
-    if (username && password) {
+    /* if (username && password) {
       const userFound = DBusers.find((user) => {
         if (user.username === username && user.password === password)
           return user;
       });
       return res.send(userFound);
-    }
+    } */
     return res.send(DBusers);
   } catch (error) {
     return res.status(404).send({ error: error.message });
@@ -42,29 +42,27 @@ async function getUser(req, res) {
 }
 
 async function putUser(req, res) {
-  const { id, email, password } = req.body;
+  const { id, email, password, username } = req.body;
   try {
-    if (!id && !email && !password) {
+    if (!id && !email && !password && username) {
       return res
         .status(404)
         .json({ error: "Faltan completar Campos obligatorios" });
     } else {
-      const upload = await User.findByPk(id);
-      if (upload) {
-        const user = await User.update(
-          {
-            email: email,
-            password: password,
+      await User.update(
+        {
+          email: email,
+          password: password,
+          username: username,
+        },
+        {
+          where: {
+            id: id,
           },
-          {
-            where: {
-              id: id,
-            },
-          }
-        );
-
-        return res.json({ error: "Usuario Actualizado con exitos" });
-      }
+        }
+      );
+      const user = await User.findOne({ where: { id: id } });
+      return res.json({ message: `Usuario Actualizado con exitos`, user });
     }
   } catch (error) {
     res.status(404).send({ error: error.message });
@@ -88,7 +86,7 @@ async function deleteUser(req, res) {
     if (destoyed) {
       return res
         .status(201)
-        .json({ error: "El Usuario a sido eliminado con exito" });
+        .json({ message: "El Usuario a sido eliminado con exito" });
     }
   } catch (error) {
     return res.status(404).json({ error: error.message });

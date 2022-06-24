@@ -5,6 +5,7 @@ import Login from './components/Login/Login';
 import RegisterUser from './components/RegisterUser/RegisterUser.jsx';
 import RegisterEvent from './components/RegisterEvent/RegisterEvents';
 import Detail from './components/Detail/Detail';
+import PageNotFound from './components/PageNotFound/PageNotFound';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             {/* <Route exact path='' element= {<Ruta/>}/> 
             <Route exact path='' element= {<Ruta/>}/>  */} 
             <Route exact path='/events' element={<RegisterEvent/>}/>
+            <Route path='*' element={<PageNotFound/>}/>
           </Routes>
       </div>
     </BrowserRouter>
