@@ -23,6 +23,7 @@ export default function Home() {
   const indexLastEvent = currentPag * eventsPerPag
   const indexFirstEvent = indexLastEvent - eventsPerPag
   const currentBigEvents = allEventsPagination.slice(indexFirstEvent, indexLastEvent)
+  console.log(currentBigEvents.length)
 
 
   const allSmallEventsPagination = useSelector((state) => {return state.Events})
@@ -31,6 +32,7 @@ export default function Home() {
   const indexLastEventt = currentpage * eventPerPage
   const indexfirstEventt = indexLastEventt - eventPerPage
   const currentEvents = allSmallEventsPagination.slice(indexfirstEventt, indexLastEventt)
+  console.log(currentEvents.length)
 
   const pagination = (numberPage) =>{
     setCurrenPag(numberPage)
@@ -57,7 +59,8 @@ const pagination2 = (numberPage2) =>{
           pagination = {pagination}
           />
           <div className={style.bigcontainer}>
-          {currentBigEvents?.map(el => {
+          { currentBigEvents.length !== 0? 
+          currentBigEvents?.map(el => {
           return(
           <div key={el.id}>
           <Link style={{textDecoration:'none'}} to= {`/${el.id}`}>
@@ -65,7 +68,7 @@ const pagination2 = (numberPage2) =>{
           </Link>
         
           </div>
-          )})}
+          )}):<div><h1>'No se encontraron eventos Grandes'</h1></div>}
 
           </div>
         </div>
@@ -75,7 +78,8 @@ const pagination2 = (numberPage2) =>{
           allSmallEventsPagination = {allSmallEventsPagination.length}
           pagination2 = {pagination2}/>
           <div className={style.litlecontainer}>
-          {currentEvents?.map(el => {
+          {currentEvents.length !== 0?
+          currentEvents?.map(el => {
           return(
           <div key={el.id}>
             
@@ -83,7 +87,7 @@ const pagination2 = (numberPage2) =>{
           <CardEvent name={el.name} genre={el.genre} image={el.performerImage} schedule={el.schedule}/>
           </Link>
           </div>
-          )})}
+          )}):<div><h1>'No se encontraron eventos Pequeños'</h1></div>}
 
           </div>
 
