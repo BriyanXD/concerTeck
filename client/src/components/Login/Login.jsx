@@ -1,24 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { LoginUser } from "../../redux/actions";
+import { LoginUser, ValidationUser } from "../../redux/actions";
 import style from "./Login.module.css";
 import { Link } from "react-router-dom";
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const people = useSelector((state) => state.User);
-  console.log(people);
-
+  const userValidation = useSelector((state) => state.userValidation);
+  
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
+  console.log(user);
 
   const [errors, setErrors] = useState({
     username: "",
     password: "",
+    validation: ""
   });
 
   const handleChange = (e) => {
@@ -68,28 +69,39 @@ export default function Login() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =(e) => {
     e.preventDefault();
-    if (errors.username !== "" || errors.password !== "") {
-      alert("Para poder registrarse debe solucionar los errores");
-    }
+    dispatch(ValidationUser(user))
 
-    if (user.username === "" || user.password === "") {
-      setErrors({
-        username:
-          user.username === "" ? "Por favor ingrese un nombre de usuario" : "",
-        password:
-          user.password === "" ? "Por favor ingrese una contraseña" : "",
-      });
-      return;
-    }
-    dispatch(LoginUser(user));
-    alert("Se registro correctamente");
-    setUser({
-      username: "",
-      password: "",
-    });
-    navigate("/");
+      if (errors.username !== "" || errors.password !== "") {
+        alert("Para poder registrarse debe solucionar los errores");
+      }
+  
+      if (user.username === "" || user.password === "") {
+        setErrors({
+          username:
+            user.username === "" ? "Por favor ingrese un nombre de usuario" : "",
+          password:
+            user.password === "" ? "Por favor ingrese una contraseña" : "",
+        });
+        return;
+      }
+        if (userValidation){
+            dispatch(LoginUser(user));
+            alert("Se registro correctamente");
+            setUser({
+              username: "",
+              password: "",
+              validation: ""
+            });
+            navigate("/");
+          }else{
+            setErrors({
+              ...errors,
+              validation: "Revise los datos ingresados e intente nuevamente"
+            }) 
+            return
+          }
   };
 
   return (
@@ -115,6 +127,7 @@ export default function Login() {
             placeholder="Contraseña"
           />
           {errors.password && <label>{errors.password}</label>}
+          {errors.validation && <label>{errors.validation}</label>}
           <button className={style.btn}>Iniciar sesión</button>
         </form>
         <a className={style.etiquetaA} href="#">

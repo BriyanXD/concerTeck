@@ -90,7 +90,7 @@ const pagination2 = (numberPage2) =>{
         </div>
       </div><br />
       <div>
-        <Calendar/>
+        {/* <Calendar/> */}
       </div><br />
       <Footer/>
 

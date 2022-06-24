@@ -3,13 +3,15 @@ const initialState = {
   AllBigEvents: [],
   AllLitleEvents: [],
   Detail: {},
-  User:{},
+  User:"",
   // TodosEvents:[],
   BigEvents:[],
   Events:[],
   Genres:[],
   Venues:[],
-
+  userValidation: "",
+  emailValidation: "",
+  usernameValidation: ""
 };
 
 function reducers(state = initialState, {type, payload}) {
@@ -69,7 +71,15 @@ function reducers(state = initialState, {type, payload}) {
     case "LOGIN_USER":{
       return {
         ...state,
-        User: payload
+        User: payload,
+        userValidation:""
+      }
+    }
+
+    case "LOGOUT_USER":{
+      return {
+        ...state,
+        User: ""
       }
     }
     // case "FILTER_GENRES":{
@@ -141,6 +151,18 @@ function reducers(state = initialState, {type, payload}) {
     case "GET_VENUES": return {
         ...state,
         Venues: payload
+    }
+    case "VALIDATION_LOGIN": return{
+      ...state,
+      userValidation: payload
+    }
+    case "VALIDATION_EMAIL": return{
+      ...state,
+      emailValidation: payload
+    }
+    case "VALIDATION_USERNAME": return{
+      ...state,
+      usernameValidation: payload
     }
   
     default:

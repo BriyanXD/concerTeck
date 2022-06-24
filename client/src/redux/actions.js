@@ -113,9 +113,11 @@ export function register (user,value) {
 }
 
 export function LoginUser (value){
+    console.log(value)
     return async function (dispatch){
         try{
-            const getUser = await axios.get("http://localhost:3001/api/user", value);
+            const getUser = await axios.post(`http://localhost:3001/api/login`, value);
+            console.log(getUser.data)
             return dispatch({
                 type: "LOGIN_USER",
                 payload: getUser.data,
@@ -125,6 +127,62 @@ export function LoginUser (value){
         }
     }
 }   
+
+export function LogOut (){
+    return async function (dispatch){
+        try{
+            return dispatch({
+                type: "LOGOUT_USER",
+            })
+        }catch(error){
+            console.log(error.message)
+        }
+    }
+}
+
+export function ValidationUser (value){
+    return async function (dispatch){
+        try{
+            const user = await axios.post(`http://localhost:3001/api/validation/login`, value)
+            return dispatch({
+                type: "VALIDATION_LOGIN",
+                payload: user.data
+            })
+        }catch(error){
+            console.log(error.message)
+        }
+    }
+}
+
+export function ValidationEmail (value){
+    return async function (dispatch){
+        try{
+            const email = await axios.post(`http://localhost:3001/api/validation/email`,{email:value});
+            return dispatch({
+                type: "VALIDATION_EMAIL",
+                payload: email.data
+            })
+        }catch(error){
+            console.log(error.message)
+        }
+    }
+}
+
+export function ValidationUsername (value){
+    console.log(value, "el value de username")
+    return async function (dispatch){
+        try{
+            const username = await axios.post(`http://localhost:3001/api/validation/username`, {username:value});
+            console.log(username.data, "desde el actions")
+            return dispatch({
+                type: "VALIDATION_USERNAME",
+                payload: username.data
+            })
+        }catch(error){
+            console.log(error.message)
+        }
+    }
+}
 
 export function filterByGenres (payload){
     console.log(payload)

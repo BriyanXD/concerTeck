@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import style from './RegisterUser.module.css';
-import { register } from '../../redux/actions';
+import { register, ValidationEmail, ValidationUsername } from '../../redux/actions';
 
 export default function RegisterUser () {
     const { usuario } = useParams();
     const navigate = useNavigate()
     console.log(usuario)
     const dispatch = useDispatch()
+    let emailV = useSelector(state => state.emailValidation)
+    let usernameV = useSelector(state => state.usernameValidation)
+    console.log(emailV, "emailV", usernameV, "usernameV")
     //Estado local que maneja la información del usuario a registrar
     const [user, setUser] = useState({
         name:"",
@@ -90,18 +93,27 @@ export default function RegisterUser () {
 
         //validacion de nombre de usuario
         if(e.target.name === "username"){
-            if(e.target.value === ""){
+          if(e.target.value === ""){
+            setErrors({
+              ...errors,
+              [e.target.name]: "Por favor ingrese un nombre de usuario"
+            })
+          } else if(e.target.value !== ""){
+              dispatch(ValidationUsername(e.target.value))
+              if(usernameV === true){
                 setErrors({
-                    ...errors,
-                    [e.target.name]: "Por favor ingrese un nombre de usuario"
+                  ...errors,
+                  [e.target.name]: "El nombre de usuario ingresado ya existe"
                 })
-            } else {
-                setErrors({
-                    ...errors,
-                    [e.target.name]: ""
-                })
+              } else{
+              setErrors({
+                  ...errors,
+                  [e.target.name]: ""
+              })
             }
         }
+
+      }
 
         //validacion de cuit o cuil
         if(e.target.name === "cuit_cuil"){
@@ -136,11 +148,28 @@ export default function RegisterUser () {
                     [e.target.name]: "Ingrese un email valido"
                 })
             } else {
+              dispatch(ValidationEmail(e.target.value))
                 setErrors({
                     ...errors,
                     [e.target.name]: ""
                 })
             }
+        }
+        if(e.target.name === "email"){
+          if (/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(e.target.value)){ 
+            if(emailV === true){
+              setErrors({
+                ...errors,
+                [e.target.name] : "El email ingresado ya existe"
+              })
+            }else{
+              setErrors({
+                ...errors,
+                [e.target.name]: ""
+              })
+            }
+          }
+
         }
 
         //validacion de cbu
