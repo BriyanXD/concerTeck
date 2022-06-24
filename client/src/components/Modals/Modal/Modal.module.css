@@ -1,9 +1,10 @@
 
 
 .containerBase{
-    position: absolute;
-    bottom: -131%;
-    left: 0px;
+    position: fixed;
+    top: 80px;
+    left: 10px;
+    z-index: 10;
     width: 100vw;
     height: 100vh;
     display: flex;
