@@ -35,12 +35,12 @@ export default function Detail() {
   const date = '';
   const time = '';
 
-  if(Detail){
-    date = Detail? Detail.schedule.split('T')[0] : null
-    console.log(date)
-    time = Detail ? Detail.schedule.split('T')[1].split(':')[0]+':'+ Detail.schedule.split('T')[1].split(':')[1] :null
-    console.log(time)
-  }
+  // if(Detail){
+  //   date = Detail? Detail.schedule.split('T')[0] : null
+  //   console.log(date)
+  //   time = Detail ? Detail.schedule.split('T')[1].split(':')[0]+':'+ Detail.schedule.split('T')[1].split(':')[1] :null
+  //   console.log(time)
+  // }
   // console.log(Detail.schedule)
 
   let prueba =''
@@ -57,7 +57,8 @@ export default function Detail() {
           <img src = {Detail.placeImage} height='300' width='400' alt={Detail.name} className={style.img}/>
           <div className={style.name}>{Detail.name}</div>
           <div className={style.genre}>{Detail.genre}</div>
-          <div className={style.schedule}>{date} {time}h.</div>
+          <div className={style.schedule}>{Detail.schedule}</div>
+          {/* <div className={style.schedule}>{date} {time}h.</div> */}
           <div className={style.venue}>{Venues.id}</div>
           <div className={style.prueba}>{prueba !== undefined ? prueba.name : null}</div>
           <div className={style.description}>{Detail.description}</div>
