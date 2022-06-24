@@ -33,6 +33,11 @@ const { getVenues } = require("../controllers/Venue");
 const { getTicketStock } = require("../controllers/TicketStock");
 
 const { LoginUser } = require("../controllers/Login");
+const { 
+  ValidationUser,
+  ValidationUsername,
+  ValidationEmail,
+} = require("../controllers/Validations");
 
 routes.post("/user", createUser);
 routes.get("/user", getUser);
@@ -60,6 +65,10 @@ routes.get("/venues", getVenues);
 
 routes.get("/ticketstock", getTicketStock);
 
-routes.get("/login", LoginUser);
+routes.post("/login", LoginUser);
+
+routes.post("/validation/login", ValidationUser);
+routes.post("/validation/username",   ValidationUsername);
+routes.post("/validation/email", ValidationEmail);
 
 module.exports = routes;

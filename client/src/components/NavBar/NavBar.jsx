@@ -23,10 +23,8 @@ export default function NavBar({setCurrenPag,setCurrentPage}) {
       <div className={style.registerAndLogin}>
       <button className={style.btnRegister} type="button">Crear Evento</button>
       {/* <button className={style.btnRegister} type="button">Registro</button> */}
-
       {/* <span className={style.logoUser}>User</span> */}
       </div>
-
     </div>
   )
 }

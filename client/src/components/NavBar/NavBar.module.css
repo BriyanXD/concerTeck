@@ -54,6 +54,8 @@
     margin-right: 35px;
 }
 
-
-
+.containerUserNavBar{
+    position: relative;
+    left: -15px;
+}
 
