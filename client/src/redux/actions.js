@@ -24,7 +24,12 @@ export function searchEvent (name){
                 payload: events.data
             })
         }catch(error){
-            console.log(error.message);
+            // alert('NO SE ENCONTRO EL EVENTO')
+            return dispatch({
+                type:'GET_EVENT_BY_NAME',
+                payload: []
+            })
+            // console.log(error.message);
         }   
     }
 }
