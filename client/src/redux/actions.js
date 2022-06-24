@@ -33,7 +33,7 @@ export function EventById (id) {
     return async function (dispatch){
         try{
             const event = await axios.get(`http://localhost:3001/api/events?id=${id}`);
-            console.log(id)
+            // console.log(id)
             return dispatch({
                 type:'GET_EVENT_DETAIL',
                 payload: event.data
