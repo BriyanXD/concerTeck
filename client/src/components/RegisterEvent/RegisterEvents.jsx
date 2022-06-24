@@ -14,6 +14,7 @@ import DateTimePicker from 'react-datetime-picker';
 import Footer from '../Footer/Footer';
 import NavBar from '../NavBar/NavBar';
 
+
 export default function RegisterEvent(){
     const dispatch = useDispatch();
     //const [dateTime, setDateTime] = useState(null);
