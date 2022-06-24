@@ -45,9 +45,11 @@ export function EventById (id) {
 }
 
 export function CreateEvent (value){
+    console.log(value)
     return async function (dispatch){
         try{
-            const creation = await axios.post(`http://localhost:3001/api/events`, value)
+            const creation = await axios.post("http://localhost:3001/api/events", value)
+            console.log(creation.data, "creando")
             return creation;
         }catch(error){
             console.log(error.message);
@@ -72,7 +74,7 @@ export function GetGenres (){
 export function CreateGenre (value){
     return async function (dispatch){
         try{
-            const creation = await axios.post(`http://localhost:3001/api/genres`, value)
+            const creation = await axios.post("http://localhost:3001/api/genres", value)
             return creation;
         }catch(error){
             console.log(error.message);

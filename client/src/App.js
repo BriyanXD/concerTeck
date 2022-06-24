@@ -16,7 +16,7 @@ function App() {
             {/* <Route exact path='/register' element= {<RegisterUser/>}/> */}
             {/* <Route exact path='' element= {<Ruta/>}/> 
             <Route exact path='' element= {<Ruta/>}/>  */} 
-            <Route exact path='/events' element={<RegisterEvent/>}/>
+            <Route path='/events' element={<RegisterEvent/>}/>
           </Routes>
       </div>
     </BrowserRouter>

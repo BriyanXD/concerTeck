@@ -5,42 +5,43 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CreateEvent, GetGenres, CreateGenre, GetVenues } from '../../redux/actions';
 import { Link } from "react-router-dom";
 //import { LocalizationProvider } from '@mui/x-date-pickers';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { Stack, TextField } from '@mui/material';
+//import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+//import AdapterDateFns from '@mui/lab/AdapterDateFns';
+//import { Stack, TextField } from '@mui/material';
 //import { DateTimePicker } from '@mui/x-date-pickers';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
+//import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
+import DateTimePicker from 'react-datetime-picker';
 
 export default function RegisterEvent(){
     const dispatch = useDispatch();
-    const [dateTime, setDateTime] = useState(null)
+    //const [dateTime, setDateTime] = useState(new Date());
+    const [value, onChange] = useState(new Date());
     const genres = useSelector((state)=> state.Genres);
     const venues = useSelector((state) => state.Venues);
-    const [postGenre, setPostGenre] = useState({
-        name: ""
-    })
+    // const [postGenre, setPostGenre] = useState({
+    //     name: ""
+    // })
     const [event, setEvent] = useState({
         name: "",
         artist: "",
-        genre: "",
+        genreId: "",
         schedule: "",
         performerImage: "",
         placeImage: "",
         description: "",
         venueId: 0,
-//      stockId: "",
+        stockId: 0,
     })
 
     const [errors, setErrors] = useState({
         name: "",
         artist: "",
-        genre: "",
+        genreId: "",
         schedule: "",
         performerImage: "",
         placeImage: "",
         description: "",
-        venueId: 0,
-//      stockId: "",
+        venueId: "",
     })
 
     useEffect(()=>{
@@ -49,48 +50,56 @@ export default function RegisterEvent(){
     }, [dispatch]) 
 
     const handleChange = (e) => {
+        if(e.target.name === "venueId"){
+            setEvent({
+                ...event,
+                [e.target.name]: Number(e.target.value) 
+            })
+            return 
+        }
         setEvent({
             ...event,
+            schedule: value,
+            stockId: event.venueId,
             [e.target.name]: e.target.value
         })
     };
 
-    const handleGenreSubmit = (e) => {
-        dispatch(CreateGenre(postGenre));
-        setPostGenre({
-            name:""
-        })
-    };
+    // const handleGenreSubmit = (e) => {
+    //     dispatch(CreateGenre(postGenre));
+    //     setPostGenre({
+    //         name:""
+    //     })
+    // };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if( errors.name !== "" ||
         errors.artist !== "" ||
-        errors.genre !== "" ||
+        errors.genreId !== "" ||
         errors.schedule !== "" ||
         errors.performerImage !== "" ||
         errors.placeImage !== "" ||
         errors.description !== "" ||
-        errors.venueId !== 0 ){
+        errors.venueId !== "" ){
             alert("Para poder registrar el Evento deben solucionarse los errores");
         }
-        if ( event.name !== "" ||
-        event.artist !== "" ||
-        event.genre !== "" ||
-        event.schedule !== "" ||
-        event.performerImage !== "" ||
-        event.placeImage !== "" ||
-        event.description !== "" ||
-        errors.venueId !== 0 ){
+        if ( event.name === "" ||
+        event.artist === "" ||
+        event.genreId === "" ||
+        event.schedule === "" ||
+        event.performerImage === "" ||
+        event.placeImage === "" ||
+        event.venueId === 0 ){
             setErrors({
                 name: event.name === "" ? "Ingrese el nombre del Evento" : "",
                 artist: event.artist === "" ? "Ingrese el nombre del artista del Evento" : "",
-                genre: event.genre === "" ? "Ingrese el genero del Evento" : "",
+                genreId: event.genreId === "" ? "Ingrese el genero del Evento" : "",
                 schedule: event.schedule === "" ? "Ingrese la fecha y hora del Evento" : "",
                 performerImage: event.performerImage === "" ? "Ingrese la imagen del artista" : "",
                 placeImage: event.placeImage === "" ? "Ingrese la imagen del lugar del Evento" : "",
                 description: "",
-                venueId: event.venueId === 0 ? "Ingrese el lugar del evento" : 0
+                venueId: event.venueId === 0 ? "Ingrese el lugar del evento" : ""
             });
             return
         }
@@ -99,13 +108,13 @@ export default function RegisterEvent(){
         setEvent({
             name: "",
             artist: "",
-            genre: "",
+            genreId: "",
             schedule: "",
             performerImage: "",
             placeImage: "",
             description: "",
             venueId: 0,
-    //      stockId: "",
+            stockId: 0,
         });
         //history.push("/home")
     };
@@ -153,7 +162,7 @@ export default function RegisterEvent(){
         }
 
         //validar genero
-        if(e.target.name === "genre"){
+        if(e.target.name === "genreId"){
             if(e.target.value === ""){
                 setErrors({
                     ...errors,
@@ -243,14 +252,14 @@ export default function RegisterEvent(){
         }
     };
 
-    function handleCheck(e){
-        if(e.target.checked){           
-            setEvent({                  
-                ...event,
-                genre: event.genre  
-            })
-        }
-    };
+    // function handleCheck(e){
+    //     if(e.target.checked){           
+    //         setEvent({                  
+    //             ...event,
+    //             genre: event.genre  
+    //         })
+    //     }
+    // };
 
 
     //k484vqmp codigo carpeta clodinari
@@ -303,22 +312,29 @@ export default function RegisterEvent(){
             <div>
                 <label>Seleccionar genero existente: </label>
                 <select onChange={handleGenreSelect}>
+                    <option>Generos</option>
                     {genres.map(g =>(<option key={g.id} value={g.name}>{g.name}</option>))}
                 </select>
-                {errors.genre && <label>{errors.genre}</label>}
+                {errors.genreId && <label>{errors.genreId}</label>}
             </div>
             
-            <div> <input name="schedule" value={event.schedule}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Hora y Fecha" /> {errors.schedule && <label>{errors.schedule}</label>}</div>
-            <div>
+            {/* <div> <input name="schedule" value={event.schedule}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Hora y Fecha" /> {errors.schedule && <label>{errors.schedule}</label>}</div> */}
+            {/* <div>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Stack spacing={4} sx={{ width: '250px'}}/>
             <DateTimePicker
                 //label='Date Time Picker'
+                //name="schedule"
+                formmat="y-MM-dd h:mm:ss"
                 renderInput={(params) => <TextField {...params}/>}
                 value={dateTime}
                 onChange={(e)=>{setDateTime(e)}}
             /> </LocalizationProvider>
+            </div> */}
+            <div>
+                <DateTimePicker onChange={onChange} value={value} format="y-MM-dd h:mm:ss a"/>
             </div>
+        
 
             <div> <input id="performerImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del artista" /> {errors.performerImage && <label>{errors.performerImage}</label>}</div>
             <div> <input id="placeImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del lugar" /> {errors.placeImage && <label>{errors.placeImage}</label>}</div>
@@ -327,6 +343,7 @@ export default function RegisterEvent(){
             <div>
                 <label>Seleccionar lugar del evento: </label>
                 <select onChange={handleVenueSelect}>
+                    <option>Lugares</option>
                     {venues.map(v =>(<option key={v.id} value={v.id}>{v.name}</option>))}
                 </select>
                 {errors.venueId && <label>{errors.venueId}</label>}
