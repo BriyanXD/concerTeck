@@ -3,6 +3,7 @@ import Style from "./ModalCalendar.module.css"
 import { connect } from "react-redux";
 import {ModalCalendarVisible} from "../../redux/actions"
 import CardEvent from "../CardEvent/CardEvent";
+import img from '../../img/ImageModalCalendar.png'
 
 class ModalCalendar extends React.Component{
     handlerClickForCloseModal=()=>{
@@ -14,7 +15,9 @@ class ModalCalendar extends React.Component{
     }
     errorEvents(){
         return <div>
-            <h1>No se encontraron Eventos</h1>
+            <div>
+                <img src={img} alt="image" height={225} width={550}/>
+            </div>
         </div>
     }
     renderModal(){
