@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import s from '../Calendar/Calendar.module.css'
@@ -6,11 +6,13 @@ import interactionPlugin from "@fullcalendar/interaction";
 import {useSelector} from 'react-redux'
 
 
+
 export default function Calendar() {
 
     const events = []
+    const events2 = []
 
-    const {AllEvents} = useSelector(state => state);
+    const {AllEvents} = useSelector(state => state)
     // console.log('eventos:',AllEvents)
 
 

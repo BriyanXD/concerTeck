@@ -22,7 +22,7 @@ export default function Detail() {
   
   useEffect(()=>{
     dispatch(GetVenues())
-  },[])
+  },[dispatch])
 
   // useEffect(()=>{
   //   dispatch(GetGenres())
@@ -38,20 +38,20 @@ export default function Detail() {
     console.log(prueba)
   }
   return (
-    <div>
+    <div className={style.container}>
       <NavBar/>
         <div className={style.card}>
-          <img src = {Detail.placeImage} height='300' width='300' alt={Detail.name}/>
+          <img src = {Detail.performerImage} height='300' width='400'  alt={Detail.name} className={style.img}/>
           <br />
-          <img src = {Detail.performerImage} height='300' width='300'  alt={Detail.name}/>
-          <div>{Detail.name}</div>
-          <div>{Detail.genre}</div>
-          <div>{Detail.schedule}</div>
-          <div>{Venues.id}</div>
-          <div>{prueba !== undefined ? prueba.name : null}</div>
-          <div>{Detail.description}</div>
+          <img src = {Detail.placeImage} height='300' width='400' alt={Detail.name} className={style.img}/>
+          <div className={style.name}>{Detail.name}</div>
+          <div className={style.genre}>{Detail.genre}</div>
+          <div className={style.schedule}>{Detail.schedule}</div>
+          <div className={style.venue}>{Venues.id}</div>
+          <div className={style.prueba}>{prueba !== undefined ? prueba.name : null}</div>
+          <div className={style.description}>{Detail.description}</div>
           <Link to='/'>
-            <button>Go Home</button>
+            <button className={style.button}>Go Home</button>
           </Link>
         </div>
       <Footer/>
