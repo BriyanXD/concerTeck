@@ -32,6 +32,8 @@ const {
 const { getVenues } = require("../controllers/Venue");
 const { getTicketStock } = require("../controllers/TicketStock");
 
+const { LoginUser } = require("../controllers/Login");
+
 routes.post("/user", createUser);
 routes.get("/user", getUser);
 routes.put("/user", putUser);
@@ -57,5 +59,7 @@ routes.post("/genres", postOneGenre);
 routes.get("/venues", getVenues);
 
 routes.get("/ticketstock", getTicketStock);
+
+routes.get("/login", LoginUser);
 
 module.exports = routes;

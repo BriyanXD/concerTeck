@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch } from "react-redux";
 import { searchEvent } from "../../redux/actions";
+import style from './SearchBar.module.css';
 
 export default function SearchBar({setCurrenPag,setCurrentPage}) {
 
@@ -13,7 +14,7 @@ export default function SearchBar({setCurrenPag,setCurrentPage}) {
 
   return (
     <div>
-      <input type = 'text' placeholder = 'Buscar evento...' onChange= {(e)=> hadleInputChange(e)}/>
+      <input type = 'text' className={style.searchBar} placeholder = 'Buscar evento...' onChange= {(e)=> hadleInputChange(e)}/>
     </div>
   )
 }
