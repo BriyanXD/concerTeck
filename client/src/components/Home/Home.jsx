@@ -64,7 +64,7 @@ const pagination2 = (numberPage2) =>{
           return(
           <div key={el.id}>
           <Link style={{textDecoration:'none'}} to= {`/${el.id}`}>
-          <CardBigEvent name={el.name} genre={el.genre} image={el.performerImage} schedule={el.schedule}/>
+          <CardBigEvent name={el.name} genreId={el.genreId} image={el.performerImage} schedule={el.schedule}/>
           </Link>
         
           </div>
@@ -84,7 +84,7 @@ const pagination2 = (numberPage2) =>{
           <div key={el.id}>
             
           <Link style={{textDecoration:'none'}} to= {`/${el.id}`}>
-          <CardEvent name={el.name} genre={el.genre} image={el.performerImage} schedule={el.schedule}/>
+          <CardEvent name={el.name} image={el.performerImage} schedule={el.schedule}/>
           </Link>
           </div>
           )}):<div><h1>'No se encontraron eventos Pequeños'</h1></div>}
