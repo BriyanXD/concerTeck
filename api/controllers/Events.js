@@ -94,7 +94,7 @@ async function postEvents(req, res) {
     const {
       name,
       artist,
-      genre,
+      genreId,
       schedule,
       performerImage,
       placeImage,
@@ -104,11 +104,13 @@ async function postEvents(req, res) {
     } = req.body;
     if (
       !name ||
-      !genre ||
+      !genreId ||
       !schedule ||
       !performerImage ||
       !placeImage ||
-      !artist
+      !artist ||
+      !venueId ||
+      !stockId
     ) {
       return res.status(404).send("Faltan datos obligatorios");
     } else {
@@ -117,10 +119,10 @@ async function postEvents(req, res) {
       if (!Number.isInteger(stockId))
         return res.status(400).json({ error: "stockId debe ser un numero" });
       await Genre.findOrCreate({
-        where: { name: genre.toLowerCase() },
+        where: { name: genreId.toLowerCase() },
       });
       let saveGenre = await Genre.findOne({
-        where: { name: genre.toLowerCase() },
+        where: { name: genreId.toLowerCase() },
       });
       if (saveGenre) {
         await Event.findOrCreate({
