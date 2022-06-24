@@ -11,16 +11,15 @@ import { Link } from "react-router-dom";
 //import { DateTimePicker } from '@mui/x-date-pickers';
 //import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import DateTimePicker from 'react-datetime-picker';
+import Footer from '../Footer/Footer';
+import NavBar from '../NavBar/NavBar';
 
 export default function RegisterEvent(){
     const dispatch = useDispatch();
-    //const [dateTime, setDateTime] = useState(new Date());
+    //const [dateTime, setDateTime] = useState(null);
     const [value, onChange] = useState(new Date());
     const genres = useSelector((state)=> state.Genres);
     const venues = useSelector((state) => state.Venues);
-    // const [postGenre, setPostGenre] = useState({
-    //     name: ""
-    // })
     const [event, setEvent] = useState({
         name: "",
         artist: "",
@@ -66,12 +65,6 @@ export default function RegisterEvent(){
         })
     };
 
-    // const handleGenreSubmit = (e) => {
-    //     dispatch(CreateGenre(postGenre));
-    //     setPostGenre({
-    //         name:""
-    //     })
-    // };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -253,15 +246,6 @@ export default function RegisterEvent(){
         }
     };
 
-    // function handleCheck(e){
-    //     if(e.target.checked){           
-    //         setEvent({                  
-    //             ...event,
-    //             genre: event.genre  
-    //         })
-    //     }
-    // };
-
 
     //k484vqmp codigo carpeta clodinari
     const uploadImage = async (e) => {
@@ -293,17 +277,12 @@ export default function RegisterEvent(){
         })
     };
 
-    // function handleDelete(e){
-    //     setInput({                  
-    //         ...input,
-    //         tipoDietas: input.tipoDietas.filter(d => d !== e) 
-    //     })
-    // };
 
     //console.log para chequear lo que se esta guardando
     console.log(event)
 
     return (<div>
+        <NavBar/>
         <Link to='/'><button >Go home</button></Link>
         <div><h2>Crear Evento</h2></div>
         <form onSubmit={handleSubmit}>
@@ -353,5 +332,6 @@ export default function RegisterEvent(){
             
             <button type="submit">Crear</button>
         </form>
+        <Footer/>
     </div>)
 };
