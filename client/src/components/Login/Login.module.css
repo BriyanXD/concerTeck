@@ -1,0 +1,51 @@
+.containerLogin{
+    width: 30vw;
+    height: 60vh;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: gray;
+}
+
+.containerPassword{
+    display:flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.contenedorForm{
+    width: 20vw;
+    height: 10vh;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.contenedorGoogleFacebook{
+    height: 5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.contenedorCrearCuenta{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.etiquetaA{
+    text-decoration: none
+}
+
+.title{
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.btn{
+    border-radius: 4px;
+}
