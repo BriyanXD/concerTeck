@@ -31,28 +31,30 @@ export default function Detail() {
   const {Detail} = useSelector((state)=> state)
   // console.log(Detail)
   const {Venues} = useSelector((state => state))
-  // console.log(Venues)
-  const prueba = Venues.filter(e => e.id === Detail.venueId)
-  console.log(prueba)
+  
+  let prueba =''
+  if(Detail && Venues){
+    prueba = Venues.find(e => e.id === Detail.venueId)
+    console.log(prueba)
+  }
   return (
-    <div>
-        <div className={style.card}>
+    <div className={style.container}>
       <NavBar/>
-          <img src = {Detail.placeImage} height='300' width='300' alt={Detail.name}/>
+        <div className={style.card}>
+          <img src = {Detail.performerImage} height='300' width='400'  alt={Detail.name} className={style.img}/>
           <br />
-          <img src = {Detail.performerImage} height='300' width='300'  alt={Detail.name}/>
-          <div>{Detail.name}</div>
-          <div>{Detail.genre}</div>
-          <div>{Detail.schedule}</div>
-          <div>{Venues.id}</div>
-          {/* <div>{prueba[0].name}</div> */}
-          {/* <div>{Detail.venueId === Venues.id ? Venues.name : 'no se encontro el recinto'}</div> */}
-          <div>{Detail.description}</div>
+          <img src = {Detail.placeImage} height='300' width='400' alt={Detail.name} className={style.img}/>
+          <div className={style.name}>{Detail.name}</div>
+          <div className={style.genre}>{Detail.genre}</div>
+          <div className={style.schedule}>{Detail.schedule}</div>
+          <div className={style.venue}>{Venues.id}</div>
+          <div className={style.prueba}>{prueba !== undefined ? prueba.name : null}</div>
+          <div className={style.description}>{Detail.description}</div>
           <Link to='/'>
-            <button>Go Home</button>
+            <button className={style.button}>Go Home</button>
           </Link>
-      <Footer/>
         </div>
+      <Footer/>
     </div>
   )
 }
