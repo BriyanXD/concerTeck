@@ -7,7 +7,7 @@ const PageNotFound = ()=>{
         <div className={s.imagen}>
         <div><br />
             <Link to='/'>
-                <button className={s.button}> Go Home </button>
+                <button className={s.button}> Volver a inicio </button>
             </Link>
         </div>
         </div>
