@@ -284,7 +284,6 @@ export default function RegisterEvent(){
 
     return (<div>
         <NavBar/>
-        <Link to='/'><button >Go home</button></Link>
         <div><h2>Crear Evento</h2></div>
         <form onSubmit={handleSubmit}>
             <div> <input name="name" value={event.name}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Nombre" /> {errors.name && <label>{errors.name}</label>}</div>
@@ -310,7 +309,7 @@ export default function RegisterEvent(){
                 renderInput={(params) => <TextField {...params}/>}
                 value={dateTime}
                 onChange={(e)=>{setDateTime(e)}}
-            /> </LocalizationProvider>
+                /> </LocalizationProvider>
             </div> */}
             <div>
                 <DateTimePicker onChange={onChange} value={value} format="y-MM-dd h:mm:ss a"/>
@@ -332,6 +331,8 @@ export default function RegisterEvent(){
             <div> <input name="description" value={event.description}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Descripcion" /> {errors.description && <label>{errors.description}</label>}</div>
             
             <button type="submit">Crear</button>
+            
+            <Link to='/'><button >Volver a inicio</button></Link>
         </form>
         <Footer/>
     </div>)
