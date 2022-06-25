@@ -5,8 +5,8 @@
     background-color: var(--color2);   
     flex-direction: column;
     justify-content: space-around;
-    width: 39vw;
-    height: 20vw;
+    width: 42vw;
+    height: 22vw;
     margin-top: 1px;
     box-shadow:  5px 5px 14px rgba(0, 0, 0, 0.32);
     border-radius: 10px;
@@ -20,64 +20,66 @@
     flex-direction: row;
     justify-content:flex-start;
     color: #dbdada;
-    margin-left: 10px;
+    margin-left: 3.3vw;
 }
 
 .nameContact{
     background-color: #dbdada;
-    width: 25vw;
+    width: 22vw;
     display: flex;
     justify-content: center;
-    margin-left: 9px;
+    margin-left: 1.2vw;
     color: var(--color2);
     border-radius: 5px;
 }
 
 .labelMailContact{
-    margin-top: -10px;
+    margin-bottom: 0.5vw;
     display: flex;
     flex-direction: row;
     justify-content:flex-start;
     color: #dbdada;
-    margin-left: 145px;
+    margin-left: 11.3vw;
 }
 
 .mailContact{
     background-color: #dbdada;
-    width: 25vw;
+    width: 22vw;
     display: flex;
     justify-content: center;
-    margin-left: 10px;
+    margin-left: 2vw;
     color: var(--color2);
     border-radius: 5px;
+
 }
 
 .labelPhoneContact{
-    margin-top: -10px;
     display: flex;
     flex-direction: row;
     justify-content:flex-start;
     color: #dbdada;
-    margin-left: 115px;
+    margin-left: 9.3vw;
+    margin-bottom: 1.5vw;
 }
 
 .phoneContact{
     background-color: #dbdada;
-    width: 25vw;
+    width: 22vw;
     display: flex;
     justify-content: center;
-    margin-left: 10px;
+    margin-left: 2.1vw;
     color: var(--color2);
     border-radius: 5px;
+    text-align: center;
 }
 
 .labelReasonContact{
-    margin-top: -30px;
+    margin-top: -2vw;
     display: flex;
     flex-direction: row;
     justify-content:flex-start;
     color: #dbdada;
-    margin-left: 36px;
+    margin-left: 4.4vw;
     height: 7vw;
     
 
@@ -90,18 +92,18 @@
     margin-right: 1vw;
     margin-bottom: 7vw; 
     background-color: #dbdada;
-    margin-left: 10px;
-    width: 25vw;
+    margin-left: 1.9vw;
+    width: 22vw;
     height:100%;
     border-radius: 5px
 }
 
 .btnSend{
-   margin-top: 5%;
-   margin-left: 58%;
+   margin-top: 1.5vw;
+   margin-left: 24vw;
    background-color: #FF4C29;
-   width: 4vw;
-   height: 1.6vw;
+   width: 5vw;
+   height: 2vw;
    text-align: center;
    border-radius: 3px;
    font-size: 14px;
