@@ -4,16 +4,18 @@ import style from './Contact.module.css';
 export default function Contact() {
   return (
     <div className={style.containerContact}>
-      <form action='https://formsubmit.co/concerteck@gmail.com' method='POST'>
-      <label className={style.labelNameContact}>Nombre o Razón Social:  <input name='name' className={style.nameContact} type='text'/></label>
+      <form action='https://formsubmit.co/concerteck@gmail.com' method='POST' className={style.form}>
+      <input name='name' className={style.nameContact} type='text' placeholder='Nombre o razón social...'/>
       <br/>
-      <label className={style.labelMailContact}>Mail: <input name='email' className={style.mailContact} type='email' /></label>
+      <input name='email' className={style.mailContact} type='email' placeholder='Email'/>
       <br/>
-      <label className={style.labelPhoneContact}>Teléfono: <input name='telephone' className={style.phoneContact} type='text'/></label>
+      <input name='telephone' className={style.phoneContact} type='text' placeholder='Teléfono'/>
       <br/>
       <br />
-      <label className={style.labelReasonContact}>Motivo de Contacto: <textarea name='message' className={style.reasonContact} type='message'  rows='5' cols='50'></textarea></label>
+      <textarea name='message' className={style.reasonContact} type='message'  rows='5' cols='50' placeholder='Motivo de consulta'></textarea>
+      <div className={style.containerbtnsend}>
       <button type='submit' className={style.btnSend}>Enviar</button>
+      </div>
       </form>
     </div>
   )

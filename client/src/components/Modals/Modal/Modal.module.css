@@ -20,8 +20,8 @@
     border: solid 1px rgba(255, 255, 255, 0.3);
     padding: 15px;
     z-index: 1;
-    min-width: 320px;
-    height: 22.3vw;
+    min-width: auto;
+    height: auto;
 }
 
 .btn{

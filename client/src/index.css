@@ -12,6 +12,9 @@ code {
     monospace;
 }
 :root {
+  --fontpage: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
   --color1: #222831;
   --color2: #2D4059;
   --color3: #FF5722;
