@@ -15,6 +15,7 @@ import Footer from '../Footer/Footer';
 import NavBar from '../NavBar/NavBar';
 
 
+
 export default function RegisterEvent(){
     const dispatch = useDispatch();
     //const [dateTime, setDateTime] = useState(null);
@@ -281,24 +282,24 @@ export default function RegisterEvent(){
 
     //console.log para chequear lo que se esta guardando
     console.log(event)
-
     return (<div>
         <NavBar/>
-        <div><h2>Crear Evento</h2></div>
+        <div className={style.h2}><h2>Crear Evento</h2></div>
         <form onSubmit={handleSubmit}>
-            <div> <input name="name" value={event.name}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Nombre" /> {errors.name && <label>{errors.name}</label>}</div>
-            <div> <input name="artist" value={event.artist}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Artista" /> {errors.artist && <label>{errors.artist}</label>}</div>
+            <div> <input name="name" value={event.name}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Nombre" /> {errors.name && <label className={style.error}>{errors.name}</label>}</div>
+            <div> <input name="artist" value={event.artist}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Artista" /> {errors.artist && <label className={style.error}>{errors.artist}</label>}</div>
 
             <div>
-                <label>Seleccionar genero existente: </label>
+                <label className={style.label}>Seleccionar genero existente: </label>
                 <select onChange={handleGenreSelect}>
                     <option>Generos</option>
                     {genres.map(g =>(<option key={g.id} value={g.name}>{g.name}</option>))}
                 </select>
                 {errors.genreId && <label>{errors.genreId}</label>}
             </div>
-            
-            {/* <div> <input name="schedule" value={event.schedule}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Hora y Fecha" /> {errors.schedule && <label>{errors.schedule}</label>}</div> */}
+
+
+            {/* <div> <input name="schedule" value={event.schedule}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Hora y Fecha" /> {errors.schedule && <label className={style.error}>{errors.schedule}</label>}</div> */}
             {/* <div>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Stack spacing={4} sx={{ width: '250px'}}/>
@@ -316,11 +317,11 @@ export default function RegisterEvent(){
             </div>
         
 
-            <div> <input id="performerImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del artista" /> {errors.performerImage && <label>{errors.performerImage}</label>}</div>
-            <div> <input id="placeImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del lugar" /> {errors.placeImage && <label>{errors.placeImage}</label>}</div>
-            
+            <div> <input id="performerImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del artista" /> {errors.performerImage && <label className={style.error}>{errors.performerImage}</label>}</div>
+            <div> <input id="placeImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del lugar" /> {errors.placeImage && <label className={style.error}>{errors.placeImage}</label>}</div>
+
             <div>
-                <label>Seleccionar lugar del evento: </label>
+                <label className={style.label}>Seleccionar lugar del evento: </label>
                 <select onChange={handleVenueSelect}>
                     <option>Lugares</option>
                     {venues.map(v =>(<option key={v.id} value={v.id}>{v.name}</option>))}
@@ -334,6 +335,11 @@ export default function RegisterEvent(){
             
             <Link to='/'><button >Volver a inicio</button></Link>
         </form>
+
+       </div>
+        <div className={style.footer}>
         <Footer/>
+        </div>
+
     </div>)
 };
