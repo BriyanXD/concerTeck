@@ -283,6 +283,7 @@ export default function RegisterEvent(){
     //console.log para chequear lo que se esta guardando
     console.log(event)
     return (<div>
+        <div>
         <NavBar/>
         <div className={style.h2}><h2>Crear Evento</h2></div>
         <form onSubmit={handleSubmit}>
