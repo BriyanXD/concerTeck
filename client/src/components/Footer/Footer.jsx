@@ -21,9 +21,9 @@ export default function Footer() {
           </Modal>
         {/* column2 */}
         <div className={s.redes}>
-            <a className={s.facebook} href="https://www.facebook.com/profile.php?id=100082560332640"><i class="fa-brands fa-facebook"></i></a>
+            <a className={s.facebook} href="https://www.facebook.com/profile.php?id=100082560332640" target="_blank"><i class="fa-brands fa-facebook"></i></a>
             <br />
-            <a className={s.instagram} href="https://www.instagram.com/concerteck01/"><span></span></a>
+            <a className={s.instagram} href="https://www.instagram.com/concerteck01/" target="_blank"><span><i class="fa fa-instagram" aria-hidden="true"></i></span></a>
             <br />
         </div>
       </div>

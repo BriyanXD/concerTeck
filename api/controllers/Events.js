@@ -47,7 +47,7 @@ async function loadEventsAndGetEvents(req, res) {
       ],
     });
     if (name) {
-      //const eventName = await Events.findOne({where:{name:name}})
+      // const eventName = await Events.findOne({where:{name:name}})
       const eventName = allEvents.filter((n) =>
         n.name.toLowerCase().includes(name.toLowerCase())
       );
@@ -68,10 +68,11 @@ async function loadEventsAndGetEvents(req, res) {
           .json({ error: "No se encontro Eventos con ese ID" });
       }
     } else if (schedule) {
-      console.log(schedule);
       //const eventName = await Events.findOne({where:{name:name}})
       const eventByDate = allEvents.filter((eventDate) => {
         if (Date.parse(eventDate.schedule) === Date.parse(schedule))
+          /* console.log("fecha db", Date.parse(eventDate.schedule));
+        console.log("fecha arg", Date.parse(schedule)); */
           return eventDate;
       });
       if (eventByDate.length >= 1) {
@@ -87,13 +88,13 @@ async function loadEventsAndGetEvents(req, res) {
     res.status(404).json({ error: error.message });
   }
 }
-
+// Modificando eventos
 async function postEvents(req, res) {
   try {
     const {
       name,
       artist,
-      genre,
+      genreId,
       schedule,
       performerImage,
       placeImage,
@@ -103,11 +104,13 @@ async function postEvents(req, res) {
     } = req.body;
     if (
       !name ||
-      !genre ||
+      !genreId ||
       !schedule ||
       !performerImage ||
       !placeImage ||
-      !artist
+      !artist ||
+      !venueId ||
+      !stockId
     ) {
       return res.status(404).send("Faltan datos obligatorios");
     } else {
@@ -116,10 +119,10 @@ async function postEvents(req, res) {
       if (!Number.isInteger(stockId))
         return res.status(400).json({ error: "stockId debe ser un numero" });
       await Genre.findOrCreate({
-        where: { name: genre.toLowerCase() },
+        where: { name: genreId.toLowerCase() },
       });
       let saveGenre = await Genre.findOne({
-        where: { name: genre.toLowerCase() },
+        where: { name: genreId.toLowerCase() },
       });
       if (saveGenre) {
         await Event.findOrCreate({

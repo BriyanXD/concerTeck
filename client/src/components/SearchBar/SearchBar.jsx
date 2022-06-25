@@ -10,11 +10,21 @@ export default function SearchBar({setCurrenPag,setCurrentPage}) {
     dispatch(searchEvent(e.target.value))
     setCurrenPag(1)
     setCurrentPage(1)
-}
+
+  }
+
+  function hadleClick(){
+    document.getElementById('search').value = ''
+    dispatch(searchEvent(''))
+    setCurrenPag(1)
+    setCurrentPage(1)
+
+  }
 
   return (
     <div>
-      <input type = 'text' className={style.searchBar} placeholder = 'Buscar evento...' onChange= {(e)=> hadleInputChange(e)}/>
+      <input maxlength="35" id='search' type = 'text' className={style.searchBar} placeholder = 'Buscar evento...' onChange= {(e)=> hadleInputChange(e)}/>
+      <button onClick={hadleClick} className={style.close}>X</button>
     </div>
   )
 }

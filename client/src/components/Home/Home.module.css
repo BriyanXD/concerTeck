@@ -1,8 +1,9 @@
 .container{
+    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width:100vw;
+    width: 100vw;
     align-items: center;
     background: url(../../img/bk.jpg);
 }
