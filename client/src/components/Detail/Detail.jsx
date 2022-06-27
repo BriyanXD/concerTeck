@@ -62,7 +62,7 @@ export default function Detail() {
           <div className={style.prueba}>{prueba !== undefined ? prueba.name : null}</div>
           <div className={style.description}>{Detail.description}</div>
           <Link to='/'>
-            <button className={style.button}>Volver al Inicio</button>
+            <button className={style.button}>Volver a inicio</button>
           </Link>
         </div>
       <Footer/>
