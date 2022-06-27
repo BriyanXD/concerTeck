@@ -6,6 +6,7 @@
     width: 100vw;
     align-items: center;
     background: url(../../img/bk.jpg);
+   
 }
 .eventcontainer{
     display: flex;
