@@ -32,6 +32,16 @@ export default function Detail() {
   // console.log(Detail)
   const {Venues} = useSelector((state => state))
   
+  let date = ''
+  let time = ''
+  if(Detail){
+    date = Detail.schedule !== undefined? Detail.schedule.split('T')[0] : null
+    console.log(date)
+    time = Detail.schedule !== undefined ? Detail.schedule.split('T')[1].split(':')[0]+':'+  Detail.schedule.split('T')[1].split(':')[1] :null
+    console.log(time)
+  }
+  console.log(Detail.schedule)
+
   let prueba =''
   if(Detail && Venues){
     prueba = Venues.find(e => e.id === Detail.venueId)
@@ -46,12 +56,13 @@ export default function Detail() {
           <img src = {Detail.placeImage} height='300' width='400' alt={Detail.name} className={style.img}/>
           <div className={style.name}>{Detail.name}</div>
           <div className={style.genre}>{Detail.genre}</div>
-          <div className={style.schedule}>{Detail.schedule}</div>
+          <div className={style.schedule}>{date} {time}h</div>
+          {/* <div className={style.schedule}>{Detail.schedule}</div> */}
           <div className={style.venue}>{Venues.id}</div>
           <div className={style.prueba}>{prueba !== undefined ? prueba.name : null}</div>
           <div className={style.description}>{Detail.description}</div>
           <Link to='/'>
-            <button className={style.button}>Go Home</button>
+            <button className={style.button}>Volver al Inicio</button>
           </Link>
         </div>
       <Footer/>
