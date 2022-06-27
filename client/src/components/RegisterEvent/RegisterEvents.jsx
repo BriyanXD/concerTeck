@@ -18,7 +18,7 @@ import NavBar from '../NavBar/NavBar';
 
 export default function RegisterEvent(){
     const dispatch = useDispatch();
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     //const [dateTime, setDateTime] = useState(null);
     const [value, onChange] = useState(new Date());
     const genres = useSelector((state)=> state.Genres);
