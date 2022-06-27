@@ -14,7 +14,7 @@ export default function CardBigEvent({name, genreId, schedule, image}) {
   let prueba =''
   if(Genres){
     prueba = Genres.find(e => e.id === genreId)
-    console.log(prueba)
+    // console.log(prueba)
       }
 
 
