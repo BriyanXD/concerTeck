@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import style from './RegisterEvents.module.css';
 import { CreateEvent, GetGenres, CreateGenre, GetVenues } from '../../redux/actions';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 //import { LocalizationProvider } from '@mui/x-date-pickers';
 //import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 //import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -17,6 +17,7 @@ import NavBar from '../NavBar/NavBar';
 
 export default function RegisterEvent(){
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     //const [dateTime, setDateTime] = useState(null);
     const [value, onChange] = useState(new Date());
     const genres = useSelector((state)=> state.Genres);
@@ -111,7 +112,7 @@ export default function RegisterEvent(){
             venueId: 0,
             stockId: 0,
         });
-        //history.push("/home")
+        navigate("/")
     };
 
     const handleBlur = (e) => {
@@ -287,7 +288,7 @@ export default function RegisterEvent(){
     <div className={style.card}>
         <div className={style.h2}><h2>Crear Evento</h2></div>
         <form onSubmit={handleSubmit}>
-            <div> <input name="name" value={event.name}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Nombre" /> {errors.name && <label className={style.error}>{errors.name}</label>}</div>
+            <div> <input name="name" value={event.name}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Nombre del evento" /> {errors.name && <label className={style.error}>{errors.name}</label>}</div>
             <div> <input name="artist" value={event.artist}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Artista" /> {errors.artist && <label className={style.error}>{errors.artist}</label>}</div>
 
             <div>
@@ -332,9 +333,9 @@ export default function RegisterEvent(){
             
             <div> <textarea name="description" value={event.description}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Descripcion" /> {errors.description && <label>{errors.description}</label>}</div>
             
-            <button type="submit">Crear</button>
-            
             <Link to='/'><button >Volver a inicio</button></Link>
+            
+            <button type="submit">Crear</button>
         </form>
 
        </div>

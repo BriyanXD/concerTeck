@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 export default function Login({toggle}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userValidation = useSelector((state) => state.userValidation);
-  console.log(userValidation, "validation user")
+  // const userValidation = useSelector((state) => state.userValidation);
+  // console.log(userValidation, "validation user")
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -68,41 +68,36 @@ export default function Login({toggle}) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-      dispatch(ValidationUser(user))
-      if (errors.username !== "" || errors.password !== "" || errors.validation !== "") {
+    const prueba= await dispatch(ValidationUser(user))
+      if (errors.username !== "" || errors.password !== "" ) {
         alert("Para poder registrarse debe solucionar los errores");
         return
       }
   
-      if (user.username === "" || user.password === "" || userValidation === false) {
-        setErrors({
+      if (user.username === "" || user.password === "" || prueba.payload === false) {
+       return setErrors({
           username:
             user.username === "" ? "Por favor ingrese un nombre de usuario" : "",
           password:
             user.password === "" ? "Por favor ingrese una contraseña" : "",
           validation:
-            userValidation === false ? "Revise los datos ingresados e intente nuevamente": "",
+            prueba.payload === false ? "La cuenta no coincide": ""
         });
-        return;
+      
       }
-        if (userValidation){
+
+      
+      if (prueba.payload){
+        console.log("ingreso")
             dispatch(LoginUser(user));
             alert("Se registro correctamente");
             setUser({
               username: "",
               password: "",
-              validation: ""
             });
             toggle()
-            // navigate("/");
-          }else{
-            setErrors({
-              ...errors,
-              validation: "Revise los datos ingresados e intente nuevamente"
-            }) 
-            return
           }
   };
 

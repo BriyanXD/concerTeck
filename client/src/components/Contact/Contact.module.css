@@ -117,3 +117,12 @@
     transform: translate(0.05em, 0.05em);
     box-shadow: 0.05em 0.05em;
    }
+
+.btnSend:disabled{
+    background-color: grey;
+}
+.errores{
+    color:#ff3f18;
+    font-weight: 400;
+    font-size: large;
+}
