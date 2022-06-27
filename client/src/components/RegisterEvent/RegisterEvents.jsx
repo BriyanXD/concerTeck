@@ -282,16 +282,10 @@ export default function RegisterEvent(){
 
     //console.log para chequear lo que se esta guardando
     console.log(event)
-<<<<<<< HEAD
-    return (<div>
-        <div>
-        <NavBar/>
-=======
     return (
         <div className={style.container}>
             <NavBar/>
     <div className={style.card}>
->>>>>>> 1b935918180e27514a65d327b19ebf9232290e4f
         <div className={style.h2}><h2>Crear Evento</h2></div>
         <form onSubmit={handleSubmit}>
             <div> <input name="name" value={event.name}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Nombre" /> {errors.name && <label className={style.error}>{errors.name}</label>}</div>
