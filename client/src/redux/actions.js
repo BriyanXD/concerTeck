@@ -70,7 +70,7 @@ export function GetGenres() {
   return async function (dispatch) {
     try {
       const genres = await axios.get("http://localhost:3001/api/genres");
-      console.log(genres.data);
+      // console.log(genres.data);
       return dispatch({
         type: "GET_GENRES",
         payload: genres.data,

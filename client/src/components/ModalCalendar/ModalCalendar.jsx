@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import {ModalCalendarVisible} from "../../redux/actions"
 import CardEvent from "../CardEvent/CardEvent";
 import img from '../../img/ImageModalCalendar.png'
+import { Link } from "react-router-dom";
 
 class ModalCalendar extends React.Component{
     handlerClickForCloseModal=()=>{
@@ -11,7 +12,10 @@ class ModalCalendar extends React.Component{
     }
     chargeEvents(){
         return this.props.stateModalCalendar.eventsForCalendar.map(e => {
-         return <CardEvent name={e.name} genre={e.genre} schedule={e.schedule} image={e.performerImage} />})
+         return <Link to={`/${e.id}`} style={{ textDecoration: "none" }}>
+            <CardEvent name={e.name} genre={e.genre} schedule={e.schedule} image={e.performerImage} />
+         </Link>
+        })
     }
     errorEvents(){
         return <div>
