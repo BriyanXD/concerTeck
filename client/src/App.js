@@ -1,24 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Home from './components/Home/Home.jsx';
+import Login from './components/Login/Login';
+import RegisterUser from './components/RegisterUser/RegisterUser.jsx';
+import RegisterEvent from './components/RegisterEvent/RegisterEvents';
+import Detail from './components/Detail/Detail';
+import PageNotFound from './components/PageNotFound/PageNotFound';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div>
+          <Routes>
+            <Route exact path='/' element= {<Home/>}/>
+            <Route path= '/:id' element={<Detail/>}/>
+            <Route exact path='/registrar/:usuario' element= {<RegisterUser/>}/>
+            <Route path='/login' element={<Login/>}/>
+            {/* <Route exact path='' element= {<Ruta/>}/> 
+            <Route exact path='' element= {<Ruta/>}/>  */} 
+            <Route exact path='/events' element={<RegisterEvent/>}/>
+            <Route path='*' element={<PageNotFound/>}/>
+          </Routes>
+      </div>
+    </BrowserRouter>
+    
   );
 }
 
