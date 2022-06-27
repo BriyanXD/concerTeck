@@ -24,11 +24,12 @@ export default function Calendar() {
 
   return (
     <div className={s.calendar}>
-      {
+{
         AllEvents?.map((e) => {
           events.push({ title: e.name, date: e.schedule.split('T')[0], })
         })
       }
+
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
