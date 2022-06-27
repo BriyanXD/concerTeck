@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import style from './RegisterEvents.module.css';
 import { CreateEvent, GetGenres, CreateGenre, GetVenues } from '../../redux/actions';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 //import { LocalizationProvider } from '@mui/x-date-pickers';
 //import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 //import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -18,6 +18,7 @@ import NavBar from '../NavBar/NavBar';
 
 export default function RegisterEvent(){
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     //const [dateTime, setDateTime] = useState(null);
     const [value, onChange] = useState(new Date());
     const genres = useSelector((state)=> state.Genres);
@@ -112,7 +113,7 @@ export default function RegisterEvent(){
             venueId: 0,
             stockId: 0,
         });
-        //history.push("/home")
+        navigate("/")
     };
 
     const handleBlur = (e) => {
