@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-//import style from './RegisterEvent.module.css';
+import style from './RegisterEvents.module.css';
 import { CreateEvent, GetGenres, CreateGenre, GetVenues } from '../../redux/actions';
 import { Link } from "react-router-dom";
 //import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -282,8 +282,10 @@ export default function RegisterEvent(){
 
     //console.log para chequear lo que se esta guardando
     console.log(event)
-    return (<div>
-        <NavBar/>
+    return (
+        <div className={style.container}>
+            <NavBar/>
+    <div className={style.card}>
         <div className={style.h2}><h2>Crear Evento</h2></div>
         <form onSubmit={handleSubmit}>
             <div> <input name="name" value={event.name}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Nombre" /> {errors.name && <label className={style.error}>{errors.name}</label>}</div>
@@ -329,7 +331,7 @@ export default function RegisterEvent(){
                 {errors.venueId && <label>{errors.venueId}</label>}
             </div>
             
-            <div> <input name="description" value={event.description}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Descripcion" /> {errors.description && <label>{errors.description}</label>}</div>
+            <div> <textarea name="description" value={event.description}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Descripcion" /> {errors.description && <label>{errors.description}</label>}</div>
             
             <button type="submit">Crear</button>
             
@@ -339,7 +341,6 @@ export default function RegisterEvent(){
        </div>
         <div className={style.footer}>
         <Footer/>
-        </div>
-
+         </div>
     </div>)
 };
