@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import style from './NavBar.module.css';
 import Genre from '../Filters/Genre/Genre';
 import SearchBar from '../SearchBar/SearchBar';
 import logoSombra from '../../assets/LogoSombra.png'
 import Date from '../Filters/Date/Date';
+import UserNavBar from '../UserNavbar/UserNavbar';
+import Modal from '../Modals/Modal/Modal';
+import Login from '../Login/Login';
 
 export default function NavBar({setCurrenPag,setCurrentPage}) {
+  const user = useSelector(state => state.User)
+  const [active, setActive] = useState(false);
+
+  const toggle = () => {
+    setActive(!active);
+  }
+
   return (
     <div className={style.containerNav}>
       {/* Logitipo que redirecciona a home */}
@@ -21,8 +32,12 @@ export default function NavBar({setCurrenPag,setCurrentPage}) {
        <Date setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage}/>
       </div>
       <div className={style.registerAndLogin}>
-      <Link to="/events"><button className={style.btnRegister} type="button">Crear Evento</button></Link> 
-      {/* <button className={style.btnRegister} type="button">Registro</button> */}
+      {/* <Link to="/events"><button className={style.btnRegister} type="button">Crear Evento</button></Link>  */}
+     {user === "" ?<button onClick={toggle} className={style.btnRegister} type="button">Ingresar</button>: null}
+     <Modal active={active} toggle={toggle}>
+        <Login toggle={toggle}/>
+     </Modal>
+      <UserNavBar/>
       {/* <span className={style.logoUser}>User</span> */}
       </div>
     </div>

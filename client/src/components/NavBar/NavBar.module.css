@@ -43,9 +43,21 @@
 }
 
 
-.btnRegister{
+/* .btnRegister{
     background-color: #FF4C29;
     width: 10vw;
+    height: 2.5vw;
+    text-align: center;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    font-size: 15px;
+    margin-right: 35px;
+    cursor: pointer;
+} */
+
+.btnRegister{
+    background-color: #FF4C29;
+    width: 8vw;
     height: 2.5vw;
     text-align: center;
     border-radius: 3px;
@@ -58,5 +70,9 @@
 .containerUserNavBar{
     position: relative;
     left: -15px;
+}
+
+.registerAndLogin{
+    display: flex;
 }
 

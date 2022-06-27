@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import DateTimePicker from 'react-datetime-picker';
 import Footer from '../Footer/Footer';
 import NavBar from '../NavBar/NavBar';
+import style from './RegisterEvents.module.css';
 
 
 
@@ -285,60 +286,58 @@ export default function RegisterEvent(){
     return (<div>
         <NavBar/>
         <div className={style.h2}><h2>Crear Evento</h2></div>
-        <form onSubmit={handleSubmit}>
-            <div> <input name="name" value={event.name}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Nombre" /> {errors.name && <label className={style.error}>{errors.name}</label>}</div>
-            <div> <input name="artist" value={event.artist}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Artista" /> {errors.artist && <label className={style.error}>{errors.artist}</label>}</div>
+            <form onSubmit={handleSubmit}>
+                <div> <input name="name" value={event.name}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Nombre" /> {errors.name && <label className={style.error}>{errors.name}</label>}</div>
+                <div> <input name="artist" value={event.artist}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Artista" /> {errors.artist && <label className={style.error}>{errors.artist}</label>}</div>
 
-            <div>
-                <label className={style.label}>Seleccionar genero existente: </label>
-                <select onChange={handleGenreSelect}>
-                    <option>Generos</option>
-                    {genres.map(g =>(<option key={g.id} value={g.name}>{g.name}</option>))}
-                </select>
-                {errors.genreId && <label>{errors.genreId}</label>}
-            </div>
+                <div>
+                    <label className={style.label}>Seleccionar genero existente: </label>
+                    <select onChange={handleGenreSelect}>
+                        <option>Generos</option>
+                        {genres.map(g =>(<option key={g.id} value={g.name}>{g.name}</option>))}
+                    </select>
+                    {errors.genreId && <label>{errors.genreId}</label>}
+                </div>
 
 
-            {/* <div> <input name="schedule" value={event.schedule}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Hora y Fecha" /> {errors.schedule && <label className={style.error}>{errors.schedule}</label>}</div> */}
-            {/* <div>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Stack spacing={4} sx={{ width: '250px'}}/>
-            <DateTimePicker
-                //label='Date Time Picker'
-                //name="schedule"
-                formmat="y-MM-dd h:mm:ss"
-                renderInput={(params) => <TextField {...params}/>}
-                value={dateTime}
-                onChange={(e)=>{setDateTime(e)}}
-                /> </LocalizationProvider>
-            </div> */}
-            <div>
-                <DateTimePicker onChange={onChange} value={value} format="y-MM-dd h:mm:ss a"/>
-            </div>
-        
-
-            <div> <input id="performerImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del artista" /> {errors.performerImage && <label className={style.error}>{errors.performerImage}</label>}</div>
-            <div> <input id="placeImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del lugar" /> {errors.placeImage && <label className={style.error}>{errors.placeImage}</label>}</div>
-
-            <div>
-                <label className={style.label}>Seleccionar lugar del evento: </label>
-                <select onChange={handleVenueSelect}>
-                    <option>Lugares</option>
-                    {venues.map(v =>(<option key={v.id} value={v.id}>{v.name}</option>))}
-                </select>
-                {errors.venueId && <label>{errors.venueId}</label>}
-            </div>
+                {/* <div> <input name="schedule" value={event.schedule}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Hora y Fecha" /> {errors.schedule && <label className={style.error}>{errors.schedule}</label>}</div> */}
+                {/* <div>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <Stack spacing={4} sx={{ width: '250px'}}/>
+                <DateTimePicker
+                    //label='Date Time Picker'
+                    //name="schedule"
+                    formmat="y-MM-dd h:mm:ss"
+                    renderInput={(params) => <TextField {...params}/>}
+                    value={dateTime}
+                    onChange={(e)=>{setDateTime(e)}}
+                    /> </LocalizationProvider>
+                </div> */}
+                <div>
+                    <DateTimePicker onChange={onChange} value={value} format="y-MM-dd h:mm:ss a"/>
+                </div>
             
-            <div> <input name="description" value={event.description}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Descripcion" /> {errors.description && <label>{errors.description}</label>}</div>
-            
-            <button type="submit">Crear</button>
-            
-            <Link to='/'><button >Volver a inicio</button></Link>
-        </form>
 
-       </div>
+                <div> <input id="performerImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del artista" /> {errors.performerImage && <label className={style.error}>{errors.performerImage}</label>}</div>
+                <div> <input id="placeImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del lugar" /> {errors.placeImage && <label className={style.error}>{errors.placeImage}</label>}</div>
+
+                <div>
+                    <label className={style.label}>Seleccionar lugar del evento: </label>
+                    <select onChange={handleVenueSelect}>
+                        <option>Lugares</option>
+                        {venues.map(v =>(<option key={v.id} value={v.id}>{v.name}</option>))}
+                    </select>
+                    {errors.venueId && <label>{errors.venueId}</label>}
+                </div>
+                
+                <div> <input name="description" value={event.description}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Descripcion" /> {errors.description && <label>{errors.description}</label>}</div>
+                
+                <button type="submit">Crear</button>
+                
+                <Link to='/'><button >Volver a inicio</button></Link>
+            </form>
         <div className={style.footer}>
-        <Footer/>
+            <Footer/>
         </div>
 
     </div>)

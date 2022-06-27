@@ -5,16 +5,15 @@ import { LoginUser, ValidationUser } from "../../redux/actions";
 import style from "./Login.module.css";
 import { Link } from "react-router-dom";
 
-export default function Login() {
+export default function Login({toggle}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userValidation = useSelector((state) => state.userValidation);
-  
+  console.log(userValidation, "validation user")
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
-  console.log(user);
 
   const [errors, setErrors] = useState({
     username: "",
@@ -69,20 +68,22 @@ export default function Login() {
     }
   };
 
-  const handleSubmit =(e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(ValidationUser(user))
-
-      if (errors.username !== "" || errors.password !== "") {
+      dispatch(ValidationUser(user))
+      if (errors.username !== "" || errors.password !== "" || errors.validation !== "") {
         alert("Para poder registrarse debe solucionar los errores");
+        return
       }
   
-      if (user.username === "" || user.password === "") {
+      if (user.username === "" || user.password === "" || userValidation === false) {
         setErrors({
           username:
             user.username === "" ? "Por favor ingrese un nombre de usuario" : "",
           password:
             user.password === "" ? "Por favor ingrese una contraseña" : "",
+          validation:
+            userValidation === false ? "Revise los datos ingresados e intente nuevamente": "",
         });
         return;
       }
@@ -94,7 +95,8 @@ export default function Login() {
               password: "",
               validation: ""
             });
-            navigate("/");
+            toggle()
+            // navigate("/");
           }else{
             setErrors({
               ...errors,
@@ -117,7 +119,7 @@ export default function Login() {
             onChange={handleChange}
             placeholder="Nombre de usuario"
           />
-          {errors.username && <label>{errors.username}</label>}
+          {errors.username && <label className={style.errors}>{errors.username}</label>}
           <input
             type="password"
             name="password"
@@ -126,8 +128,8 @@ export default function Login() {
             onChange={handleChange}
             placeholder="Contraseña"
           />
-          {errors.password && <label>{errors.password}</label>}
-          {errors.validation && <label>{errors.validation}</label>}
+          {errors.password && <label className={style.errors}>{errors.password}</label>}
+          {errors.validation && <label className={style.errors}>{errors.validation}</label>}
           <button className={style.btn}>Iniciar sesión</button>
         </form>
         <a className={style.etiquetaA} href="#">
@@ -144,11 +146,11 @@ export default function Login() {
         <Link to={`/registrar/user`}>
           <button className={style.btn}>Crear cuenta</button>
         </Link>
-        <span>
-          <Link to={`/registrar/producer`}>Crear cuenta</Link> para productores
+        <span className={style.spanText}>
+          <Link to={`/registrar/producer`} style={{color: "white"}}>Crear cuenta</Link> para productores
         </span>
       </div>
-      <button onClick={() => navigate('/')}>Volver</button>
+      <button className={style.btn} onClick={() => navigate('/')}>Volver</button>
     </div>
   );
 }

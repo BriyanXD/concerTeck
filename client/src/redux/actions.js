@@ -70,7 +70,6 @@ export function GetGenres() {
   return async function (dispatch) {
     try {
       const genres = await axios.get("http://localhost:3001/api/genres");
-      console.log(genres.data);
       return dispatch({
         type: "GET_GENRES",
         payload: genres.data,
@@ -134,7 +133,6 @@ export function LoginUser(value) {
         `http://localhost:3001/api/login`,
         value
       );
-      console.log(getUser.data);
       return dispatch({
         type: "LOGIN_USER",
         payload: getUser.data,

@@ -332,6 +332,7 @@ export default function RegisterUser () {
         }
         dispatch(register(usuario, user));
         alert("Se registro el usuario correctamente");
+        navigate("/")
         setUser({
           name: "",
           lastname: "",
@@ -376,6 +377,7 @@ export default function RegisterUser () {
         }
         dispatch(register(usuario, user));
         alert("Se registro el usuario correctamente");
+        navigate("/")
         setUser({
           username: "",
           email: "",
@@ -412,7 +414,7 @@ export default function RegisterUser () {
                 <button>Registrarse con Google</button>
                 <button>Registrarse con Facebook</button>
             </div>
-            <button onClick={() => navigate('/login')}>Volver</button>
+            <button onClick={() => navigate('/')}>Volver</button>
         </div>
     )
 }
