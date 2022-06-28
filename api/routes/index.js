@@ -29,7 +29,7 @@ const {
   deleteTicket,
 } = require("../controllers/Tickets");
 
-const { getVenues } = require("../controllers/Venue");
+const { getVenues,postVenues } = require("../controllers/Venue");
 const { getTicketStock } = require("../controllers/TicketStock");
 
 const { LoginUser } = require("../controllers/Login");
@@ -62,6 +62,7 @@ routes.get("/genres", getAllGenres);
 routes.post("/genres", postOneGenre);
 
 routes.get("/venues", getVenues);
+routes.post("/venues",postVenues)
 
 routes.get("/ticketstock", getTicketStock);
 
