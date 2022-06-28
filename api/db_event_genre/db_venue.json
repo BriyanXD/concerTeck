@@ -29,7 +29,7 @@
             "maxStockStreaming": 3000,
             "maxStockVIP": 0,
             "maxStockGeneralLateral": 500,
-            "maxStockGeneral": 8000,
+            "maxStockGeneral": 9000,
             "maxStockPalco": 500,
             "isBigEvent": true
         },
