@@ -7,9 +7,9 @@ async function LoginUser (req,res) {
         if(username && password) {
             let user = await User.findOne({where:{username, password}});
             let producer= await Producer.findOne({where:{username, password}});
-            if( user !==null  ) res.json(user);
+            if( user !==null  ) res.json(["Usuario", user]);
             if( producer !==null ){
-                res.json(producer);
+                res.json(["Productor", producer]);
             }else{
                 res.send("Los datos ingresados no coinciden con un usuario registrado")
             }

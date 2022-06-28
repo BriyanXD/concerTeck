@@ -134,7 +134,6 @@ export function LoginUser(value) {
         `http://localhost:3001/api/login`,
         value
       );
-      console.log(getUser.data);
       return dispatch({
         type: "LOGIN_USER",
         payload: getUser.data,
@@ -198,7 +197,6 @@ export function ValidationUsername(value) {
         `http://localhost:3001/api/validation/username`,
         { username: value }
       );
-      console.log(username.data, "desde el actions");
       return dispatch({
         type: "VALIDATION_USERNAME",
         payload: username.data,
