@@ -1,3 +1,5 @@
+require("dotenv").config();
+const { PORT_APP } = process.env;
 const express = require("express");
 const routes = require("./routes/index");
 const sequelize = require("./db");
@@ -32,12 +34,14 @@ app.use((req, res, next) => {
 
 app.use("/api", routes);
 
+let PORT = PORT_APP || 3001;
+
 async function main() {
   try {
-    await sequelize.sync({ force: false });
+    await sequelize.sync({ force: true });
     console.log("Conection DB succesful");
-    app.listen(3001, () => {
-      console.log("App listen on port 3001");
+    app.listen(PORT, () => {
+      console.log(`App listen http://localhost:${PORT}`);
     });
     await chargeGenres();
     await chargeEvents();

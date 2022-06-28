@@ -1,7 +1,10 @@
 // const { useInflection } = require("sequelize/types");
 const Ticket = require("../models/Ticket");
 const User = require("../models/User");
-//prueba
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+const { AUTH_ROUNDS } = process.env;
 require("../db.js");
 
 async function createUser(req, res) {
@@ -10,14 +13,14 @@ async function createUser(req, res) {
     res.status(404).json({ error: "Faltan completar Campos obligatorios" });
   } else {
     try {
-      let create = await User.findOrCreate({
+      let passcrypt = bcrypt.hashSync(password, AUTH_ROUNDS);
+      User.create({
         where: {
           username: username,
-          password: password,
+          password: passcrypt,
           email: email,
         },
-      });
-      res.json(create);
+      }).then((newuser) => {});
     } catch (error) {
       res.status(404).send({ error: error.message });
     }
