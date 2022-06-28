@@ -3,6 +3,7 @@ const dbVenue = require("../db_event_genre/db_venue.json");
 
 async function chargeVenue() {
   dbVenue.Venues.map(async (e) => {
+    const min = Math.floor((e.maxStockGeneral+e.maxStockGeneralLateral+e.maxStockPalco+e.maxStockStreaming+e.maxStockVIP)* 0.7)
     return await Venue.findOrCreate({
       where: {
         name: e.name,
@@ -14,7 +15,7 @@ async function chargeVenue() {
         maxStockGeneral: e.maxStockGeneral,
         maxStockPalco: e.maxStockPalco,
         minStock:Math.floor((e.maxStockGeneral+e.maxStockGeneralLateral+e.maxStockPalco+e.maxStockStreaming+e.maxStockVIP)* 0.7),
-        isBigEvent: e.minStock > 10000 ? true : false 
+        isBigEvent: min > 10000 ? true : false 
       },
     });
   });
