@@ -8,8 +8,7 @@
             "maxStockVIP": 200,
             "maxStockGeneralLateral": 5000,
             "maxStockGeneral": 11000,
-            "maxStockPalco": 0,
-            "isBigEvent": true
+            "maxStockPalco": 0
         },
         {
             "name": "Estadio Monumental",
@@ -19,8 +18,7 @@
             "maxStockVIP": 5000,
             "maxStockGeneralLateral": 25000,
             "maxStockGeneral": 50000,
-            "maxStockPalco": 0,
-            "isBigEvent": true
+            "maxStockPalco": 0
         },
         {
             "name": "Teatro Colón",
@@ -28,10 +26,9 @@
             "map": "-34.6010406 -58.3852673",
             "maxStockStreaming": 3000,
             "maxStockVIP": 0,
-            "maxStockGeneralLateral": 500,
+            "maxStockGeneralLateral": 1500,
             "maxStockGeneral": 9000,
-            "maxStockPalco": 500,
-            "isBigEvent": true
+            "maxStockPalco": 1500
         },
         {
             "name": "Teatro de Flores",
