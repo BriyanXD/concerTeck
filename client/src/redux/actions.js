@@ -197,7 +197,6 @@ export function ValidationUsername(value) {
         `http://localhost:3001/api/validation/username`,
         { username: value }
       );
-      console.log(username.data, "desde el actions");
       return dispatch({
         type: "VALIDATION_USERNAME",
         payload: username.data,
