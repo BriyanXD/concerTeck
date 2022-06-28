@@ -27,7 +27,6 @@ export default function Home() {
     indexFirstEvent,
     indexLastEvent
   );
-  console.log(currentBigEvents.length);
 
   const allSmallEventsPagination = useSelector((state) => {
     return state.Events;
@@ -40,7 +39,6 @@ export default function Home() {
     indexfirstEventt,
     indexLastEventt
   );
-  console.log(currentEvents.length);
 
   const pagination = (numberPage) => {
     setCurrenPag(numberPage);

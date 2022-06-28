@@ -29,7 +29,7 @@ export default function Detail() {
   // },[])
 
   const {Detail} = useSelector((state)=> state)
-  // console.log(Detail)
+  console.log(Detail)
   const {Venues} = useSelector((state => state))
   
   let date = ''
@@ -47,6 +47,8 @@ export default function Detail() {
     prueba = Venues.find(e => e.id === Detail.venueId)
     console.log(prueba)
   }
+
+  
   return (
     <div className={style.container}>
       <NavBar/>
