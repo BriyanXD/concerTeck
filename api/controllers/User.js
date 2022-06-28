@@ -4,7 +4,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const { AUTH_ROUNDS } = process.env;
+const { AUTH_ROUNDS, AUTH_SECRET } = process.env;
 require("../db.js");
 
 async function createUser(req, res) {
@@ -20,7 +20,9 @@ async function createUser(req, res) {
           password: passcrypt,
           email: email,
         },
-      }).then((newuser) => {});
+      }).then((newuser) => {
+        let token = jwt.sign({ user: newuser }, AUTH_SECRET, {});
+      });
     } catch (error) {
       res.status(404).send({ error: error.message });
     }
