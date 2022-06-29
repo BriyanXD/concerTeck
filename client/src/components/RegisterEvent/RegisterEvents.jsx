@@ -284,7 +284,7 @@ export default function RegisterEvent(){
     console.log(event)
     return (
         <div className={style.container}>
-            <NavBar/>
+            {/* <NavBar/> */}
     <div className={style.card}>
         <div className={style.h2}><h2>Crear Evento</h2></div>
         <form onSubmit={handleSubmit}>
@@ -300,20 +300,6 @@ export default function RegisterEvent(){
                 {errors.genreId && <label>{errors.genreId}</label>}
             </div>
 
-
-            {/* <div> <input name="schedule" value={event.schedule}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Hora y Fecha" /> {errors.schedule && <label className={style.error}>{errors.schedule}</label>}</div> */}
-            {/* <div>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Stack spacing={4} sx={{ width: '250px'}}/>
-            <DateTimePicker
-                //label='Date Time Picker'
-                //name="schedule"
-                formmat="y-MM-dd h:mm:ss"
-                renderInput={(params) => <TextField {...params}/>}
-                value={dateTime}
-                onChange={(e)=>{setDateTime(e)}}
-                /> </LocalizationProvider>
-            </div> */}
             <div>
                 <DateTimePicker onChange={onChange} value={value} format="y-MM-dd h:mm:ss a"/>
             </div>
