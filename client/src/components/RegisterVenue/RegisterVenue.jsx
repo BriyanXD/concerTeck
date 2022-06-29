@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { GetVenues } from '../../redux/actions';
+import { GetVenues, CreateVenue } from '../../redux/actions';
 
 function validate(venue){
     const error = {}
