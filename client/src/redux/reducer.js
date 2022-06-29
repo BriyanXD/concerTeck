@@ -9,6 +9,8 @@ const initialState = {
   Events: [],
   Genres: [],
   Venues: [],
+  Basket: [],
+  Likes: [],
   userValidation: "",
   emailValidation: "",
   usernameValidation: "",
@@ -45,6 +47,13 @@ function reducers(state = initialState, { type, payload }) {
         Genres: payload,
       };
     }
+    case "ADD_TO_BASKET": 
+      if(state.Basket.includes(payload)) return state;
+      return {
+        ...state,
+        Basket: [...state.Basket, payload]
+              }
+
     case "GET_EVENT_BY_NAME": {
       const bigEvents = payload.filter((e) => e.venue.isBigEvent === true);
       const smallEvents = payload.filter((e) => e.venue.isBigEvent === false);
