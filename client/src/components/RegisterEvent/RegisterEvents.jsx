@@ -13,7 +13,7 @@ import DateTimePicker from 'react-datetime-picker';
 import Footer from '../Footer/Footer';
 import NavBar from '../NavBar/NavBar';
 import { useLocalStorage } from '../useLocalStorage/useLocalStorage';
-import ModalRegisterGenre from '../ModalRegisterGenre/ModalRegisterGenre';
+import RegisterGenre from '../RegisterGenre/RegisterGenre';
 
 function validateGenre(genre){
     const error = {};
@@ -336,7 +336,7 @@ export default function RegisterEvent(){
                     <div> <input name="name" value={genre.name}  onChange={handleGenre} type="text" placeholder="Nombrar nuevo genero" />{errorGenre.name && (<label>{errorGenre.name}</label>)} </div>
                     <button onClick={handeSubmitGenre}>Añadir</button>
             </div>:null }</div> */}
-            <div>{activeGenre ? <ModalRegisterGenre/>:null}</div>
+            <div>{activeGenre ? <RegisterGenre/>:null}</div>
 
             <div> <DateTimePicker onChange={onChange} value={value} minDate={new Date()} format="y-MM-dd h:mm:ss a"/> {errors.schedule && <label className={style.error}>{errors.schedule}</label>} </div>
             
