@@ -1,15 +1,25 @@
 .containerRegisterUser{
-    width: 50vw;
-    height: 60vh;
-    background-color: grey;
+    width: 100vw;
+    height: 100vh;
+    background: url("../../img/bk.jpg");
     display:flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
+}
+
+.conteinerData{
+    height: 75vh;
+    width: 30vw;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .containerForm{
-    height: 30vh;
+    height: 55vh;
+    width: 45vw;
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -27,4 +37,23 @@
 .title{
     margin-top: 0px;
     margin-bottom:0px;
+    color: white;
+}
+
+.error{
+    color: red;
+}
+
+.subTitle{
+    display:flex;
+    color: white
+}
+
+.inputText{
+    width:50%
+}
+
+.containerInput{
+    width: 50%;
+    display:flex;
 }
