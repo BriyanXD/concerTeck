@@ -31,8 +31,9 @@
 .contenedorGoogleFacebook{
     height: 5vh;
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    flex-direction: row;
+    /* padding-right: 2vw; */
+    /* justify-content: space-around; */
 }
 
 .contenedorCrearCuenta{
@@ -65,10 +66,22 @@
     cursor: pointer;
 }
 
+.redes{
+    margin-right: 1vw;
+    color: white;
+    
+    
+}
+
 .spanText{
     color: white
 }
 
 .errors{
     color:red
+}
+
+h3{
+    color: white;
+    margin-top: 0vw;
 }
