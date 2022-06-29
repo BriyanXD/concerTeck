@@ -61,7 +61,8 @@ export default function Contact() {
       return swal({
         title: 'Mensaje no enviado',
         text: 'Por favor ingrese los datos ',
-        icon: 'error'})
+        icon: 'error',
+        dangerMode:true})
       }
 
       if(error.name || error.message || error.email || error.telephone){
@@ -85,7 +86,7 @@ export default function Contact() {
         }
         if(error.email){
           return swal({
-            title: 'Por favor ingrese un mail de teléfono válido',
+            title: 'Por favor ingrese un mail válido',
             icon: 'warning'})
         }
         return swal({
