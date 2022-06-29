@@ -136,7 +136,7 @@
     border-radius: 5px;
     font-size: 15px;
     border-color: red;
-    color: red;
+
 }
 
 .errorMessage::placeholder{
@@ -161,7 +161,7 @@
    cursor: pointer;
    font-weight: bold;
    color: #dbdada;
-   transition: 0.4s;
+   transition: 0.3s;
    margin-bottom: 5px;
 }
 

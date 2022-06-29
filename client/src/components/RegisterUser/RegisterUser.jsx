@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import style from "./RegisterUser.module.css";
+import swal from 'sweetalert'
 import {
   register,
   ValidationEmail,
@@ -287,8 +288,11 @@ export default function RegisterUser() {
         errors.telephone !== "" ||
         errors.company !== ""
       ) {
-        alert("Para poder registrarse debe solucionar los errores");
-      }
+        return swal({
+          title: 'No se pudo registrar',
+          text: 'Por favor chequee los datos ingresados',
+          icon: 'error'})
+              }
       if (
         user.name === "" ||
         user.lastname === "" ||
@@ -322,12 +326,17 @@ export default function RegisterUser() {
             user.telephone === undefined
               ? "Por favor ingrese un numero de telefono"
               : "",
-          company: "",
+          company:
+          user.company === "" ? 'Por favor ingrese Compañía' : ""
         });
         return;
       }
       dispatch(register(usuario, user));
-      alert("Se registro el usuario correctamente");
+      swal({
+        title: 'Usuario registrado correctamente',
+        icon: 'success',
+        button: 'Aceptar',
+       })
       navigate("/");
       setUser({
         name: "",
@@ -348,7 +357,10 @@ export default function RegisterUser() {
         errors.password !== "" ||
         errors.repeatPassword !== ""
       ) {
-        alert("Para poder registrarse debe solucionar los errores");
+        return swal({
+          title: 'No se pudo registrar',
+          text: 'Por favor chequee los datos ingresados',
+          icon: 'error'})
       }
       if (
         user.username === "" ||
@@ -372,7 +384,11 @@ export default function RegisterUser() {
         return;
       }
       dispatch(register(usuario, user));
-      alert("Se registro el usuario correctamente");
+      swal({
+        title: 'Usuario registrado correctamente',
+        icon: 'success',
+        button: 'Aceptar',
+       })
       navigate("/");
       setUser({
         username: "",
@@ -390,158 +406,158 @@ export default function RegisterUser() {
       <h2 className={style.title}>Crear cuenta</h2>
       {usuario === "producer" ? (
         <form onSubmit={handleSubmit} className={style.containerForm}>
-         <div className={style.containerInput}><span className={style.subTitle}>Nombre: </span> {errors.name && <label className={style.error}>{errors.name}</label>}</div> 
+         <div className={style.containerInput}></div> 
           <input
             name="name"
             value={user.name}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={style.inputText}
+            className={errors.name?.length > 0 ? style.error :style.inputText}
             type="text"
-            placeholder="Nombre"
+            placeholder={errors.name?.length > 0 ? errors.name : "Nombre"}
           />
-          <div className={style.containerInput}><span className={style.subTitle}>Apellido: </span> {errors.lastname && <label className={style.error}>{errors.lastname}</label>}</div>
+          <div className={style.containerInput}></div>
           <input
             name="lastname"
             value={user.lastname}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={style.inputText}
+            className={errors.lastname?.length > 0 ? style.error :style.inputText}
             type="text"
-            placeholder="Apellido"
+            placeholder={errors.lastname?.length > 0 ? errors.lastname : "Apellido"}
           />
-         <div className={style.containerInput}><span className={style.subTitle}>Nombre de usuario: </span> {errors.username && <label className={style.error}>{errors.username}</label>}</div>
+         <div className={style.containerInput}></div>
           <input
             name="username"
             value={user.username}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={style.inputText}
+            className={errors.username?.length > 0 ? style.error :style.inputText}
             type="text"
-            placeholder="Nombre de Usuario"
+            placeholder={errors.username?.length > 0 ? errors.username : "Nombre de Usuario"}
           />
-          <div className={style.containerInput}><span className={style.subTitle}>Cuit_Cuil: </span> {errors.cuit_cuil && <label className={style.error}>{errors.cuit_cuil}</label>}</div>
+          <div className={style.containerInput}></div>
           <input
             name="cuit_cuil"
             value={user.cuit_cuil}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={style.inputText}
+            className={errors.cuit_cuil?.length > 0 ? style.error :style.inputText}
             type="text"
-            placeholder="Cuit_Cuil"
+            placeholder={errors.cuit_cuil?.length > 0 ? errors.cuit_cuil : "Número de CUIT / CUIL"}
           />
-          <div className={style.containerInput}><span className={style.subTitle}>Correo: </span> {errors.email && <label className={style.error}>{errors.email}</label>}</div>
+          <div className={style.containerInput}></div>
           <input
             name="email"
             value={user.email}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={style.inputText}
+            className={errors.email?.length > 0 ? style.error :style.inputText}
             type="text"
-            placeholder="Correo electronico"
+            placeholder={errors.email?.length > 0 ? errors.email : "Correo electrónico"}
           />
-          <div className={style.containerInput}><span className={style.subTitle}>Cbu: </span> {errors.cbu && <label className={style.error}>{errors.cbu}</label>}</div>
+          <div className={style.containerInput}></div>
           <input
             name="cbu"
             value={user.cbu}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={style.inputText}
+            className={errors.cbu?.length > 0 ? style.error :style.inputText}
             type="number"
-            placeholder="cbu"
+            placeholder={errors.cbu?.length > 0 ? errors.cbu : "CBU"}
           />
-         <div className={style.containerInput}><span className={style.subTitle}>Contraseña: </span> {errors.password && <label className={style.error}>{errors.password}</label>}</div>
+         <div className={style.containerInput}></div>
           <input
             name="password"
             value={user.password}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={style.inputText}
+            className={errors.password?.length > 0 ? style.error :style.inputText}
             type="password"
-            placeholder="Contraseña"
+            placeholder={errors.password?.length > 0 ? errors.password : "Contraseña"}
           />
-         <div className={style.containerInput}><span className={style.subTitle}>Confirmar contraseña: </span> {errors.repeatPassword && <label className={style.error}>{errors.repeatPassword}</label>}</div>
+         <div className={style.containerInput}></div>
           <input
             name="repeatPassword"
             value={user.repeatPassword}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={style.inputText}
+            className={errors.repeatPassword?.length > 0 ? style.error :style.inputText}
             type="password"
-            placeholder="Confirmar Contraseña"
+            placeholder={errors.repeatPassword?.length > 0 ? errors.repeatPassword : "Confirmar Contraseña"}
           />
-          <div className={style.containerInput}><span className={style.subTitle}>Telefono: </span> {errors.telephone && <label className={style.error}>{errors.telephone}</label>}</div>
+          <div className={style.containerInput}></div>
           <input
             name="telephone"
             value={user.telephone}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={style.inputText}
+            className={errors.telephone?.length > 0 ? style.error :style.inputText}
             type="number"
-            placeholder="Telefono"
+            placeholder={errors.telephone?.length > 0 ? errors.telephone : "Teléfono"}
           />
-         <div className={style.containerInput}><span className={style.subTitle}>Compania: </span> {errors.company && <label className={style.error}>{errors.company}</label>}</div>
+         <div className={style.containerInput}></div>
           <input
             name="company"
             value={user.company}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={style.inputText}
+            className={errors.company?.length > 0 ? style.error :style.inputText}
             type="text"
-            placeholder="Compania"
+            placeholder={errors.company?.length > 0 ? errors.company : "Compañía"}
           />
-          <button type="submit">Crear</button>
+          <button type="submit" className={style.btnProducer}>Crear</button>
         </form>
       ) : (
         <form onSubmit={handleSubmit} className={style.containerForm}>
-          <div className={style.containerInput}><span className={style.subTitle}>Nombre de usuario: </span> {errors.username && <label className={style.error}>{errors.username}</label>}</div>
+          <div className={style.containerInput}></div>
           <input
             name="username"
             value={user.username}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={style.inputText}
+            className={errors.username?.length > 0 ? style.error :style.inputText}
             type="text"
-            placeholder="Nombre de Usuario"
+            placeholder={errors.username?.length > 0 ? errors.username : "Nombre de Usuario"}
           />
-          <div className={style.containerInput}><span className={style.subTitle}>Correo: </span> {errors.email && <label className={style.error}>{errors.email}</label>}</div>
+          <div className={style.containerInput}></div>
           <input
             name="email"
             value={user.email}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={style.inputText}
+            className={errors.email?.length > 0 ? style.error :style.inputText}
             type="text"
-            placeholder="Correo electronico"
+            placeholder={errors.email?.length > 0 ? errors.email : "Correo electrónico"}
           />
-          <div className={style.containerInput}><span className={style.subTitle}>Contraseña: </span> {errors.password && <label className={style.error}>{errors.password}</label>}</div>
+          <div className={style.containerInput}></div>
           <input
             name="password"
             value={user.password}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={style.inputText}
+            className={errors.password?.length > 0 ? style.error :style.inputText}
             type="password"
-            placeholder="Contraseña"
+            placeholder={errors.password?.length > 0 ? errors.password : "Contraseña"}
           />
-            <div className={style.containerInput}><span className={style.subTitle}>Confirmar contraseña: </span> {errors.repeatPassword && <label className={style.error}>{errors.repeatPassword}</label>}</div>
+            <div className={style.containerInput}></div>
           <input
             name="repeatPassword"
             value={user.repeatPassword}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={style.inputText}
+            className={errors.repeatPassword?.length > 0 ? style.error :style.inputText}
             type="password"
-            placeholder="Confirmar Contraseña"
+            placeholder={errors.repeatPassword?.length > 0 ? errors.repeatPassword : "Confirmar Contraseña"}
           />
-          <button type="submit">Crear</button>
+          <button type="submit" className={style.btnUser}>Crear</button>
         </form>
       )}
       <div className={style.containerSocialRegister}>
-        <button>Registrarse con Google</button>
-        <button>Registrarse con Facebook</button>
+        {/* <button>Registrarse con Google</button> */}
+        {/* <button>Registrarse con Facebook</button> */}
       </div>
-      <button onClick={() => navigate("/")}>Volver</button>
+      <button onClick={() => navigate("/")} className={style.btnBack}>Volver</button>
       </div>
       <Footer />
     </div>
