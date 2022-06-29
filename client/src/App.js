@@ -7,6 +7,7 @@ import Detail from './components/Detail/Detail';
 import PageNotFound from './components/PageNotFound/PageNotFound';
 
 
+
 function App() {
   return (
     <BrowserRouter>
