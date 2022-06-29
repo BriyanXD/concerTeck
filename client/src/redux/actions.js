@@ -233,6 +233,13 @@ export function ModalCalendarVisible(booleanForVisible, dateFor) {
   };
 }
 
+export function AddToBasket (payload){
+  return {
+    type: "ADD_TO_BASKET",
+    payload: payload
+  };
+}
+
 // export function filterByGenres (){
 //     return async(dispatch) => {
 //         const gen = await axios.get('http://localhost:3001/api/genres')
