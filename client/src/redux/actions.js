@@ -107,6 +107,17 @@ export function GetVenues() {
   };
 }
 
+export function CreateVenue (value){
+  return async function (dispatch){
+      try{
+          const creation = await axios.post("http://localhost:3001/api/venues", value)
+          return creation;
+      }catch(error){
+          console.log(error.message);
+      }
+  }
+};
+
 export function ClearDetail() {
   return function () {
     return { type: "CLEAR_DETAIL" };
@@ -230,6 +241,13 @@ export function ModalCalendarVisible(booleanForVisible, dateFor) {
       visibleModal: booleanForVisible,
       dateForSearch: dateFor,
     },
+  };
+}
+
+export function AddToBasket (payload){
+  return {
+    type: "ADD_TO_BASKET",
+    payload: payload
   };
 }
 
