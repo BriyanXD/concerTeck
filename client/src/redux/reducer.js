@@ -176,6 +176,11 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         Venues: payload,
       };
+    case "POST_VENUE":
+      return {
+        ...state,
+        Venues: payload,
+      }
     case "VALIDATION_LOGIN":
       return {
         ...state,
