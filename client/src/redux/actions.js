@@ -145,6 +145,7 @@ export function LoginUser(value) {
         `http://localhost:3001/api/login`,
         value
       );
+      console.log(getUser)
       return dispatch({
         type: "LOGIN_USER",
         payload: getUser.data,

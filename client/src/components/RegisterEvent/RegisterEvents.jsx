@@ -355,7 +355,7 @@ export default function RegisterEvent(){
                     {venues.map(v =>(<option key={v.id} value={v.id}>{v.name}</option>))}
                 </select>
                 {errors.venueId && <label>{errors.venueId}</label>}
-                <button type="button" onClick={()=>setActiveVenue(!activeGenre)}>Añadir nuevo Establecimiento +</button>
+                <button type="button" onClick={()=>setActiveVenue(!activeVenue)}>Añadir nuevo Establecimiento +</button>
             </div>
             <div>{activeVenue ? <RegisterVenue/>:null}</div>
             
