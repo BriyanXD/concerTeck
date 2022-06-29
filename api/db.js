@@ -10,7 +10,4 @@ const sequelize = new Sequelize(
   }
 );
 
-const { Events, Producer, Ticket, User } = sequelize.models;
-//console.log(sequelize.models);
-
 module.exports = sequelize;

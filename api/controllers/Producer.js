@@ -1,5 +1,9 @@
 const Producer = require("../models/Producer");
 const Events = require("../models/Events");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+const { AUTH_ROUNDS, AUTH_SECRET, AUTH_EXPIRES } = process.env;
 //prueba
 require("../db.js");
 
@@ -28,20 +32,25 @@ async function createProducer(req, res) {
     res.status(404).send("Faltan completar Campos obligatorios");
   } else {
     try {
-      let create = await Producer.findOrCreate({
-        where: {
-          username: username,
-          password: password,
-          email: email,
-          telephone: telephone,
-          name: name,
-          lastname: lastname,
-          cbu: cbu,
-          company: company,
-          cuit_cuil: cuit_cuil,
-        },
-      });
-      res.json(create);
+      let passcrypt = bcrypt.hashSync(password, parseInt(AUTH_ROUNDS));
+      await Producer.create({
+        username: username,
+        password: passcrypt,
+        email: email,
+        telephone: telephone,
+        name: name,
+        lastname: lastname,
+        cbu: cbu,
+        company: company,
+        cuit_cuil: cuit_cuil,
+      })
+        .then((newproducer) => {
+          let token = jwt.sign({ user: newproducer }, AUTH_SECRET, {
+            expiresIn: AUTH_EXPIRES,
+          });
+          res.json(["Productor", { producer: newproducer }, { token: token }]);
+        })
+        .catch((error) => res.status(500).json(error));
     } catch (error) {
       res.status(404).send({ error: error.message });
     }

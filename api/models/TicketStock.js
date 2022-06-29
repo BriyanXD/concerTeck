@@ -46,8 +46,8 @@ const TicketStock = sequelize.define(
     timestamps: false,
   }
 );
-TicketStock.hasOne(Events, { as: "stock" });
-Events.belongsTo(TicketStock, { as: "stock" });
+TicketStock.hasOne(Events, { as: "stock", foreignKey: "stockId" });
+Events.belongsTo(TicketStock, { as: "stock", foreignKey: "stockId" });
 
 Venue.hasMany(TicketStock);
 TicketStock.belongsTo(Venue);
