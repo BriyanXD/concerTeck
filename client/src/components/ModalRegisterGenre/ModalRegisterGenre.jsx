@@ -19,6 +19,7 @@ export default function ModalRegisterGenre(){
     const dispatch = useDispatch();
     //const navigate = useNavigate();
     // const genres = useSelector((state)=> state.Genres);
+    const [activeGenre, setActiveGenre] = useState(true)
     const [error, setError] = useState({});
     const [genre, setGenre] = useState({
         name: ""
@@ -47,14 +48,19 @@ export default function ModalRegisterGenre(){
             setGenre({
                 name: ""
             })
+            setActiveGenre(!activeGenre)
             //navigate("/events")
         }
     };
 
     return (<div>
-            <form onSubmit={handeSubmitGenre}>
-                    <div> <input name="name" value={genre.name}  onChange={handleGenre} type="text" placeholder="Nombrar nuevo genero" />{error.name && (<label>{error.name}</label>)} </div>
-                    <button type="submit">Añadir</button>
-            </form>
+            {activeGenre ? <div>
+                <div> <input name="name" value={genre.name}  onChange={handleGenre} type="text" placeholder="Nombrar nuevo genero" />{errorGenre.name && (<label>{errorGenre.name}</label>)} </div>
+                <button onClick={handeSubmitGenre}>Añadir</button>
+            </div>:null }
         </div>)
 }
+{/* <form onSubmit={handeSubmitGenre}>
+        <div> <input name="name" value={genre.name}  onChange={handleGenre} type="text" placeholder="Nombrar nuevo genero" />{error.name && (<label>{error.name}</label>)} </div>
+        <button type="submit">Añadir</button>
+</form> */}

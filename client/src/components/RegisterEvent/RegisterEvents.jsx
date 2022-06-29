@@ -85,7 +85,7 @@ export default function RegisterEvent(){
         })
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmitEvent = (e) => {
         e.preventDefault();
         if( errors.name !== "" ||
         errors.artist !== "" ||
@@ -320,7 +320,7 @@ export default function RegisterEvent(){
             <NavBar/>
     <div className={style.card}>
         <div className={style.h2}><h2>Crear Evento</h2></div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitEvent}>
             <div> <input name="name" value={event.name}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Nombre del evento" /> {errors.name && <label className={style.error}>{errors.name}</label>}</div>
             <div> <input name="artist" value={event.artist}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Artista" /> {errors.artist && <label className={style.error}>{errors.artist}</label>}</div>
 
