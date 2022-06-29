@@ -38,7 +38,7 @@ let PORT = PORT_APP || 3001;
 
 async function main() {
   try {
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: false });
     console.log("Conection DB succesful");
     app.listen(PORT, () => {
       console.log(`App listen http://localhost:${PORT}`);

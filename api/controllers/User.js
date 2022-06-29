@@ -4,7 +4,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const { AUTH_ROUNDS, AUTH_SECRET } = process.env;
+const { AUTH_ROUNDS, AUTH_SECRET, AUTH_EXPIRES } = process.env;
 require("../db.js");
 
 async function createUser(req, res) {
@@ -13,16 +13,19 @@ async function createUser(req, res) {
     res.status(404).json({ error: "Faltan completar Campos obligatorios" });
   } else {
     try {
-      let passcrypt = bcrypt.hashSync(password, AUTH_ROUNDS);
+      let passcrypt = bcrypt.hashSync(password, parseInt(AUTH_ROUNDS));
       User.create({
-        where: {
-          username: username,
-          password: passcrypt,
-          email: email,
-        },
-      }).then((newuser) => {
-        let token = jwt.sign({ user: newuser }, AUTH_SECRET, {});
-      });
+        username: username,
+        password: passcrypt,
+        email: email,
+      })
+        .then((newuser) => {
+          let token = jwt.sign({ user: newuser }, AUTH_SECRET, {
+            expiresIn: AUTH_EXPIRES,
+          });
+          res.json(["Usuario", { user: newuser }, { token: token }]);
+        })
+        .catch((error) => res.status(500).json(error));
     } catch (error) {
       res.status(404).send({ error: error.message });
     }
@@ -98,20 +101,36 @@ async function deleteUser(req, res) {
   }
 }
 
-//   const { name } = req.params;
-//   try {
-//     const user = await Usuario.create({
-//       name,
-//     });
-//     res.send(user);
-//   } catch (error) {
-//     return res.status(400).send({ error: error.message });
-//   }
-// }
+async function UpgradeRank(req, res) {
+  const { isAdmin, id } = req.body;
+  try {
+    if (!isAdmin || typeof isAdmin !== "boolean") {
+      return res
+        .status(404)
+        .json({ error: "isAdmin tiene que ser un booleado" });
+    } else {
+      await User.update(
+        {
+          isAdmin: isAdmin,
+        },
+        {
+          where: {
+            id: id,
+          },
+        }
+      );
+      const user = await User.findOne({ where: { id: id } });
+      return res.json({ message: `Rango de usuario actualizado`, user });
+    }
+  } catch (error) {
+    res.status(404).send({ error: error.message });
+  }
+}
 
 module.exports = {
   getUser,
   createUser,
   putUser,
   deleteUser,
+  UpgradeRank,
 };

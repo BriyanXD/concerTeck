@@ -102,6 +102,10 @@ const Producer = sequelize.define(
         },
       },
     },
+    isProducer: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
     company: {
       type: DataTypes.STRING,
     },
