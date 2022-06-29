@@ -15,7 +15,7 @@ function validate(genre){
     return error
 }
 
-export default function ModalRegisterGenre(){
+export default function RegisterGenre(){
     const dispatch = useDispatch();
     //const navigate = useNavigate();
     // const genres = useSelector((state)=> state.Genres);
