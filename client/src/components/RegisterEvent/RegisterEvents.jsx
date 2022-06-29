@@ -13,21 +13,39 @@ import { Link, useNavigate } from "react-router-dom";
 import DateTimePicker from 'react-datetime-picker';
 import Footer from '../Footer/Footer';
 import NavBar from '../NavBar/NavBar';
+import { useLocalStorage } from '../useLocalStorage/useLocalStorage';
+import ModalRegisterGenre from '../ModalRegisterGenre/ModalRegisterGenre';
 
+function validateGenre(genre){
+    const error = {};
+    if(!genre.name){
+        error.name = 'Campo obligatorio'
+    }
+    if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(genre.name)){
+        error.name = "Ingrese un nombre con caracteres validos"
+    }
+    return error
+}
 
 
 export default function RegisterEvent(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [activeGenre, setActiveGenre] = useState(false)
     //const [dateTime, setDateTime] = useState(null);
     const [value, onChange] = useState(new Date());
     const genres = useSelector((state)=> state.Genres);
     const venues = useSelector((state) => state.Venues);
+    const [errorGenre, setErrorGenre] = useState({});
+    const [genre, setGenre] = useState({
+        name: ""
+    })
     const [event, setEvent] = useState({
         name: "",
         artist: "",
         genreId: "",
         schedule: "",
+        //duration: "",  //nueva propiedad, duracion del evento
         performerImage: "",
         placeImage: "",
         description: "",
@@ -40,9 +58,9 @@ export default function RegisterEvent(){
         artist: "",
         genreId: "",
         schedule: "",
+        //duration: "",  //nueva propiedad, duracion del evento
         performerImage: "",
         placeImage: "",
-        description: "",
         venueId: "",
     })
 
@@ -55,19 +73,17 @@ export default function RegisterEvent(){
         if(e.target.name === "venueId"){
             setEvent({
                 ...event,
-                [e.target.name]: Number(e.target.value) 
+                [e.target.name]: Number(e.target.value),
+                stockId: Number(e.target.value)
             })
             return 
         }
         setEvent({
             ...event,
             schedule: value,
-            venueId: parseInt(event.venueId),
-            stockId: parseInt(event.venueId),
             [e.target.name]: e.target.value
         })
     };
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -75,9 +91,10 @@ export default function RegisterEvent(){
         errors.artist !== "" ||
         errors.genreId !== "" ||
         errors.schedule !== "" ||
+        //errors.duration !== "" ||
         errors.performerImage !== "" ||
         errors.placeImage !== "" ||
-        errors.description !== "" ||
+        //errors.description !== "" ||
         errors.venueId !== "" ){
             alert("Para poder registrar el Evento deben solucionarse los errores");
         }
@@ -85,6 +102,7 @@ export default function RegisterEvent(){
         event.artist === "" ||
         event.genreId === "" ||
         event.schedule === "" ||
+        //event.duration === "" ||
         event.performerImage === "" ||
         event.placeImage === "" ||
         event.venueId === 0 ){
@@ -93,9 +111,9 @@ export default function RegisterEvent(){
                 artist: event.artist === "" ? "Ingrese el nombre del artista del Evento" : "",
                 genreId: event.genreId === "" ? "Ingrese el genero del Evento" : "",
                 schedule: event.schedule === "" ? "Ingrese la fecha y hora del Evento" : "",
+                //duration: event.duration === "" ? "Ingrese la duracion del Evento" : "",
                 performerImage: event.performerImage === "" ? "Ingrese la imagen del artista" : "",
                 placeImage: event.placeImage === "" ? "Ingrese la imagen del lugar del Evento" : "",
-                description: "",
                 venueId: event.venueId === 0 ? "Ingrese el lugar del evento" : ""
             });
             return
@@ -188,6 +206,21 @@ export default function RegisterEvent(){
             }
         }
 
+        //validar la duracion
+        // if(e.target.name === "duration"){
+        //     if(e.target.value === ""){
+        //         setErrors({
+        //             ...errors,
+        //             [e.target.name]: "Ingrese la duracion del Evento"
+        //         })
+        //     } else {
+        //         setErrors({
+        //             ...errors,
+        //             [e.target.name]: ""
+        //         })
+        //     }
+        // }
+
         //validar imagen del artista
         if(e.target.name === "performerImage"){
             if(e.target.value === ""){
@@ -216,21 +249,6 @@ export default function RegisterEvent(){
                     [e.target.name]: ""
                 })
             }    
-        }
-
-        //validar descripcion
-        if(e.target.name === "description"){
-            if( typeof e.target.value !== "string"){
-                setErrors({
-                    ...errors,
-                    [e.target.name]: "El escribir una descripcion valida"
-                })
-            } else {
-                setErrors({
-                    ...errors,
-                    [e.target.name]: ""
-                })
-            }
         }
 
         //validar Lugar/Venue
@@ -266,18 +284,32 @@ export default function RegisterEvent(){
       };
 
 
-    function handleVenueSelect(e){
-        setEvent({
-            ...event,
-            venueId: e.target.value //event.venueId
+    const handleGenre = (e) => {
+        setGenre({
+            [e.target.name]: e.target.value
         })
+        setErrorGenre(validateGenre({
+            [e.target.name]: e.target.value 
+        }))   
     };
 
-    function handleGenreSelect(e){
-        setEvent({
-            ...event,
-            genreId: e.target.value //event.genre
-        })
+    const handeSubmitGenre = async(e) => {
+        e.preventDefault();
+        if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(genre.name)){
+            return alert("Ingrese un nombre con caracteres validos")
+        } else {
+            const genreCreated = await dispatch(CreateGenre(genre));
+            //console.log(genreCreated)
+            if(genreCreated.data[0].name){
+                dispatch(GetGenres());
+                alert("Genero añadido a la lista");
+                setGenre({
+                    name: ""
+                })
+                setActiveGenre(!activeGenre)
+            }
+            //navigate("/events")
+        }
     };
 
 
@@ -294,38 +326,29 @@ export default function RegisterEvent(){
 
             <div>
                 <label className={style.label}>Seleccionar genero existente: </label>
-                <select onChange={handleGenreSelect}>
+                <select name="genreId" onChange={handleChange}>
                     <option>Generos</option>
                     {genres.map(g =>(<option key={g.id} value={g.name}>{g.name}</option>))}
                 </select>
                 {errors.genreId && <label>{errors.genreId}</label>}
+                <button type="button" onClick={()=>setActiveGenre(!activeGenre)}>Añadir nuevo genero +</button>
             </div>
+            <div>{activeGenre ? <div>
+                    <div> <input name="name" value={genre.name}  onChange={handleGenre} type="text" placeholder="Nombrar nuevo genero" />{errorGenre.name && (<label>{errorGenre.name}</label>)} </div>
+                    <button onClick={handeSubmitGenre}>Añadir</button>
+            </div>:null }</div>
+            {/* <div>{activeGenre ? <ModalRegisterGenre/>:null}</div> */}
 
+            <div> <DateTimePicker onChange={onChange} value={value} minDate={new Date()} format="y-MM-dd h:mm:ss a"/> {errors.schedule && <label className={style.error}>{errors.schedule}</label>} </div>
+            
+            {/* <div> <input id="duration" name="file" onChange={(e) => handleChange(e)} onBlur={handleBlur} type="time" placeholder="Duracion del evento" /> {errors.duration && <label className={style.error}>{errors.duration}</label>}</div> */}
 
-            {/* <div> <input name="schedule" value={event.schedule}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Hora y Fecha" /> {errors.schedule && <label className={style.error}>{errors.schedule}</label>}</div> */}
-            {/* <div>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Stack spacing={4} sx={{ width: '250px'}}/>
-            <DateTimePicker
-                //label='Date Time Picker'
-                //name="schedule"
-                formmat="y-MM-dd h:mm:ss"
-                renderInput={(params) => <TextField {...params}/>}
-                value={dateTime}
-                onChange={(e)=>{setDateTime(e)}}
-                /> </LocalizationProvider>
-            </div> */}
-            <div>
-                <DateTimePicker onChange={onChange} value={value} format="y-MM-dd h:mm:ss a"/>
-            </div>
-        
-
-            <div> <input id="performerImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del artista" /> {errors.performerImage && <label className={style.error}>{errors.performerImage}</label>}</div>
-            <div> <input id="placeImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del lugar" /> {errors.placeImage && <label className={style.error}>{errors.placeImage}</label>}</div>
+            <div> <input id="performerImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del artista" /> Imagen del Artista {errors.performerImage && <label className={style.error}>{errors.performerImage}</label>}</div>
+            <div> <input id="placeImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del lugar" /> Imagen del Lugar {errors.placeImage && <label className={style.error}>{errors.placeImage}</label>}</div>
 
             <div>
                 <label className={style.label}>Seleccionar lugar del evento: </label>
-                <select onChange={handleVenueSelect}>
+                <select name="venueId" onChange={handleChange}>
                     <option>Lugares</option>
                     {venues.map(v =>(<option key={v.id} value={v.id}>{v.name}</option>))}
                 </select>
