@@ -332,11 +332,11 @@ export default function RegisterEvent(){
                 {errors.genreId && <label>{errors.genreId}</label>}
                 <button type="button" onClick={()=>setActiveGenre(!activeGenre)}>Añadir nuevo genero +</button>
             </div>
-            <div>{activeGenre ? <div>
+            {/* <div>{activeGenre ? <div>
                     <div> <input name="name" value={genre.name}  onChange={handleGenre} type="text" placeholder="Nombrar nuevo genero" />{errorGenre.name && (<label>{errorGenre.name}</label>)} </div>
                     <button onClick={handeSubmitGenre}>Añadir</button>
-            </div>:null }</div>
-            {/* <div>{activeGenre ? <ModalRegisterGenre/>:null}</div> */}
+            </div>:null }</div> */}
+            <div>{activeGenre ? <ModalRegisterGenre/>:null}</div>
 
             <div> <DateTimePicker onChange={onChange} value={value} minDate={new Date()} format="y-MM-dd h:mm:ss a"/> {errors.schedule && <label className={style.error}>{errors.schedule}</label>} </div>
             

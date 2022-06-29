@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { CreateGenre } from '../../redux/actions';
+import { CreateGenre, GetGenres } from '../../redux/actions';
 //import { Link, useNavigate } from "react-router-dom";
 
 function validate(genre){
@@ -38,24 +38,28 @@ export default function ModalRegisterGenre(){
         }))   
     };
 
-    const handeSubmitGenre = (e) => {
+    const handeSubmitGenre = async(e) => {
         e.preventDefault();
         if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(genre.name)){
             return alert("Ingrese un nombre con caracteres validos")
         } else {
-            dispatch(CreateGenre(genre));
-            alert("Genero añadido a la lista");
-            setGenre({
-                name: ""
-            })
-            setActiveGenre(!activeGenre)
+            const genreCreated = await dispatch(CreateGenre(genre));
+            //console.log(genreCreated)
+            if(genreCreated.data[0].name){
+                dispatch(GetGenres());
+                alert("Genero añadido a la lista");
+                setGenre({
+                    name: ""
+                })
+                setActiveGenre(!activeGenre)
+            }
             //navigate("/events")
         }
     };
 
     return (<div>
             {activeGenre ? <div>
-                <div> <input name="name" value={genre.name}  onChange={handleGenre} type="text" placeholder="Nombrar nuevo genero" />{errorGenre.name && (<label>{errorGenre.name}</label>)} </div>
+                <div> <input name="name" value={genre.name}  onChange={handleGenre} type="text" placeholder="Nombrar nuevo genero" />{error.name && (<label>{error.name}</label>)} </div>
                 <button onClick={handeSubmitGenre}>Añadir</button>
             </div>:null }
         </div>)
