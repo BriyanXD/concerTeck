@@ -14,28 +14,30 @@ import Footer from '../Footer/Footer';
 import NavBar from '../NavBar/NavBar';
 import { useLocalStorage } from '../useLocalStorage/useLocalStorage';
 import RegisterGenre from '../RegisterGenre/RegisterGenre';
+import RegisterVenue from '../RegisterVenue/RegisterVenue';
 
-function validateGenre(genre){
-    const error = {};
-    if(!genre.name){
-        error.name = 'Campo obligatorio'
-    }
-    if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(genre.name)){
-        error.name = "Ingrese un nombre con caracteres validos"
-    }
-    return error
-}
+// function validateGenre(genre){
+//     const error = {};
+//     if(!genre.name){
+//         error.name = 'Campo obligatorio'
+//     }
+//     if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(genre.name)){
+//         error.name = "Ingrese un nombre con caracteres validos"
+//     }
+//     return error
+// }
 
 
 export default function RegisterEvent(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [activeGenre, setActiveGenre] = useState(false)
+    const [activeGenre, setActiveGenre] = useState(false);
+    const [activeVenue, setActiveVenue] = useState(false);
     //const [dateTime, setDateTime] = useState(null);
     const [value, onChange] = useState(new Date());
     const genres = useSelector((state)=> state.Genres);
     const venues = useSelector((state) => state.Venues);
-    const [errorGenre, setErrorGenre] = useState({});
+    //const [errorGenre, setErrorGenre] = useState({});
     const [genre, setGenre] = useState({
         name: ""
     })
@@ -283,33 +285,33 @@ export default function RegisterEvent(){
       };
 
 
-    const handleGenre = (e) => {
-        setGenre({
-            [e.target.name]: e.target.value
-        })
-        setErrorGenre(validateGenre({
-            [e.target.name]: e.target.value 
-        }))   
-    };
+    // const handleGenre = (e) => {
+    //     setGenre({
+    //         [e.target.name]: e.target.value
+    //     })
+    //     setErrorGenre(validateGenre({
+    //         [e.target.name]: e.target.value 
+    //     }))   
+    // };
 
-    const handeSubmitGenre = async(e) => {
-        e.preventDefault();
-        if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(genre.name)){
-            return alert("Ingrese un nombre con caracteres validos")
-        } else {
-            const genreCreated = await dispatch(CreateGenre(genre));
-            //console.log(genreCreated)
-            if(genreCreated.data[0].name){
-                dispatch(GetGenres());
-                alert("Genero añadido a la lista");
-                setGenre({
-                    name: ""
-                })
-                setActiveGenre(!activeGenre)
-            }
-            //navigate("/events")
-        }
-    };
+    // const handeSubmitGenre = async(e) => {
+    //     e.preventDefault();
+    //     if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(genre.name)){
+    //         return alert("Ingrese un nombre con caracteres validos")
+    //     } else {
+    //         const genreCreated = await dispatch(CreateGenre(genre));
+    //         //console.log(genreCreated)
+    //         if(genreCreated.data[0].name){
+    //             dispatch(GetGenres());
+    //             alert("Genero añadido a la lista");
+    //             setGenre({
+    //                 name: ""
+    //             })
+    //             setActiveGenre(!activeGenre)
+    //         }
+    //         //navigate("/events")
+    //     }
+    // };
 
 
     //console.log para chequear lo que se esta guardando
@@ -320,8 +322,8 @@ export default function RegisterEvent(){
     <div className={style.card}>
         <div className={style.h2}><h2>Crear Evento</h2></div>
         <form onSubmit={handleSubmitEvent}>
-            <div> <input name="name" value={event.name}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Nombre del evento" /> {errors.name && <label className={style.error}>{errors.name}</label>}</div>
-            <div> <input name="artist" value={event.artist}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Artista" /> {errors.artist && <label className={style.error}>{errors.artist}</label>}</div>
+            <div> <label>Nombre del evento:* </label> <input name="name" value={event.name}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Nombre del evento" /> {errors.name && <label className={style.error}>{errors.name}</label>}</div>
+            <div> <label>Nombre del artista:* </label> <input name="artist" value={event.artist}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Artista" /> {errors.artist && <label className={style.error}>{errors.artist}</label>}</div>
 
             <div>
                 <label className={style.label}>Seleccionar genero existente: </label>
@@ -338,12 +340,13 @@ export default function RegisterEvent(){
             </div>:null }</div> */}
             <div>{activeGenre ? <RegisterGenre/>:null}</div>
 
-            <div> <DateTimePicker onChange={onChange} value={value} minDate={new Date()} format="y-MM-dd h:mm:ss a"/> {errors.schedule && <label className={style.error}>{errors.schedule}</label>} </div>
+            <div> <label>Fecha y Hora del evento:* </label></div>
+            <div> <DateTimePicker onChange={onChange} value={value} format="y-MM-dd h:mm:ss a"/> {errors.schedule && <label className={style.error}>{errors.schedule}</label>} </div>
             
             {/* <div> <input id="duration" name="file" onChange={(e) => handleChange(e)} onBlur={handleBlur} type="time" placeholder="Duracion del evento" /> {errors.duration && <label className={style.error}>{errors.duration}</label>}</div> */}
 
-            <div> <input id="performerImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del artista" /> Imagen del Artista {errors.performerImage && <label className={style.error}>{errors.performerImage}</label>}</div>
-            <div> <input id="placeImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del lugar" /> Imagen del Lugar {errors.placeImage && <label className={style.error}>{errors.placeImage}</label>}</div>
+            <div> <label>Imagen del Artista:* </label> <input id="performerImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del artista" /> {errors.performerImage && <label className={style.error}>{errors.performerImage}</label>}</div>
+            <div> <label>Imagen del Lugar:* </label> <input id="placeImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del lugar" />  {errors.placeImage && <label className={style.error}>{errors.placeImage}</label>}</div>
 
             <div>
                 <label className={style.label}>Seleccionar lugar del evento: </label>
@@ -352,9 +355,11 @@ export default function RegisterEvent(){
                     {venues.map(v =>(<option key={v.id} value={v.id}>{v.name}</option>))}
                 </select>
                 {errors.venueId && <label>{errors.venueId}</label>}
+                <button type="button" onClick={()=>setActiveVenue(!activeGenre)}>Añadir nuevo Establecimiento +</button>
             </div>
+            <div>{activeVenue ? <RegisterVenue/>:null}</div>
             
-            <div> <textarea name="description" value={event.description}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Descripcion" /> {errors.description && <label>{errors.description}</label>}</div>
+            <div> <label>Descripcion del evento: </label> <textarea name="description" value={event.description}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Descripcion" /> {errors.description && <label>{errors.description}</label>}</div>
             
             <Link to='/'><button >Volver a inicio</button></Link>
             

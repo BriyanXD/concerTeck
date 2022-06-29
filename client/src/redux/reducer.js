@@ -179,7 +179,7 @@ function reducers(state = initialState, { type, payload }) {
     case "POST_VENUE":
       return {
         ...state,
-        Venues: payload,
+        //Venues: payload,
       }
     case "VALIDATION_LOGIN":
       return {
