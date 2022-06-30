@@ -15,7 +15,11 @@ export default function PanelAdmin({setUser}){
     const [active, setActive] = useState(false);
     const user = useSelector((state) => state.User);
     const dispatch = useDispatch()
-    const usuario = useState((state) => state.adminPanel.allUsers)
+    useEffect (()=>{
+        dispatch(getAllUsers())
+    },[dispatch])
+    const userInfo = useSelector((state) => state.stateAdminPanel?.allUsers)
+    console.log(userInfo)
     // const token = useSelector((state) => state.token);
     // useLocalStorage()
 
@@ -23,15 +27,12 @@ export default function PanelAdmin({setUser}){
         setActive(!active);
     };
     
-    // useEffect ((=>{
-    //     dispatch()
-    // }))
 
-    function handleClickUser() {
-        // e.preventDefaut();
-        // console.log(token)
-        dispatch(getAllUsers())
-    }
+    // function handleClickUser() {
+    //     // e.preventDefaut();
+    //     // console.log(token)
+    //     dispatch(CardConteiner())
+    // }
     
     return(
         <div>
@@ -41,7 +42,7 @@ export default function PanelAdmin({setUser}){
                 </Modal>
                 <UserNavBar />
                 <div>
-                    <button onClick={() => handleClickUser()}>Usuario</button>
+                    <button >Usuario</button>
                     <br />
                     <button>Productores</button>
                     <br />
@@ -53,7 +54,7 @@ export default function PanelAdmin({setUser}){
             <div>
             <div>
             {
-                usuario?.map((e,k) =>{
+                userInfo?.map((e,k) =>{
                     return(
                         <div>
                             <UserCard key={k} id={e.id} username={e.username}/>
