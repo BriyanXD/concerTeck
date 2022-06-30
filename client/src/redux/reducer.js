@@ -22,7 +22,8 @@ const initialState = {
     allUsers:[],
     allProducers:[],
     allSolicits:[],
-  }
+  },
+  token:'',
 };
 
 function reducers(state = initialState, { type, payload }) {
@@ -88,6 +89,7 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         User: payload,
         userValidation: "",
+        token:payload[2].token
       };
     }
 

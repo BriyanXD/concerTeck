@@ -49,7 +49,7 @@ const {
 } = require("../controllers/Validations");
 
 routes.post("/user", createUser);
-routes.get("/user", verifyToken, getUser);
+routes.get("/user",  getUser); // verifyToken
 routes.put("/user", verifyToken, putUser);
 routes.delete("/user", verifyToken, isAdmin, deleteUser);
 

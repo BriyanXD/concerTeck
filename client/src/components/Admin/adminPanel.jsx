@@ -7,22 +7,31 @@ import { useDispatch, useSelector } from "react-redux";
 import style from './adminPanel.module.css'
 import { useLocalStorage } from "../useLocalStorage/useLocalStorage";
 import { getAllUsers } from "../../redux/actions";
+// import CardConteiner from "./adminCardConteiner";
+import { useEffect } from "react";
+import UserCard from './UserCard'
 
 export default function PanelAdmin({setUser}){
     const [active, setActive] = useState(false);
     const user = useSelector((state) => state.User);
     const dispatch = useDispatch()
+    const usuario = useState((state) => state.adminPanel.allUsers)
+    // const token = useSelector((state) => state.token);
     // useLocalStorage()
 
     const toggle = () => {
         setActive(!active);
     };
     
-    function handleClickUser(e) {
+    // useEffect ((=>{
+    //     dispatch()
+    // }))
+
+    function handleClickUser() {
         // e.preventDefaut();
-        dispatch(getAllUsers(e))
+        // console.log(token)
+        dispatch(getAllUsers())
     }
-    
     
     return(
         <div>
@@ -32,7 +41,7 @@ export default function PanelAdmin({setUser}){
                 </Modal>
                 <UserNavBar />
                 <div>
-                    <button onClick={(e) => handleClickUser(e) }>Usuario</button>
+                    <button onClick={() => handleClickUser()}>Usuario</button>
                     <br />
                     <button>Productores</button>
                     <br />
@@ -42,6 +51,17 @@ export default function PanelAdmin({setUser}){
                 </div>
             </div>
             <div>
+            <div>
+            {
+                usuario?.map((e,k) =>{
+                    return(
+                        <div>
+                            <UserCard key={k} id={e.id} username={e.username}/>
+                        </div>
+                    )
+                })
+            }
+        </div>
                 <div><input type="text" /></div>
                 <div>table
                     <div>
