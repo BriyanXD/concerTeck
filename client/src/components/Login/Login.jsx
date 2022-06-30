@@ -8,12 +8,15 @@ import { Link } from "react-router-dom";
 export default function Login({toggle}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const userValidation = useSelector((state) => state.userValidation);
+  const nuevo = useSelector((state) => state.User);
+  console.log("🚀 ~ file: Login.jsx ~ line 12 ~ Login ~ nuevo", nuevo)
   // console.log(userValidation, "validation user")
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
+  console.log("🚀 ~ file: Login.jsx ~ line 17 ~ Login ~ user", user)
+  
 
   const [errors, setErrors] = useState({
     username: "",
@@ -71,6 +74,7 @@ export default function Login({toggle}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const prueba= await dispatch(ValidationUser(user))
+    console.log("🚀 ~ file: Login.jsx ~ line 74 ~ handleSubmit ~ prueba", prueba)
       if (errors.username !== "" || errors.password !== "" ) {
         alert("Para poder registrarse debe solucionar los errores");
         return
@@ -90,7 +94,7 @@ export default function Login({toggle}) {
 
       
       if (prueba.payload){
-        console.log("ingreso")
+        console.log("ingreso acaaaaaaaaaaaaaaa")
             dispatch(LoginUser(user));
             alert("Se registro correctamente");
             setUser({
