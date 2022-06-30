@@ -13,9 +13,9 @@
     border-color: rgba(255, 255, 255, 0.3);
     vertical-align: bottom;
     line-height: 0;
-    
-    
 }
+  
+
 .facebook{
     color: #ffffff;
     font-size: 2.5vw;
@@ -50,4 +50,13 @@
     font-size: 22px;
     cursor: pointer;
 }
+
+.contactProducer{
+    color: #dbdada;
+    font-size: 22px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 4vw;
+}
+
 

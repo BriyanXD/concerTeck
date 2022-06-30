@@ -136,18 +136,13 @@ export default function Login({toggle}) {
         </a>
       </div>
 
-      <div className={style.contenedorGoogleFacebook}>
-        <button className={style.btn}>Iniciar sesion con Google</button>
-        <button className={style.btn}>Iniciar sesion con Facebook</button>
-      </div>
-
       <div className={style.contenedorCrearCuenta}>
         <Link to={`/registrar/user`}>
           <button className={style.btn}>Crear cuenta</button>
         </Link>
-        <span className={style.spanText}>
+        {/* <span className={style.spanText}>
           <Link to={`/registrar/producer`} style={{color: "white"}}>Crear cuenta</Link> para productores
-        </span>
+        </span> */}
       </div>
       <button className={style.btn} onClick={() => navigate('/')}>Volver</button>
     </div>
