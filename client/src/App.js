@@ -12,12 +12,12 @@ function App() {
     <BrowserRouter>
       <div>
           <Routes>
-            <Route exact path='/' element= {<Home/>}/>
+            <Route path='/' element= {<Home/>}/>
             <Route path= '/:id' element={<Detail/>}/>
-            <Route exact path='/registrar/:usuario' element= {<RegisterUser/>}/>
+            <Route path='/registrar/:usuario' element= {<RegisterUser/>}/>
             {/* <Route exact path='' element= {<Ruta/>}/> 
             <Route exact path='' element= {<Ruta/>}/>  */} 
-            <Route exact path='/events' element={<RegisterEvent/>}/>
+            <Route path='/events' element={<RegisterEvent/>}/>
             <Route path='*' element={<PageNotFound/>}/>
           </Routes>
       </div>
