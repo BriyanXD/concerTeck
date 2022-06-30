@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { LoginUser, ValidationUser } from "../../redux/actions";
 import style from "./Login.module.css";
 import { Link } from "react-router-dom";
+// import LoginAuth0  from '../LoginAuth0/LoginAuth0';
+// import LogoutAuth0 from '../LogoutAuth0/LogoutAuth0';
+
 
 export default function Login({toggle}) {
   const dispatch = useDispatch();
@@ -106,36 +109,12 @@ export default function Login({toggle}) {
   };
 
   return (
-    <div className={style.containerLogin}>
-      <h1 className={style.title}>Iniciar Sesión</h1>
-      <div className={style.containerPassword}>
-        <form onSubmit={handleSubmit} className={style.contenedorForm}>
-          <input
-            type="text"
-            name="username"
-            onBlur={handleBlur}
-            value={user.username}
-            onChange={handleChange}
-            placeholder="Nombre de usuario"
-          />
-          {errors.username && <label className={style.errors}>{errors.username}</label>}
-          <input
-            type="password"
-            name="password"
-            value={user.password}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            placeholder="Contraseña"
-          />
-          {errors.password && <label className={style.errors}>{errors.password}</label>}
-          {errors.validation && <label className={style.errors}>{errors.validation}</label>}
-          <button className={style.btn}>Iniciar sesión</button>
-        </form>
-        <a className={style.etiquetaA} href="#">
-          ¿Olvidaste tu contraseña?
-        </a>
-      </div>
 
+<<<<<<< HEAD
+    <div>
+   
+
+=======
       <div className={style.contenedorCrearCuenta}>
         <Link to={`/registrar/user`}>
           <button className={style.btn}>Crear cuenta</button>
@@ -145,6 +124,52 @@ export default function Login({toggle}) {
         </span> */}
       </div>
       <button className={style.btn} onClick={() => navigate('/')}>Volver</button>
+>>>>>>> e5a78270d4869fa027adca3bd70d0564a73fc480
     </div>
+    // <div className={style.containerLogin}>
+    //   <h1 className={style.title}>Iniciar Sesión</h1>
+    //   <div className={style.containerPassword}>
+    //     <form onSubmit={handleSubmit} className={style.contenedorForm}>
+    //       <input
+    //         type="text"
+    //         name="username"
+    //         onBlur={handleBlur}
+    //         value={user.username}
+    //         onChange={handleChange}
+    //         placeholder="Nombre de usuario"
+    //       />
+    //       {errors.username && <label className={style.errors}>{errors.username}</label>}
+    //       <input
+    //         type="password"
+    //         name="password"
+    //         value={user.password}
+    //         onBlur={handleBlur}
+    //         onChange={handleChange}
+    //         placeholder="Contraseña"
+    //       />
+    //       {errors.password && <label className={style.errors}>{errors.password}</label>}
+    //       {errors.validation && <label className={style.errors}>{errors.validation}</label>}
+    //       <button className={style.btn}>Iniciar sesión</button>
+    //     </form>
+    //     <a className={style.etiquetaA} href="#">
+    //       ¿Olvidaste tu contraseña?
+    //     </a>
+    //   </div>
+
+    //   <div className={style.contenedorGoogleFacebook}>
+    //     <button className={style.btn}>Iniciar sesion con Google</button>
+    //     <button className={style.btn}>Iniciar sesion con Facebook</button>
+    //   </div>
+
+    //   <div className={style.contenedorCrearCuenta}>
+    //     <Link to={`/registrar/user`}>
+    //       <button className={style.btn}>Crear cuenta</button>
+    //     </Link>
+    //     <span className={style.spanText}>
+    //       <Link to={`/registrar/producer`} style={{color: "white"}}>Crear cuenta</Link> para productores
+    //     </span>
+    //   </div>
+    //   <button className={style.btn} onClick={() => navigate('/')}>Volver</button>
+    // </div>
   );
 }
