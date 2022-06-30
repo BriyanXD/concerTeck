@@ -259,6 +259,49 @@ export function AddToFav(payload){
   };
 }
 
+export function getAllUsers(){
+  return async function(dispatch){
+    try {
+      const adminState = await axios.get('http://localhost:3001/api/user')
+      return dispatch({
+        type: 'GET_ALL_USERS',
+        payload:adminState.data
+      })
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+}
+
+export function getAllProducers(){
+  return async function(dispatch){
+    try {
+      const adminState = await axios.get('http://localhost:3001/api/producers')
+      return dispatch({
+        type: 'GET_ALL_PRODUCERS',
+        payload:adminState.data
+      })
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+}
+
+export function getAllSolicits(){
+  return async function(dispatch){
+    try {
+      const adminState = await axios.post('http://localhost:3001/api/Solicits',{Headers:{
+        "authorization":"",
+      }})
+      return dispatch({
+        type: 'GET_ALL_SOLICITS',
+        payload:adminState.data
+      })
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+}
 // export function filterByGenres (){
 //     return async(dispatch) => {
 //         const gen = await axios.get('http://localhost:3001/api/genres')

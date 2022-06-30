@@ -18,6 +18,11 @@ const initialState = {
     isVisbleModal: false,
     eventsForCalendar: [],
   },
+  stateAdminPanel:{
+    allUsers:[],
+    allProducers:[],
+    allSolicits:[],
+  }
 };
 
 function reducers(state = initialState, { type, payload }) {

@@ -17,6 +17,10 @@ const User = sequelize.define(
         notNull: {
           msg: "Por favor ingrese un nombre de usuario",
         },
+        len: {
+          args: [4, 255],
+          msg: "username debe tener entre 4 y 255 caracteres",
+        },
       },
     },
     isAdmin: {
@@ -30,10 +34,10 @@ const User = sequelize.define(
       validate: {
         isEmail: {
           args: true,
-          msg: "Ingrese un correo valido",
+          msg: "Por favor Ingrese un email valido",
         },
         notNull: {
-          msg: "Por favor ingrese un emial",
+          msg: "Por favor ingrese un email",
         },
       },
     },
@@ -42,7 +46,7 @@ const User = sequelize.define(
       allowNull: false,
       validate: {
         notNull: {
-          msg: "Por favor ingrese una contrasena valida",
+          msg: "Por favor ingrese una contrasena",
         },
       },
     },
