@@ -109,11 +109,18 @@ export default function Login({toggle}) {
   };
 
   return (
-
-    <div>
-   
-
+      <div>
+      <div className={style.contenedorCrearCuenta}>
+        <Link to={`/registrar/user`}>
+          <button className={style.btn}>Crear cuenta</button>
+        </Link>
+        {/* <span className={style.spanText}>
+          <Link to={`/registrar/producer`} style={{color: "white"}}>Crear cuenta</Link> para productores
+        </span> */}
+      <button className={style.btn} onClick={() => navigate('/')}>Volver</button>
+      </div>
     </div>
+    
     // <div className={style.containerLogin}>
     //   <h1 className={style.title}>Iniciar Sesión</h1>
     //   <div className={style.containerPassword}>
