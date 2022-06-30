@@ -4,19 +4,19 @@ import React from "react"
 
 
 export default function UserCard({id,username}){
-const usuario = useState((state) => state.adminPanel.allUsers)
+// const usuario = useState((state) => state.adminPanel.allUsers)
 
     return( 
         <div>
-            <p>{id}</p>
-            <hr />
-            <p>{username}</p>
-            <hr />
             <button>Cerrar cesion</button>
-            <hr />
+            {/* <hr /> */}
             <button>Ver Perfil</button>
-            <hr />
+            {/* <hr /> */}
             <button>Permisos</button>
+            <h4>{id}</h4>
+            {/* <hr /> */}
+            <h4>{username}</h4>
+            {/* <hr /> */}
         </div>
     )
 }

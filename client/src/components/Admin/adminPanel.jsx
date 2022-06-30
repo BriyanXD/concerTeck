@@ -11,13 +11,15 @@ import { getAllUsers } from "../../redux/actions";
 import { useEffect } from "react";
 import UserCard from './UserCard'
 
-export default function PanelAdmin({setUser}){
+export default function PanelAdmin(){
     const [active, setActive] = useState(false);
     const user = useSelector((state) => state.User);
     const dispatch = useDispatch()
+
     useEffect (()=>{
         dispatch(getAllUsers())
     },[dispatch])
+
     const userInfo = useSelector((state) => state.stateAdminPanel?.allUsers)
     console.log(userInfo)
     // const token = useSelector((state) => state.token);
@@ -29,9 +31,19 @@ export default function PanelAdmin({setUser}){
     
 
     // function handleClickUser() {
-    //     // e.preventDefaut();
-    //     // console.log(token)
-    //     dispatch(CardConteiner())
+    //     return(
+    //         <div>
+    //         {
+    //             userInfo?.map((e,k) =>{
+    //                 return(
+    //                     <div>
+    //                         <UserCard key={k} id={e.id} username={e.username}/>
+    //                     </div>
+    //                 )
+    //             })
+    //         }
+    //     </div>
+    //     )
     // }
     
     return(
@@ -52,6 +64,7 @@ export default function PanelAdmin({setUser}){
                 </div>
             </div>
             <div>
+                <br />
             <div>
             {
                 userInfo?.map((e,k) =>{
@@ -63,6 +76,7 @@ export default function PanelAdmin({setUser}){
                 })
             }
         </div>
+        <br />
                 <div><input type="text" /></div>
                 <div>table
                     <div>
