@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import style from './RegisterEvents.module.css';
-import { CreateEvent, GetGenres, CreateGenre, GetVenues } from '../../redux/actions';
+import { CreateEvent, GetGenres, GetVenues } from '../../redux/actions';
 import { Link, useNavigate } from "react-router-dom";
 //import { LocalizationProvider } from '@mui/x-date-pickers';
 //import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
@@ -12,20 +12,8 @@ import { Link, useNavigate } from "react-router-dom";
 import DateTimePicker from 'react-datetime-picker';
 import Footer from '../Footer/Footer';
 import NavBar from '../NavBar/NavBar';
-import { useLocalStorage } from '../useLocalStorage/useLocalStorage';
 import RegisterGenre from '../RegisterGenre/RegisterGenre';
 import RegisterVenue from '../RegisterVenue/RegisterVenue';
-
-// function validateGenre(genre){
-//     const error = {};
-//     if(!genre.name){
-//         error.name = 'Campo obligatorio'
-//     }
-//     if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(genre.name)){
-//         error.name = "Ingrese un nombre con caracteres validos"
-//     }
-//     return error
-// }
 
 
 export default function RegisterEvent(){
@@ -37,10 +25,6 @@ export default function RegisterEvent(){
     const [value, onChange] = useState(new Date());
     const genres = useSelector((state)=> state.Genres);
     const venues = useSelector((state) => state.Venues);
-    //const [errorGenre, setErrorGenre] = useState({});
-    const [genre, setGenre] = useState({
-        name: ""
-    })
     const [event, setEvent] = useState({
         name: "",
         artist: "",
@@ -285,35 +269,6 @@ export default function RegisterEvent(){
       };
 
 
-    // const handleGenre = (e) => {
-    //     setGenre({
-    //         [e.target.name]: e.target.value
-    //     })
-    //     setErrorGenre(validateGenre({
-    //         [e.target.name]: e.target.value 
-    //     }))   
-    // };
-
-    // const handeSubmitGenre = async(e) => {
-    //     e.preventDefault();
-    //     if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(genre.name)){
-    //         return alert("Ingrese un nombre con caracteres validos")
-    //     } else {
-    //         const genreCreated = await dispatch(CreateGenre(genre));
-    //         //console.log(genreCreated)
-    //         if(genreCreated.data[0].name){
-    //             dispatch(GetGenres());
-    //             alert("Genero añadido a la lista");
-    //             setGenre({
-    //                 name: ""
-    //             })
-    //             setActiveGenre(!activeGenre)
-    //         }
-    //         //navigate("/events")
-    //     }
-    // };
-
-
     //console.log para chequear lo que se esta guardando
     console.log(event)
     return (
@@ -334,10 +289,6 @@ export default function RegisterEvent(){
                 {errors.genreId && <label>{errors.genreId}</label>}
                 <button type="button" onClick={()=>setActiveGenre(!activeGenre)}>Añadir nuevo genero +</button>
             </div>
-            {/* <div>{activeGenre ? <div>
-                    <div> <input name="name" value={genre.name}  onChange={handleGenre} type="text" placeholder="Nombrar nuevo genero" />{errorGenre.name && (<label>{errorGenre.name}</label>)} </div>
-                    <button onClick={handeSubmitGenre}>Añadir</button>
-            </div>:null }</div> */}
             <div>{activeGenre ? <RegisterGenre/>:null}</div>
 
             <div> <label>Fecha y Hora del evento:* </label></div>
