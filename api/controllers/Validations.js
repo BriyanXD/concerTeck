@@ -1,5 +1,6 @@
 const Producer = require("../models/Producer");
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
 
 async function ValidationUser (req,res) {
     const { username, password } = req.body;
