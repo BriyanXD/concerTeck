@@ -92,7 +92,8 @@ export default function Home() {
                       />
                     </Link>
                       <div className={style.heart}>
-                        <BsFillHeartFill size={30} onClick={()=>User?dispatch(AddToFav(el)):alert('Tenes que Registrarte')}/>
+                        {/* <BsFillHeartFill size={30} onClick={()=>User?dispatch(AddToFav(el)):alert('Tenes que Registrarte')}/> */}
+                        <BsFillHeartFill size={30} onClick={()=>dispatch(AddToFav(el))}/>
                       </div>
                   </div>
                 );
@@ -117,7 +118,8 @@ export default function Home() {
                         id={el.id}
                       />
                     </Link>
-                    <div className={style.heart}><BsFillHeartFill size={20} onClick={()=>User?dispatch(AddToFav(el)):alert('Tenes que Registrarte')}/></div>
+                    {/* <div className={style.heart}><BsFillHeartFill size={20} onClick={()=>User?dispatch(AddToFav(el)):alert('Tenes que Registrarte')}/></div> */}
+                    <div className={style.heart2}><BsFillHeartFill size={20} onClick={()=>dispatch(AddToFav(el))}/></div>
                   </div>
                 );
               })}

@@ -1,26 +1,26 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import s from './Favorites.module.css'
 import CardBigEvent from "../CardBigEvent/CardBigEvent";
 import CardEvent from "../CardEvent/CardEvent";
+import { RemoveFavorite } from "../../redux/actions";
 
 
 
 export default function Favorites(){
     const {Likes} = useSelector((state)=> state)
+    const dispatch = useDispatch()
     const bigEvents = Likes.filter((b)=>b.venue.isBigEvent===true)
     const events = Likes.filter((b)=>b.venue.isBigEvent===false)
-    console.log('likes:', Likes)
+    // console.log('likes:', Likes)
 
     return(
-        <div className={s.font}>
-            <h4>favoritos</h4>
+        <div className={s.container}>
             {
                 bigEvents?.map((el)=>{
                     return (
                        
-                        <div>
-                            {/* <h3>{el.name}</h3> */}
+                     <div className={s.containerClose}>
                         <CardBigEvent
                         name={el.name}
                         genreId={el.genreId}
@@ -28,22 +28,28 @@ export default function Favorites(){
                         schedule={el.schedule}
                         id={el.id}
                       />
-                    </div>
+                      <button className={s.btn} onClick={()=>dispatch(RemoveFavorite(el))}>X</button>
+
+                 </div>
                 )})
             }
             {
-                                events?.map((el)=>{
-                                    return(
-                                        <CardEvent
-                                        name={el.name}
-                                        image={el.performerImage}
-                                        schedule={el.schedule}
-                                        id={el.id}
-                                      />
-                                    )
-                                })
-            }
-        </div>
+                events?.map((el)=>{
+                    return(
+                     <div className={s.containerClose2}>
+                        <CardEvent
+                        name={el.name}
+                        image={el.performerImage}
+                        schedule={el.schedule}
+                        id={el.id}
+                        />
+                        <button className={s.btn2} onClick={()=>dispatch(RemoveFavorite(el))}> X </button>
+                     </div>
+                        )
+                    })
+                }
+                
+            </div>
     )
 
 }

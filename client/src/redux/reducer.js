@@ -63,7 +63,15 @@ function reducers(state = initialState, { type, payload }) {
       return {
         ...state,
         Likes: [...state.Likes, payload]
-      }
+    }
+    case "REMOVE_FAVORITE":
+      // console.log('likes:', state.Likes)
+      // console.log('payload:', payload)
+        return {
+            ...state,
+            Likes: state.Likes.filter((f) => f.id !== payload.id) 
+
+    }
 
     case "GET_EVENT_BY_NAME": {
       const bigEvents = payload.filter((e) => e.venue.isBigEvent === true);

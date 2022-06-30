@@ -252,11 +252,19 @@ export function AddToBasket (payload){
 }
 
 export function AddToFav(payload){
-  console.log('payload',payload)
+  // console.log('payload',payload)
   return{
     type: "ADD_TO_FAV",
     payload: payload
   };
+}
+
+export function RemoveFavorite(id){
+  console.log('payload id:', id)
+    return {
+        type: "REMOVE_FAVORITE",
+        payload: id
+    }
 }
 
 export function getAllUsers(){
