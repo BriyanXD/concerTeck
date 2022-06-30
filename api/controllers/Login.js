@@ -16,7 +16,7 @@ async function LoginUser(req, res) {
           let token = jwt.sign({ user: user }, AUTH_SECRET, {
             expiresIn: AUTH_EXPIRES,
           });
-          res.json(["Usuario", { user: user }, { token: token }]);
+          res.json(["Usuario", user , { token: token }]);
         } else {
           res.status(401).json({ error: "Password incorrecto" });
         }
@@ -26,7 +26,7 @@ async function LoginUser(req, res) {
           let token = jwt.sign({ producer: producer }, AUTH_SECRET, {
             expiresIn: AUTH_EXPIRES,
           });
-          res.json(["Productor", { producer: producer }, { token: token }]);
+          res.json(["Productor", producer, { token: token }]);
         } else {
           res.status(401).json({ error: "Password incorrecto" });
         }
