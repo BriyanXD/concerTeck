@@ -85,6 +85,7 @@ if(e.target.name === "company"){
       })
   }
 }
+
 if(e.target.name === "message"){
   if(e.target.value === ""){
     setError({
@@ -101,6 +102,7 @@ if(e.target.name === "message"){
         ...error,
         [e.target.name]: ""
     })
+  }
 }
 
 if(e.target.name === "cuit_cuil"){
@@ -160,7 +162,7 @@ if(e.target.name === "telephone"){
   }
 }
 
-}
+
   }
 
   function handleSubmit(e){
