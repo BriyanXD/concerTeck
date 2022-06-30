@@ -49,3 +49,16 @@
     background-color: #FF4C29;
     border-radius: 5px;
 }
+
+.heart{
+    position: absolute;
+    color: white;
+    z-index: 100;
+    margin-left: 15px;
+    margin-top: -2.5rem;
+ 
+}
+.heart:hover{
+    color: red;
+    cursor: pointer;
+}

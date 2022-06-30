@@ -2,7 +2,7 @@ import React from 'react'
 import style from './CardBigEvent.module.css'
 import top from '../../img/cartel.png'
 import { useSelector } from "react-redux";
-import { BsFillHeartFill } from 'react-icons/bs';
+
 
 
 export default function CardBigEvent({name, genreId, schedule, image}) {
@@ -29,7 +29,6 @@ export default function CardBigEvent({name, genreId, schedule, image}) {
         <div className={style.info}>{prueba !== undefined ? prueba.name.toUpperCase() : null}</div>
         <div className={style.info}>{date} {time}h.</div>
       </div>
-        <div className={style.heart}><BsFillHeartFill size={30}/></div>
     </div>   
   )
 }

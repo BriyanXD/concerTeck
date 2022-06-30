@@ -12,10 +12,16 @@ import Calendar from "../Calendar/Calendar";
 import PaginadoBigEvents from "../Paginado/PaginadoBigEvents";
 import PaginadoEvents from "../Paginado/PaginadoEvents";
 import ModalCalendar from "../ModalCalendar/ModalCalendar";
+import { BsFillHeartFill } from 'react-icons/bs';
+import { AddToFav } from '../../redux/actions';
+import Favorites from "../Favorites/Favorites";
+
 
 export default function Home() {
   const dispatch = useDispatch();
-
+  const {Likes} = useSelector((state)=> state)
+  const { User } = useSelector((state) => state)
+  console.log('Likes:',Likes)
   const allEventsPagination = useSelector((state) => {
     return state.BigEvents;
   });
@@ -60,7 +66,7 @@ export default function Home() {
   }
 
   
-
+// console.log(currentBigEvents)
   return (
     <div className={style.container}>
       <NavBar setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage} />
@@ -82,8 +88,12 @@ export default function Home() {
                         genreId={el.genreId}
                         image={el.performerImage}
                         schedule={el.schedule}
+                        id={el.id}
                       />
                     </Link>
+                      <div className={style.heart}>
+                        <BsFillHeartFill size={30} onClick={()=>User?dispatch(AddToFav(el)):alert('Tenes que Registrarte')}/>
+                      </div>
                   </div>
                 );
               })}
@@ -104,8 +114,10 @@ export default function Home() {
                         name={el.name}
                         image={el.performerImage}
                         schedule={el.schedule}
+                        id={el.id}
                       />
                     </Link>
+                    <div className={style.heart}><BsFillHeartFill size={20} onClick={()=>User?dispatch(AddToFav(el)):alert('Tenes que Registrarte')}/></div>
                   </div>
                 );
               })}
@@ -119,6 +131,7 @@ export default function Home() {
       <br />
       <Footer />
       <ModalCalendar />
+      <Favorites/>
     </div>
   );
 }

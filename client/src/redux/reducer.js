@@ -52,7 +52,13 @@ function reducers(state = initialState, { type, payload }) {
       return {
         ...state,
         Basket: [...state.Basket, payload]
-              }
+    }
+    case "ADD_TO_FAV":
+      if(state.Likes.find(l => l.id === payload.id)) return state;
+      return {
+        ...state,
+        Likes: [...state.Likes, payload]
+      }
 
     case "GET_EVENT_BY_NAME": {
       const bigEvents = payload.filter((e) => e.venue.isBigEvent === true);

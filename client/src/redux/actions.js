@@ -251,6 +251,14 @@ export function AddToBasket (payload){
   };
 }
 
+export function AddToFav(payload){
+  console.log('payload',payload)
+  return{
+    type: "ADD_TO_FAV",
+    payload: payload
+  };
+}
+
 // export function filterByGenres (){
 //     return async(dispatch) => {
 //         const gen = await axios.get('http://localhost:3001/api/genres')

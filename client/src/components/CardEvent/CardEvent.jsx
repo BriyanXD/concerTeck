@@ -1,6 +1,6 @@
 import React from 'react'
 import style from './CardEvent.module.css'
-import { BsFillHeartFill } from 'react-icons/bs';
+
 
 export default function CardEvent({name, schedule, image}) {
 
@@ -17,7 +17,6 @@ export default function CardEvent({name, schedule, image}) {
             <div className={style.name}>{name}</div>
             <div className={style.info}>{date} {time}h.</div>
           </div>
-          <div className={style.heart}><BsFillHeartFill size={20}/></div>
         </div>
     </div>
   )

@@ -56,11 +56,3 @@
     justify-content: center;
     font-size: medium;
 }
-
-
-.heart{
-    z-index: 30;
-}
-.heart:hover{
-    color: red;
-}
