@@ -10,7 +10,6 @@ export default function UserNavBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.User);
-  console.log("🚀 ~ file: UserNavbar.jsx ~ line 14 ~ UserNavBar ~ user", user);
 
   const [menuOpen, setMenuOpen] = useState(false);
 

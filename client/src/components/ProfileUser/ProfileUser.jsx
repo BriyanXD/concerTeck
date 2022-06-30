@@ -60,7 +60,6 @@ export default function ProfileUser() {
       <NavBarProfile change={change} />
       <div className={style.containerDataUser}>
         {active.data? <DatosUser/>: null}
-        {active.event? <RegisterEvent/>: null}
         {active.favorite? <h3>Hello Favorite</h3>: null}
         {active.shop? <h3>Hello Shop</h3>: null}
         {active.configuration? <h3>Hello configuratión</h3>: null}

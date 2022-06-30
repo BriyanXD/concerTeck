@@ -6,6 +6,7 @@ import RegisterEvent from './components/RegisterEvent/RegisterEvents';
 import Detail from './components/Detail/Detail';
 import PageNotFound from './components/PageNotFound/PageNotFound';
 import ProfileUser from './components/ProfileUser/ProfileUser.jsx';
+import PanelAdmin from './components/Admin/adminPanel'
 
 
 
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route exact path='/' element= {<Home/>}/>
             <Route path= '/:id' element={<Detail/>}/>
+            <Route path='/panelAdmin' element={<PanelAdmin/>}/>
             <Route exact path='/registrar/:usuario' element= {<RegisterUser/>}/>
             <Route exact path='/perfil/:usuario' element={<ProfileUser/>}/>
             {/* <Route exact path='' element= {<Ruta/>}/> 
