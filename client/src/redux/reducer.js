@@ -9,6 +9,8 @@ const initialState = {
   Events: [],
   Genres: [],
   Venues: [],
+  Basket: [],
+  Likes: [],
   userValidation: "",
   emailValidation: "",
   usernameValidation: "",
@@ -16,6 +18,11 @@ const initialState = {
     isVisbleModal: false,
     eventsForCalendar: [],
   },
+  stateAdminPanel:{
+    allUsers:[],
+    allProducers:[],
+    allSolicits:[],
+  }
 };
 
 function reducers(state = initialState, { type, payload }) {
@@ -45,6 +52,13 @@ function reducers(state = initialState, { type, payload }) {
         Genres: payload,
       };
     }
+    case "ADD_TO_BASKET": 
+      if(state.Basket.includes(payload)) return state;
+      return {
+        ...state,
+        Basket: [...state.Basket, payload]
+              }
+
     case "GET_EVENT_BY_NAME": {
       const bigEvents = payload.filter((e) => e.venue.isBigEvent === true);
       const smallEvents = payload.filter((e) => e.venue.isBigEvent === false);
@@ -167,6 +181,11 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         Venues: payload,
       };
+    case "POST_VENUE":
+      return {
+        ...state,
+        Venues: payload,
+      }
     case "VALIDATION_LOGIN":
       return {
         ...state,

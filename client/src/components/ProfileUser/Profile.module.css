@@ -1,0 +1,13 @@
+.containerProfileUser{
+    width: 100vw;
+    height: 100vh;
+    background-color: grey;
+}
+
+.containerDataUser{
+    display: flex;
+}
+
+.title{
+    margin: 0px 0px 0px 0px
+}

@@ -11,12 +11,15 @@ import { Link } from "react-router-dom";
 export default function Login({toggle}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const userValidation = useSelector((state) => state.userValidation);
+  const nuevo = useSelector((state) => state.User);
+  console.log("🚀 ~ file: Login.jsx ~ line 12 ~ Login ~ nuevo", nuevo)
   // console.log(userValidation, "validation user")
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
+  console.log("🚀 ~ file: Login.jsx ~ line 17 ~ Login ~ user", user)
+  
 
   const [errors, setErrors] = useState({
     username: "",
@@ -74,6 +77,7 @@ export default function Login({toggle}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const prueba= await dispatch(ValidationUser(user))
+    console.log("🚀 ~ file: Login.jsx ~ line 74 ~ handleSubmit ~ prueba", prueba)
       if (errors.username !== "" || errors.password !== "" ) {
         alert("Para poder registrarse debe solucionar los errores");
         return
@@ -93,7 +97,7 @@ export default function Login({toggle}) {
 
       
       if (prueba.payload){
-        console.log("ingreso")
+        console.log("ingreso acaaaaaaaaaaaaaaa")
             dispatch(LoginUser(user));
             alert("Se registro correctamente");
             setUser({
@@ -106,9 +110,21 @@ export default function Login({toggle}) {
 
   return (
 
+<<<<<<< HEAD
     <div>
    
 
+=======
+      <div className={style.contenedorCrearCuenta}>
+        <Link to={`/registrar/user`}>
+          <button className={style.btn}>Crear cuenta</button>
+        </Link>
+        {/* <span className={style.spanText}>
+          <Link to={`/registrar/producer`} style={{color: "white"}}>Crear cuenta</Link> para productores
+        </span> */}
+      </div>
+      <button className={style.btn} onClick={() => navigate('/')}>Volver</button>
+>>>>>>> e5a78270d4869fa027adca3bd70d0564a73fc480
     </div>
     // <div className={style.containerLogin}>
     //   <h1 className={style.title}>Iniciar Sesión</h1>

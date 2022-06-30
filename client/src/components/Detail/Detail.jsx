@@ -1,5 +1,5 @@
 import React from 'react'
-import {EventById,ClearDetail,GetVenues,GetGenres} from '../../redux/actions'
+import {EventById,ClearDetail,GetVenues,GetGenres, AddToBasket} from '../../redux/actions'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import NavBar from '../NavBar/NavBar';
@@ -7,6 +7,8 @@ import Footer from '../Footer/Footer';
 import style from './Detail.module.css'
 import { Link, useParams } from 'react-router-dom';
 import Map from '../Map/Map';
+import { MdOutlineAddShoppingCart } from 'react-icons/md';
+import Tooltip from '@mui/material/Tooltip';
 
 
 export default function Detail() {
@@ -32,6 +34,8 @@ export default function Detail() {
   const {Detail} = useSelector((state)=> state)
   console.log(Detail)
   const {Venues} = useSelector((state => state))
+  const {Basket} = useSelector((state)=> state)
+  console.log('Basket',Basket)
   
   let date = ''
   let time = ''
@@ -76,9 +80,21 @@ export default function Detail() {
           <Map data='-34.545306 -58.449775'/>
         
          </div>
+         <div className={style.buttonscontainer}>
+
           <Link to='/'>
+          <Tooltip title="Volver a Inicio" arrow>
             <button className={style.button}>Volver</button>
+            </Tooltip>
           </Link>
+            <Tooltip title="Agregar al carrito" arrow>
+              <div className={style.add}>
+
+           <MdOutlineAddShoppingCart onClick={()=>dispatch(AddToBasket(Detail.id))} className={style.addicon}/>
+              </div>
+            </Tooltip>
+         </div>
+           
         </div>
       <Footer/>
         

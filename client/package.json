@@ -25,6 +25,7 @@
     "react-datetime-picker": "^3.5.0",
     "react-devtools": "^4.24.7",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.4.0",
     "react-native-datepicker": "^1.7.2",
     "react-redux": "^8.0.2",
     "react-responsive-carousel": "^3.2.23",

@@ -19,6 +19,7 @@ export default function NavBar({ setCurrenPag, setCurrentPage }) {
   let path = location.pathname.split("/");
 
   const [active, setActive] = useState(false);
+  
 
   const toggle = () => {
     setActive(!active);

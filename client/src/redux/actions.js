@@ -107,6 +107,17 @@ export function GetVenues() {
   };
 }
 
+export function CreateVenue (value){
+  return async function (dispatch){
+      try{
+          const creation = await axios.post("http://localhost:3001/api/venues", value)
+          return creation;
+      }catch(error){
+          console.log(error.message);
+      }
+  }
+};
+
 export function ClearDetail() {
   return function () {
     return { type: "CLEAR_DETAIL" };
@@ -233,6 +244,56 @@ export function ModalCalendarVisible(booleanForVisible, dateFor) {
   };
 }
 
+export function AddToBasket (payload){
+  return {
+    type: "ADD_TO_BASKET",
+    payload: payload
+  };
+}
+
+export function getAllUsers(){
+  return async function(dispatch){
+    try {
+      const adminState = await axios.get('http://localhost:3001/api/user')
+      return dispatch({
+        type: 'GET_ALL_USERS',
+        payload:adminState.data
+      })
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+}
+
+export function getAllProducers(){
+  return async function(dispatch){
+    try {
+      const adminState = await axios.get('http://localhost:3001/api/producers')
+      return dispatch({
+        type: 'GET_ALL_PRODUCERS',
+        payload:adminState.data
+      })
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+}
+
+export function getAllSolicits(){
+  return async function(dispatch){
+    try {
+      const adminState = await axios.post('http://localhost:3001/api/Solicits',{Headers:{
+        "authorization":"",
+      }})
+      return dispatch({
+        type: 'GET_ALL_SOLICITS',
+        payload:adminState.data
+      })
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+}
 // export function filterByGenres (){
 //     return async(dispatch) => {
 //         const gen = await axios.get('http://localhost:3001/api/genres')

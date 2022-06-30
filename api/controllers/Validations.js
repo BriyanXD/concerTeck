@@ -1,15 +1,23 @@
 const Producer = require("../models/Producer");
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
 
 async function ValidationUser (req,res) {
     const { username, password } = req.body;  
     try{ 
-        if(username && password) {
-            let user = await User.findOne({where:{username, password}});
-            let producer= await Producer.findOne({where:{username, password}});
-            if( user !==null  ) res.send(true);
-            if( producer !==null ){
-                res.send(true);
+        if (username && password) {
+            let user = await User.findOne({ where: { username } });
+            let producer = await Producer.findOne({ where: { username } });
+            if( user !==null || producer !== null ){
+                if(user !== null){
+                    if(bcrypt.compareSync(password, user.password)){
+                        res.send(true);
+                    }
+                }else if(producer !== null){
+                    if(bcrypt.compareSync(password, producer.password)){
+                        res.send(true);
+                    }
+                }
             }else{
                 res.send(false);
             }
