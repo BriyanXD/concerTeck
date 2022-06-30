@@ -39,4 +39,23 @@ function verifyIsProducer(req, res, next) {
   }
 }
 
-module.exports = { verifyToken, isAdmin, verifyIsProducer };
+function adminNotAuthorization(req,res,next){
+  if (!UserDate.user.isAdmin) {
+    next();
+  } else {
+    return res
+      .status(401)
+      .json({ error: "Acceso no autorizado eres administrador" });
+  }
+}
+function producerNotAuthorization(req, res, next) {
+  try {
+    if (!UserDate.user.isProducer) {
+      next();
+    }
+  } catch (error) {
+    return res.status(401).json({ error: 'Acceso no autorizado eres productor' });
+  }
+}
+
+module.exports = { verifyToken, isAdmin, verifyIsProducer,adminNotAuthorization,producerNotAuthorization };

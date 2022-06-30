@@ -3,6 +3,7 @@ const Ticket = require("../models/Ticket");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { use } = require("../routes");
 require("dotenv").config();
 const { AUTH_ROUNDS, AUTH_SECRET, AUTH_EXPIRES } = process.env;
 require("../db.js");
@@ -127,10 +128,28 @@ async function UpgradeRank(req, res) {
   }
 }
 
+async function postAdminUser(req,res){
+  try {
+    const { username, password, email } = req.body;
+    let passcrypt = bcrypt.hashSync(password, parseInt(AUTH_ROUNDS));
+    const admin = User.findOrCreate({
+      where:{
+        username:username,
+        password:passcrypt,
+        email:email,
+        isAdmin:true
+      }})
+      res.send(admin)
+  } catch (error) {
+    res.status(401).json({error: error.message})
+  }
+}
+
 module.exports = {
   getUser,
   createUser,
   putUser,
   deleteUser,
   UpgradeRank,
+  postAdminUser
 };
