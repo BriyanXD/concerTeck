@@ -3,18 +3,25 @@ import Login from "../Login/Login";
 import Modal from "../Modals/Modal/Modal";
 import { useState } from "react";
 import UserNavBar from "../UserNavbar/UserNavbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import style from './adminPanel.module.css'
 import { useLocalStorage } from "../useLocalStorage/useLocalStorage";
+import { getAllUsers } from "../../redux/actions";
 
 export default function PanelAdmin({setUser}){
     const [active, setActive] = useState(false);
     const user = useSelector((state) => state.User);
-    useLocalStorage()
+    const dispatch = useDispatch()
+    // useLocalStorage()
+
     const toggle = () => {
         setActive(!active);
     };
     
+    function handleClickUser(e) {
+        // e.preventDefaut();
+        dispatch(getAllUsers(e))
+    }
     
     
     return(
@@ -25,7 +32,7 @@ export default function PanelAdmin({setUser}){
                 </Modal>
                 <UserNavBar />
                 <div>
-                    <button>Usuario</button>
+                    <button onClick={(e) => handleClickUser(e) }>Usuario</button>
                     <br />
                     <button>Productores</button>
                     <br />

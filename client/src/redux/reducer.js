@@ -213,6 +213,14 @@ function reducers(state = initialState, { type, payload }) {
           ),
         },
       };
+    case 'GET_ALL_USERS':{
+      return{
+        ...state,
+        stateAdminPanel:{
+          allUsers:payload
+        }
+      }
+    }
 
     default:
       return state;

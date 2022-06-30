@@ -145,6 +145,8 @@ export function LoginUser(value) {
         `http://localhost:3001/api/login`,
         value
       );
+      console.log(getUser.data)
+      // setCookies(getUser.data)
       return dispatch({
         type: "LOGIN_USER",
         payload: getUser.data,
@@ -293,6 +295,10 @@ export function getAllSolicits(){
       console.log(error.message);
     }
   }
+}
+
+function setCookies(token){
+  document.cookie=`authorization=${token}`;
 }
 // export function filterByGenres (){
 //     return async(dispatch) => {
