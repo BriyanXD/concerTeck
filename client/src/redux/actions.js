@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useLocalStorage } from "../components/useLocalStorage/useLocalStorage";
 
 export function getEvents() {
   return async function (dispatch) {
@@ -145,6 +146,10 @@ export function LoginUser(value) {
         `http://localhost:3001/api/login`,
         value
       );
+      console.log(getUser.data, 'USUARIOS')
+      localStorage.setItem('token',getUser.data[2].token)
+      // console.log(localStorage.getItem('token'),'ESTE ES EL MUDF TOKEN')
+      // setCookies(getUser.data[2].token)
       return dispatch({
         type: "LOGIN_USER",
         payload: getUser.data,
@@ -254,7 +259,17 @@ export function AddToBasket (payload){
 export function getAllUsers(){
   return async function(dispatch){
     try {
+      // let config = {
+      //   method: 'get',
+      //   url :'http://localhost:3001/api/user',
+      //   headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}
+      // } 
+      // let token = localStorage.getItem('token');
+      // const encabezado = `Authorization: Bearer ${localStorage.getItem('token')}`
+      // console.log(encabezado,'SI FUNCIONO') 
+
       const adminState = await axios.get('http://localhost:3001/api/user')
+      console.log(adminState.data)
       return dispatch({
         type: 'GET_ALL_USERS',
         payload:adminState.data
@@ -293,6 +308,10 @@ export function getAllSolicits(){
       console.log(error.message);
     }
   }
+}
+
+function setCookies(token){
+  document.cookie=`authorization=${token}`;
 }
 // export function filterByGenres (){
 //     return async(dispatch) => {

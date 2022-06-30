@@ -9,7 +9,9 @@ function verifyToken(req, res, next) {
   if (!req.headers.authorization) {
     return res.status(401).json({ error: "Acceso no autorizado" });
   } else {
+    console.log(req.headers)
     let token = req.headers.authorization.split(" ")[1];
+    console.log(token)
     jwt.verify(token, AUTH_SECRET, (err, decoded) => {
       if (err)
         return res.status(500).json({ error: "Error al decodificar el token" });

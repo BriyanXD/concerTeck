@@ -3,19 +3,36 @@ import Login from "../Login/Login";
 import Modal from "../Modals/Modal/Modal";
 import { useState } from "react";
 import UserNavBar from "../UserNavbar/UserNavbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import style from './adminPanel.module.css'
 import { useLocalStorage } from "../useLocalStorage/useLocalStorage";
+import { getAllUsers } from "../../redux/actions";
+// import CardConteiner from "./adminCardConteiner";
+import { useEffect } from "react";
+import UserCard from './UserCard'
 
 export default function PanelAdmin({setUser}){
     const [active, setActive] = useState(false);
     const user = useSelector((state) => state.User);
-    useLocalStorage()
+    const dispatch = useDispatch()
+    useEffect (()=>{
+        dispatch(getAllUsers())
+    },[dispatch])
+    const userInfo = useSelector((state) => state.stateAdminPanel?.allUsers)
+    console.log(userInfo)
+    // const token = useSelector((state) => state.token);
+    // useLocalStorage()
+
     const toggle = () => {
         setActive(!active);
     };
     
-    
+
+    // function handleClickUser() {
+    //     // e.preventDefaut();
+    //     // console.log(token)
+    //     dispatch(CardConteiner())
+    // }
     
     return(
         <div>
@@ -25,7 +42,7 @@ export default function PanelAdmin({setUser}){
                 </Modal>
                 <UserNavBar />
                 <div>
-                    <button>Usuario</button>
+                    <button >Usuario</button>
                     <br />
                     <button>Productores</button>
                     <br />
@@ -35,6 +52,17 @@ export default function PanelAdmin({setUser}){
                 </div>
             </div>
             <div>
+            <div>
+            {
+                userInfo?.map((e,k) =>{
+                    return(
+                        <div>
+                            <UserCard key={k} id={e.id} username={e.username}/>
+                        </div>
+                    )
+                })
+            }
+        </div>
                 <div><input type="text" /></div>
                 <div>table
                     <div>
