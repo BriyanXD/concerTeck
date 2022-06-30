@@ -110,11 +110,9 @@ export default function Login({toggle}) {
 
   return (
 
-<<<<<<< HEAD
     <div>
    
 
-=======
       <div className={style.contenedorCrearCuenta}>
         <Link to={`/registrar/user`}>
           <button className={style.btn}>Crear cuenta</button>
@@ -124,7 +122,6 @@ export default function Login({toggle}) {
         </span> */}
       </div>
       <button className={style.btn} onClick={() => navigate('/')}>Volver</button>
->>>>>>> e5a78270d4869fa027adca3bd70d0564a73fc480
     </div>
     // <div className={style.containerLogin}>
     //   <h1 className={style.title}>Iniciar Sesión</h1>
