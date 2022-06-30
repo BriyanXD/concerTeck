@@ -9,13 +9,14 @@ const { AUTH_ROUNDS, AUTH_SECRET, AUTH_EXPIRES } = process.env;
 require("../db.js");
 
 async function createUser(req, res) {
-  const { username, password, email } = req.body;
+  const { username, password, email, id } = req.body;
   if (!username || !password || !email) {
     res.status(404).json({ error: "Faltan completar Campos obligatorios" });
   } else {
     try {
       let passcrypt = bcrypt.hashSync(password, parseInt(AUTH_ROUNDS));
       User.create({
+        id: id,
         username: username,
         password: passcrypt,
         email: email,
@@ -128,20 +129,21 @@ async function UpgradeRank(req, res) {
   }
 }
 
-async function postAdminUser(req,res){
+async function postAdminUser(req, res) {
   try {
     const { username, password, email } = req.body;
     let passcrypt = bcrypt.hashSync(password, parseInt(AUTH_ROUNDS));
     const admin = User.findOrCreate({
-      where:{
-        username:username,
-        password:passcrypt,
-        email:email,
-        isAdmin:true
-      }})
-      res.send(admin)
+      where: {
+        username: username,
+        password: passcrypt,
+        email: email,
+        isAdmin: true,
+      },
+    });
+    res.send(admin);
   } catch (error) {
-    res.status(401).json({error: error.message})
+    res.status(401).json({ error: error.message });
   }
 }
 
@@ -151,5 +153,5 @@ module.exports = {
   putUser,
   deleteUser,
   UpgradeRank,
-  postAdminUser
+  postAdminUser,
 };
