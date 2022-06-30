@@ -554,8 +554,7 @@ export default function RegisterUser() {
         </form>
       )}
       <div className={style.containerSocialRegister}>
-        {/* <button>Registrarse con Google</button> */}
-        {/* <button>Registrarse con Facebook</button> */}
+
       </div>
       <button onClick={() => navigate("/")} className={style.btnBack}>Volver</button>
       </div>
