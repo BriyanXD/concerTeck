@@ -401,6 +401,45 @@ export function upgradeRank(id, boolean) {
   };
 }
 
+// export function searchUserByName (name){
+//   return async function(dispatch){
+//     try {
+//       const userByName = await axios.get(`http://localhost:3001/api/user?name=${name}`, {headers: {
+//         Authorization: `Bearer ${localStorage.getItem("token")}`,
+//       }}) ;
+//       console.log(userByName, 'ESTOY RE LCOO')
+//       return dispatch({
+//         type : "SEARCH_USER_BY_NAME",
+//         payload :userByName.data
+//       })
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   }
+// }
+
+export function searchUserByUserName (username){
+  return async function(dispatch){
+    try {
+      const userByUserName = await axios.get(
+        `http://localhost:3001/api/user?username=${username}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );;
+      console.log(userByUserName, 'ESTOY RE LCOO')
+      return dispatch({
+        type : "SEARCH_USER_BY_USERNAME",
+        payload :userByUserName.data.username
+      })
+    } catch (error) {
+      console.log(error,'SOY YO')
+    }
+  }
+}
+
 /* export function getAllSolicits(allevents) {
   return async function (dispatch) {
     try {
