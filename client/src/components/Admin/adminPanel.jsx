@@ -4,31 +4,42 @@ import Modal from "../Modals/Modal/Modal";
 import { useState } from "react";
 import UserNavBar from "../UserNavbar/UserNavbar";
 import { useDispatch, useSelector } from "react-redux";
-import style from './adminPanel.module.css'
-import { useLocalStorage } from "../useLocalStorage/useLocalStorage";
-import { getAllUsers } from "../../redux/actions";
 // import CardConteiner from "./adminCardConteiner";
-import { useEffect } from "react";
-import UserCard from './UserCard'
+import {getAllUsers, getEvents, getAllSolicits} from "../../redux/actions"
 
-export default function PanelAdmin(){
+
+import AdminUserPanel from "./AdminUserPanel";
+import AdminEventPanel from "./AdminEventPanel";
+import AdminSolicitPanel from "./AdminSolicitPanel";
+import AdminSolicit from "./AdminSolicit";
+
+export default function PanelAdmin({setUser}){
+    
+    const allEvents = useSelector((state) => state.AllEvents)
     const [active, setActive] = useState(false);
-    const user = useSelector((state) => state.User);
-    const dispatch = useDispatch()
+    const [usersActive, setUsers] = useState(true);
+    const [eventsActive, setEvents] = useState(false);
+    const [solicitsActive, setSolicits] = useState(false);
 
-    useEffect (()=>{
+
+    const user = useSelector((state) => state.User);
+
+
+    
+    const dispatch = useDispatch()
+    
+    /* useEffect (()=>{
         dispatch(getAllUsers())
     },[dispatch])
 
     const userInfo = useSelector((state) => state.stateAdminPanel?.allUsers)
     console.log(userInfo)
     // const token = useSelector((state) => state.token);
-    // useLocalStorage()
+    // useLocalStorage()*/
 
     const toggle = () => {
         setActive(!active);
     };
-    
 
     // function handleClickUser() {
     //     return(
@@ -45,6 +56,24 @@ export default function PanelAdmin(){
     //     </div>
     //     )
     // }
+    function handlerClickUsuarios(){
+        dispatch(getAllUsers())
+        setEvents(false)
+        setSolicits(false)
+        setUsers(true)
+    }
+    function handlerClickEventos(){
+        dispatch(getEvents())
+        setSolicits(false)
+        setUsers(false)
+        setEvents(true)
+    }
+    function handlerClickSolicits(){
+        dispatch(getAllSolicits())
+        setEvents(false)
+        setUsers(false)
+        setSolicits(true)
+    }
     
     return(
         <div>
@@ -54,19 +83,22 @@ export default function PanelAdmin(){
                 </Modal>
                 <UserNavBar />
                 <div>
-                    <button >Usuario</button>
+                    <button onClick={handlerClickUsuarios}>Usuario</button>
                     <br />
-                    <button>Productores</button>
+                    <button onClick={handlerClickEventos}>Eventos</button>
                     <br />
-                    <button>Eventos</button>
-                    <br />
-                    <button>Solicitudes</button>
+                    <button onClick={handlerClickSolicits}>Solicitudes</button>
                 </div>
+        </div>
+            <div>
+            {usersActive ? <AdminUserPanel/> : eventsActive ? <AdminEventPanel/>: solicitsActive ? <AdminSolicit/>: <h1>Error</h1> }
             </div>
-            <div>
-                <br />
-            <div>
-            {
+        </div>
+    )
+}
+
+
+{/*             {
                 userInfo?.map((e,k) =>{
                     return(
                         <div>
@@ -74,18 +106,6 @@ export default function PanelAdmin(){
                         </div>
                     )
                 })
-            }
-        </div>
-        <br />
-                <div><input type="text" /></div>
-                <div>table
-                    <div>
-                        id
-                        name
-                        ...
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
+            } */}
+
+

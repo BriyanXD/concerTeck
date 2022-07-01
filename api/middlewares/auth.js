@@ -9,13 +9,13 @@ function verifyToken(req, res, next) {
   if (!req.headers.authorization) {
     return res.status(401).json({ error: "Acceso no autorizado" });
   } else {
-    console.log(req.headers)
     let token = req.headers.authorization.split(" ")[1];
-    console.log(token)
+    console.log(token);
     jwt.verify(token, AUTH_SECRET, (err, decoded) => {
       if (err)
-        return res.status(500).json({ err: "Error al decodificar el token" });
+        return res.status(500).json({ error: "Error al decodificar el token" });
       else {
+        console.log("usuario autorizado");
         UserDate = decoded;
         next();
       }
@@ -26,9 +26,9 @@ function isAdmin(req, res, next) {
   if (UserDate.user.isAdmin) {
     next();
   } else {
-    return res
-      .status(401)
-      .json({ error: "Acceso no autorizado no eres administrador" });
+    return res.status(401).json({
+      error: "Acceso no autorizado no tienes permisos de administrador",
+    });
   }
 }
 function verifyIsProducer(req, res, next) {
@@ -37,11 +37,13 @@ function verifyIsProducer(req, res, next) {
       next();
     }
   } catch (error) {
-    return res.status(401).json({ error: error });
+    return res
+      .status(401)
+      .json({ error: "Acceso no autorizado no tienes permisos de productor" });
   }
 }
 
-function adminNotAuthorization(req,res,next){
+function adminNotAuthorization(req, res, next) {
   if (!UserDate.user.isAdmin) {
     next();
   } else {
@@ -56,8 +58,16 @@ function producerNotAuthorization(req, res, next) {
       next();
     }
   } catch (error) {
-    return res.status(401).json({ error: 'Acceso no autorizado eres productor' });
+    return res
+      .status(401)
+      .json({ error: "Acceso no autorizado eres productor" });
   }
 }
 
-module.exports = { verifyToken, isAdmin, verifyIsProducer,adminNotAuthorization,producerNotAuthorization };
+module.exports = {
+  verifyToken,
+  isAdmin,
+  verifyIsProducer,
+  adminNotAuthorization,
+  producerNotAuthorization,
+};
