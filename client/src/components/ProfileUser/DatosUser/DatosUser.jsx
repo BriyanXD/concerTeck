@@ -1,12 +1,20 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAuth0 } from "@auth0/auth0-react";
+import  style  from './DatosUser.module.css';
 
 export default function DatosUser () {
-
-    const user = useSelector(state => state.User);
-
-    return(<div>
-       {user ? <h3> Nombre de usuario: {user[1].username}</h3>: null}
-       {user ? <h3> Correo electronico: {user[1].email}</h3>: null}
-    </div>)
-}
+    const { user, isAuthenticated, isLoading } = useAuth0();
+    if (isLoading) {
+        return <div>Loading ...</div>;
+      }
+    return (
+        isAuthenticated && (
+          <div className={style.containerUser}>
+            <img className={style.image} src={user.picture} alt={user.name} />
+            <h2 className={style.userData}>Nombre: {user.given_name}</h2>
+            <h2 className={style.userData}>Apellido: {user.family_name}</h2>
+            <h2 className={style.userData}>Correo: {user.email}</h2>
+          </div>
+        )
+      );
+    };

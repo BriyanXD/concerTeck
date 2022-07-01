@@ -12,13 +12,13 @@ export default function Login({toggle}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const nuevo = useSelector((state) => state.User);
-  console.log("🚀 ~ file: Login.jsx ~ line 12 ~ Login ~ nuevo", nuevo)
+
   // console.log(userValidation, "validation user")
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
-  console.log("🚀 ~ file: Login.jsx ~ line 17 ~ Login ~ user", user)
+ 
   
 
   const [errors, setErrors] = useState({
