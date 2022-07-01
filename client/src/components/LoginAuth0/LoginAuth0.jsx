@@ -12,12 +12,6 @@ export default function LoginAuth0(){
     loginWithRedirect,
   } = useAuth0();
 
-<<<<<<< HEAD
-  console.log('usuario', user);
-  console.log('autenticacion', isAuthenticated);
-  console.log('loginWithRedirect', loginWithRedirect);
-=======
->>>>>>> 2dbdb1b06d8c28ac2aa5305c88f3b87a96f56348
 
   return(
   <div>
