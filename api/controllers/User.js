@@ -148,6 +148,37 @@ async function postAdminUser(req, res) {
   }
 }
 
+async function userSerchbar (){
+  try {
+    const {name,username} = req.query;
+    const allUsersName = User.findOne({
+      where:{
+        name:name
+      }})
+    const allUsersNames = User.findOne({where:{username:username}})
+      if(name){
+        const filt = allUsersName.filter((n) =>
+        n.name.toLowerCase().includes(name.toLowerCase())
+      );
+        if(filt.length > 0){
+          return res.send(filt);
+        }else{
+          return res.status(401).json({ error: "No se encontro un Usuario con ese Nombre" });
+        }
+      }
+      if(username){
+        const filts = allUsersNames.filter(n => m.username.toLowerCase().includes(username.toLowerCase));
+        if(filts.length > 0){
+          return res.send(filts)
+        }else{
+          res.status(401).json({error: 'No se uncontro ningun usuario con ese Username'})
+        }
+      }
+  } catch (error) {
+    res.status(401).json({error: error.message})
+  }
+}
+
 module.exports = {
   getUser,
   createUser,
@@ -155,4 +186,5 @@ module.exports = {
   deleteUser,
   UpgradeRank,
   postAdminUser,
+  userSerchbar
 };

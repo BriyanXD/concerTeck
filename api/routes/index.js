@@ -14,6 +14,7 @@ const {
   deleteUser,
   UpgradeRank,
   postAdminUser,
+  userSerchbar
 } = require("../controllers/User");
 const { getAllGenres, postOneGenre } = require("../controllers/Genres");
 const {
@@ -49,7 +50,7 @@ const {
 } = require("../controllers/Validations");
 
 routes.post("/user", createUser);
-routes.get("/user", verifyToken, getUser); // verifyToken
+routes.get("/user", verifyToken, getUser,userSerchbar); // verifyToken
 routes.put("/user", verifyToken, putUser);
 routes.delete("/user", verifyToken, isAdmin, deleteUser);
 
