@@ -87,9 +87,7 @@ function reducers(state = initialState, { type, payload }) {
     case "LOGIN_USER": {
       return {
         ...state,
-        User: payload,
-        userValidation: "",
-        token: payload[2].token,
+        User: payload.user,
       };
     }
 

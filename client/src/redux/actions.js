@@ -132,14 +132,18 @@ export function ClearDetail() {
   };
 }
 
-export function register(user, value) {
+export function register(value) {
   return async function (dispatch) {
     try {
       const register = await axios.post(
-        `http://localhost:3001/api/${user}`,
+        `http://localhost:3001/api/user`,
         value
       );
-      return register;
+      localStorage.setItem("token", register.data[2].token);
+      return dispatch({
+        type: "LOGIN_USER",
+        payload: register.data[1],
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -266,16 +270,16 @@ export function AddToBasket(payload) {
 export function getAllUsers() {
   return async function (dispatch) {
     try {
-      // let config = {
-      //   method: 'get',
-      //   url :'http://localhost:3001/api/user',
-      //   headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}
-      // }
-      // let token = localStorage.getItem('token');
-      // const encabezado = `Authorization: Bearer ${localStorage.getItem('token')}`
-      // console.log(encabezado,'SI FUNCIONO')
+      let config = {
+        method: "get",
+        url: "http://localhost:3001/api/user",
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      };
+      let token = localStorage.getItem("token");
+      console.log(token);
+      /* const encabezado = `Authorization: Bearer ${localStorage.getItem('token')}` */
 
-      const adminState = await axios.get("http://localhost:3001/api/user");
+      const adminState = await axios(config);
       console.log(adminState.data);
       return dispatch({
         type: "GET_ALL_USERS",
