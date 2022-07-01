@@ -10,6 +10,7 @@ export default function AdminUserPanel(){
     const allUsers = useSelector((state) => state.stateAdminPanel?.allUsers)
     // const UserByName = useSelector((state) => state.stateAdminPanel?.UserByName)
     const UserByUserName = useSelector((state) => state.stateAdminPanel?.UserByUserName)
+    console.log('Prueba',UserByUserName)
     const dispatch = useDispatch()
 
     function handleInputChange(e){
@@ -29,13 +30,13 @@ export default function AdminUserPanel(){
             </div>
             <div>
                 {
-                UserByUserName? UserByUserName.map(user => {
+                UserByUserName && UserByUserName.length>0 ?
+                UserByUserName.map(user => {
                     return(
-                        <div>
-                            <UserCard id={user.id} username={user.username}/>
-                        </div>
-                    )
-                }):
+                        <div key={user.id}>
+                        <UserCard aux={true} id={user.id} username={user.username}/>
+                    </div> )}) 
+                :
                 allUsers ? allUsers.map(user => {
                     return( <div>
                         <UserCard id={user.id} username={user.username}/>
