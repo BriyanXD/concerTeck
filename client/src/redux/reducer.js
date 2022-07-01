@@ -24,6 +24,8 @@ const initialState = {
   },
   stateAdminPanel: {
     allUsers: [],
+    // UserByName:[],
+    UserByUserName:[],
     allProducers: [],
     allSolicits: [],
   },
@@ -93,6 +95,7 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         User: payload.user,
       };
+      
     }
 
     case "LOGOUT_USER": {
@@ -253,6 +256,20 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         eventSaved: payload,
       };
+      // case "SEARCH_USER_BY_NAME":
+      //   return{
+      //     ...state,
+      //     stateAdminPanel:{
+      //       UserByName:payload,
+      //     }
+      //   };
+      case "SEARCH_USER_BY_USERNAME":
+        return{
+          ...state,
+          stateAdminPanel:{
+            UserByUserName:payload,
+          }
+        };
     default:
       return state;
   }
