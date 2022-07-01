@@ -119,6 +119,7 @@ async function postEvents(req, res) {
       !venueId ||
       !stockId
     ) {
+      //console.log("Faltan datos obligatorios")
       return res.status(404).send("Faltan datos obligatorios");
     } else {
       if (!Number.isInteger(venueId))
@@ -128,11 +129,13 @@ async function postEvents(req, res) {
       await Genre.findOrCreate({
         where: { name: genreId.toLowerCase() },
       });
+      let saveVenue = await Venue.findOne({where:{id: parseInt(venueId)}});
+      console.log(saveVenue)
       let saveGenre = await Genre.findOne({
         where: { name: genreId.toLowerCase() },
       });
-      if (saveGenre) {
-        await Event.findOrCreate({
+      if (saveGenre && saveVenue) {
+        const eventCreated = await Event.findOrCreate({
           where: {
             name: name,
             artist: artist,
@@ -141,19 +144,22 @@ async function postEvents(req, res) {
             performerImage: performerImage,
             placeImage: placeImage,
             description: description,
-            venueId: venueId,
-            stockId: stockId,
+            venueId: saveVenue.id,
+            stockId: saveVenue.id,
           },
         })
-          .then((response) => {
+          .then((response) => { 
+            response.addVenue(saveVenue.id)
             return res.status(201).json({ message: "Evento creado con exito" });
           })
           .catch((error) => {
+            console.log("No se puedo crear el evento")
             return res
               .status(404)
               .json({ error: "No se puedo crear el evento" });
           });
       } else {
+        //console.log("No se puedo crear el genero para el evento")
         return res
           .status(404)
           .json({ error: "No se puedo crear el genero para el evento" });

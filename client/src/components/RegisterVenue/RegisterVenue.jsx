@@ -3,34 +3,6 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { GetVenues, CreateVenue } from '../../redux/actions';
 
-// function validate(venue){
-//     const error = {}
-//     if(!venue.name){
-//         error.name = "Ingrese el nombre el establecimiento"
-//     }
-//     if(!/^[a-z0-9-]{3,16}$/.test(venue.name)){
-//         error.name = "Ingrese un nombre con caracteres validos"
-//     }
-//     if(!venue.address){
-//         error.address = "Ingrese la direccion del establecimiento"
-//     }
-//     if(!/^[a-z0-9-]{3,16}$/.test(venue.address)){
-//         error.address = "Ingrese una direcion con caracteres validos"
-//     }
-//     if(!venue.map){
-//         error.map = "Ingrese la ubicacion URL del mapa"
-//     }
-//     if(!/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(venue.map)){
-//         error.map = "Ingrese una URL valida"
-//     }
-//     if(!venue.maxStockGeneral){
-//         error.maxStockGeneral = "Ingrese la cantidad maxima general de espectadores"
-//     }
-//     if(!/^^[0-9]$/.test(venue.maxStockGeneral)){
-//         error.maxStockGeneral = "Ingrese valores numericos"
-//     }
-//     return error
-// }
 
 export default function RegisterVenue(){
     const dispatch = useDispatch();
@@ -44,7 +16,7 @@ export default function RegisterVenue(){
         maxStockPalco: 0,
         maxStockStreaming: 0,
         maxStockVIP: 0,
-        minStock: 0
+        //minStock: 0
     })
     const [error, setError] = useState({
         name: "",
@@ -89,9 +61,21 @@ export default function RegisterVenue(){
             })
             return 
         }
+        // else if(e.target.id === "alt"){
+        //     setVenue({
+        //         ...venue,
+        //         map: e.target.value
+        //     })
+        // }
+        // else if(e.target.id === "lat"){
+        //     setVenue({
+        //         ...venue,
+        //         map: `${venue.map} ${e.target.value}`
+        //     })
+        // }
         setVenue({
             ...venue,
-            minStock: Math.floor((venue.maxStockGeneral+(venue.maxStockGeneralLateral || 0)+(venue.maxStockPalco || 0)+(venue.maxStockStreaming || 0)+(venue.maxStockVIP || 0))*0.7),
+            //minStock: Math.floor((venue.maxStockGeneral+(venue.maxStockGeneralLateral || 0)+(venue.maxStockPalco || 0)+(venue.maxStockStreaming || 0)+(venue.maxStockVIP || 0))*0.7),
             [e.target.name]: e.target.value
         })
     };
@@ -105,7 +89,7 @@ export default function RegisterVenue(){
             setError({
                 name: venue.name === "" ? "Ingrese el nombre el establecimiento" : "",
                 address: venue.address === "" ? "Ingrese la direccion del establecimiento" : "",
-                map: venue.map === "" ? "Ingrese la ubicacion URL del mapa" : "",
+                map: venue.map === "" ? "Ingrese las coordenadas de altitud y latitud del establecimiento" : "",
                 maxStockGeneral: venue.maxStockGeneral === 0 ? "Ingrese la cantidad maxima general de espectadores" : ""
             });
             return
@@ -124,7 +108,7 @@ export default function RegisterVenue(){
                 maxStockPalco: 0,
                 maxStockStreaming: 0,
                 maxStockVIP: 0,
-                minStock: 0
+                //minStock: 0
             });
             setActiveVenue(!activeVenue)
         }
@@ -138,12 +122,13 @@ export default function RegisterVenue(){
                     ...error,
                     [e.target.name]: "Ingrese el nombre el establecimiento"
                 })
-            }else if (!/^[a-z0-9-]{3,16}$/.test(e.target.value)){
-                setError({
-                    ...error,
-                    [e.target.name]: "Ingrese un nombre con caracteres validos"
-                })
-            } else {
+            // }else if (!/^[a-z0-9-]{3,16}$/.test(e.target.value)){
+            //     setError({
+            //         ...error,
+            //         [e.target.name]: "Ingrese un nombre con caracteres validos"
+            //     })
+            } 
+            else {
                 setError({
                     ...error,
                     [e.target.name]: ""
@@ -157,11 +142,11 @@ export default function RegisterVenue(){
                     ...error,
                     [e.target.name]: "Ingrese la direccion del establecimiento"
                 })
-            }else if (!/^[a-z0-9-]{3,16}$/.test(e.target.value)){
-                setError({
-                    ...error,
-                    [e.target.name]: "Ingrese una direcion con caracteres validos"
-                })
+            // }else if (!/^[a-z0-9-]{3,16}$/.test(e.target.value)){
+            //     setError({
+            //         ...error,
+            //         [e.target.name]: "Ingrese una direcion con caracteres validos"
+            //     })
             } else {
                 setError({
                     ...error,
@@ -174,13 +159,13 @@ export default function RegisterVenue(){
             if(e.target.value === ""){
                 setError({
                     ...error,
-                    [e.target.name]: "Ingrese la ubicacion URL del mapa"
+                    [e.target.name]: "Ingrese la direccion del establecimiento"
                 })
-            }else if (!/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(e.target.value)){
-                setError({
-                    ...error,
-                    [e.target.name]: "Ingrese una URL valida"
-                })
+            // }else if (!/^[0-9]?$/.test(e.target.value)){
+            //     setError({
+            //         ...error,
+            //         [e.target.name]: "Ingrese coordenadas validas"
+            //     })
             } else {
                 setError({
                     ...error,
@@ -204,22 +189,25 @@ export default function RegisterVenue(){
         }
     };
 
+    console.log("Lugar nuevo", venue)
     return(<div> {activeVenue ? <div>
         <div> <label>Nombre del nuevo establecimiento:* </label> <input name="name" value={venue.name}  onChange={handleVenue} onBlur={handleBlurVenue} type="text" placeholder="Nombre del nuevo establecimiento" />{error.name && (<label>{error.name}</label>)} </div>
 
         <div> <label>Direccion del nuevo establecimiento:* </label> <input name="address" value={venue.address}  onChange={handleVenue} onBlur={handleBlurVenue} type="text" placeholder="Direccion del nuevo establecimiento" />{error.address && (<label>{error.address}</label>)} </div>
 
-        <div> <label>Ubicacion map del nuevo establecimiento:* </label> <input name="map" value={venue.map}  onChange={handleVenue} onBlur={handleBlurVenue} type="url" placeholder="URL mapa del nuevo establecimiento" />{error.map && (<label>{error.map}</label>)} </div>
+        {/* <div> <label>Ubicacion de coordinadas del nuevo establecimiento:* </label> <input name="map" value={venue.map}  onChange={handleVenue} onBlur={handleBlurVenue} type="text" placeholder="Altitud y Latitud del nuevo establecimiento" />{error.map && (<label>{error.map}</label>)} </div> */}
+        <div> <label>Coordenada de Altitud:* </label> <input id="alt" name="map" onChange={handleVenue} onBlur={handleBlurVenue} type="text" placeholder="Coordenadas de Altitud" />{error.map && (<label>{error.map}</label>)} </div>
+        <div> <label>Coordenada de Latitud:* </label> <input id="lat" name="map" onChange={handleVenue} onBlur={handleBlurVenue} type="text" placeholder="Coordenadas de Latitud" />{error.map && (<label>{error.map}</label>)} </div>
 
-        <div> <label>Maxima capacidad general de espectadores:* </label> <input name="maxStockGeneral" value={venue.maxStockGeneral} onChange={handleVenue} onBlur={handleBlurVenue} type="number" placeholder="Cantidad maxima general de expectadores" />{error.maxStockGeneral && (<label>{error.maxStockGeneral}</label>)} </div>
+        <div> <label>Maxima capacidad general de espectadores:* </label> <input name="maxStockGeneral" value={venue.maxStockGeneral} onChange={handleVenue} onBlur={handleBlurVenue} type="text" placeholder="Cantidad maxima general de expectadores" />{error.maxStockGeneral && (<label>{error.maxStockGeneral}</label>)} </div>
 
-        <div> <label>Maxima capacidad lateral de espectadores: </label> <input name="maxStockGeneralLateral" value={venue.maxStockGeneralLateral}  onChange={handleVenue} type="number" placeholder="Cantidad maxima de expectadores en zonas laterales" />{error.maxStockGeneralLateral && (<label>{error.maxStockGeneralLateral}</label>)} </div>
+        <div> <label>Maxima capacidad lateral de espectadores: </label> <input name="maxStockGeneralLateral" value={venue.maxStockGeneralLateral}  onChange={handleVenue} type="text" placeholder="Cantidad maxima de expectadores en zonas laterales" />{error.maxStockGeneralLateral && (<label>{error.maxStockGeneralLateral}</label>)} </div>
 
-        <div> <label>Maxima capacidad palco de espectadores: </label> <input name="maxStockPalco" value={venue.maxStockPalco}  onChange={handleVenue} type="number" placeholder="Cantidad maxima de expectadores en zonas palco" />{error.maxStockPalco && (<label>{error.maxStockPalco}</label>)} </div>
+        <div> <label>Maxima capacidad palco de espectadores: </label> <input name="maxStockPalco" value={venue.maxStockPalco}  onChange={handleVenue} type="text" placeholder="Cantidad maxima de expectadores en zonas palco" />{error.maxStockPalco && (<label>{error.maxStockPalco}</label>)} </div>
 
-        <div> <label>Maxima capacidad de espectadores via streaming: </label> <input name="maxStockStreaming" value={venue.maxStockStreaming}  onChange={handleVenue} type="number" placeholder="Cantidad maxima de expectadores via streaming" />{error.maxStockStreaming && (<label>{error.maxStockStreaming}</label>)} </div>
+        <div> <label>Maxima capacidad de espectadores via streaming: </label> <input name="maxStockStreaming" value={venue.maxStockStreaming}  onChange={handleVenue} type="text" placeholder="Cantidad maxima de expectadores via streaming" />{error.maxStockStreaming && (<label>{error.maxStockStreaming}</label>)} </div>
 
-        <div> <label>Maxima capacidad de espectadores VIP: </label> <input name="maxStockVIP" value={venue.maxStockVIP}  onChange={handleVenue} type="number" placeholder="Cantidad maxima de expectadores VIP" />{error.maxStockVIP && (<label>{error.maxStockVIP}</label>)} </div>
+        <div> <label>Maxima capacidad de espectadores VIP: </label> <input name="maxStockVIP" value={venue.maxStockVIP}  onChange={handleVenue} type="text" placeholder="Cantidad maxima de expectadores VIP" />{error.maxStockVIP && (<label>{error.maxStockVIP}</label>)} </div>
 
         <div><span>Stock minimo de espectadores registrado: {venue.minStock}</span></div>
 

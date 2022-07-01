@@ -16,13 +16,16 @@ import RegisterGenre from '../RegisterGenre/RegisterGenre';
 import RegisterVenue from '../RegisterVenue/RegisterVenue';
 
 
+
 export default function RegisterEvent(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [activeGenre, setActiveGenre] = useState(false);
     const [activeVenue, setActiveVenue] = useState(false);
+    const [activeTickets, setActiveTickets] = useState(false);
     //const [dateTime, setDateTime] = useState(null);
-    const [value, onChange] = useState(new Date());
+    const [dateTime, setDateTime] = useState(new Date());
+    const Allevents = useSelector((state) => state.AllEvents);
     const genres = useSelector((state)=> state.Genres);
     const venues = useSelector((state) => state.Venues);
     const [event, setEvent] = useState({
@@ -52,7 +55,13 @@ export default function RegisterEvent(){
     useEffect(()=>{
         dispatch(GetGenres());
         dispatch(GetVenues());  
-    }, [dispatch]) 
+    }, [dispatch])
+    
+    // const handleDateTime = (e) => {
+    //     setDateTime(
+    //         e.target.value
+    //     )
+    // };
 
     const handleChange = (e) => {
         if(e.target.name === "venueId"){
@@ -63,14 +72,21 @@ export default function RegisterEvent(){
             })
             return 
         }
+        if(e.target.name === "schedule"){
+            setEvent({
+                ...event,
+                schedule: dateTime
+            })
+            return 
+        }
         setEvent({
             ...event,
-            schedule: value,
+            schedule: dateTime,
             [e.target.name]: e.target.value
         })
     };
 
-    const handleSubmitEvent = (e) => {
+    const handleSubmitEvent = async(e) => {
         e.preventDefault();
         if( errors.name !== "" ||
         errors.artist !== "" ||
@@ -103,20 +119,21 @@ export default function RegisterEvent(){
             });
             return
         }
-        dispatch(CreateEvent(event));
-        alert("Evento creado exitosamente");
-        setEvent({
-            name: "",
-            artist: "",
-            genreId: "",
-            schedule: "",
-            performerImage: "",
-            placeImage: "",
-            description: "",
-            venueId: 0,
-            stockId: 0,
-        });
-        navigate("/")
+        await dispatch(CreateEvent(event));
+        //console.log("creacion de evento", eventCreated);
+            alert("Evento creado exitosamente");
+            setEvent({
+                name: "",
+                artist: "",
+                genreId: "",
+                schedule: "",
+                performerImage: "",
+                placeImage: "",
+                description: "",
+                venueId: 0,
+                stockId: 0,
+            });
+            navigate("/")
     };
 
     const handleBlur = (e) => {
@@ -292,7 +309,7 @@ export default function RegisterEvent(){
             <div>{activeGenre ? <RegisterGenre/>:null}</div>
 
             <div> <label>Fecha y Hora del evento:* </label></div>
-            <div> <DateTimePicker onChange={onChange} value={value} format="y-MM-dd h:mm:ss a"/> {errors.schedule && <label className={style.error}>{errors.schedule}</label>} </div>
+            <div> <DateTimePicker name="schedule" value={dateTime} onChange={setDateTime} minDate={new Date()} format="y-MM-dd h:mm:ss a"/> {errors.schedule && <label className={style.error}>{errors.schedule}</label>} </div>
             
             {/* <div> <input id="duration" name="file" onChange={(e) => handleChange(e)} onBlur={handleBlur} type="time" placeholder="Duracion del evento" /> {errors.duration && <label className={style.error}>{errors.duration}</label>}</div> */}
 
@@ -311,7 +328,7 @@ export default function RegisterEvent(){
             <div>{activeVenue ? <RegisterVenue/>:null}</div>
             
             <div> <label>Descripcion del evento: </label> <textarea name="description" value={event.description}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Descripcion" /> {errors.description && <label>{errors.description}</label>}</div>
-            
+
             <Link to='/'><button >Volver a inicio</button></Link>
             
             <button type="submit">Crear</button>

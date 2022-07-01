@@ -58,7 +58,8 @@ routes.put("/producer", verifyToken, putProducer);
 routes.delete("/producer", verifyToken, isAdmin, deleteProducer);
 
 routes.get("/events", loadEventsAndGetEvents);
-routes.post("/events", verifyToken, verifyIsProducer, postEvents);
+//routes.post("/events", verifyToken, verifyIsProducer, postEvents);
+routes.post("/events", postEvents);
 routes.put("/events", verifyToken, verifyIsProducer, putEvents);
 routes.delete("/events", verifyToken, isAdmin, deleteEvent);
 
@@ -67,12 +68,16 @@ routes.post("/ticket", verifyToken, isAdmin, postTicket);
 routes.delete("/ticket", verifyToken, isAdmin, deleteTicket);
 
 routes.get("/genres", getAllGenres);
-routes.post("/genres", verifyToken, verifyIsProducer, postOneGenre);
+//routes.post("/genres", verifyToken, verifyIsProducer, postOneGenre);
+routes.post("/genres", postOneGenre);
 
-routes.get("/venues", verifyToken, getVenues);
-routes.post("/venues", verifyToken, verifyIsProducer, postVenues);
+//routes.get("/venues", verifyToken, getVenues);
+routes.get("/venues", getVenues);
+//routes.post("/venues", verifyToken, verifyIsProducer, postVenues);
+routes.post("/venues", postVenues);
 
-routes.get("/ticketstock", verifyToken, getTicketStock);
+//routes.get("/ticketstock", verifyToken, getTicketStock);
+routes.get("/ticketstock", getTicketStock);
 
 routes.post("/login", LoginUser);
 
