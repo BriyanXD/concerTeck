@@ -89,6 +89,7 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         User: payload.user,
       };
+      
     }
 
     case "LOGOUT_USER": {
