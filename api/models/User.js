@@ -23,6 +23,10 @@ const User = sequelize.define(
         },
       },
     },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     isAdmin: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
@@ -38,15 +42,6 @@ const User = sequelize.define(
         },
         notNull: {
           msg: "Por favor ingrese un email",
-        },
-      },
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Por favor ingrese una contrasena",
         },
       },
     },

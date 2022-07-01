@@ -3,7 +3,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
 async function ValidationUser (req,res) {
-    const { username, password } = req.body;  
+    const { username, password } = req.body;
     try{ 
         if (username && password) {
             let user = await User.findOne({ where: { username } });

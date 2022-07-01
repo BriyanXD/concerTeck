@@ -17,7 +17,7 @@ function App() {
           <Routes>
             <Route path='/' element= {<Home/>}/>
             <Route path= '/:id' element={<Detail/>}/>
-            <Route path='/panelAdmin' element={<PanelAdmin/>}/>
+            <Route path='/perfil/panelAdmin' element={<PanelAdmin/>}/>
             <Route exact path='/registrar/:usuario' element= {<RegisterUser/>}/>
             <Route exact path='/perfil' element={<ProfileUser/>}/>
             {/* <Route exact path='' element= {<Ruta/>}/> 

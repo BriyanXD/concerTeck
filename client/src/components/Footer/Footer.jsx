@@ -19,7 +19,7 @@ export default function Footer() {
         
           <h4 onClick={toggle} className={s.contact}>Contactate con Nosotros</h4>
           <Link to={`/registrar/producer`} className={s.contactProducer}>
-            <h4 onClick={toggle} className={s.contact}>Vendé con Nosotros</h4>
+            <h4 className={s.contact}>Vendé con Nosotros</h4>
           </Link>
           <Modal active={active} toggle={toggle}>
               <Contact/>
