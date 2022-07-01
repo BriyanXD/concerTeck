@@ -38,7 +38,7 @@ async function chargeEvents() {
 }
 
 async function loadEventsAndGetEvents(req, res) {
-  const { name, id, schedule,artist } = req.query;
+  const { name, id, schedule, artist } = req.query;
   try {
     const allEvents = await Event.findAll({
       include: [
@@ -82,12 +82,16 @@ async function loadEventsAndGetEvents(req, res) {
           .status(404)
           .json({ error: "No se encontro Eventos con esa fecha" });
       }
-    } else if(artist){
-      const artisSearch = allEvents.filter((a) => a.artist.toLowerCase().includes(artist.toLowerCase()));
-      if(artisSearch.length >= 1){
+    } else if (artist) {
+      const artisSearch = allEvents.filter((a) =>
+        a.artist.toLowerCase().includes(artist.toLowerCase())
+      );
+      if (artisSearch.length >= 1) {
         return res.send(artisSearch);
-      }else{
-        return res.status(404).json({error : "No se encontro Eventos de ese artista"})
+      } else {
+        return res
+          .status(404)
+          .json({ error: "No se encontro Eventos de ese artista" });
       }
     }
     res.json(allEvents);
@@ -204,7 +208,7 @@ async function putEvents(req, res) {
 }
 async function deleteEvent(req, res) {
   try {
-    const { id } = req.body; //req.params.id
+    const { id } = req.query; //req.params.id
     const event = await Event.findByPk(id);
     if (!id) {
       return res.status(404).json({ error: "El ID solicitado no existe" });
@@ -218,7 +222,7 @@ async function deleteEvent(req, res) {
     if (destoyed) {
       return res
         .status(201)
-        .json({ message: "El evento a sido eliminado con exito" });
+        .json({ message: "El evento a sido eliminado con exito", event });
     }
   } catch (error) {
     return res.status(404).json({ error: error.message });

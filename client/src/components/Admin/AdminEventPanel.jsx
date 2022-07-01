@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import UserCard from "./UserCard";
+import EventCard from "./EventCard";
+import PerfilEventAdmin from "./PerfilEventAdmin";
 
 export default function AdminEventPanel(){
     const allEvents = useSelector((state) => state.AllEvents)
@@ -10,12 +11,13 @@ export default function AdminEventPanel(){
                 <input type="text" />
             </div>
             <div>
-                {allEvents ? allEvents.map(user => {
+                {allEvents ? allEvents.map(event => {
                     return( <div>
-                        <UserCard id={user.id} username={user.name}/>
+                        <EventCard id={event.id} name={event.name}/>
                     </div> )
         }): <h1>No se encontraron datos de eventos</h1> }
             </div>
+            <PerfilEventAdmin/>
         </div>
     )
 }

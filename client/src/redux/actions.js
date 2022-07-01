@@ -327,6 +327,13 @@ export function findUser(allusers, id) {
     payload: userSaved,
   };
 }
+export function findEvent(allEvents, id) {
+  const eventSave = allEvents?.find((event) => event.id === id);
+  return {
+    type: "FIND_EVENT",
+    payload: eventSave,
+  };
+}
 
 export function deleteUser(id) {
   return async function (dispatch) {
@@ -343,6 +350,28 @@ export function deleteUser(id) {
       return dispatch({
         type: "DELETE_USER",
         payload: userDeleted.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+export function deleteEvents(id) {
+  return async function (dispatch) {
+    try {
+      console.log(id);
+      const eventDeleted = await axios.delete(
+        `http://localhost:3001/api/events?id=${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(eventDeleted);
+      return dispatch({
+        type: "DELETE_EVENT",
+        payload: eventDeleted,
       });
     } catch (error) {
       console.log(error.message);

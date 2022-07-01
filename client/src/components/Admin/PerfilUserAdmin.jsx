@@ -2,7 +2,6 @@ import React from "react"
 import {useSelector} from "react-redux"
 
 export default function PerfilUserAdmin(){
-
     const userSaved = useSelector((state) => state.userSaved)
 
     return(

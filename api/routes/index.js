@@ -61,9 +61,9 @@ routes.put("/producer", verifyToken, putProducer);
 routes.delete("/producer", verifyToken, isAdmin, deleteProducer);
 
 routes.get("/events", loadEventsAndGetEvents);
-routes.post("/events", verifyToken, verifyIsProducer, postEvents);
-routes.put("/events", verifyToken, verifyIsProducer, putEvents);
-routes.delete("/events", verifyToken, isAdmin, deleteEvent);
+routes.post("/events", verifyToken, postEvents);
+routes.put("/events", verifyToken, putEvents);
+routes.delete("/events", verifyToken, deleteEvent); //isAdmin
 
 routes.get("/ticket", verifyToken, getTicketByID);
 routes.post(
