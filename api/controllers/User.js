@@ -81,7 +81,7 @@ async function putUser(req, res) {
 }
 async function deleteUser(req, res) {
   try {
-    const { id } = req.body; //req.params.id
+    const { id } = req.query; //req.params.id
     //console.log(id)
     const user = await User.findByPk(id);
     //console.log(user)
@@ -107,7 +107,7 @@ async function deleteUser(req, res) {
 async function UpgradeRank(req, res) {
   const { isAdmin, id } = req.body;
   try {
-    if (!isAdmin || typeof isAdmin !== "boolean") {
+    if (typeof isAdmin !== "boolean") {
       return res
         .status(404)
         .json({ error: "isAdmin tiene que ser un booleado" });

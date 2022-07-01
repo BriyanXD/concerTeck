@@ -4,6 +4,10 @@ const initialState = {
   AllLitleEvents: [],
   Detail: {},
   User: "",
+  userDeleted: "",
+  eventDeleted: "",
+  userSaved: "",
+  eventSaved: "",
   // TodosEvents:[],
   BigEvents: [],
   Events: [],
@@ -230,7 +234,26 @@ function reducers(state = initialState, { type, payload }) {
           allSolicits: filter ? filter : "error no hay eventos",
         },
       };
-
+    case "DELETE_USER":
+      return {
+        ...state,
+        userDeleted: payload,
+      };
+    case "DELETE_EVENT":
+      return {
+        ...state,
+        eventDeleted: payload,
+      };
+    case "FIND_USER":
+      return {
+        ...state,
+        userSaved: payload,
+      };
+    case "FIND_EVENT":
+      return {
+        ...state,
+        eventSaved: payload,
+      };
     default:
       return state;
   }
