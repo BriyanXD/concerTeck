@@ -51,9 +51,9 @@ const {
 routes.post("/user", createUser);
 routes.get("/user", verifyToken, getUser); // verifyToken
 routes.put("/user", verifyToken, putUser);
-routes.delete("/user", verifyToken, isAdmin, deleteUser);
+routes.delete("/user", verifyToken, deleteUser); //isAdmin
 
-routes.put("/upgrade", verifyToken, isAdmin, UpgradeRank);
+routes.put("/upgrade", verifyToken, UpgradeRank); //isAdmin
 
 routes.get("/producer", verifyToken, getProducer);
 routes.post("/producer", createProducer);

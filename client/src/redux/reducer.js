@@ -4,6 +4,8 @@ const initialState = {
   AllLitleEvents: [],
   Detail: {},
   User: "",
+  userDeleted: "",
+  userSaved: "",
   // TodosEvents:[],
   BigEvents: [],
   Events: [],
@@ -228,6 +230,16 @@ function reducers(state = initialState, { type, payload }) {
         stateAdminPanel: {
           allSolicits: filter ? filter : "error no hay eventos",
         },
+      };
+    case "DELETE_USER":
+      return {
+        ...state,
+        userDeleted: payload,
+      };
+    case "FIND_USER":
+      return {
+        ...state,
+        userSaved: payload,
       };
 
     default:
