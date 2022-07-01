@@ -23,7 +23,6 @@ export default function PerfilYLogoutAuth0(){
         name:user.name,
         email:user.email,
       }
-      console.log("nuevo usuario",newUser)
       dispatch(register(newUser))
     }
   return (
