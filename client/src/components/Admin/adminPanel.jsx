@@ -31,6 +31,7 @@ export default function PanelAdmin({setUser}){
     /* useEffect (()=>{
         dispatch(getAllUsers())
     },[dispatch])
+
     const userInfo = useSelector((state) => state.stateAdminPanel?.allUsers)
     console.log(userInfo)
     // const token = useSelector((state) => state.token);
@@ -41,9 +42,19 @@ export default function PanelAdmin({setUser}){
     };
 
     // function handleClickUser() {
-    //     // e.preventDefaut();
-    //     // console.log(token)
-    //     dispatch(CardConteiner())
+    //     return(
+    //         <div>
+    //         {
+    //             userInfo?.map((e,k) =>{
+    //                 return(
+    //                     <div>
+    //                         <UserCard key={k} id={e.id} username={e.username}/>
+    //                     </div>
+    //                 )
+    //             })
+    //         }
+    //     </div>
+    //     )
     // }
     function handlerClickUsuarios(){
         dispatch(getAllUsers())

@@ -14,6 +14,7 @@ const {
   deleteUser,
   UpgradeRank,
   postAdminUser,
+  // userSerchbar
 } = require("../controllers/User");
 const { getAllGenres, postOneGenre } = require("../controllers/Genres");
 const {
@@ -51,9 +52,9 @@ const {
 routes.post("/user", createUser);
 routes.get("/user", verifyToken, getUser); // verifyToken
 routes.put("/user", verifyToken, putUser);
-routes.delete("/user", verifyToken, isAdmin, deleteUser);
+routes.delete("/user", verifyToken, deleteUser); //isAdmin
 
-routes.put("/upgrade", verifyToken, isAdmin, UpgradeRank);
+routes.put("/upgrade", verifyToken, UpgradeRank); //isAdmin
 
 routes.get("/producer", verifyToken, getProducer);
 routes.post("/producer", createProducer);
@@ -61,9 +62,9 @@ routes.put("/producer", verifyToken, putProducer);
 routes.delete("/producer", verifyToken, isAdmin, deleteProducer);
 
 routes.get("/events", loadEventsAndGetEvents);
-routes.post("/events", verifyToken, verifyIsProducer, postEvents);
-routes.put("/events", verifyToken, verifyIsProducer, putEvents);
-routes.delete("/events", verifyToken, isAdmin, deleteEvent);
+routes.post("/events", verifyToken, postEvents);
+routes.put("/events", verifyToken, putEvents);
+routes.delete("/events", verifyToken, deleteEvent); //isAdmin
 
 routes.get("/ticket", verifyToken, getTicketByID);
 routes.post(

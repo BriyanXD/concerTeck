@@ -37,8 +37,21 @@ async function createUser(req, res) {
 // "No se ha logrado crear el usuario"
 async function getUser(req, res) {
   const DBusers = await User.findAll({ include: { model: Ticket } });
+  const {username} = req.query;
   /* const { username, password } = req.body; */
   try {
+    // const allUsersName = User.findAll()
+        // console.log(DBusers)
+          if(username){
+            const filts = DBusers.filter((n) => n.username.toLowerCase().includes(username.toLowerCase()));
+            if(filts.length > 0){
+              return res.send(filts)
+            }else{
+              res.status(401).json({error: 'No se uncontro ningun usuario con ese Username'})
+            }
+          }else{
+
+          
     /* if (username && password) {
       const userFound = DBusers.find((user) => {
         if (user.username === username && user.password === password)
@@ -47,6 +60,7 @@ async function getUser(req, res) {
       return res.send(userFound);
     } */
     return res.send(DBusers);
+  }
   } catch (error) {
     return res.status(404).send({ error: error.message });
   }
@@ -81,7 +95,7 @@ async function putUser(req, res) {
 }
 async function deleteUser(req, res) {
   try {
-    const { id } = req.body; //req.params.id
+    const { id } = req.query; //req.params.id
     //console.log(id)
     const user = await User.findByPk(id);
     //console.log(user)
@@ -107,7 +121,7 @@ async function deleteUser(req, res) {
 async function UpgradeRank(req, res) {
   const { isAdmin, id } = req.body;
   try {
-    if (!isAdmin || typeof isAdmin !== "boolean") {
+    if (typeof isAdmin !== "boolean") {
       return res
         .status(404)
         .json({ error: "isAdmin tiene que ser un booleado" });
@@ -148,6 +162,24 @@ async function postAdminUser(req, res) {
   }
 }
 
+// async function userSerchbar (){
+//   const {name,username} = req.query;
+//   try {
+//     const allUsersName = User.findAll()
+//     console.log(allUsersName)
+//       if(username){
+//         const filts = allUsersName.filter((n) => n.username.toLowerCase().includes(username.toLowerCase()));
+//         if(filts.length > 0){
+//           return res.send(filts)
+//         }else{
+//           res.status(401).json({error: 'No se uncontro ningun usuario con ese Username'})
+//         }
+//       }
+//   } catch (error) {
+//     res.status(401).json({error: error.message})
+//   }
+// }
+
 module.exports = {
   getUser,
   createUser,
@@ -155,4 +187,5 @@ module.exports = {
   deleteUser,
   UpgradeRank,
   postAdminUser,
+  // userSerchbar
 };
