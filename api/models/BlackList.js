@@ -1,6 +1,5 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../db");
-const Events = require("./Events");
 
 const BlackList = sequelize.define(
   "blacklist",

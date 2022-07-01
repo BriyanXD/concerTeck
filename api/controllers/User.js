@@ -3,7 +3,7 @@ const Ticket = require("../models/Ticket");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { use } = require("../routes");
+const BlackList = require("../models/BlackList");
 require("dotenv").config();
 const { AUTH_ROUNDS, AUTH_SECRET, AUTH_EXPIRES } = process.env;
 require("../db.js");
@@ -11,24 +11,31 @@ require("../db.js");
 async function createUser(req, res) {
   const { name, username, email } = req.body;
   if (!username || !email || !name) {
-    res.status(404).json({ error: "Faltan completar Campos obligatorios" });
+    return res
+      .status(404)
+      .json({ error: "Faltan completar Campos obligatorios" });
   } else {
     try {
       //let passcrypt = bcrypt.hashSync(password, parseInt(AUTH_ROUNDS));
-      User.findOrCreate({
-        where: {
-          name: name,
-          username: username,
-          email: email,
-        },
-      })
-        .then((newuser) => {
-          let token = jwt.sign({ user: newuser }, AUTH_SECRET, {
-            expiresIn: AUTH_EXPIRES,
-          });
-          res.json(["Usuario", { user: newuser }, { token: token }]);
+      const emailBaned = await BlackList.findOne({ where: { email: email } });
+      console.log(emailBaned, "< Usuario baneado");
+      if (!emailBaned) {
+        await User.findOrCreate({
+          where: {
+            name: name,
+            username: username,
+            email: email,
+          },
         })
-        .catch((error) => res.status(500).json(error));
+          .then((newuser) => {
+            let token = jwt.sign({ user: newuser }, AUTH_SECRET, {
+              expiresIn: AUTH_EXPIRES,
+            });
+            return res.json(["Usuario", { user: newuser }, { token: token }]);
+          })
+          .catch((error) => res.status(500).json(error));
+      }
+      res.status(401).json({ error: "El usuario esta baneado" });
     } catch (error) {
       res.status(404).send({ error: error.message });
     }
