@@ -8,7 +8,9 @@ import logoSombra from "../../assets/LogoSombra.png";
 import Date from "../Filters/Date/Date";
 import UserNavBar from "../UserNavbar/UserNavbar";
 import Modal from "../Modals/Modal/Modal";
-import Login from "../Login/Login";
+// import Login from "../Login/Login";
+import LoginAuth0  from '../LoginAuth0/LoginAuth0';
+// import PerfilYLogoutAuth0 from '../LogoutAuth0/PerfilYLogoutAuth0';
 import { useLocation } from "react-router-dom";
 import {MdOutlineShoppingCart } from 'react-icons/md';
 import Tooltip from '@mui/material/Tooltip';
@@ -19,6 +21,7 @@ export default function NavBar({ setCurrenPag, setCurrentPage }) {
   let path = location.pathname.split("/");
 
   const [active, setActive] = useState(false);
+  
 
   const toggle = () => {
     setActive(!active);
@@ -54,7 +57,7 @@ export default function NavBar({ setCurrenPag, setCurrentPage }) {
           </Link>
           <div className={style.registerAndLogin}>
             {/* <Link to="/events"><button className={style.btnRegister} type="button">Crear Evento</button></Link>  */}
-            {user === "" ? (
+            {/* {user === "" ? (
               <button
                 onClick={toggle}
                 className={style.btnRegister}
@@ -62,11 +65,13 @@ export default function NavBar({ setCurrenPag, setCurrentPage }) {
               >
                 Ingresar
               </button>
-            ) : null}
-            <Modal active={active} toggle={toggle}>
+            ) : null} */}
+               <LoginAuth0/>
+               {/* <PerfilYLogoutAuth0/> */}
+            {/* <Modal active={active} toggle={toggle}>
               <Login toggle={toggle} />
-            </Modal>
-            <UserNavBar />
+            </Modal> */}
+            {/* <UserNavBar /> */}
           </div>
         </>
       ) : null}

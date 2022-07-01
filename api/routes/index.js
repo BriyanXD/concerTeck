@@ -3,6 +3,8 @@ const {
   verifyToken,
   isAdmin,
   verifyIsProducer,
+  adminNotAuthorization,
+  producerNotAuthorization,
 } = require("../middlewares/auth");
 
 const {
@@ -11,6 +13,7 @@ const {
   putUser,
   deleteUser,
   UpgradeRank,
+  postAdminUser,
 } = require("../controllers/User");
 const { getAllGenres, postOneGenre } = require("../controllers/Genres");
 const {
@@ -46,7 +49,7 @@ const {
 } = require("../controllers/Validations");
 
 routes.post("/user", createUser);
-routes.get("/user", verifyToken, getUser);
+routes.get("/user", verifyToken, getUser); // verifyToken
 routes.put("/user", verifyToken, putUser);
 routes.delete("/user", verifyToken, isAdmin, deleteUser);
 
@@ -63,7 +66,13 @@ routes.put("/events", verifyToken, verifyIsProducer, putEvents);
 routes.delete("/events", verifyToken, isAdmin, deleteEvent);
 
 routes.get("/ticket", verifyToken, getTicketByID);
-routes.post("/ticket", verifyToken, isAdmin, postTicket);
+routes.post(
+  "/ticket",
+  verifyToken,
+  adminNotAuthorization,
+  producerNotAuthorization,
+  postTicket
+);
 routes.delete("/ticket", verifyToken, isAdmin, deleteTicket);
 
 routes.get("/genres", getAllGenres);
@@ -79,5 +88,7 @@ routes.post("/login", LoginUser);
 routes.post("/validation/login", ValidationUser);
 routes.post("/validation/username", ValidationUsername);
 routes.post("/validation/email", ValidationEmail);
+
+routes.post("/admin", postAdminUser);
 
 module.exports = routes;

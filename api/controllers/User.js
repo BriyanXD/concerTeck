@@ -3,21 +3,24 @@ const Ticket = require("../models/Ticket");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { use } = require("../routes");
 require("dotenv").config();
 const { AUTH_ROUNDS, AUTH_SECRET, AUTH_EXPIRES } = process.env;
 require("../db.js");
 
 async function createUser(req, res) {
-  const { username, password, email } = req.body;
-  if (!username || !password || !email) {
+  const { name, username, email } = req.body;
+  if (!username || !email || !name) {
     res.status(404).json({ error: "Faltan completar Campos obligatorios" });
   } else {
     try {
-      let passcrypt = bcrypt.hashSync(password, parseInt(AUTH_ROUNDS));
-      User.create({
-        username: username,
-        password: passcrypt,
-        email: email,
+      //let passcrypt = bcrypt.hashSync(password, parseInt(AUTH_ROUNDS));
+      User.findOrCreate({
+        where: {
+          name: name,
+          username: username,
+          email: email,
+        },
       })
         .then((newuser) => {
           let token = jwt.sign({ user: newuser }, AUTH_SECRET, {
@@ -127,10 +130,29 @@ async function UpgradeRank(req, res) {
   }
 }
 
+async function postAdminUser(req, res) {
+  try {
+    const { username, password, email } = req.body;
+    let passcrypt = bcrypt.hashSync(password, parseInt(AUTH_ROUNDS));
+    const admin = User.findOrCreate({
+      where: {
+        username: username,
+        password: passcrypt,
+        email: email,
+        isAdmin: true,
+      },
+    });
+    res.send(admin);
+  } catch (error) {
+    res.status(401).json({ error: error.message });
+  }
+}
+
 module.exports = {
   getUser,
   createUser,
   putUser,
   deleteUser,
   UpgradeRank,
+  postAdminUser,
 };
