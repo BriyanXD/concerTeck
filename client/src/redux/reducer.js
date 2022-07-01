@@ -18,11 +18,12 @@ const initialState = {
     isVisbleModal: false,
     eventsForCalendar: [],
   },
-  stateAdminPanel:{
-    allUsers:[],
-    allProducers:[],
-    allSolicits:[],
-  }
+  stateAdminPanel: {
+    allUsers: [],
+    allProducers: [],
+    allSolicits: [],
+  },
+  token: "",
 };
 
 function reducers(state = initialState, { type, payload }) {
@@ -52,12 +53,12 @@ function reducers(state = initialState, { type, payload }) {
         Genres: payload,
       };
     }
-    case "ADD_TO_BASKET": 
-      if(state.Basket.includes(payload)) return state;
+    case "ADD_TO_BASKET":
+      if (state.Basket.includes(payload)) return state;
       return {
         ...state,
-        Basket: [...state.Basket, payload]
-              }
+        Basket: [...state.Basket, payload],
+      };
 
     case "GET_EVENT_BY_NAME": {
       const bigEvents = payload.filter((e) => e.venue.isBigEvent === true);
@@ -66,10 +67,10 @@ function reducers(state = initialState, { type, payload }) {
       return {
         ...state,
         BigEvents: bigEvents,
-        Events: smallEvents 
-      }
-     }
-      
+        Events: smallEvents,
+      };
+    }
+
     case "GET_EVENT_DETAIL":
       return {
         ...state,
@@ -86,8 +87,7 @@ function reducers(state = initialState, { type, payload }) {
     case "LOGIN_USER": {
       return {
         ...state,
-        User: payload,
-        userValidation: "",
+        User: payload.user,
       };
     }
 
@@ -185,7 +185,7 @@ function reducers(state = initialState, { type, payload }) {
       return {
         ...state,
         Venues: payload,
-      }
+      };
     case "VALIDATION_LOGIN":
       return {
         ...state,
@@ -211,6 +211,22 @@ function reducers(state = initialState, { type, payload }) {
             payload.dateForSearch,
             payload.visibleModal
           ),
+        },
+      };
+    case "GET_ALL_USERS": {
+      return {
+        ...state,
+        stateAdminPanel: {
+          allUsers: payload,
+        },
+      };
+    }
+    case "GET_ALL_SOLICITS":
+      const filter = payload.filter((event) => event.isAprobe === false);
+      return {
+        ...state,
+        stateAdminPanel: {
+          allSolicits: filter ? filter : "error no hay eventos",
         },
       };
 
