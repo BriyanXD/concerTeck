@@ -4,6 +4,7 @@ import s from './Favorites.module.css'
 import CardBigEvent from "../CardBigEvent/CardBigEvent";
 import CardEvent from "../CardEvent/CardEvent";
 import { RemoveFavorite } from "../../redux/actions";
+import FooterFav from "./FooterFav/FooterFav";
 
 
 
@@ -15,7 +16,9 @@ export default function Favorites(){
     // console.log('likes:', Likes)
 
     return(
-        <div className={s.container}>
+        <div>
+            <div>
+            <div className={s.container}>
             {
                 bigEvents?.map((el)=>{
                     return (
@@ -48,7 +51,11 @@ export default function Favorites(){
                         )
                     })
                 }
-                
+                </div>
+                </div>
+                <div>
+                    <FooterFav/>
+                </div>
             </div>
     )
 

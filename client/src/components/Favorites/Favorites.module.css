@@ -1,10 +1,14 @@
 .container{
     display: flex;
-    width: 75vw;
+    flex-wrap: wrap;
+    width: 100vw;
+    box-sizing: border-box;
+    justify-content: space-evenly;
+    /* display: flex;
     justify-content: space-around;
     align-content: space-around;
     flex-wrap: wrap;
-    padding-top: 10px;
+    padding-top: 10px; */
 }
 
 .btn{
@@ -53,3 +57,4 @@
 .btn2:hover{
     background-color: #f80303;
 }
+
