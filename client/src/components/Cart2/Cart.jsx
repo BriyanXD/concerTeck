@@ -6,35 +6,37 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Cart() {
   const dispatch = useDispatch();
+  const { user, loginWithRedirect } = useAuth0();
+
   const {
-    user,
-    loginWithRedirect,
-  } = useAuth0();
-  //functions de useCart
-  const { isEmpty, totalUniqueItems, items, cartTotal, updateItemQuantity, removeItem, updateItem} = useCart();
-  console.log("🚀 ~ file: Cart.jsx ~ line 10 ~ Cart ~ items", items)
+    isEmpty,
+    totalUniqueItems,
+    items,
+    cartTotal,
+    updateItemQuantity,
+    removeItem,
+    updateItem,
+  } = useCart();
   const { AllEvents } = useSelector((state) => state);
-  console.log("🚀 ~ file: Cart.jsx ~ line 12 ~ Cart ~ AllEvents", AllEvents)
-  let events = []
-  console.log("🚀 ~ file: Cart.jsx ~ line 14 ~ Cart ~ events", events)
+  let events = [];
 
   useEffect(() => {
     dispatch(getEvents());
-}, []);
+  }, []);
 
-    items.forEach((el) => {
+  items.forEach((el) => {
     AllEvents.forEach((e) => {
-        if (e.id === el.id) return events.push(e);
+      if (e.id === el.id) return events.push(e);
     });
-    });
-  //mensaje que envia en caso de tener el carrito vacio
+  });
+
   if (isEmpty) return <p>Your cart is empty</p>;
   return (
     <>
-     {events?.map((el) => {
+      {events?.map((el) => {
         function handleChange(e) {
-            updateItem(el.id, {variant: e.target.value})
-            updateItem(el.id, {price: el.stock[e.target.value]})
+          updateItem(el.id, { variant: e.target.value });
+          updateItem(el.id, { price: el.stock[e.target.value] });
         }
 
         const date = el.schedule.split("T")[0];
@@ -68,24 +70,34 @@ export default function Cart() {
 
       <ul>
         {items.map((item) => (
-            <li key={item.id}>
-              {console.log(item)}
+          <li key={item.id}>
+            {console.log(item)}
             {item.quantity} x {item.name} &mdash;
-            <p> <div>Tipo de entrada:  {item.variant === "streamingPrice"
-                      ? "Streaming"
-                      : item.variant === "generalPrice"
-                      ? "General"
-                      : item.variant === "generalLateralPrice"
-                      ? "General lateral"
-                      : item.variant === "vipPrice"
-                      ? "Vip"
-                      : item.variant === "palcoPrice"
-                      ? "Palco"
-                      : null}</div></p>
-                      <p>Precio: {item.price}</p>
-                       <p>Total: {item.itemTotal === 0 ? null : item.itemTotal }</p>
+            <p>
+              {" "}
+              <div>
+                Tipo de entrada:{" "}
+                {item.variant === "streamingPrice"
+                  ? "Streaming"
+                  : item.variant === "generalPrice"
+                  ? "General"
+                  : item.variant === "generalLateralPrice"
+                  ? "General lateral"
+                  : item.variant === "vipPrice"
+                  ? "Vip"
+                  : item.variant === "palcoPrice"
+                  ? "Palco"
+                  : null}
+              </div>
+            </p>
+            <p>Precio: {item.price}</p>
+            <p>Total: {item.itemTotal === 0 ? null : item.itemTotal}</p>
             <button
-              onClick={() => item.quantity  > 1 ? updateItemQuantity(item.id, item.quantity - 1): null}
+              onClick={() =>
+                item.quantity > 1
+                  ? updateItemQuantity(item.id, item.quantity - 1)
+                  : null
+              }
             >
               -
             </button>
@@ -99,7 +111,13 @@ export default function Cart() {
           </li>
         ))}
         Total final: {cartTotal}
-        <button onClick={() => !user ? loginWithRedirect(): alert("Pasarela de pagos")}>Comprar Todos</button>
+        <button
+          onClick={() =>
+            !user ? loginWithRedirect() : alert("Pasarela de pagos")
+          }
+        >
+          Comprar Todos
+        </button>
       </ul>
     </>
   );
