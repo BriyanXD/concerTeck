@@ -10,6 +10,7 @@ const { chargeEvents } = require("./controllers/Events");
 const { chargeVenue } = require("./controllers/Venue");
 const { chargeTicketStock } = require("./controllers/TicketStock");
 
+require("./models/ShoppingCart");
 require("./models/Producer");
 require("./models/User");
 require("./models/Events");

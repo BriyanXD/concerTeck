@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import UserCard from "./UserCard";
 import PerfilUserAdmin from "./PerfilUserAdmin";
 import AdminUserPermised from "./AdminUserPermised";
-import {getAllUsers, searchUserByName,searchUserByUserName } from "../../redux/actions"
-import { useEffect } from "react";
-
+import {searchUserByUserName} from "../../redux/actions"
+import Style from "./AdminUserPanel.module.css"
 export default function AdminUserPanel(){
     const allUsers = useSelector((state) => state.stateAdminPanel?.allUsers)
     // const UserByName = useSelector((state) => state.stateAdminPanel?.UserByName)
@@ -25,8 +24,8 @@ export default function AdminUserPanel(){
 
     return(
         <div>
-            <div>
-                <input type="text" placeholder="searchByname" onChange={(e) => handleInputChange(e)} />
+            <div className={Style.SearchBardiv}>
+                <input className={Style.SearchBar} type="text" placeholder="searchByname" onChange={(e) => handleInputChange(e)} />
             </div>
             <div>
                 {

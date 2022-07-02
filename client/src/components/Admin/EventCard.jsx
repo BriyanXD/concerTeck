@@ -1,7 +1,8 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux";
-import { findEvent, getEvents, deleteEvents } from "../../redux/actions";
+import { findEvent, getEvents, deleteEvents, activeModalEventsAdminPanel } from "../../redux/actions";
 import swal from 'sweetalert'
+import Style from "./EventCard.module.css"
 
 export default function EventCard({id,name}){
 
@@ -13,10 +14,11 @@ export default function EventCard({id,name}){
 
 function filterEvent(){
     dispatch(findEvent(allevents, id))
+    dispatch(activeModalEventsAdminPanel(true))
 }
 
-function handlerDeleteEvent(){
-         dispatch(deleteEvents(id))
+async function handlerDeleteEvent(){
+        await dispatch(deleteEvents(id))
         if(eventDeleted?.message){
             return swal({
                 title: 'Evento no eliminado',
@@ -25,21 +27,23 @@ function handlerDeleteEvent(){
                 dangerMode:true
             })
         }else{
+            await dispatch(getEvents())
             return swal({
                 title: 'Evento eliminado',
                 text: 'El evento se eliminó',
                 icon: 'success',
-            }),dispatch(getEvents())
+            })
         }
     }
 
     return(
-        <div>
-            <p>{id}</p>
-            <p>{name}</p>
-            <button onClick={handlerDeleteEvent}>Borrar</button>
-            <button onClick={filterEvent}>Detalles</button>
-            <hr />
+        <div className={Style.cardEvent}>
+            <p className={Style.id}>{id}</p>
+            <p className={Style.name}>{name}</p>
+            <div className={Style.buttonsCard}>
+            <button className={Style.button} onClick={handlerDeleteEvent}>Borrar</button>
+            <button className={Style.button} onClick={filterEvent}>Detalles</button>
+            </div>
         </div>
     )
 }

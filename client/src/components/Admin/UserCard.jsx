@@ -2,6 +2,7 @@ import React from "react"
 import { useSelector, useDispatch } from "react-redux";
 import { deleteUser, findUser, findUser2, getAllUsers } from "../../redux/actions";
 import swal from 'sweetalert'
+import Style from "./UserCard.module.css"
 
 export default function UserCard({id,username,aux}){
     let userSaved = []
@@ -38,7 +39,7 @@ function handlerDeleteUser(){
     }
 
     return(
-        <div>
+        <div className={Style.cardEvent}>
             <p>{id}</p>
             <p>{username}</p>
             <button onClick={handlerDeleteUser}>Borrar</button>
