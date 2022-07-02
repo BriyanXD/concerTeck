@@ -9,7 +9,6 @@ import { register } from "../../redux/actions";
 export default function PerfilYLogoutAuth0(){
   const dispatch = useDispatch()
   const registro = useSelector((state) => {return state.User})
-  console.log("registro",registro)
 
   const {  user,
     isAuthenticated,
@@ -32,11 +31,10 @@ export default function PerfilYLogoutAuth0(){
     <div>
       <div className={style.container}>
       {isAuthenticated ? 
-      <Link to="/perfil"><div className={style.box}>
-        <img src={user.picture} alt={user.name} className={style.img}/>
-       <Link to={`/perfil/${registro[0]?.id}`}>
+          <Link to={`/perfil/${registro[0]?.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+        <div className={style.box}>
+            <img src={user?.picture} alt={user.name} className={style.img}/>
        <p className={style.p}>{user.name}</p>
-       </Link>
        </div> 
        </Link> 
        : null
