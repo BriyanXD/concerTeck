@@ -5,7 +5,7 @@ import CardBigEvent from "../CardBigEvent/CardBigEvent";
 import CardEvent from "../CardEvent/CardEvent";
 import { RemoveFavorite } from "../../redux/actions";
 import FooterFav from "./FooterFav/FooterFav";
-
+import { Link } from "react-router-dom";
 
 
 export default function Favorites(){
@@ -24,6 +24,7 @@ export default function Favorites(){
                     return (
                        
                      <div className={s.containerClose}>
+                        <Link style={{ textDecoration: "none" }} to={`/${el.id}`}>
                         <CardBigEvent
                         name={el.name}
                         genreId={el.genreId}
@@ -31,6 +32,7 @@ export default function Favorites(){
                         schedule={el.schedule}
                         id={el.id}
                       />
+                      </Link>
                       <button className={s.btn} onClick={()=>dispatch(RemoveFavorite(el))}>X</button>
 
                  </div>
@@ -40,12 +42,14 @@ export default function Favorites(){
                 events?.map((el)=>{
                     return(
                      <div className={s.containerClose2}>
+                        <Link style={{ textDecoration: "none" }} to={`/${el.id}`}>
                         <CardEvent
                         name={el.name}
                         image={el.performerImage}
                         schedule={el.schedule}
                         id={el.id}
                         />
+                        </Link>
                         <button className={s.btn2} onClick={()=>dispatch(RemoveFavorite(el))}> X </button>
                      </div>
                         )
