@@ -1,94 +1,42 @@
-import style from "./Cart.module.css";
-import React, { useState, useEffect } from "react";
-import { useDispatch } from 'react-redux';
-import { useSelector } from "react-redux";
-import { useLocalStorage } from '../useLocalStorage/useLocalStorage';
-import { getEvents } from '../../redux/actions';
+import React, { useEffect } from "react";
+import { useCart } from "react-use-cart";
+import { useSelector, useDispatch } from "react-redux";
+import { getEvents } from "../../redux/actions";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Cart() {
-  const { AllEvents } = useSelector((state) => state);
-  let prueba = useSelector(state => state.Basket);
-  let temp = JSON.parse(window.localStorage.getItem("basket"))
-  prueba.push(temp)
-  let Basket = new Set(prueba);
-  // const [Tickets, setTickets] = useState([]);
-  const [Tickets, setTickets] = useLocalStorage("ticket", []);
-  const [flag, setFlag] = useState(false);
-  // const [flag, setFlag] = useLocalStorage("flag", false);
-  const [events, setEvents] = useState([]); 
-  
-  let tickets = [];
-  let total = 0;
- 
   const dispatch = useDispatch();
+  const { user, loginWithRedirect } = useAuth0();
+
+  const {
+    isEmpty,
+    totalUniqueItems,
+    items,
+    cartTotal,
+    updateItemQuantity,
+    removeItem,
+    updateItem,
+  } = useCart();
+  const { AllEvents } = useSelector((state) => state);
+  let events = [];
 
   useEffect(() => {
     dispatch(getEvents());
-  },[])
-  
-  Basket.forEach((el) => {
+  }, []);
+
+  items.forEach((el) => {
     AllEvents.forEach((e) => {
-      if (e.id === el) setEvents([...events, e]);
+      if (e.id === el.id) return events.push(e);
     });
   });
 
-
-  tickets = Tickets.filter((e) => e.variant && e.items);
-
-  for (let i = 0; i <= tickets.length; i++) {
-    for (let j = 1 + i; j <= tickets.length - 1; j++) {
-      if (
-        tickets[i].id === tickets[j].id &&
-        tickets[i].variant === tickets[j].variant
-      ) {
-        tickets[i].items = (
-          parseInt(tickets[i].items) + parseInt(tickets[j].items)
-        ).toString();
-        tickets[j].items = "";
-      }
-    }
-  }
-
-  function handleDelete() {
-    tickets = [];
-    setTickets(tickets);
-    // tickets=tickets.filter((e)=>(ev.id!==e.id))
-  }
-  function handleDeleteItem(ev) {
-    tickets = tickets.filter((e) => ev.id !== e.id || ev.variant !== e.variant);
-    setTickets(tickets);
-  }
-
-  const handleDetails = () => {
-    setFlag(!flag);
-  };
-
+  if (isEmpty) return <p>El carrito esta vacio</p>;
   return (
-    <div>
+    <>
       {events?.map((el) => {
-        let ticket = {};
-
-        console.log("ticket", ticket);
-
         function handleChange(e) {
-          ticket = {
-            ...ticket,
-            id: el.id,
-            name: el.name,
-            [e.target.name]: e.target.value,
-          };
-        }
-
-        function handleSubmit(e) {
-          e.preventDefault();
-          setTickets([
-            ...Tickets,
-            {
-              ...ticket,
-            },
-          ]);
-          document.getElementById(el.id).value = "1";
-          document.getElementById(`items+${el.id}`).value = "";
+          updateItem(el.id, { variant: e.target.value });
+          updateItem(el.id, { price: el.stock[e.target.value] });
         }
 
         const date = el.schedule.split("T")[0];
@@ -115,80 +63,62 @@ export default function Cart() {
               <option value="vipPrice">Vip: $ {el.stock.vipPrice}</option>
               <option value="palcoPrice">Palco: $ {el.stock.palcoPrice}</option>
             </select>
-            <input
-              onChange={handleChange}
-              type="number"
-              id={`items+${el.id}`}
-              name="items"
-              min="1"
-              max="10"
-            ></input>
-            <button id="button" type="button" onClick={handleSubmit}>
-              Agregar
-            </button>
           </div>
         );
       })}
-      <div>
-        {tickets?.map((e) => {
-          return (
-            <div>
-              <div>Evento: {e.name}</div>
-              <div>Tipo de entrada:  {e.variant === "streamingPrice"
-                      ? "Streaming"
-                      : e.variant === "generalPrice"
-                      ? "General"
-                      : e.variant === "generalLateralPrice"
-                      ? "General lateral"
-                      : e.variant === "vipPrice"
-                      ? "Vip"
-                      : e.variant === "palcoPrice"
-                      ? "Palco"
-                      : null}</div>
-              <div>Cantidad:{e.items}</div>
-              <button onClick={() => handleDeleteItem(e)}>X</button>
-            </div>
-          );
-        })}
-      </div>
-      <button onClick={handleDelete}>Vaciar</button>
-      <button onClick={handleDetails}>Detalles</button>
+      <h1>Cart ({totalUniqueItems})</h1>
 
-      {/* Detalle de compra  figuara el nombre cantidad y precio + suma total y opcion de pagar */}
-      <div>
-        {flag ? (
-          <div className={style.containerDetails}>
-            {tickets?.map((e) => {
-              let price = events.find((p) => p.id === e.id);
-              total = total + e.items * price.stock[e.variant];
-              return (
-                <div className={style.containerData}>
-                  <div>Evento: {e.name}</div>
-                  <div>
-                    Tipo de entrada:{" "}
-                    {e.variant === "streamingPrice"
-                      ? "Streaming"
-                      : e.variant === "generalPrice"
-                      ? "General"
-                      : e.variant === "generalLateralPrice"
-                      ? "General lateral"
-                      : e.variant === "vipPrice"
-                      ? "Vip"
-                      : e.variant === "palcoPrice"
-                      ? "Palco"
-                      : null}{" "}
-                  </div>
-                  <div>Cantidad:{e.items}</div>
-                  <div>Precio: {price.stock[e.variant]}</div>
-                  <div>Total: {e.items * price.stock[e.variant]}</div>
-                  {/* <button onClick={() => handleDeleteItem(e)}>X</button> */}
-                </div>
-              );
-            })}{" "}
-            Total final: {total}
-          </div>
-        ) : null}
-      </div>
-    </div>
+      <ul>
+        {items.map((item) => (
+          <li key={item.id}>
+            {console.log(item)}
+            {item.quantity} x {item.name} &mdash;
+            <p>
+              {" "}
+              <div>
+                Tipo de entrada:{" "}
+                {item.variant === "streamingPrice"
+                  ? "Streaming"
+                  : item.variant === "generalPrice"
+                  ? "General"
+                  : item.variant === "generalLateralPrice"
+                  ? "General lateral"
+                  : item.variant === "vipPrice"
+                  ? "Vip"
+                  : item.variant === "palcoPrice"
+                  ? "Palco"
+                  : null}
+              </div>
+            </p>
+            <p>Precio: {item.price}</p>
+            <p>Total: {item.itemTotal === 0 ? null : item.itemTotal}</p>
+            <button
+              onClick={() =>
+                item.quantity > 1
+                  ? updateItemQuantity(item.id, item.quantity - 1)
+                  : null
+              }
+            >
+              -
+            </button>
+            <button
+              onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
+            >
+              +
+            </button>
+            <button onClick={() => removeItem(item.id)}>&times;</button>
+            <button>Comprar entrada/s</button>
+          </li>
+        ))}
+        Total final: {cartTotal}
+        <button
+          onClick={() =>
+            !user ? loginWithRedirect() : alert("Pasarela de pagos")
+          }
+        >
+          Comprar Todos
+        </button>
+      </ul>
+    </>
   );
 }

@@ -3,6 +3,7 @@ import style from './NavBarProfile.module.css';
 import { Link } from 'react-router-dom';
 import logoSombra from '../../../assets/Logo-png.png';
 import { useAuth0 } from "@auth0/auth0-react";
+import PerfilYLogoutAuth0 from '../../LogoutAuth0/PerfilYLogoutAuth0';
 
 export default function NavBarProfile ({change}) {
 
@@ -16,7 +17,6 @@ export default function NavBarProfile ({change}) {
             <h3 onClick={() => change("Data")} className={style.btnInfo}>Datos Personales</h3>
             <h3 onClick={() => change("Favorite")} className={style.btnInfo}>Favoritos</h3>
             <h3 onClick={() => change("Carrito")} className={style.btnInfo}>Carrito</h3>
-            <h3 onClick={() => logout({ returnTo: window.location.origin })} className={style.btnInfo}>Cerrar sesión</h3>
         </div>
             <PerfilYLogoutAuth0/>
     </div>)
