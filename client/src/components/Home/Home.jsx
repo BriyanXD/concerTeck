@@ -20,7 +20,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const { user, loginWithRedirect } = useAuth0();
+  const { user, loginWithPopup } = useAuth0();
   const {Likes} = useSelector((state)=> state)
   // const { User } = useSelector((state) => state)
   console.log('Likes:',Likes)
@@ -94,7 +94,7 @@ export default function Home() {
                       />
                     </Link>
                       <div className={style.heart}>
-                        <BsFillHeartFill size={30} onClick={()=> user ? dispatch(AddToFav(el)) : loginWithRedirect()}/>
+                        <BsFillHeartFill size={30} onClick={()=> user ? dispatch(AddToFav(el)) : loginWithPopup()}/>
                         {/* <BsFillHeartFill size={30} onClick={()=>dispatch(AddToFav(el))}/> */}
                       </div>
                   </div>
@@ -121,7 +121,7 @@ export default function Home() {
                       />
                     </Link>
                     {/* <div className={style.heart}><BsFillHeartFill size={20} onClick={()=>User?dispatch(AddToFav(el)):alert('Tenes que Registrarte')}/></div> */}
-                    <div className={style.heart2}><BsFillHeartFill size={20} onClick={()=> user ? dispatch(AddToFav(el)) : loginWithRedirect()}/></div>
+                    <div className={style.heart2}><BsFillHeartFill size={20} onClick={()=> user ? dispatch(AddToFav(el)) : loginWithPopup()}/></div>
                   </div>
                 );
               })}
