@@ -49,6 +49,13 @@ const {
   ValidationEmail,
 } = require("../controllers/Validations");
 
+const {
+  getAOneBlackList,
+  getAllBlackList,
+  deleteOneBlackList,
+  postOneBlackList,
+} = require("../controllers/BlackList");
+
 routes.post("/user", createUser);
 routes.get("/user", verifyToken, getUser); // verifyToken
 routes.put("/user", verifyToken, putUser);
@@ -67,13 +74,7 @@ routes.put("/events", verifyToken, putEvents);
 routes.delete("/events", verifyToken, deleteEvent); //isAdmin
 
 routes.get("/ticket", verifyToken, getTicketByID);
-routes.post(
-  "/ticket",
-  verifyToken,
-  adminNotAuthorization,
-  producerNotAuthorization,
-  postTicket
-);
+routes.post("/ticket", verifyToken, adminNotAuthorization, postTicket);
 routes.delete("/ticket", verifyToken, isAdmin, deleteTicket);
 
 routes.get("/genres", getAllGenres);
@@ -91,5 +92,10 @@ routes.post("/validation/username", ValidationUsername);
 routes.post("/validation/email", ValidationEmail);
 
 routes.post("/admin", postAdminUser);
+
+routes.get("/blackall", getAllBlackList);
+routes.get("/black", getAOneBlackList);
+routes.post("/black", postOneBlackList);
+routes.delete("/black", deleteOneBlackList);
 
 module.exports = routes;
