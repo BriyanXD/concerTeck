@@ -81,7 +81,7 @@ export default function Contact() {
     if(e.target.value === ""){
         setError({
             ...error,
-            [e.target.name]: "Por favor ingrese un número de teléfono"
+            [e.target.name]: "Por favor ingrese número de teléfono"
         })
     } else if (isNaN(Number(e.target.value))){
         setError({

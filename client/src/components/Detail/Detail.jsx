@@ -30,8 +30,8 @@ export default function Detail() {
 
   const {Detail} = useSelector((state)=> state)
   const {Venues} = useSelector((state => state))
-  // const {Basket} = useSelector((state)=> state)
-Detail["price"] = 0;
+ 
+  Detail["price"] = 0;
  
   let date = ''
   let time = ''
@@ -59,7 +59,6 @@ Detail["price"] = 0;
           <div className={style.name}>{Detail.name}</div>
           <div className={style.genre}>{Detail.genre}</div>
           <div className={style.schedule}>{date} {time}h</div>
-          {/* <div className={style.schedule}>{Detail.schedule}</div> */}
           <div className={style.venue}>{Venues.id}</div>
           <div className={style.prueba}>{prueba !== undefined ? prueba.name : null}</div>
           <div className={style.description}>{Detail.description}</div>
@@ -80,7 +79,7 @@ Detail["price"] = 0;
             <Tooltip title="Agregar al carrito" arrow>
               <div className={style.add}>
             
-           <MdOutlineAddShoppingCart onClick={()=> addItem(Detail) } className={style.addicon}/>
+           <MdOutlineAddShoppingCart onClick={()=> addItem(Detail)} className={style.addicon}/>
               </div>
             </Tooltip>
          </div>

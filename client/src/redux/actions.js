@@ -124,15 +124,15 @@ export function ClearDetail() {
   };
 }
 
-export function register(user, value) {
+export function register( value) {
   return async function (dispatch) {
     try {
       const register = await axios.post(
-        `http://localhost:3001/api/${user}`,
+        `http://localhost:3001/api/user`,
         value
       );
       localStorage.setItem("token", register.data[2].token);
-      console.log("desde actions",register.data)
+      console.log("desde actions",register.data[1].user[0])
       return dispatch({
         type: "LOGIN_USER",
         payload: register.data[1],
