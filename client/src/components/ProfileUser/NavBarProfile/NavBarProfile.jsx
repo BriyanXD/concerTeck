@@ -1,15 +1,13 @@
 import React from 'react';
 import style from './NavBarProfile.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { LogOut } from '../../../redux/actions';
+import { Link } from 'react-router-dom';
 import logoSombra from '../../../assets/Logo-png.png';
+import { useAuth0 } from "@auth0/auth0-react";
+import PerfilYLogoutAuth0 from '../../LogoutAuth0/PerfilYLogoutAuth0';
 
 export default function NavBarProfile ({change}) {
 
-    const user = useSelector(state => state.User);
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const { logout } = useAuth0();
 
     return(<div className={style.containerNavBarProfile}>
          <Link to="/">
@@ -18,9 +16,8 @@ export default function NavBarProfile ({change}) {
         <div className={style.containerDatos}>
             <h3 onClick={() => change("Data")} className={style.btnInfo}>Datos Personales</h3>
             <h3 onClick={() => change("Favorite")} className={style.btnInfo}>Favoritos</h3>
-            <h3 onClick={()=> change("Carrito")} className={style.btnInfo}>Carrito</h3>
-            <h3 onClick={()=> change("Configuration")} className={style.btnInfo}>Configuración</h3>
-            {user !== "" ? (<h3 className={style.btnInfo} onClick={() => dispatch(LogOut()) && navigate("/")}>Cerrar sesión</h3>) : null}
+            <h3 onClick={() => change("Carrito")} className={style.btnInfo}>Carrito</h3>
         </div>
+            <PerfilYLogoutAuth0/>
     </div>)
 }
