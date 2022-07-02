@@ -429,15 +429,23 @@ export function searchUserByUserName (username){
           },
         }
       );;
-      console.log(userByUserName, 'ESTOY RE LCOO')
+      console.log(userByUserName.data, 'ESTOY RE LCOO')
       return dispatch({
         type : "SEARCH_USER_BY_USERNAME",
-        payload :userByUserName.data.username
+        payload :userByUserName.data
       })
     } catch (error) {
       console.log(error,'SOY YO')
     }
   }
+}
+
+export function findUser2(allusers, id) {
+  const userSaved = allusers.find((user) => user.id === id);
+  return {
+    type: "FIND_USER_2",
+    payload: userSaved,
+  };
 }
 
 /* export function getAllSolicits(allevents) {

@@ -1,17 +1,22 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux";
-import { deleteUser, findUser, getAllUsers } from "../../redux/actions";
+import { deleteUser, findUser, findUser2, getAllUsers } from "../../redux/actions";
 import swal from 'sweetalert'
 
-export default function UserCard({id,username}){
+export default function UserCard({id,username,aux}){
     let userSaved = []
     const dispatch = useDispatch()
+    const UserByUserName = useSelector((state) => state.stateAdminPanel?.UserByUserName)
     const userDeleted = useSelector((state) => state.userDeleted)
     const allUsers = useSelector((state) => state.stateAdminPanel?.allUsers)
     console.log(userDeleted)
 
 function filterUser(){
-    dispatch(findUser(allUsers, id))
+    if(aux){
+        dispatch(findUser(UserByUserName, id))
+    }else{
+        dispatch(findUser(allUsers, id))
+    }
 }
 
 function handlerDeleteUser(){
