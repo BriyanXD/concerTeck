@@ -2,34 +2,6 @@ import React, { useState } from 'react';
 import style from './Contact.module.css';
 import swal from 'sweetalert'
 
-function validate (input){
-  const error = {};
-  if(!input.name){
-    error.name = 'Por favor ingrese un nombre válido'
-  }
-  if(!/^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/gi.test(input.name)){
-    error.name = 'Por favor ingrese un nombre válido'
-  }
-  if(!input.message){
-    error.message ='Por favor ingrese su consulta'
-  }
-  if(/[$%&|<>#]/.test(input.message)){
-    error.message = 'Mensaje inválido'
-  }
-  if(!input.email){
-    error.email = 'Por favor ingrese un email'
-  } 
-  if(!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(input.email)){
-    error.email= 'Por favor ingrese un email válido'
-  }
-  if(!input.telephone){
-    error.telephone = 'Por favor ingrese un teléfono'
-  }
-  if(! /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/.test(input.telephone)){
-    error.telephone = 'Ingrese característica y número válido'
-  }
-  return error;
-}
 
 export default function Contact() {
   const[input,setInput] = useState({name:'',email:'',telephone:'',message:''})
@@ -47,12 +19,83 @@ export default function Contact() {
   }
   
   function handlerInputBlur(e){
-    setError(validate({
-      ...input,
-      [e.target.name]: e.target.value,
-      
-    }, e))
+    
+    if(e.target.name === 'name'){
+      if(e.target.value === ""){
+        setError({
+            ...error,
+            [e.target.name]: "Por favor ingrese un nombre"
+        })
+      } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(e.target.value)){
+        setError({
+            ...error,
+            [e.target.name]: "Por favor ingrese un nombre válido"
+        })
+      }else {
+        setError({
+            ...error,
+            [e.target.name]: ""
+        })
     }
+  }
+
+  if(e.target.name === "message"){
+    if(e.target.value === ""){
+      setError({
+        ...error,
+        [e.target.name]: 'Por favor ingrese su consulta'
+      })
+    } else if (/[$%&|<>#]/.test(input.message)){
+      setError({
+        ...error,
+        [e.target.name]: 'Mensaje inválido'
+      }) 
+    } else {
+      setError({
+          ...error,
+          [e.target.name]: ""
+      })
+    }
+  }
+
+  if(e.target.name === "email"){
+    if(e.target.value === ""){
+        setError({
+            ...error,
+            [e.target.name]: "Por favor un email"
+        })
+    } else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(e.target.value)){
+        setError({
+            ...error,
+            [e.target.name]: "Ingrese un email válido"
+        })
+    } else {
+        setError({
+            ...error,
+            [e.target.name]: ""
+        })
+    }
+  }
+
+  if(e.target.name === "telephone"){
+    if(e.target.value === ""){
+        setError({
+            ...error,
+            [e.target.name]: "Por favor ingrese un número de teléfono"
+        })
+    } else if (isNaN(Number(e.target.value))){
+        setError({
+            ...error,
+            [e.target.name]: "Solo se puede ingresar números"
+        })
+    } else {
+        setError({
+            ...error,
+            [e.target.name]: ""
+        })
+    }
+  }
+}
 
   function handleAlert(e){
     
@@ -60,7 +103,7 @@ export default function Contact() {
       e.preventDefault()
       return swal({
         title: 'Mensaje no enviado',
-        text: 'Por favor ingrese los datos ',
+        text: 'Por favor ingrese los datos solicitados',
         icon: 'error',
         dangerMode:true})
       }
@@ -105,22 +148,27 @@ export default function Contact() {
     <div className={style.containerContact}>
       <form action='https://formsubmit.co/concerteck@gmail.com' method='POST' className={style.form}>
         <div>
-          <input onChange={(e) => handleInputChange(e)} onBlur={(e)=> handlerInputBlur(e)} value={input.name} name='name' className={error.name?.length > 0 ? style.errors : style.nameContact} type='text' 
+          <input 
+          onChange={handleInputChange} 
+          onBlur={handlerInputBlur} 
+          value={input.name} 
+          name='name' 
+          className={error.name?.length > 0 ? style.errors : style.nameContact} type='text' 
           placeholder={error.name?.length > 0 ? error.name : 'Nombre o razón social...'}/>
         </div>
       <br/>
       <div>
-        <input onChange={(e) => handleInputChange(e)} onBlur={(e)=> handlerInputBlur(e)} value={input.email} name='email' className={error.email?.length > 0 ? style.errors : style.mailContact} type='email' 
+        <input onChange={handleInputChange} onBlur={handlerInputBlur} value={input.email} name='email' className={error.email?.length > 0 ? style.errors : style.mailContact} type='email' 
         placeholder={error.email?.length > 0 ? error.email : 'Email'}/>
       </div>
       <br/>
       <div>
-      <input onChange={(e) => handleInputChange(e)} onBlur={(e)=> handlerInputBlur(e)} value={input.telephone} name='telephone' className={error.telephone?.length > 0 ? style.errors : style.phoneContact} type='text' 
+      <input onChange={handleInputChange} onBlur={handlerInputBlur} value={input.telephone} name='telephone' className={error.telephone?.length > 0 ? style.errors : style.phoneContact} type='text' 
       placeholder={error.telephone?.length > 0 ? error.telephone : 'Teléfono'}/>
       </div>
       <br/>
       <div>
-        <textarea onChange={(e) => handleInputChange(e)} onBlur={(e)=> handlerInputBlur(e)} name='message' className={error.message?.length > 0 ? style.errorMessage : style.reasonContact} value={input.message} type='message'  rows='5' cols='50' 
+        <textarea onChange={handleInputChange} onBlur={handlerInputBlur} name='message' className={error.message?.length > 0 ? style.errorMessage : style.reasonContact} value={input.message} type='message'  rows='5' cols='50' 
         placeholder={error.message?.length > 0 ? error.message : 'Motivo de consulta'}></textarea>
       </div>
       <div className={style.containerbtnsend}>

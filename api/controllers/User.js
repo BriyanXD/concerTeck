@@ -3,31 +3,42 @@ const Ticket = require("../models/Ticket");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const BlackList = require("../models/BlackList");
 require("dotenv").config();
 const { AUTH_ROUNDS, AUTH_SECRET, AUTH_EXPIRES } = process.env;
 require("../db.js");
 
 async function createUser(req, res) {
-  const { username, password, email } = req.body;
-  if (!username || !password || !email) {
-    res.status(404).json({ error: "Faltan completar Campos obligatorios" });
+  const { name, username, email } = req.body;
+  if (!username || !email || !name) {
+    return res
+      .status(404)
+      .json({ error: "Faltan completar Campos obligatorios" });
   } else {
     try {
-      let passcrypt = bcrypt.hashSync(password, parseInt(AUTH_ROUNDS));
-      User.create({
-        username: username,
-        password: passcrypt,
-        email: email,
-      })
-        .then((newuser) => {
-          let token = jwt.sign({ user: newuser }, AUTH_SECRET, {
+      //let passcrypt = bcrypt.hashSync(password, parseInt(AUTH_ROUNDS));
+      const emailBaned = await BlackList.findOne({ where: { email: email } });
+      if (!emailBaned) {
+        const newUser = await User.findOrCreate({
+          where: {
+            name: name,
+            username: username,
+            email: email,
+          },
+        });
+        if (newUser) {
+          let token = jwt.sign({ user: newUser }, AUTH_SECRET, {
             expiresIn: AUTH_EXPIRES,
           });
-          res.json(["Usuario", { user: newuser }, { token: token }]);
-        })
-        .catch((error) => res.status(500).json(error));
+          return res.json(["Usuario", { user: newUser }, { token: token }]);
+        } else {
+          res.status(500).json({ error: "Error al crear el Usuario" });
+        }
+      } else {
+        return res.status(401).json({ error: "El usuario esta baneado" });
+      }
     } catch (error) {
-      res.status(404).send({ error: error.message });
+      return res.status(404).send({ error: error.message });
     }
   }
 }
@@ -78,7 +89,7 @@ async function putUser(req, res) {
 }
 async function deleteUser(req, res) {
   try {
-    const { id } = req.body; //req.params.id
+    const { id } = req.query; //req.params.id
     //console.log(id)
     const user = await User.findByPk(id);
     //console.log(user)
@@ -90,6 +101,13 @@ async function deleteUser(req, res) {
         error: "No se a encontrado un Usuario que corresponda a lo solicitado",
       });
     }
+    const newBaned = await BlackList.findOrCreate({
+      where: {
+        email: user.email,
+        username: user.username || "undefined",
+      },
+    });
+    console.log("Usuario Eliminado y baneado", newBaned);
     const destoyed = await user.destroy();
     if (destoyed) {
       return res
@@ -104,7 +122,7 @@ async function deleteUser(req, res) {
 async function UpgradeRank(req, res) {
   const { isAdmin, id } = req.body;
   try {
-    if (!isAdmin || typeof isAdmin !== "boolean") {
+    if (typeof isAdmin !== "boolean") {
       return res
         .status(404)
         .json({ error: "isAdmin tiene que ser un booleado" });
@@ -127,10 +145,29 @@ async function UpgradeRank(req, res) {
   }
 }
 
+async function postAdminUser(req, res) {
+  try {
+    const { username, password, email } = req.body;
+    let passcrypt = bcrypt.hashSync(password, parseInt(AUTH_ROUNDS));
+    const admin = User.findOrCreate({
+      where: {
+        username: username,
+        password: passcrypt,
+        email: email,
+        isAdmin: true,
+      },
+    });
+    res.send(admin);
+  } catch (error) {
+    res.status(401).json({ error: error.message });
+  }
+}
+
 module.exports = {
   getUser,
   createUser,
   putUser,
   deleteUser,
   UpgradeRank,
+  postAdminUser,
 };

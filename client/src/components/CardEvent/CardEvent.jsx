@@ -1,6 +1,7 @@
 import React from 'react'
 import style from './CardEvent.module.css'
 
+
 export default function CardEvent({name, schedule, image}) {
 
   const date = schedule.split('T')[0]
