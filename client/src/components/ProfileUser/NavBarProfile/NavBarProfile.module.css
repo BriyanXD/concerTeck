@@ -14,6 +14,8 @@
 .logo{
     position:relative;
     width: 120px;
+    margin-top: 0px;
+    margin-bottom: 0px;
     margin-left: 15px;
 }
 
@@ -25,9 +27,9 @@
 
 .btnInfo:hover{
     cursor: pointer;
-    background-color: white;
 }
 .btnInfo{
+    margin: 0px 0px 0px 0px;
     display: flex;
     justify-content: center;
     /* border: solid 1px black; */

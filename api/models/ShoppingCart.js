@@ -25,6 +25,9 @@ const ShoppingCart = sequelize.define(
     price: {
       type: DataTypes.FLOAT,
     },
+    variant: {
+      type: DataTypes.STRING,
+    },
   },
   {
     timestamps: false,

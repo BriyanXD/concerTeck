@@ -1,4 +1,8 @@
 import axios from "axios";
+<<<<<<< HEAD
+=======
+
+>>>>>>> 185e3e13e1485d658345f37d6de9ab5a9e79952d
 export function getEvents() {
   return async function (dispatch) {
     try {
@@ -51,21 +55,19 @@ export function EventById(id) {
   };
 }
 
-export function CreateEvent(value) {
-  console.log(value);
-  return async function (dispatch) {
-    try {
-      const creation = await axios.post(
-        "http://localhost:3001/api/events",
-        value
-      );
-      console.log(creation.data, "creando");
-      return creation;
-    } catch (error) {
-      console.log(error.message);
+export function CreateEvent (value){
+    console.log(value)
+    return async function (dispatch){
+        try{
+            const creation = await axios.post("http://localhost:3001/api/events", value)
+            console.log(creation.data, "creando")
+            return creation;
+        }catch(error){
+            console.log(error.message);
+        }
     }
-  };
-}
+};
+
 
 export function GetGenres() {
   return async function (dispatch) {
@@ -82,19 +84,17 @@ export function GetGenres() {
   };
 }
 
-export function CreateGenre(value) {
-  return async function (dispatch) {
-    try {
-      const creation = await axios.post(
-        "http://localhost:3001/api/genres",
-        value
-      );
-      return creation;
-    } catch (error) {
-      console.log(error.message);
+export function CreateGenre (value){
+    return async function (dispatch){
+        try{
+            const creation = await axios.post("http://localhost:3001/api/genres", value)
+            return creation;
+        }catch(error){
+            console.log(error.message);
+        }
     }
-  };
-}
+};
+
 
 export function GetVenues() {
   return async function (dispatch) {
@@ -110,19 +110,16 @@ export function GetVenues() {
   };
 }
 
-export function CreateVenue(value) {
-  return async function (dispatch) {
-    try {
-      const creation = await axios.post(
-        "http://localhost:3001/api/venues",
-        value
-      );
-      return creation;
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-}
+export function CreateVenue (value){
+  return async function (dispatch){
+      try{
+          const creation = await axios.post("http://localhost:3001/api/venues", value)
+          return creation;
+      }catch(error){
+          console.log(error.message);
+      }
+  }
+};
 
 export function ClearDetail() {
   return function () {
@@ -130,14 +127,15 @@ export function ClearDetail() {
   };
 }
 
-export function register(value) {
+export function register(user, value) {
   return async function (dispatch) {
     try {
       const register = await axios.post(
-        `http://localhost:3001/api/user`,
+        `http://localhost:3001/api/${user}`,
         value
       );
       localStorage.setItem("token", register.data[2].token);
+      console.log("desde actions",register.data)
       return dispatch({
         type: "LOGIN_USER",
         payload: register.data[1],
@@ -155,10 +153,6 @@ export function LoginUser(value) {
         `http://localhost:3001/api/login`,
         value
       );
-      console.log(getUser.data, "USUARIOS");
-      localStorage.setItem("token", getUser.data[2].token);
-      // console.log(localStorage.getItem('token'),'ESTE ES EL MUDF TOKEN')
-      // setCookies(getUser.data[2].token)
       return dispatch({
         type: "LOGIN_USER",
         payload: getUser.data,
@@ -258,11 +252,27 @@ export function ModalCalendarVisible(booleanForVisible, dateFor) {
   };
 }
 
-export function AddToBasket(payload) {
+export function AddToBasket (payload){
   return {
     type: "ADD_TO_BASKET",
-    payload: payload,
+    payload: payload
   };
+}
+
+export function AddToFav(payload){
+  // console.log('payload',payload)
+  return{
+    type: "ADD_TO_FAV",
+    payload: payload
+  };
+}
+
+export function RemoveFavorite(id){
+  console.log('payload id:', id)
+    return {
+        type: "REMOVE_FAVORITE",
+        payload: id
+    }
 }
 
 export function getAllUsers() {
@@ -289,33 +299,34 @@ export function getAllUsers() {
   };
 }
 
-export function getAllProducers() {
-  return async function (dispatch) {
+export function getAllProducers(){
+  return async function(dispatch){
     try {
-      const adminState = await axios.get("http://localhost:3001/api/producers");
+      const adminState = await axios.get('http://localhost:3001/api/producers')
       return dispatch({
-        type: "GET_ALL_PRODUCERS",
-        payload: adminState.data,
-      });
+        type: 'GET_ALL_PRODUCERS',
+        payload:adminState.data
+      })
     } catch (error) {
       console.log(error.message);
     }
-  };
+  }
 }
 
-export function getAllSolicits() {
-  return async function (dispatch) {
+export function getAllSolicits(){
+  return async function(dispatch){
     try {
-      const adminState = await axios.get("http://localhost:3001/api/events");
-      console.log(adminState.data, "adminstate");
+      const adminState = await axios.post('http://localhost:3001/api/Solicits',{Headers:{
+        "authorization":"",
+      }})
       return dispatch({
-        type: "GET_ALL_SOLICITS",
-        payload: adminState.data,
-      });
+        type: 'GET_ALL_SOLICITS',
+        payload:adminState.data
+      })
     } catch (error) {
       console.log(error.message);
     }
-  };
+  }
 }
 
 export function findUser(allusers, id) {
