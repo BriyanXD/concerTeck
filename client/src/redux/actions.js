@@ -277,7 +277,7 @@ export function getAllUsers() {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       };
       let token = localStorage.getItem("token");
-      console.log(token);
+      /* console.log(token); */
       /* const encabezado = `Authorization: Bearer ${localStorage.getItem('token')}` */
 
       const adminState = await axios(config);
@@ -318,6 +318,134 @@ export function getAllSolicits() {
     } catch (error) {
       console.log(error.message);
     }
+  };
+}
+
+export function findUser(allusers, id) {
+  const userSaved = allusers.find((user) => user.id === id);
+  return {
+    type: "FIND_USER",
+    payload: userSaved,
+  };
+}
+export function findEvent(allEvents, id) {
+  const eventSave = allEvents?.find((event) => event.id === id);
+  return {
+    type: "FIND_EVENT",
+    payload: eventSave,
+  };
+}
+
+export function deleteUser(id) {
+  return async function (dispatch) {
+    try {
+      const userDeleted = await axios.delete(
+        `http://localhost:3001/api/user?id=${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log("Ususario eliminado", userDeleted);
+      return dispatch({
+        type: "DELETE_USER",
+        payload: userDeleted.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+export function deleteEvents(id) {
+  return async function (dispatch) {
+    try {
+      console.log(id);
+      const eventDeleted = await axios.delete(
+        `http://localhost:3001/api/events?id=${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(eventDeleted);
+      return dispatch({
+        type: "DELETE_EVENT",
+        payload: eventDeleted,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+export function upgradeRank(id, boolean) {
+  return async function (dispatch) {
+    try {
+      console.log(boolean, "admin estado");
+      console.log(id, "id user");
+      const userRanked = await axios.put(
+        `http://localhost:3001/api/upgrade`,
+        { isAdmin: boolean, id: id },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      return dispatch({
+        type: "USER_RANKED",
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+
+// export function searchUserByName (name){
+//   return async function(dispatch){
+//     try {
+//       const userByName = await axios.get(`http://localhost:3001/api/user?name=${name}`, {headers: {
+//         Authorization: `Bearer ${localStorage.getItem("token")}`,
+//       }}) ;
+//       console.log(userByName, 'ESTOY RE LCOO')
+//       return dispatch({
+//         type : "SEARCH_USER_BY_NAME",
+//         payload :userByName.data
+//       })
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   }
+// }
+
+export function searchUserByUserName (username){
+  return async function(dispatch){
+    try {
+      const userByUserName = await axios.get(
+        `http://localhost:3001/api/user?username=${username}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );;
+      console.log(userByUserName.data, 'ESTOY RE LCOO')
+      return dispatch({
+        type : "SEARCH_USER_BY_USERNAME",
+        payload :userByUserName.data
+      })
+    } catch (error) {
+      console.log(error,'SOY YO')
+    }
+  }
+}
+
+export function findUser2(allusers, id) {
+  const userSaved = allusers.find((user) => user.id === id);
+  return {
+    type: "FIND_USER_2",
+    payload: userSaved,
   };
 }
 

@@ -10,13 +10,14 @@ export default function LoginAuth0(){
     user,
     isAuthenticated,
     loginWithRedirect,
+    loginWithPopup
   } = useAuth0();
 
 
   return(
   <div>
     {
-    !user ? <button onClick={() => loginWithRedirect()} className={style.button}>Log In</button> : <PerfilYLogoutAuth0/>
+    !user ? <button onClick={() => loginWithPopup()} className={style.button}>Log In</button> : <PerfilYLogoutAuth0/>
     }
   </div>
   )

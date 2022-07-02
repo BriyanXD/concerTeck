@@ -16,8 +16,8 @@ export default function NavBarProfile ({change}) {
             <h3 onClick={() => change("Data")} className={style.btnInfo}>Datos Personales</h3>
             <h3 onClick={() => change("Favorite")} className={style.btnInfo}>Favoritos</h3>
             <h3 onClick={() => change("Carrito")} className={style.btnInfo}>Carrito</h3>
-            <h3 onClick={() => change("Configuration")} className={style.btnInfo}>Configuración</h3>
             <h3 onClick={() => logout({ returnTo: window.location.origin })} className={style.btnInfo}>Cerrar sesión</h3>
         </div>
+            <PerfilYLogoutAuth0/>
     </div>)
 }

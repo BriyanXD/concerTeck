@@ -9,12 +9,13 @@ import { Link, useParams } from 'react-router-dom';
 import Map from '../Map/Map';
 import { MdOutlineAddShoppingCart } from 'react-icons/md';
 import Tooltip from '@mui/material/Tooltip';
+import { useCart } from "react-use-cart";
+
 
 
 export default function Detail() {
-  // const id = props.match.params.id;
   const {id} = useParams();
-  // console.log(id);
+  const { addItem } = useCart();
   const dispatch =  useDispatch()
   useEffect(()=>{
     dispatch(EventById(id))
@@ -27,33 +28,22 @@ export default function Detail() {
     dispatch(GetVenues())
   },[dispatch])
 
-  // useEffect(()=>{
-  //   dispatch(GetGenres())
-  // },[])
-
   const {Detail} = useSelector((state)=> state)
-  console.log(Detail)
   const {Venues} = useSelector((state => state))
-  const {Basket} = useSelector((state)=> state)
-  console.log('Basket',Basket)
-  
+  // const {Basket} = useSelector((state)=> state)
+Detail["price"] = 0;
+ 
   let date = ''
   let time = ''
   if(Detail){
     date = Detail.schedule !== undefined? Detail.schedule.split('T')[0] : null
-    console.log(date)
     time = Detail.schedule !== undefined ? Detail.schedule.split('T')[1].split(':')[0]+':'+  Detail.schedule.split('T')[1].split(':')[1] :null
-    console.log(time)
   }
-  console.log(Detail.schedule)
 
   let prueba =''
   if(Detail && Venues){
     prueba = Venues.find(e => e.id === Detail.venueId)
-    console.log(prueba)
   }
-
-  
   return (
     <div className={style.container}>
       <NavBar/>
@@ -89,17 +79,14 @@ export default function Detail() {
           </Link>
             <Tooltip title="Agregar al carrito" arrow>
               <div className={style.add}>
-
-           <MdOutlineAddShoppingCart onClick={()=>dispatch(AddToBasket(Detail.id))} className={style.addicon}/>
+            
+           <MdOutlineAddShoppingCart onClick={()=> addItem(Detail) } className={style.addicon}/>
               </div>
             </Tooltip>
          </div>
            
         </div>
-      <Footer/>
-        
-
-        
+      <Footer/>    
     </div>
   )
 }
