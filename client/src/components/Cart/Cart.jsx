@@ -90,7 +90,7 @@ export default function Cart() {
                   : null}
               </div>
             </p>
-            <p>Precio: {item.price}</p>
+            {item.price !== 0 ? <p>Precio: {item.price}</p>: null}
             <p>Total: {item.itemTotal === 0 ? null : item.itemTotal}</p>
             <button
               onClick={() =>
