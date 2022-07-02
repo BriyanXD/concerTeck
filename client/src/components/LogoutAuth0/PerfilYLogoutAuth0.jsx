@@ -10,8 +10,6 @@ export default function PerfilYLogoutAuth0(){
   const {  user,
     isAuthenticated,
     logout, } = useAuth0();
-    console.log("User:",user)
-
     useEffect(() => {
       findOrRegister()
     },[dispatch])
@@ -45,4 +43,3 @@ export default function PerfilYLogoutAuth0(){
     </div>
   );
 };
-console.log('hola')

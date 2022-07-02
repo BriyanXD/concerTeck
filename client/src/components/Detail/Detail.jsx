@@ -9,12 +9,11 @@ import { Link, useParams } from 'react-router-dom';
 import Map from '../Map/Map';
 import { MdOutlineAddShoppingCart } from 'react-icons/md';
 import Tooltip from '@mui/material/Tooltip';
+import { useLocalStorage } from '../useLocalStorage/useLocalStorage';
 
 
 export default function Detail() {
-  // const id = props.match.params.id;
   const {id} = useParams();
-  // console.log(id);
   const dispatch =  useDispatch()
   useEffect(()=>{
     dispatch(EventById(id))
@@ -27,16 +26,10 @@ export default function Detail() {
     dispatch(GetVenues())
   },[dispatch])
 
-  // useEffect(()=>{
-  //   dispatch(GetGenres())
-  // },[])
-
   const {Detail} = useSelector((state)=> state)
-  console.log(Detail)
   const {Venues} = useSelector((state => state))
   const {Basket} = useSelector((state)=> state)
-  console.log('Basket',Basket)
-  
+ 
   let date = ''
   let time = ''
   if(Detail){
@@ -52,8 +45,22 @@ export default function Detail() {
     prueba = Venues.find(e => e.id === Detail.venueId)
     console.log(prueba)
   }
-
   
+  let temp = window.localStorage.getItem("basket")
+  let data = JSON.parse(temp)
+  const handleCanasta = (value) => {
+   if(data !== null){
+    console.log(data, "if")
+     data.push(value)
+     window.localStorage.setItem("basket", JSON.stringify((data)))
+   }else{
+    console.log("else")
+    window.localStorage.setItem("basket", JSON.stringify(([value])))
+    return
+   }
+  }
+
+
   return (
     <div className={style.container}>
       <NavBar/>
@@ -89,8 +96,8 @@ export default function Detail() {
           </Link>
             <Tooltip title="Agregar al carrito" arrow>
               <div className={style.add}>
-
-           <MdOutlineAddShoppingCart onClick={()=>dispatch(AddToBasket(Detail.id))} className={style.addicon}/>
+            
+           <MdOutlineAddShoppingCart onClick={()=>dispatch(AddToBasket(Detail.id)) && handleCanasta(Detail.id)} className={style.addicon}/>
               </div>
             </Tooltip>
          </div>

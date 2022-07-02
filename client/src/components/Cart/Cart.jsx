@@ -1,18 +1,37 @@
-import React, { useState } from "react";
+import style from "./Cart.module.css";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from 'react-redux';
 import { useSelector } from "react-redux";
+import { useLocalStorage } from '../useLocalStorage/useLocalStorage';
+import { getEvents } from '../../redux/actions';
 
 export default function Cart() {
-  const { Basket, AllEvents } = useSelector((state) => state);
-  const [Tickets, setTickets] = useState([]);
-  const [render, setrender] = useState([]);
-  const events = [];
+  const { AllEvents } = useSelector((state) => state);
+  let prueba = useSelector(state => state.Basket);
+  let temp = JSON.parse(window.localStorage.getItem("basket"))
+  prueba.push(temp)
+  let Basket = new Set(prueba);
+  // const [Tickets, setTickets] = useState([]);
+  const [Tickets, setTickets] = useLocalStorage("ticket", []);
+  const [flag, setFlag] = useState(false);
+  // const [flag, setFlag] = useLocalStorage("flag", false);
+  const [events, setEvents] = useState([]); 
+  console.log("🚀 ~ file: Cart.jsx ~ line 19 ~ Cart ~ events", events)
   let tickets = [];
+  let total = 0;
+ 
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getEvents());
+  },[])
+  
   Basket.forEach((el) => {
     AllEvents.forEach((e) => {
-      if (e.id === el) events.push(e);
+      if (e.id === el) setEvents([...events, e]);
     });
   });
+
 
   tickets = Tickets.filter((e) => e.variant && e.items);
 
@@ -30,30 +49,38 @@ export default function Cart() {
     }
   }
 
-  function handleDelete(ev) {
-    tickets = [tickets.filter((e) => ev.id !== e.id)];
-    console.log("ID ticket filtrado", ev.id);
-    console.log("tickets", tickets);
-    setrender((tickets) => tickets);
+  function handleDelete() {
+    tickets = [];
+    setTickets(tickets);
+    // tickets=tickets.filter((e)=>(ev.id!==e.id))
   }
+  function handleDeleteItem(ev) {
+    tickets = tickets.filter((e) => ev.id !== e.id || ev.variant !== e.variant);
+    setTickets(tickets);
+  }
+
+  const handleDetails = () => {
+    setFlag(!flag);
+  };
 
   return (
     <div>
       {events?.map((el) => {
         let ticket = {};
+
+        console.log("ticket", ticket);
+
         function handleChange(e) {
           ticket = {
             ...ticket,
             id: el.id,
             name: el.name,
-
             [e.target.name]: e.target.value,
           };
         }
 
         function handleSubmit(e) {
           e.preventDefault();
-
           setTickets([
             ...Tickets,
             {
@@ -62,7 +89,6 @@ export default function Cart() {
           ]);
           document.getElementById(el.id).value = "1";
           document.getElementById(`items+${el.id}`).value = "";
-          setrender((tickets) => tickets);
         }
 
         const date = el.schedule.split("T")[0];
@@ -77,17 +103,17 @@ export default function Cart() {
             <div>{time}</div>
             <select onChange={handleChange} id={el.id} name="variant">
               <option value="1">Elegir tipo de entrada...</option>
-              <option value="streaming">
+              <option value="streamingPrice">
                 Streaming: $ {el.stock.streamingPrice}
               </option>
-              <option value="general">
+              <option value="generalPrice">
                 General: $ {el.stock.generalPrice}
               </option>
-              <option value="general lateral">
+              <option value="generalLateralPrice">
                 General lateral: $ {el.stock.generalLateralPrice}
               </option>
-              <option value="vip">Vip: $ {el.stock.vipPrice}</option>
-              <option value="palco">Palco: $ {el.stock.palcoPrice}</option>
+              <option value="vipPrice">Vip: $ {el.stock.vipPrice}</option>
+              <option value="palcoPrice">Palco: $ {el.stock.palcoPrice}</option>
             </select>
             <input
               onChange={handleChange}
@@ -103,18 +129,65 @@ export default function Cart() {
           </div>
         );
       })}
-
       <div>
-        {render?.map((e) => {
+        {tickets?.map((e) => {
           return (
             <div>
               <div>Evento: {e.name}</div>
-              <div>Tipo de entrada: {e.variant}</div>
+              <div>Tipo de entrada:  {e.variant === "streamingPrice"
+                      ? "Streaming"
+                      : e.variant === "generalPrice"
+                      ? "General"
+                      : e.variant === "generalLateralPrice"
+                      ? "General lateral"
+                      : e.variant === "vipPrice"
+                      ? "Vip"
+                      : e.variant === "palcoPrice"
+                      ? "Palco"
+                      : null}</div>
               <div>Cantidad:{e.items}</div>
-              <button onClick={() => handleDelete(e)}>x</button>
+              <button onClick={() => handleDeleteItem(e)}>X</button>
             </div>
           );
         })}
+      </div>
+      <button onClick={handleDelete}>Vaciar</button>
+      <button onClick={handleDetails}>Detalles</button>
+
+      {/* Detalle de compra  figuara el nombre cantidad y precio + suma total y opcion de pagar */}
+      <div>
+        {flag ? (
+          <div className={style.containerDetails}>
+            {tickets?.map((e) => {
+              let price = events.find((p) => p.id === e.id);
+              total = total + e.items * price.stock[e.variant];
+              return (
+                <div className={style.containerData}>
+                  <div>Evento: {e.name}</div>
+                  <div>
+                    Tipo de entrada:{" "}
+                    {e.variant === "streamingPrice"
+                      ? "Streaming"
+                      : e.variant === "generalPrice"
+                      ? "General"
+                      : e.variant === "generalLateralPrice"
+                      ? "General lateral"
+                      : e.variant === "vipPrice"
+                      ? "Vip"
+                      : e.variant === "palcoPrice"
+                      ? "Palco"
+                      : null}{" "}
+                  </div>
+                  <div>Cantidad:{e.items}</div>
+                  <div>Precio: {price.stock[e.variant]}</div>
+                  <div>Total: {e.items * price.stock[e.variant]}</div>
+                  {/* <button onClick={() => handleDeleteItem(e)}>X</button> */}
+                </div>
+              );
+            })}{" "}
+            Total final: {total}
+          </div>
+        ) : null}
       </div>
     </div>
   );
