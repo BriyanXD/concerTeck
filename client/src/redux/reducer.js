@@ -270,6 +270,11 @@ function reducers(state = initialState, { type, payload }) {
             UserByUserName:payload,
           }
         };
+      case "FIND_USER_2":
+        return {
+          ...state,
+          UserByUserName: payload,
+        };
     default:
       return state;
   }
