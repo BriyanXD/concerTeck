@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import style from "./Profile.module.css";
 import NavBarProfile from "./NavBarProfile/NavBarProfile";
-import DatosUser from './DatosUser/DatosUser';
+import Cart from '../Cart/Cart';
+import Favorite from '../Favorites/Favorites';
 
 
 export default function ProfileUser() {
@@ -9,7 +10,10 @@ export default function ProfileUser() {
     <div className={style.containerProfileUser}>
       <NavBarProfile />
       <div className={style.containerDataUser}>
-        <DatosUser/>
+      <Cart/>
+      </div>
+      <div className={style.favorite}>
+      <Favorite/>
       </div>
     </div>
   );

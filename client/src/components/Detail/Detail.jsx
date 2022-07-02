@@ -30,7 +30,7 @@ export default function Detail() {
 
   const {Detail} = useSelector((state)=> state)
   const {Venues} = useSelector((state => state))
-  // const {Basket} = useSelector((state)=> state)
+ 
   Detail["price"] = 0;
  
   let date = ''
@@ -59,7 +59,6 @@ export default function Detail() {
           <div className={style.name}>{Detail.name}</div>
           <div className={style.genre}>{Detail.genre}</div>
           <div className={style.schedule}>{date} {time}h</div>
-          {/* <div className={style.schedule}>{Detail.schedule}</div> */}
           <div className={style.venue}>{Venues.id}</div>
           <div className={style.prueba}>{prueba !== undefined ? prueba.name : null}</div>
           <div className={style.description}>{Detail.description}</div>
