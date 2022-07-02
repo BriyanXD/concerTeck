@@ -9,7 +9,7 @@ function getAllBlackList(req, res) {
     res.status(404).json({ error: error.message });
   }
 }
-
+//para uscar usuarios baneados
 function getAOneBlackList(req, res) {
   const { id, email, username } = req.query;
   try {
