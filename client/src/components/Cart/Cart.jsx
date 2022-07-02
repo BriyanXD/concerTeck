@@ -16,7 +16,7 @@ export default function Cart() {
   const [flag, setFlag] = useState(false);
   // const [flag, setFlag] = useLocalStorage("flag", false);
   const [events, setEvents] = useState([]); 
-  console.log("🚀 ~ file: Cart.jsx ~ line 19 ~ Cart ~ events", events)
+  
   let tickets = [];
   let total = 0;
  

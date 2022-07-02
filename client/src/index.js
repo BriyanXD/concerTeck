@@ -6,16 +6,20 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { CartProvider } from "react-use-cart";
 
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
-    <Auth0Provider
-    domain="dev-r0p08gfu.us.auth0.com"
-    clientId="G6T4l8nTJXXZrCfj7BLTbInN5X5K32kc"
-    redirectUri={window.location.origin}>
-      <App />
-      </Auth0Provider>
+      <CartProvider>
+        <Auth0Provider
+          domain="dev-r0p08gfu.us.auth0.com"
+          clientId="G6T4l8nTJXXZrCfj7BLTbInN5X5K32kc"
+          redirectUri={window.location.origin}
+        >
+          <App />
+        </Auth0Provider>
+      </CartProvider>
     </React.StrictMode>
   </Provider>,
   document.getElementById("root")

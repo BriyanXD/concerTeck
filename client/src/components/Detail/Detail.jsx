@@ -9,11 +9,13 @@ import { Link, useParams } from 'react-router-dom';
 import Map from '../Map/Map';
 import { MdOutlineAddShoppingCart } from 'react-icons/md';
 import Tooltip from '@mui/material/Tooltip';
-import { useLocalStorage } from '../useLocalStorage/useLocalStorage';
+import { useCart } from "react-use-cart";
+
 
 
 export default function Detail() {
   const {id} = useParams();
+  const { addItem } = useCart();
   const dispatch =  useDispatch()
   useEffect(()=>{
     dispatch(EventById(id))
@@ -28,39 +30,20 @@ export default function Detail() {
 
   const {Detail} = useSelector((state)=> state)
   const {Venues} = useSelector((state => state))
-  const {Basket} = useSelector((state)=> state)
+  // const {Basket} = useSelector((state)=> state)
+Detail["price"] = 0;
  
   let date = ''
   let time = ''
   if(Detail){
     date = Detail.schedule !== undefined? Detail.schedule.split('T')[0] : null
-    console.log(date)
     time = Detail.schedule !== undefined ? Detail.schedule.split('T')[1].split(':')[0]+':'+  Detail.schedule.split('T')[1].split(':')[1] :null
-    console.log(time)
   }
-  console.log(Detail.schedule)
 
   let prueba =''
   if(Detail && Venues){
     prueba = Venues.find(e => e.id === Detail.venueId)
-    console.log(prueba)
   }
-  
-  let temp = window.localStorage.getItem("basket")
-  let data = JSON.parse(temp)
-  const handleCanasta = (value) => {
-   if(data !== null){
-    console.log(data, "if")
-     data.push(value)
-     window.localStorage.setItem("basket", JSON.stringify((data)))
-   }else{
-    console.log("else")
-    window.localStorage.setItem("basket", JSON.stringify(([value])))
-    return
-   }
-  }
-
-
   return (
     <div className={style.container}>
       <NavBar/>
@@ -97,16 +80,13 @@ export default function Detail() {
             <Tooltip title="Agregar al carrito" arrow>
               <div className={style.add}>
             
-           <MdOutlineAddShoppingCart onClick={()=>dispatch(AddToBasket(Detail.id)) && handleCanasta(Detail.id)} className={style.addicon}/>
+           <MdOutlineAddShoppingCart onClick={()=> addItem(Detail) } className={style.addicon}/>
               </div>
             </Tooltip>
          </div>
            
         </div>
-      <Footer/>
-        
-
-        
+      <Footer/>    
     </div>
   )
 }
