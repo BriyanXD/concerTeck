@@ -1,28 +1,56 @@
 import React, { useState,useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { getEvents } from '../../redux/actions';
+import { useLocalStorage } from '../useLocalStorage/useLocalStorage';
+import style from "./Cart.module.css";
 
 
 
 export default function Cart() {
+  const dispatch = useDispatch();
+  const [eventsLS, seteventsLS] = useLocalStorage('eventsLS', []);
+  const [events, setevents] = useState([])
+
+  //let events = [];
   
-  // useEffect(() => {
-  //   setTicket(tickets);
-  // }, [tickets]);
-  
+  useEffect(() => {
+    dispatch(getEvents());
+    
+
+    // return () => {
+    // if(events.length<=eventsLS.length) events = eventsLS
+    // console.log('events', events)
+    //  // seteventsLS(events)
+    if(events.length>eventsLS.length) seteventsLS(events)
+    // }
+  }, []);
   const {Basket, AllEvents} = useSelector((state)=> state)
   const [Tickets, setTickets] = useState([])
-  const [Ticket, setTicket] = useState([])
-    const events = [];
+  //const [Ticket, setTicket] = useState([])
+  const [flag, setFlag] = useState(false);
+  const [flag2, setFlag2] = useState(true);
     let tickets = []
-
-    
-    Basket.forEach(el => {
-      AllEvents.forEach((e)=>{if(e.id===el) events.push(e);})
-                               })
+    let total = 0;
 
    
-  tickets = Tickets.filter((e)=>(e.variant&&e.items))
+  //  Basket.forEach(el => {
+   //   AllEvents.forEach((e)=>{if(e.id===el) events.push(e);})
 
+      Basket.forEach(el => {
+        AllEvents.forEach((e)=>{if(e.id===el) setevents([...events, e]);})
+                               })
+
+//if(events.length>eventsLS.length) seteventsLS(events)
+//if(events.length===0) events = eventsLS
+
+if(flag2){
+  setevents(eventsLS)
+  setFlag2(false)
+}
+console.log('EventsLS', eventsLS)
+console.log('events', events)
+  tickets = Tickets.filter((e)=>(e.variant&&e.items))
+  
   
   
   
@@ -51,6 +79,9 @@ export default function Cart() {
     
       
     }
+    const handleDetails = () => {
+      setFlag(!flag);
+    };
 
     
   return (
@@ -120,7 +151,43 @@ export default function Cart() {
           }
       </div>
          <button onClick={handleDelete}>Vaciar</button> 
+         <button onClick={handleDetails}>Detalles</button>
 
+      {/* Detalle de compra  figuara el nombre cantidad y precio + suma total y opcion de pagar */}
+      <div>
+        {flag ? (
+          <div className={style.containerDetails}>
+            {tickets?.map((e) => {
+              let price = events.find((p) => p.id === e.id);
+              total = total + e.items * price.stock[e.variant];
+              return (
+                <div className={style.containerData}>
+                  <div>Evento: {e.name}</div>
+                  <div>
+                    Tipo de entrada:{" "}
+                    {e.variant === "streamingPrice"
+                      ? "Streaming"
+                      : e.variant === "generalPrice"
+                      ? "General"
+                      : e.variant === "generalLateralPrice"
+                      ? "General lateral"
+                      : e.variant === "vipPrice"
+                      ? "Vip"
+                      : e.variant === "palcoPrice"
+                      ? "Palco"
+                      : null}{" "}
+                  </div>
+                  <div>Cantidad:{e.items}</div>
+                  <div>Precio: {price.stock[e.variant]}</div>
+                  <div>Total: {e.items * price.stock[e.variant]}</div>
+                  {/* <button onClick={() => handleDeleteItem(e)}>X</button> */}
+                </div>
+              );
+            })}{" "}
+            Total final: {total}
+          </div>
+        ) : null}
+      </div>
             
     </div>
   )
