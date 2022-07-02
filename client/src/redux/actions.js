@@ -1,6 +1,4 @@
 import axios from "axios";
-import { useLocalStorage } from "../components/useLocalStorage/useLocalStorage";
-
 export function getEvents() {
   return async function (dispatch) {
     try {
@@ -418,8 +416,8 @@ export function upgradeRank(id, boolean) {
 //   }
 // }
 
-export function searchUserByUserName (username){
-  return async function(dispatch){
+export function searchUserByUserName(username) {
+  return async function (dispatch) {
     try {
       const userByUserName = await axios.get(
         `http://localhost:3001/api/user?username=${username}`,
@@ -428,16 +426,16 @@ export function searchUserByUserName (username){
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
-      );;
-      console.log(userByUserName.data, 'ESTOY RE LCOO')
+      );
+      console.log(userByUserName.data, "ESTOY RE LCOO");
       return dispatch({
-        type : "SEARCH_USER_BY_USERNAME",
-        payload :userByUserName.data
-      })
+        type: "SEARCH_USER_BY_USERNAME",
+        payload: userByUserName.data,
+      });
     } catch (error) {
-      console.log(error,'SOY YO')
+      console.log(error, "SOY YO");
     }
-  }
+  };
 }
 
 export function findUser2(allusers, id) {
@@ -445,6 +443,13 @@ export function findUser2(allusers, id) {
   return {
     type: "FIND_USER_2",
     payload: userSaved,
+  };
+}
+
+export function activeModalEventsAdminPanel(booleano) {
+  return {
+    type: "MODAL_EVENT_ADMIN_PANEL",
+    payload: booleano,
   };
 }
 
