@@ -140,6 +140,7 @@ export function register(value) {
         value
       );
       localStorage.setItem("token", register.data[2].token);
+      console.log("desde actions",register.data)
       return dispatch({
         type: "LOGIN_USER",
         payload: register.data[1],
