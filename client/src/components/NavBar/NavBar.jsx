@@ -12,6 +12,8 @@ import Modal from "../Modals/Modal/Modal";
 import LoginAuth0  from '../LoginAuth0/LoginAuth0';
 // import PerfilYLogoutAuth0 from '../LogoutAuth0/PerfilYLogoutAuth0';
 import { useLocation } from "react-router-dom";
+import {MdOutlineShoppingCart } from 'react-icons/md';
+import Tooltip from '@mui/material/Tooltip';
 
 export default function NavBar({ setCurrenPag, setCurrentPage }) {
   const user = useSelector((state) => state.User);
@@ -46,6 +48,13 @@ export default function NavBar({ setCurrenPag, setCurrentPage }) {
             />
             <Date setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage} />
           </div>
+          <Link to="/Cart">
+          <Tooltip title="Ver carrito" arrow>
+          <div className={style.cart}>
+          <MdOutlineShoppingCart/>
+          </div>
+          </Tooltip>  
+          </Link>
           <div className={style.registerAndLogin}>
             {/* <Link to="/events"><button className={style.btnRegister} type="button">Crear Evento</button></Link>  */}
             {/* {user === "" ? (
