@@ -3,6 +3,7 @@ import style from './NavBarProfile.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { LogOut } from '../../../redux/actions';
+import PerfilYLogoutAuth0 from '../../LogoutAuth0/PerfilYLogoutAuth0';
 import logoSombra from '../../../assets/Logo-png.png';
 
 export default function NavBarProfile ({change}) {
@@ -20,7 +21,7 @@ export default function NavBarProfile ({change}) {
             <h3 onClick={() => change("Favorite")} className={style.btnInfo}>Favoritos</h3>
             <h3 onClick={()=> change("Carrito")} className={style.btnInfo}>Carrito</h3>
             <h3 onClick={()=> change("Configuration")} className={style.btnInfo}>Configuración</h3>
-            {user !== "" ? (<h3 className={style.btnInfo} onClick={() => dispatch(LogOut()) && navigate("/")}>Cerrar sesión</h3>) : null}
         </div>
+            <PerfilYLogoutAuth0/>
     </div>)
 }
