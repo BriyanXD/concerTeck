@@ -31,7 +31,7 @@ export default function Detail() {
   const {Detail} = useSelector((state)=> state)
   const {Venues} = useSelector((state => state))
   // const {Basket} = useSelector((state)=> state)
-Detail["price"] = 0;
+  Detail["price"] = 0;
  
   let date = ''
   let time = ''
@@ -80,7 +80,7 @@ Detail["price"] = 0;
             <Tooltip title="Agregar al carrito" arrow>
               <div className={style.add}>
             
-           <MdOutlineAddShoppingCart onClick={()=> addItem(Detail) } className={style.addicon}/>
+           <MdOutlineAddShoppingCart onClick={()=> addItem(Detail)} className={style.addicon}/>
               </div>
             </Tooltip>
          </div>

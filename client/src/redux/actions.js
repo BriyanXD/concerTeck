@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useLocalStorage } from "../components/useLocalStorage/useLocalStorage";
 
 export function getEvents() {
   return async function (dispatch) {
