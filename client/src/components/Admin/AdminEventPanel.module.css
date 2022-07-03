@@ -3,7 +3,7 @@
     height: 40px;
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     box-sizing: border-box;
 }
 .SearchBar{
@@ -16,7 +16,7 @@
     color: wheat;
     font-size: 17px;
     position: fixed;
-    top: 75px;
+    top: 5px;
 }
 .SearchBar::placeholder{
     color: rgb(148, 148, 148);
