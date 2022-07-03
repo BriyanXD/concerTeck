@@ -22,6 +22,8 @@ export default function Home() {
   const dispatch = useDispatch();
   const { user, loginWithPopup } = useAuth0();
   const {Likes} = useSelector((state)=> state)
+  // const { User } = useSelector((state) => state)
+  console.log('Likes:',Likes)
   const allEventsPagination = useSelector((state) => {
     return state.BigEvents;
   });
@@ -66,6 +68,7 @@ export default function Home() {
   }
 
   
+// console.log(currentBigEvents)
   return (
     <div className={style.container}>
       <NavBar setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage} />
@@ -90,8 +93,9 @@ export default function Home() {
                         id={el.id}
                       />
                     </Link>
-                      <div className={style.heart}>
+                      <div className={Likes.find(e => e.id === el.id) ? style.heart : style.heartWhite}>
                         <BsFillHeartFill size={30} onClick={()=> user ? dispatch(AddToFav(el)) : loginWithPopup()}/>
+                        {/* <BsFillHeartFill size={30} onClick={()=>dispatch(AddToFav(el))}/> */}
                       </div>
                   </div>
                 );
@@ -116,7 +120,7 @@ export default function Home() {
                         id={el.id}
                       />
                     </Link>
-                    <div className={style.heart2}><BsFillHeartFill size={20} onClick={()=> user ? dispatch(AddToFav(el)) : loginWithPopup()}/></div>
+                    <div className={Likes.find(e => e.id === el.id) ? style.heart2 : style.heart2White}><BsFillHeartFill size={20} onClick={()=> user ? dispatch(AddToFav(el)) : loginWithPopup()}/></div>
                   </div>
                 );
               })}

@@ -138,6 +138,7 @@ export function register(value) {
         value
       );
       localStorage.setItem("token", register.data[2].token);
+      console.log(register.data[2].token, "datos de usuario")
       return dispatch({
         type: "LOGIN_USER",
         payload: register.data[1],
@@ -408,8 +409,10 @@ export function upgradeRank(id, boolean) {
           },
         }
       );
+      console.log(userRanked, "Usuario Modificado ");
       return dispatch({
         type: "USER_RANKED",
+        payload: userRanked,
       });
     } catch (error) {
       console.log(error.message);
@@ -467,6 +470,18 @@ export function findUser2(allusers, id) {
 export function activeModalEventsAdminPanel(booleano) {
   return {
     type: "MODAL_EVENT_ADMIN_PANEL",
+    payload: booleano,
+  };
+}
+export function activeModalUsersAdminPanel(booleano) {
+  return {
+    type: "MODAL_USERS_ADMIN_PANEL",
+    payload: booleano,
+  };
+}
+export function activeModalUsersPermisedAdminPanel(booleano) {
+  return {
+    type: "MODAL_USERS_PERMISED_ADMIN_PANEL",
     payload: booleano,
   };
 }

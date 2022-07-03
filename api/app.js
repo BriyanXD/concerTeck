@@ -19,6 +19,7 @@ require("./models/Genre");
 require("./models/Venue");
 require("./models/TicketStock");
 require("./models/BlackList");
+require("./models/Likes");
 
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.json({ limit: "50mb" }));
