@@ -409,8 +409,10 @@ export function upgradeRank(id, boolean) {
           },
         }
       );
+      console.log(userRanked, "Usuario Modificado ");
       return dispatch({
         type: "USER_RANKED",
+        payload: userRanked,
       });
     } catch (error) {
       console.log(error.message);
@@ -468,6 +470,18 @@ export function findUser2(allusers, id) {
 export function activeModalEventsAdminPanel(booleano) {
   return {
     type: "MODAL_EVENT_ADMIN_PANEL",
+    payload: booleano,
+  };
+}
+export function activeModalUsersAdminPanel(booleano) {
+  return {
+    type: "MODAL_USERS_ADMIN_PANEL",
+    payload: booleano,
+  };
+}
+export function activeModalUsersPermisedAdminPanel(booleano) {
+  return {
+    type: "MODAL_USERS_PERMISED_ADMIN_PANEL",
     payload: booleano,
   };
 }

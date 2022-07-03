@@ -29,6 +29,8 @@ const initialState = {
     allProducers: [],
     allSolicits: [],
     modalEvent: false,
+    modalUser: false,
+    modalUserPermised: false,
   },
   token: "",
 };
@@ -64,8 +66,8 @@ function reducers(state = initialState, { type, payload }) {
       if (state.Basket.includes(payload)) return state;
       return {
         ...state,
-        Basket: [...state.Basket, payload]
-    }
+        Basket: [...state.Basket, payload],
+      };
     case "ADD_TO_FAV":
       if(state.Likes.find(l => l.id === payload.id)){ 
         return {
@@ -81,12 +83,10 @@ function reducers(state = initialState, { type, payload }) {
     case "REMOVE_FAVORITE":
       // console.log('likes:', state.Likes)
       // console.log('payload:', payload)
-        return {
-            ...state,
-            Likes: state.Likes.filter((f) => f.id !== payload.id) 
-
-    }
-
+      return {
+        ...state,
+        Likes: state.Likes.filter((f) => f.id !== payload.id),
+      };
 
     case "GET_EVENT_BY_NAME": {
       const bigEvents = payload.filter((e) => e.venue.isBigEvent === true);
@@ -272,6 +272,12 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         userSaved: payload,
       };
+    case "USER_RANKED":
+      return {
+        ...state,
+        userSaved: payload.data.user,
+      };
+    //USER_RANKED
     case "FIND_EVENT":
       return {
         ...state,
@@ -302,6 +308,22 @@ function reducers(state = initialState, { type, payload }) {
         stateAdminPanel: {
           ...state.stateAdminPanel,
           modalEvent: payload,
+        },
+      };
+    case "MODAL_USERS_ADMIN_PANEL":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          modalUser: payload,
+        },
+      };
+    case "MODAL_USERS_PERMISED_ADMIN_PANEL":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          modalUserPermised: payload,
         },
       };
     default:
