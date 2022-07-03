@@ -3,7 +3,7 @@
         {
             "name": "Luna Park",
             "address": "Av. Eduardo Madero 470, CABA",
-            "map": "34.6021563 -58.370605",
+            "map": "-34.6021519 -58.370605",
             "maxStockStreaming": 5000,
             "maxStockVIP": 200,
             "maxStockGeneralLateral": 5000,
@@ -23,7 +23,7 @@
         {
             "name": "Teatro Colón",
             "address": "Cerrito 628, CABA",
-            "map": "-34.6010406 -58.3852673",
+            "map": "-34.6010406 -58.388905",
             "maxStockStreaming": 3000,
             "maxStockVIP": 0,
             "maxStockGeneralLateral": 1500,
@@ -33,7 +33,7 @@
         {
             "name": "Teatro de Flores",
             "address": "Av. Rivadavia 7806, CABA",
-            "map": "-34.6324321 -58.4768238",
+            "map": "-34.6324321 -58.4828748",
             "maxStockStreaming": 3000,
             "maxStockVIP": 50,
             "maxStockGeneralLateral": 200,
