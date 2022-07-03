@@ -27,7 +27,7 @@ export default function AdminUserPanel(){
     return(
         <div>
             <div className={Style.SearchBardiv}>
-                <input className={Style.SearchBar} type="text" placeholder="searchByname" onChange={(e) => handleInputChange(e)} />
+                <input className={Style.SearchBar} type="text" placeholder="Buscar por nombre de usuario" onChange={(e) => handleInputChange(e)} />
             </div>
             <div>
                 {
