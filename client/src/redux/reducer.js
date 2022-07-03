@@ -69,11 +69,17 @@ function reducers(state = initialState, { type, payload }) {
         Basket: [...state.Basket, payload],
       };
     case "ADD_TO_FAV":
-      if (state.Likes.find((l) => l.id === payload.id)) return state;
-      return {
-        ...state,
-        Likes: [...state.Likes, payload],
-      };
+      if(state.Likes.find(l => l.id === payload.id)){ 
+        return {
+          ...state,
+          Likes:state.Likes.filter((f) => f.id !== payload.id) 
+        }
+        } else{
+          return {
+            ...state,
+            Likes: [...state.Likes, payload]
+        }
+        }
     case "REMOVE_FAVORITE":
       // console.log('likes:', state.Likes)
       // console.log('payload:', payload)
