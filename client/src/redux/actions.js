@@ -497,6 +497,27 @@ export  function addCartDB(data){
     } catch (error) {
       console.log(error);
     }
+  }
+}
+export function findEventByName(name) {
+  return async function (dispatch) {
+    try {
+      const eventos = await axios.get(
+        `http://localhost:3001/api/events?name=${name}`
+      );
+      console.log('ESTA PRUEBA NUEVA',eventos.data)
+      return dispatch({
+        type: "FIND_EVENT_BY_NAME",
+        payload: eventos.data,
+      });
+    } catch (error) {
+      // alert('NO SE ENCONTRO EL EVENTO')
+      // return dispatch({
+      //   type: "FIND_EVENT_BY_NAME",
+      //   payload: [],
+      // });
+      console.log(error.message);
+    }
   };
 }
 

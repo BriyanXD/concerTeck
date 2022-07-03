@@ -25,6 +25,7 @@ const initialState = {
   cartDB:[],
   stateAdminPanel: {
     allUsers: [],
+    tdosEvents:[],
     // UserByName:[],
     UserByUserName: [],
     allProducers: [],
@@ -337,6 +338,13 @@ function reducers(state = initialState, { type, payload }) {
       return{
         ...state,
         cartDB: [...state.cartDB, payload]
+      }
+    case  "FIND_EVENT_BY_NAME":
+      return {
+        ...state,
+        stateAdminPanel:{
+          tdosEvents:payload
+        }
       }
     default:
       return state;
