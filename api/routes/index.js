@@ -56,6 +56,24 @@ const {
   postOneBlackList,
 } = require("../controllers/BlackList");
 
+const {
+  getShoppingCart,
+  postShoppingCart,
+  putShoppingCart,
+  deleteShoppingCart,
+} = require("../controllers/ShoppingCart");
+
+const { getLikes, postLikes, deleteLikes } = require("../controllers/Likes");
+
+routes.get("/like", getLikes);
+routes.post("/like", postLikes);
+routes.delete("/like", deleteLikes);
+
+routes.get("/cart", getShoppingCart);
+routes.post("/cart", postShoppingCart);
+routes.put("/cart", putShoppingCart);
+routes.delete("/cart", deleteShoppingCart);
+
 routes.post("/user", createUser);
 routes.get("/user", verifyToken, getUser); // verifyToken
 routes.put("/user", verifyToken, putUser);

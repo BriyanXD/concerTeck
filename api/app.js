@@ -10,6 +10,7 @@ const { chargeEvents } = require("./controllers/Events");
 const { chargeVenue } = require("./controllers/Venue");
 const { chargeTicketStock } = require("./controllers/TicketStock");
 
+require("./models/ShoppingCart");
 require("./models/Producer");
 require("./models/User");
 require("./models/Events");
@@ -18,6 +19,7 @@ require("./models/Genre");
 require("./models/Venue");
 require("./models/TicketStock");
 require("./models/BlackList");
+require("./models/Likes");
 
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.json({ limit: "50mb" }));

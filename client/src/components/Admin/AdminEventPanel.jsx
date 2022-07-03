@@ -1,14 +1,18 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import EventCard from "./EventCard";
 import PerfilEventAdmin from "./PerfilEventAdmin";
+import Style from "./AdminEventPanel.module.css"
 
 export default function AdminEventPanel(){
     const allEvents = useSelector((state) => state.AllEvents)
+    const modalEvent = useSelector((state) => state.stateAdminPanel.modalEvent)
+
+
     return(
-        <div>
-            <div>
-                <input type="text" />
+        <div className={Style.containerEvents}>
+            <div className={Style.SearchBardiv}>
+                <input placeholder="Buscar Eventos" className={Style.SearchBar} type="text" />
             </div>
             <div>
                 {allEvents ? allEvents.map(event => {
@@ -17,7 +21,7 @@ export default function AdminEventPanel(){
                     </div> )
         }): <h1>No se encontraron datos de eventos</h1> }
             </div>
-            <PerfilEventAdmin/>
+            {modalEvent ? <PerfilEventAdmin/> : <></>}
         </div>
     )
 }

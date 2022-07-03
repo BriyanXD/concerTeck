@@ -25,9 +25,12 @@ const initialState = {
   stateAdminPanel: {
     allUsers: [],
     // UserByName:[],
-    UserByUserName:[],
+    UserByUserName: [],
     allProducers: [],
     allSolicits: [],
+    modalEvent: false,
+    modalUser: false,
+    modalUserPermised: false,
   },
   token: "",
 };
@@ -63,23 +66,21 @@ function reducers(state = initialState, { type, payload }) {
       if (state.Basket.includes(payload)) return state;
       return {
         ...state,
-        Basket: [...state.Basket, payload]
-    }
+        Basket: [...state.Basket, payload],
+      };
     case "ADD_TO_FAV":
-      if(state.Likes.find(l => l.id === payload.id)) return state;
+      if (state.Likes.find((l) => l.id === payload.id)) return state;
       return {
         ...state,
-        Likes: [...state.Likes, payload]
-    }
+        Likes: [...state.Likes, payload],
+      };
     case "REMOVE_FAVORITE":
       // console.log('likes:', state.Likes)
       // console.log('payload:', payload)
-        return {
-            ...state,
-            Likes: state.Likes.filter((f) => f.id !== payload.id) 
-
-    }
-
+      return {
+        ...state,
+        Likes: state.Likes.filter((f) => f.id !== payload.id),
+      };
 
     case "GET_EVENT_BY_NAME": {
       const bigEvents = payload.filter((e) => e.venue.isBigEvent === true);
@@ -110,7 +111,6 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         User: payload.user,
       };
-      
     }
 
     case "LOGOUT_USER": {
@@ -266,30 +266,60 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         userSaved: payload,
       };
+    case "USER_RANKED":
+      return {
+        ...state,
+        userSaved: payload.data.user,
+      };
+    //USER_RANKED
     case "FIND_EVENT":
       return {
         ...state,
         eventSaved: payload,
       };
-      // case "SEARCH_USER_BY_NAME":
-      //   return{
-      //     ...state,
-      //     stateAdminPanel:{
-      //       UserByName:payload,
-      //     }
-      //   };
-      case "SEARCH_USER_BY_USERNAME":
-        return{
-          ...state,
-          stateAdminPanel:{
-            UserByUserName:payload,
-          }
-        };
-      case "FIND_USER_2":
-        return {
-          ...state,
+    // case "SEARCH_USER_BY_NAME":
+    //   return{
+    //     ...state,
+    //     stateAdminPanel:{
+    //       UserByName:payload,
+    //     }
+    //   };
+    case "SEARCH_USER_BY_USERNAME":
+      return {
+        ...state,
+        stateAdminPanel: {
           UserByUserName: payload,
-        };
+        },
+      };
+    case "FIND_USER_2":
+      return {
+        ...state,
+        UserByUserName: payload,
+      };
+    case "MODAL_EVENT_ADMIN_PANEL":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          modalEvent: payload,
+        },
+      };
+    case "MODAL_USERS_ADMIN_PANEL":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          modalUser: payload,
+        },
+      };
+    case "MODAL_USERS_PERMISED_ADMIN_PANEL":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          modalUserPermised: payload,
+        },
+      };
     default:
       return state;
   }

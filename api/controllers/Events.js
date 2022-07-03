@@ -51,6 +51,7 @@ async function loadEventsAndGetEvents(req, res) {
       const eventName = allEvents.filter((n) =>
         n.name.toLowerCase().includes(name.toLowerCase())
       );
+      console.log(eventName);
       if (eventName.length >= 1) {
         return res.send(eventName);
       } else {
