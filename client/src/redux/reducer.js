@@ -266,6 +266,12 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         userSaved: payload,
       };
+    case "USER_RANKED":
+      return {
+        ...state,
+        userSaved: payload.data.user,
+      };
+    //USER_RANKED
     case "FIND_EVENT":
       return {
         ...state,

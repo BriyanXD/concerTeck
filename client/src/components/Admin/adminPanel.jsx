@@ -6,7 +6,7 @@ import UserNavBar from "../UserNavbar/UserNavbar";
 import { useDispatch, useSelector } from "react-redux";
 // import CardConteiner from "./adminCardConteiner";
 import {getAllUsers, getEvents, getAllSolicits} from "../../redux/actions"
-import Style from "./adminPanel.module.css"
+import Style from "./AdminPanel.module.css"
 
 import AdminUserPanel from "./AdminUserPanel";
 import AdminEventPanel from "./AdminEventPanel";

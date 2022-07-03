@@ -10,6 +10,7 @@ export default function AdminUserPanel(){
     // const UserByName = useSelector((state) => state.stateAdminPanel?.UserByName)
     const UserByUserName = useSelector((state) => state.stateAdminPanel?.UserByUserName)
     const modalUser = useSelector((state) => state.stateAdminPanel?.modalUser)
+    const modalUserPermised = useSelector((state) => state.stateAdminPanel?.modalUserPermised)
     console.log('Prueba',UserByUserName)
     const dispatch = useDispatch()
 
@@ -44,7 +45,7 @@ export default function AdminUserPanel(){
         }): <h1>No se encontraron datos de usuarios </h1> }
             </div>
             {modalUser ? <PerfilUserAdmin/>: <></>}
-            <AdminUserPermised/>
+            {modalUserPermised ? <AdminUserPermised/>: <></>}
         </div>
     )
 }

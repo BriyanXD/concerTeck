@@ -1,10 +1,11 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux";
-import { deleteUser, findUser, findUser2, getAllUsers ,activeModalUsersAdminPanel} from "../../redux/actions";
+import { activeModalUsersPermisedAdminPanel,deleteUser, findUser, findUser2, getAllUsers ,activeModalUsersAdminPanel} from "../../redux/actions";
 import swal from 'sweetalert'
 import Style from "./UserCard.module.css"
 
-export default function UserCard({id,username,aux}){
+    export default function UserCard({id,username,aux}){
+
     const dispatch = useDispatch()
     const UserByUserName = useSelector((state) => state.stateAdminPanel?.UserByUserName)
     const userDeleted = useSelector((state) => state.userDeleted)
@@ -19,13 +20,16 @@ function filterUser(){
     }
     handlerPerfilClick()
 }
-
+async function handlerCloseModalPermised(){
+    await dispatch(findUser(allUsers, id))
+    await dispatch(activeModalUsersPermisedAdminPanel(true))
+}
 function handlerPerfilClick(){
     dispatch(activeModalUsersAdminPanel(true))
 }
 
-function handlerDeleteUser(){
-         dispatch(deleteUser(id))
+async function handlerDeleteUser(){
+        await dispatch(deleteUser(id))
         if(userDeleted?.message){
             return swal({
                 title: 'Usuario no eliminado',
@@ -49,7 +53,7 @@ function handlerDeleteUser(){
             <div className={Style.buttonsCard}>
             <button className={Style.button} onClick={handlerDeleteUser}>Borrar</button>
             <button className={Style.button} onClick={filterUser}>Ver Perfil</button>
-            <button className={Style.button}>Permisos</button>
+            <button className={Style.button} onClick={handlerCloseModalPermised}>Permisos</button>
             </div>
         </div>
     )

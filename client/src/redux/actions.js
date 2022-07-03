@@ -408,8 +408,10 @@ export function upgradeRank(id, boolean) {
           },
         }
       );
+      console.log(userRanked, "Usuario Modificado ");
       return dispatch({
         type: "USER_RANKED",
+        payload: userRanked,
       });
     } catch (error) {
       console.log(error.message);

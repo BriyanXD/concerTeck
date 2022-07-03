@@ -1,24 +1,30 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux"
-import {findUser, getAllUsers, upgradeRank} from "../../redux/actions"
+import {upgradeRank, activeModalUsersPermisedAdminPanel} from "../../redux/actions"
+import Style from "./AdminUserPermised.module.css"
 
 
 export default function AdminUserPermised(){
-    
     const dispatch = useDispatch()
     const userSaved = useSelector((state) => state.userSaved)
-    const allUsers = useSelector((state) => state.stateAdminPanel?.allUsers)
 
-
-    async function handlerUserPermised(boolean){
-        await dispatch(upgradeRank(userSaved.id, boolean))
-        await dispatch(getAllUsers())
-        return await dispatch(findUser(allUsers,userSaved.id))
+    function handlerUserPermised(boolean){
+        console.log(userSaved, "Usuario Guardado")
+         dispatch(upgradeRank(userSaved.id, boolean))
+    }
+    function handlerCloseModal(){
+        dispatch(activeModalUsersPermisedAdminPanel(false))
     }
     return(
-        <div>
-            <button onClick={() => handlerUserPermised(true)}>Subir a Admin</button>
-            <button onClick={() => handlerUserPermised(false)}>Quitar Admin</button>
+        <div className={Style.containerGeneral}>
+            <dir className={Style.containerInfo}>
+            <div className={Style.containerClose}>
+                <button className={Style.buttonClose} onClick={handlerCloseModal}>X</button>
+            </div>
+            <div className={Style.containerButtons}>
+            {userSaved.isAdmin ? <button className={Style.button} onClick={() => handlerUserPermised(false)}>Quitar Admin</button> : <button className={Style.button} onClick={() => handlerUserPermised(true)}>Subir a Admin</button>}
+            </div>
+            </dir>
         </div>
     )
 }
