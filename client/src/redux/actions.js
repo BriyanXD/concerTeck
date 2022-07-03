@@ -138,6 +138,7 @@ export function register(value) {
         value
       );
       localStorage.setItem("token", register.data[2].token);
+      console.log(register.data[2].token, "datos de usuario")
       return dispatch({
         type: "LOGIN_USER",
         payload: register.data[1],
@@ -482,6 +483,28 @@ export function activeModalUsersPermisedAdminPanel(booleano) {
   return {
     type: "MODAL_USERS_PERMISED_ADMIN_PANEL",
     payload: booleano,
+  };
+}
+
+export function findEventByName(name) {
+  return async function (dispatch) {
+    try {
+      const eventos = await axios.get(
+        `http://localhost:3001/api/events?name=${name}`
+      );
+      console.log('ESTA PRUEBA NUEVA',eventos.data)
+      return dispatch({
+        type: "FIND_EVENT_BY_NAME",
+        payload: eventos.data,
+      });
+    } catch (error) {
+      // alert('NO SE ENCONTRO EL EVENTO')
+      // return dispatch({
+      //   type: "FIND_EVENT_BY_NAME",
+      //   payload: [],
+      // });
+      console.log(error.message);
+    }
   };
 }
 

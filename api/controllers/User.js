@@ -45,16 +45,23 @@ async function createUser(req, res) {
 // "No se ha logrado crear el usuario"
 async function getUser(req, res) {
   const DBusers = await User.findAll({ include: { model: Ticket } });
-  /* const { username, password } = req.body; */
+   const { username, password } = req.query; 
   try {
-    /* if (username && password) {
-      const userFound = DBusers.find((user) => {
-        if (user.username === username && user.password === password)
-          return user;
-      });
-      return res.send(userFound);
-    } */
+    if(username){
+      const filt = DBusers.filter((user) => user.username.toLowerCase().includes(username.toLowerCase()));
+      if(filt.length > 0){
+        return res.send(filt);
+      }
+    }else{
+    //  if (username && password) {
+    //   const userFound = DBusers.find((user) => {
+    //     if (user.username === username && user.password === password)
+    //       return user;
+    //   });
+    //   return res.send(userFound);
+    // } 
     return res.send(DBusers);
+    }
   } catch (error) {
     return res.status(404).send({ error: error.message });
   }
