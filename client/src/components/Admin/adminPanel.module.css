@@ -4,6 +4,7 @@
 .containerGeneral{
     display: grid;
     grid-template-columns:  25% 1fr;
+    background-color: #dbdada;
 }
 .sideBar{
     display: flex;
