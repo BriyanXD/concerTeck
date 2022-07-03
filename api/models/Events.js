@@ -83,7 +83,4 @@ const Events = sequelize.define(
   { timestamps: false }
 );
 
-Producer.hasMany(Events);
-Events.belongsTo(Producer);
-
 module.exports = Events;

@@ -61,27 +61,24 @@ async function getUser(req, res) {
 }
 
 async function putUser(req, res) {
-  const { id, email, password, username } = req.body;
+  const { id, email, password, username, eventId } = req.body;
   try {
     if (!id && !email && !password && username) {
       return res
         .status(404)
         .json({ error: "Faltan completar Campos obligatorios" });
     } else {
-      await User.update(
-        {
+      const user = await User.findOne({ where: { id: id } });
+      if (user) {
+        await user.update({
           email: email,
           password: password,
           username: username,
-        },
-        {
-          where: {
-            id: id,
-          },
-        }
-      );
-      const user = await User.findOne({ where: { id: id } });
-      return res.json({ message: `Usuario Actualizado con exitos`, user });
+        });
+        return res.json({ message: `Usuario Actualizado con exitos`, user });
+      } else {
+        res.status(404).send({ error: "El usuario no lo encontro" });
+      }
     }
   } catch (error) {
     res.status(404).send({ error: error.message });

@@ -27,6 +27,10 @@ export default function PerfilYLogoutAuth0(){
       }
       dispatch(register(newUser))
     }
+    function clearLocalStorageToken(){
+      localStorage.setItem("token"," ")
+      logout({ returnTo: window.location.origin })
+    }
   return (
     <div>
       <div className={style.container}>
@@ -39,7 +43,7 @@ export default function PerfilYLogoutAuth0(){
        </Link> 
        : null
       }
-       <button onClick={() => logout({ returnTo: window.location.origin })} className={style.button}>
+       <button onClick={() => clearLocalStorageToken()} className={style.button}>
        Log Out
        </button>
       </div>
