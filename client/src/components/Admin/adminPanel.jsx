@@ -6,7 +6,7 @@ import NavBarProfile from '../ProfileUser/NavBarProfile/NavBarProfile'
 import { useDispatch, useSelector } from "react-redux";
 // import CardConteiner from "./adminCardConteiner";
 import {getAllUsers, getEvents, getAllSolicits} from "../../redux/actions"
-import Style from "./AdminPanel.module.css"
+import Style from "./adminPanel.module.css"
 
 import AdminUserPanel from "./AdminUserPanel";
 import AdminEventPanel from "./AdminEventPanel";
@@ -77,9 +77,10 @@ export default function PanelAdmin({setUser}){
     
     return(
         <div>
-            <NavBarProfile />
-            {/* <NavBar/> */}
-        <div className={Style.containerGeneral}>
+            <div className={Style.containerNavbar}>
+                <NavBarProfile/>
+            </div>
+            <div className={Style.containerGeneral}>
             <div className={Style.sideBar}>
                 <div className={Style.userContainer}>
                 <Modal active={active} toggle={toggle}>
