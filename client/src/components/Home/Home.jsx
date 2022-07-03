@@ -134,7 +134,7 @@ export default function Home() {
       <br />
       <Footer />
       <ModalCalendar />
-      <Favorites/>
+      {/* <Favorites/> */}
     </div>
   );
 }
