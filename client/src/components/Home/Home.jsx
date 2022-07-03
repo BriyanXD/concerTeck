@@ -93,7 +93,7 @@ export default function Home() {
                         id={el.id}
                       />
                     </Link>
-                      <div className={style.heart}>
+                      <div className={Likes.find(e => e.id === el.id) ? style.heart : style.heartWhite}>
                         <BsFillHeartFill size={30} onClick={()=> user ? dispatch(AddToFav(el)) : loginWithPopup()}/>
                         {/* <BsFillHeartFill size={30} onClick={()=>dispatch(AddToFav(el))}/> */}
                       </div>
@@ -120,8 +120,7 @@ export default function Home() {
                         id={el.id}
                       />
                     </Link>
-                    {/* <div className={style.heart}><BsFillHeartFill size={20} onClick={()=>User?dispatch(AddToFav(el)):alert('Tenes que Registrarte')}/></div> */}
-                    <div className={style.heart2}><BsFillHeartFill size={20} onClick={()=> user ? dispatch(AddToFav(el)) : loginWithPopup()}/></div>
+                    <div className={Likes.find(e => e.id === el.id) ? style.heart2 : style.heart2White}><BsFillHeartFill size={20} onClick={()=> user ? dispatch(AddToFav(el)) : loginWithPopup()}/></div>
                   </div>
                 );
               })}
@@ -135,7 +134,7 @@ export default function Home() {
       <br />
       <Footer />
       <ModalCalendar />
-      <Favorites/>
+      {/* <Favorites/> */}
     </div>
   );
 }
