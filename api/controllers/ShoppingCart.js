@@ -1,16 +1,20 @@
-const ShoppingCart = require("../models/ShoppingCart");
+const ShoppingCart = require("../models/ShoppingCart.js");
 
 async function getShoppingCart(req, res) {
   const { idUser } = req.query;
+  console.log("🚀 ~ file: ShoppingCart.js ~ line 5 ~ getShoppingCart ~ idUser", idUser)
   try {
     if (idUser) {
-      const dateShoppingCart = await ShoppingCart.findOne({
+      console.log("🚀 ~ file: ShoppingCart.js ~ line 8 ~ getShoppingCart ~ idUser", idUser)
+      const dateShoppingCart = await ShoppingCart.findAll({
         where: { idUser: idUser },
       });
-      res.json(dateShoppingCart);
+      console.log("🚀 ~ file: ShoppingCart.js ~ line 10 ~ getShoppingCart ~ dateShoppingCart", dateShoppingCart)
+      return res.status(200).json(dateShoppingCart);
+    } else{
+      const allDateShoppingCart = await ShoppingCart.findAll();
+     return res.json(allDateShoppingCart);
     }
-    const allDateShoppingCart = await ShoppingCart.findAll();
-    res.json(allDateShoppingCart);
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
@@ -28,22 +32,17 @@ async function postShoppingCart(req, res) {
   } = req.body;
   try {
     if (idUser && idEvent) {
-      await ShoppingCart.findOrCreate({
-        where: {
-          idUser: idUser,
-          idEvent: idEvent,
-          nombre: nombre,
-          schedule: schedule,
-          quantity: quantity,
-          variant: variant,
-          itemTotal: itemTotal,
-        },
+     const allDateShoppingCart = await ShoppingCart.create({
+       idUser: idUser,
+       idEvent: idEvent   
       });
-      res.json(allDateShoppingCart);
+      return res.status(200).json(allDateShoppingCart);
+    }else {
+     return res
+        .status(401)
+        .json({ error: "No se lograron guardar los datos del carrito" });
     }
-    res
-      .status(401)
-      .json({ error: "No se lograron guardar los datos del carrito" });
+
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
@@ -91,6 +90,7 @@ async function putShoppingCart(req, res) {
         quantity: quantity,
         variant: variant,
         itemTotal: itemTotal,
+        price: price
       });
       return res.json({
         message: "Carrito Actualizado",

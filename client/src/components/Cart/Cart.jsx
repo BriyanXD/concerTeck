@@ -3,6 +3,7 @@ import { useCart } from "react-use-cart";
 import { useSelector, useDispatch } from "react-redux";
 import { getEvents } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
+import { getCartDB } from "../../redux/actions";
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -18,19 +19,29 @@ export default function Cart() {
     updateItem,
   } = useCart();
   const { AllEvents } = useSelector((state) => state);
+  const { cartDB } = useSelector(state => state);
+  console.log("🚀 ~ file: Cart.jsx ~ line 23 ~ Cart ~ cartDB", cartDB)
+  const userData = useSelector(state => state.User);
+  console.log("🚀 ~ file: Cart.jsx ~ line 25 ~ Cart ~ userData", userData)
+
   let events = [];
 
   useEffect(() => {
     dispatch(getEvents());
-  }, []);
+    dispatch(getCartDB(userData[0].id))
+  }, [dispatch]);
 
-  items.forEach((el) => {
+  cartDB ? cartDB.forEach((el) => {
+    AllEvents.forEach((e) => {
+      if (e.id === el.id) return events.push(e);
+    });
+  }): items.forEach((el) => {
     AllEvents.forEach((e) => {
       if (e.id === el.id) return events.push(e);
     });
   });
-
-  if (isEmpty) return <p>El carrito esta vacio</p>;
+ 
+  //  if (isEmpty && cartDB) return <p>El carrito esta vacio</p>;
   return (
     <>
       {events?.map((el) => {

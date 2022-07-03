@@ -22,6 +22,7 @@ const initialState = {
     isVisbleModal: false,
     eventsForCalendar: [],
   },
+  cartDB:[],
   stateAdminPanel: {
     allUsers: [],
     // UserByName:[],
@@ -326,6 +327,17 @@ function reducers(state = initialState, { type, payload }) {
           modalUserPermised: payload,
         },
       };
+    case "ADD_CART_DB":
+      console.log(payload, "desde el reducer")
+      return {
+        ...state,
+        cartDB: [...state.cartDB, payload]
+      }
+    case "GET_CART_EVENT":
+      return{
+        ...state,
+        cartDB: [...state.cartDB, payload]
+      }
     default:
       return state;
   }

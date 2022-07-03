@@ -1,5 +1,5 @@
-import React from 'react'
-import {EventById,ClearDetail,GetVenues,GetGenres, AddToBasket} from '../../redux/actions'
+import React, { useState } from 'react'
+import {EventById,ClearDetail,GetVenues,addCartDB} from '../../redux/actions'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import NavBar from '../NavBar/NavBar';
@@ -11,11 +11,13 @@ import { MdOutlineAddShoppingCart } from 'react-icons/md';
 import Tooltip from '@mui/material/Tooltip';
 import { useCart } from "react-use-cart";
 
-
+//resolver problema de necesitar 2 click para agregar el evento en la base de datos
 
 export default function Detail() {
   const {id} = useParams();
   const { addItem } = useCart();
+  const user = useSelector(state => state.User);
+  
   const dispatch =  useDispatch()
   useEffect(()=>{
     dispatch(EventById(id))
@@ -30,6 +32,12 @@ export default function Detail() {
 
   const {Detail} = useSelector((state)=> state)
   const {Venues} = useSelector((state => state))
+
+  const [add , setAdd] =useState({
+    idUser: "",
+    idEvent: ""
+  })
+  
  
   Detail["price"] = 0;
  
@@ -43,6 +51,19 @@ export default function Detail() {
   let prueba =''
   if(Detail && Venues){
     prueba = Venues.find(e => e.id === Detail.venueId)
+  }
+
+  const handleClick = async (data) => {
+    if(user[0]){
+      await setAdd({
+        idUser: user[0].id,
+        idEvent: data.id
+      })
+      addItem(data)
+     dispatch(addCartDB(add))
+    }else{
+      addItem(data)
+    }
   }
   return (
     <div className={style.container}>
@@ -79,7 +100,7 @@ export default function Detail() {
             <Tooltip title="Agregar al carrito" arrow>
               <div className={style.add}>
             
-           <MdOutlineAddShoppingCart onClick={()=> addItem(Detail)} className={style.addicon}/>
+           <MdOutlineAddShoppingCart onClick={() => handleClick(Detail)} className={style.addicon}/>
               </div>
             </Tooltip>
          </div>

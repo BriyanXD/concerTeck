@@ -31,8 +31,8 @@ export default function PerfilYLogoutAuth0(){
   return (
     <div>
       <div className={style.container}>
-      {register?isAuthenticated ? 
-          <Link to={`/perfil/${registro[0]?.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+      {registro?isAuthenticated ? 
+          <Link to={registro[0].isAdmin?`/perfil/panelAdmin`: `/perfil/${registro[0].id}`} style={{ textDecoration: "none", color: "inherit" }}>
         <div className={style.box}>
             <img src={user?.picture} alt={user.name} className={style.img}/>
        <p className={style.p}>{user.name}</p>
