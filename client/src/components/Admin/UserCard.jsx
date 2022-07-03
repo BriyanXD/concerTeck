@@ -1,11 +1,10 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux";
-import { deleteUser, findUser, findUser2, getAllUsers } from "../../redux/actions";
+import { deleteUser, findUser, findUser2, getAllUsers ,activeModalUsersAdminPanel} from "../../redux/actions";
 import swal from 'sweetalert'
 import Style from "./UserCard.module.css"
 
 export default function UserCard({id,username,aux}){
-    let userSaved = []
     const dispatch = useDispatch()
     const UserByUserName = useSelector((state) => state.stateAdminPanel?.UserByUserName)
     const userDeleted = useSelector((state) => state.userDeleted)
@@ -18,6 +17,11 @@ function filterUser(){
     }else{
         dispatch(findUser(allUsers, id))
     }
+    handlerPerfilClick()
+}
+
+function handlerPerfilClick(){
+    dispatch(activeModalUsersAdminPanel(true))
 }
 
 function handlerDeleteUser(){
@@ -40,12 +44,13 @@ function handlerDeleteUser(){
 
     return(
         <div className={Style.cardEvent}>
-            <p>{id}</p>
-            <p>{username}</p>
-            <button onClick={handlerDeleteUser}>Borrar</button>
-            <button onClick={filterUser}>Ver Perfil</button>
-            <button>Permisos</button>
-            <hr />
+            <p className={Style.id}>{id}</p>
+            <p className={Style.name}>{username}</p>
+            <div className={Style.buttonsCard}>
+            <button className={Style.button} onClick={handlerDeleteUser}>Borrar</button>
+            <button className={Style.button} onClick={filterUser}>Ver Perfil</button>
+            <button className={Style.button}>Permisos</button>
+            </div>
         </div>
     )
 }

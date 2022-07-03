@@ -470,6 +470,18 @@ export function activeModalEventsAdminPanel(booleano) {
     payload: booleano,
   };
 }
+export function activeModalUsersAdminPanel(booleano) {
+  return {
+    type: "MODAL_USERS_ADMIN_PANEL",
+    payload: booleano,
+  };
+}
+export function activeModalUsersPermisedAdminPanel(booleano) {
+  return {
+    type: "MODAL_USERS_PERMISED_ADMIN_PANEL",
+    payload: booleano,
+  };
+}
 
 /* export function getAllSolicits(allevents) {
   return async function (dispatch) {

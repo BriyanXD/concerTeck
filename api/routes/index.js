@@ -63,6 +63,12 @@ const {
   deleteShoppingCart,
 } = require("../controllers/ShoppingCart");
 
+const { getLikes, postLikes, deleteLikes } = require("../controllers/Likes");
+
+routes.get("/like", getLikes);
+routes.post("/like", postLikes);
+routes.delete("/like", deleteLikes);
+
 routes.get("/cart", getShoppingCart);
 routes.post("/cart", postShoppingCart);
 routes.put("/cart", putShoppingCart);
