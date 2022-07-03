@@ -10,14 +10,11 @@ export default function PerfilYLogoutAuth0(){
   const dispatch = useDispatch()
   const registro = useSelector((state) => {return state.User})
 
-  const {  user,
-    isAuthenticated,
-    logout, } = useAuth0();
+  const { user, isAuthenticated, logout } = useAuth0();
     
     useEffect(() => {
       findOrRegister()
     },[dispatch])
-
 
     function findOrRegister(){
       const newUser={
@@ -27,17 +24,18 @@ export default function PerfilYLogoutAuth0(){
       }
       dispatch(register(newUser))
     }
+
   return (
     <div>
       <div className={style.container}>
-      {isAuthenticated ? 
+      {register?isAuthenticated ? 
           <Link to={`/perfil/${registro[0]?.id}`} style={{ textDecoration: "none", color: "inherit" }}>
         <div className={style.box}>
             <img src={user?.picture} alt={user.name} className={style.img}/>
        <p className={style.p}>{user.name}</p>
        </div> 
        </Link> 
-       : null
+       : null: null
       }
        <button onClick={() => logout({ returnTo: window.location.origin })} className={style.button}>
        Log Out
