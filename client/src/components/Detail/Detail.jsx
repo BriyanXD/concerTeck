@@ -6,10 +6,11 @@ import NavBar from '../NavBar/NavBar';
 import Footer from '../Footer/Footer';
 import style from './Detail.module.css'
 import { Link, useParams } from 'react-router-dom';
-import Map from '../Map/Map';
+//import Map from '../Map/Map';
 import { MdOutlineAddShoppingCart } from 'react-icons/md';
 import Tooltip from '@mui/material/Tooltip';
 import { useCart } from "react-use-cart";
+import Leaflet from '../Leaflet/Leaflet';
 
 
 
@@ -43,7 +44,15 @@ export default function Detail() {
   let prueba =''
   if(Detail && Venues){
     prueba = Venues.find(e => e.id === Detail.venueId)
+    console.log('prueba', prueba)
   }
+
+  let coord = ''
+  
+
+  coord = prueba? prueba.map : '-34.545306 -58.449775'
+ 
+
   return (
     <div className={style.container}>
       <NavBar/>
@@ -51,7 +60,7 @@ export default function Detail() {
           <br />
           {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3286.3259476513035!2d-58.451963585088734!3d-34.545301761915844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb43ae6018ddf%3A0x3d7f60a75bfa308a!2sEstadio%20Monumental%20Antonio%20Vespucio%20Liberti!5e0!3m2!1ses-419!2sar!4v1656420898046!5m2!1ses-419!2sar" width="300" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> */}
           <img src = {Detail.placeImage} alt={Detail.name} className={style.imgPlace}/>
-         <div className={style.midcontainer}>
+        <div className={style.midcontainer}>
           <div>
 
           <img src = {Detail.performerImage}  alt={Detail.name} className={style.img}/>
@@ -65,8 +74,8 @@ export default function Detail() {
           </div>
         </div>
         
-
-          <Map data='-34.545306 -58.449775'/>
+        
+          <Leaflet  data={coord} />
         
          </div>
          <div className={style.buttonscontainer}>
