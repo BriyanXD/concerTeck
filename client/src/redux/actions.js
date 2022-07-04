@@ -487,13 +487,9 @@ export function activeModalUsersPermisedAdminPanel(booleano) {
 }
 
 export  function addCartDB(data){
-  return  async function (dispatch) {
+  return  async function () {
     try {
-      const addCartDb = await axios.post(`http://localhost:3001/api/cart`, data);
-      return dispatch({
-        type: "ADD_CART_DB",
-        payload: addCartDb.data,
-      });
+      await axios.post(`http://localhost:3001/api/cart`, data);
     } catch (error) {
       console.log(error);
     }
@@ -535,6 +531,30 @@ export  function getCartDB(idUser){
   };
 }
 
+
+export function deleteCart(id){
+  return async function (dispatch){
+    try{
+    await axios.delete(`http://localhost:3001/api/cart?id=${id}`);
+    return dispatch({
+      type: "DELETE_CART",
+      payload: id
+    })
+    }catch(error){
+      console.log(error);
+    }
+  }
+}
+
+export function putCartDB(value){
+  return async function(dispatch){
+    try{
+      
+    }catch(error){
+      console.log(error)
+    }
+  }
+}
 
 /* export function getAllSolicits(allevents) {
   return async function (dispatch) {

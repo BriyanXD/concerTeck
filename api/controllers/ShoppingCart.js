@@ -2,14 +2,11 @@ const ShoppingCart = require("../models/ShoppingCart.js");
 
 async function getShoppingCart(req, res) {
   const { idUser } = req.query;
-  console.log("🚀 ~ file: ShoppingCart.js ~ line 5 ~ getShoppingCart ~ idUser", idUser)
   try {
     if (idUser) {
-      console.log("🚀 ~ file: ShoppingCart.js ~ line 8 ~ getShoppingCart ~ idUser", idUser)
       const dateShoppingCart = await ShoppingCart.findAll({
         where: { idUser: idUser },
       });
-      console.log("🚀 ~ file: ShoppingCart.js ~ line 10 ~ getShoppingCart ~ dateShoppingCart", dateShoppingCart)
       return res.status(200).json(dateShoppingCart);
     } else{
       const allDateShoppingCart = await ShoppingCart.findAll();
@@ -34,7 +31,11 @@ async function postShoppingCart(req, res) {
     if (idUser && idEvent) {
      const allDateShoppingCart = await ShoppingCart.create({
        idUser: idUser,
-       idEvent: idEvent   
+       idEvent: idEvent,
+       nombre: nombre,
+       quantity: 0,
+       price:0,
+       itemTotal:0
       });
       return res.status(200).json(allDateShoppingCart);
     }else {

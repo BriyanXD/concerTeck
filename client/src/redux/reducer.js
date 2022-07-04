@@ -328,16 +328,15 @@ function reducers(state = initialState, { type, payload }) {
           modalUserPermised: payload,
         },
       };
-    case "ADD_CART_DB":
-      console.log(payload, "desde el reducer")
-      return {
-        ...state,
-        cartDB: [...state.cartDB, payload]
-      }
     case "GET_CART_EVENT":
       return{
         ...state,
-        cartDB: [...state.cartDB, payload]
+        cartDB: payload
+      }
+    case "DELETE_CART":
+      return{
+        ...state,
+        cartDB: state.cartDB.filter(e => e.id !== payload)
       }
     case  "FIND_EVENT_BY_NAME":
       return {

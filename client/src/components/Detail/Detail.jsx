@@ -57,7 +57,9 @@ export default function Detail() {
     if(user[0]){
       await setAdd({
         idUser: user[0].id,
-        idEvent: data.id
+        idEvent: data.id,
+        nombre: data.name,
+        schedule: data.schedule
       })
       addItem(data)
      dispatch(addCartDB(add))
