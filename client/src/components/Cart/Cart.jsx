@@ -25,6 +25,7 @@ export default function Cart() {
   } = useCart();
   const { AllEvents } = useSelector((state) => state);
   const { cartDB } = useSelector(state => state);
+  console.log("🚀 ~ file: Cart.jsx ~ line 28 ~ Cart ~ cartDB", cartDB)
   const userData = useSelector(state => state.User);
  
 
@@ -39,7 +40,10 @@ export default function Cart() {
 
   userData[0]? cartDB.forEach((el) => {
     AllEvents.forEach((e) => {
-      if (e.id === el.idEvent) return events.push(e);
+      if (e.id === el.idEvent){
+        let data = e;
+        data.idDos = el.id 
+        events.push(data);}
     });
   }):items.forEach((el) => {
     AllEvents.forEach((e) => {
@@ -83,12 +87,13 @@ export default function Cart() {
           </div>
         );
       }):events?.map((el) => {
-        let idTemp = cartDB.find((cart)=> cart.idEvent === el.id)
-        console.log("ID TEMPORAL", idTemp)
-        function handleCartDB(e) {
+     
+      async function handleCartDB(e) {
+     
           dispatch(putCartDB({
-            id: idTemp.id,
-            [e.target.name]: e.target.value
+            id: el.idDos,
+            [e.target.name]: e.target.value,
+            price: el.stock[e.target.value]
           }))
         }
 
@@ -182,19 +187,19 @@ export default function Cart() {
                   : null}
               </div>
             </p>
-            {item.price !== 0 ? <p>Precio: {item.price}</p>: null}
+            <p>Precio: {item.price}</p>
             <p>Total: {item.itemTotal === 0 ? null : item.itemTotal}</p>
             <button
               onClick={() =>
                 item.quantity > 1
-                  ? updateItemQuantity(item.id, item.quantity - 1)
+                  ? dispatch(putCartDB({id:item.id, quantity:item.quantity--, itemTotal: item.price * item.quantity}))
                   : null
               }
             >
               -
             </button>
             <button
-              onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
+              onClick={() => dispatch(putCartDB({id:item.id, quantity:item.quantity++, itemTotal: item.price * item.quantity}))}
             >
               +
             </button>

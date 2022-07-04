@@ -33,7 +33,7 @@ async function postShoppingCart(req, res) {
        idUser: idUser,
        idEvent: idEvent,
        nombre: nombre,
-       quantity: 0,
+       quantity: 1,
        price:0,
        itemTotal:0
       });
