@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getEvents } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import { getCartDB, deleteCart, putCartDB } from "../../redux/actions";
+import Style from "./Cart.module.css"
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -53,7 +54,8 @@ export default function Cart() {
   //  if (isEmpty && cartDB) return <p>El carrito esta vacio</p>;
   console.log("evetos", events)
   return (
-    <>
+    <div>
+    <div>
       {!userData[0]?events?.map((el) => {
         function handleChange(e) {
           updateItem(el.id, { variant: e.target.value });
@@ -66,11 +68,11 @@ export default function Cart() {
           ":" +
           el.schedule.split("T")[1].split(":")[1];
         return (
-          <div>
+          <div className={Style.containerDetail}>
             <div>{el.name}</div>
-            <div>{date}</div>
-            <div>{time}</div>
-            <select onChange={handleChange} id={el.id} name="variant">
+            <div className={Style.text}>{date}</div>
+            <div className={Style.text}>{time}</div>
+            <select className={Style.select} onChange={handleChange} id={el.id} name="variant">
               <option value="1">Elegir tipo de entrada...</option>
               <option value="streamingPrice">
                 Streaming: $ {el.stock.streamingPrice}
@@ -124,7 +126,6 @@ export default function Cart() {
           </div>
         );
       })}
-      <h1>Cart ({totalUniqueItems})</h1>
 
       <ul>
         {!userData[0]?items.map((item) => (
@@ -149,7 +150,7 @@ export default function Cart() {
             </p>
             {item.price !== 0 ? <p>Precio: {item.price}</p>: null}
             <p>Total: {item.itemTotal === 0 ? null : item.itemTotal}</p>
-            <button
+            <button className={Style.btn}
               onClick={() =>
                 item.quantity > 1
                   ? updateItemQuantity(item.id, item.quantity - 1)
@@ -158,13 +159,13 @@ export default function Cart() {
             >
               -
             </button>
-            <button
+            <button className={Style.btn}
               onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
             >
               +
             </button>
-            <button onClick={() => removeItem(item.id)}>&times;</button>
-            <button>Comprar entrada/s</button>
+            <button className={Style.btn} onClick={() => removeItem(item.id)}>&times;</button>
+            <button className={Style.btncomprar}>Comprar entradas</button>
           </li>
           
         )): cartDB?.map((item) => (
@@ -215,6 +216,7 @@ export default function Cart() {
           Comprar Todos
         </button>
       </ul>
-    </>
+      </div>
+    </div>
   );
 }
