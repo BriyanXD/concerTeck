@@ -75,7 +75,7 @@ routes.put("/cart", putShoppingCart);
 routes.delete("/cart", deleteShoppingCart);
 
 routes.post("/user", createUser);
-routes.get("/user", verifyToken, getUser); // verifyToken
+routes.get("/user", getUser); // verifyToken
 routes.put("/user", verifyToken, putUser);
 routes.delete("/user", verifyToken, deleteUser); //isAdmin
 

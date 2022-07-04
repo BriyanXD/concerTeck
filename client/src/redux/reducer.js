@@ -22,6 +22,7 @@ const initialState = {
     isVisbleModal: false,
     eventsForCalendar: [],
   },
+  cartDB:[],
   stateAdminPanel: {
     allUsers: [],
     tdosEvents:[],
@@ -327,6 +328,16 @@ function reducers(state = initialState, { type, payload }) {
           modalUserPermised: payload,
         },
       };
+    case "GET_CART_EVENT":
+      return{
+        ...state,
+        cartDB: payload
+      }
+    case "DELETE_CART":
+      return{
+        ...state,
+        cartDB: state.cartDB.filter(e => e.id !== payload)
+      }
     case  "FIND_EVENT_BY_NAME":
       return {
         ...state,
