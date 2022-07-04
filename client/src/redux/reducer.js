@@ -24,6 +24,7 @@ const initialState = {
   },
   stateAdminPanel: {
     allUsers: [],
+    tdosEvents:[],
     // UserByName:[],
     UserByUserName: [],
     allProducers: [],
@@ -326,6 +327,13 @@ function reducers(state = initialState, { type, payload }) {
           modalUserPermised: payload,
         },
       };
+    case  "FIND_EVENT_BY_NAME":
+      return {
+        ...state,
+        stateAdminPanel:{
+          tdosEvents:payload
+        }
+      }
     default:
       return state;
   }

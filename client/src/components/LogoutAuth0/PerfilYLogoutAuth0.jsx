@@ -9,7 +9,7 @@ import { register } from "../../redux/actions";
 export default function PerfilYLogoutAuth0(){
   const dispatch = useDispatch()
   const registro = useSelector((state) => {return state.User})
-
+  console.log(registro,'prueba')
   const { user, isAuthenticated, logout } = useAuth0();
     
     useEffect(() => {
@@ -31,14 +31,28 @@ export default function PerfilYLogoutAuth0(){
   return (
     <div>
       <div className={style.container}>
-      {register?isAuthenticated ? 
+      {registro[0]?.isAdmin===true?
+       <Link to={'/perfil/panelAdmin'} style={{ textDecoration: "none", color: "inherit" }}>
+         <div className={style.box}>
+            <img src={user?.picture} alt={user.name} className={style.img}/>
+       <p className={style.p}>{user.name}</p>
+       </div> 
+        </Link> 
+      :
+      register?isAuthenticated ?
           <Link to={`/perfil/${registro[0]?.id}`} style={{ textDecoration: "none", color: "inherit" }}>
         <div className={style.box}>
             <img src={user?.picture} alt={user.name} className={style.img}/>
        <p className={style.p}>{user.name}</p>
        </div> 
        </Link> 
-       : null: null
+      /*  :  registro?.isAdmin===true ?
+      //  <Link to={'/perfil/panelAdmin'} style={{ textDecoration: "none", color: "inherit" }}>
+      //    <div className={style.box}>
+      //       <img src={user?.picture} alt={user.name} className={style.img}/>
+      //  <p className={style.p}>{user.name}</p>
+      //  </div> 
+        </Link> */ : null : null
       }
        <button onClick={() => clearLocalStorageToken()} className={style.button}>
        Log Out
