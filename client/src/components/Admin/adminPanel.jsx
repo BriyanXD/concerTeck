@@ -77,9 +77,10 @@ export default function PanelAdmin({setUser}){
     
     return(
         <div>
-            <NavBarProfile />
-            {/* <NavBar/> */}
-        <div className={Style.containerGeneral}>
+            <div className={Style.containerNavbar}>
+                <NavBarProfile/>
+            </div>
+            <div className={Style.containerGeneral}>
             <div className={Style.sideBar}>
                 <div className={Style.userContainer}>
                 <Modal active={active} toggle={toggle}>
