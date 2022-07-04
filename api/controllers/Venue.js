@@ -13,7 +13,7 @@ async function chargeVenue() {
     );
     return await Venue.findOrCreate({
       where: {
-        // id:e.id,
+        id: e.id,
         name: e.name,
         address: e.address,
         map: e.map,
