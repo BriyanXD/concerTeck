@@ -61,7 +61,9 @@ export default function Detail() {
         idUser: user[0].id,
         idEvent: data.id,
         nombre: data.name,
-        schedule: data.schedule
+        schedule: data.schedule,
+        quantity: 0,
+        itemTotal: 0
       })
       addItem(data)
      dispatch(addCartDB(add))

@@ -33,9 +33,10 @@ async function postShoppingCart(req, res) {
        idUser: idUser,
        idEvent: idEvent,
        nombre: nombre,
-       quantity: 0,
-       price:0,
-       itemTotal:0
+       schedule: schedule,
+       quantity: quantity,
+       price: price,
+       itemTotal:itemTotal
       });
       return res.status(200).json(allDateShoppingCart);
     }else {

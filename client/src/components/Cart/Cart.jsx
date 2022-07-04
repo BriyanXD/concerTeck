@@ -88,6 +88,9 @@ export default function Cart() {
         function handleCartDB(e) {
           dispatch(putCartDB({
             id: idTemp.id,
+            price: el.stock[e.target.value],
+            //quantity: 1,
+            //itemTotal: price * quantity,
             [e.target.name]: e.target.value
           }))
         }
@@ -119,7 +122,7 @@ export default function Cart() {
           </div>
         );
       })}
-      <h1>Cart ({totalUniqueItems})</h1>
+      <h1>Cart ({cartDB.length > 0 ? cartDB.length : totalUniqueItems})</h1>
 
       <ul>
         {!userData[0]?items.map((item) => (
@@ -187,14 +190,14 @@ export default function Cart() {
             <button
               onClick={() =>
                 item.quantity > 1
-                  ? updateItemQuantity(item.id, item.quantity - 1)
+                  ? dispatch(putCartDB({id:item.id, quantity:item.quantity - 1}))
                   : null
               }
             >
               -
             </button>
             <button
-              onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
+              onClick={() =>dispatch(putCartDB({id:item.id, quantity:item.quantity + 1}))}
             >
               +
             </button>
