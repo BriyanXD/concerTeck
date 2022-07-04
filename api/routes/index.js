@@ -98,7 +98,7 @@ routes.delete("/ticket", verifyToken, isAdmin, deleteTicket);
 routes.get("/genres", getAllGenres);
 routes.post("/genres", verifyToken, verifyIsProducer, postOneGenre);
 
-routes.get("/venues", verifyToken, getVenues);
+routes.get("/venues", getVenues); //verifyToken
 routes.post("/venues", verifyToken, verifyIsProducer, postVenues);
 
 routes.get("/ticketstock", verifyToken, getTicketStock);
