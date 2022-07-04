@@ -547,9 +547,11 @@ export function deleteCart(id){
 }
 
 export function putCartDB(value){
+  console.log("ENTRANDO 111", value)
   return async function(dispatch){
     try{
-      
+      await axios.put("http://localhost:3001/api/cart", value);
+      console.log("ENTRANDO 2222")
     }catch(error){
       console.log(error)
     }

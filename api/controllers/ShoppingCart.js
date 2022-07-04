@@ -69,6 +69,7 @@ async function deleteShoppingCart(req, res) {
   }
 }
 async function putShoppingCart(req, res) {
+  console.log("ENTRANDO 3333")
   const {
     id,
     idUser,
@@ -81,8 +82,10 @@ async function putShoppingCart(req, res) {
     price,
   } = req.body;
   try {
+    console.log("ENTRANDO 444")
     const ShoppingSave = await ShoppingCart.findOne({ where: { id: id } });
     if (ShoppingSave) {
+      console.log("ENTRANDO 555")
       const ShoppingUpdate = await ShoppingSave.update({
         idUser: idUser,
         idEvent: idEvent,
@@ -93,6 +96,7 @@ async function putShoppingCart(req, res) {
         itemTotal: itemTotal,
         price: price
       });
+      console.log("ENTRANDO 666")
       return res.json({
         message: "Carrito Actualizado",
         ShoppingSave,

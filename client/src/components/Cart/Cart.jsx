@@ -1,14 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useCart } from "react-use-cart";
 import { useSelector, useDispatch } from "react-redux";
 import { getEvents } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
-import { getCartDB, deleteCart } from "../../redux/actions";
+import { getCartDB, deleteCart, putCartDB } from "../../redux/actions";
 
 export default function Cart() {
   const dispatch = useDispatch();
   const { user, loginWithPopup } = useAuth0();
-
+  // const [card, setCard] = useState({
+  //   quantity: 0,
+  //   variant: "",
+  //   itemTotal:0,
+  //   price:0,
+  // })
   const {
     isEmpty,
     totalUniqueItems,
@@ -42,6 +47,7 @@ export default function Cart() {
     });
   });
   //  if (isEmpty && cartDB) return <p>El carrito esta vacio</p>;
+  console.log("evetos", events)
   return (
     <>
       {!userData[0]?events?.map((el) => {
@@ -77,9 +83,13 @@ export default function Cart() {
           </div>
         );
       }):events?.map((el) => {
-        function handleChange(e) {
-          updateItem(el.id, { variant: e.target.value });
-          updateItem(el.id, { price: el.stock[e.target.value] });
+        let idTemp = cartDB.find((cart)=> cart.idEvent === el.id)
+        console.log("ID TEMPORAL", idTemp)
+        function handleCartDB(e) {
+          dispatch(putCartDB({
+            id: idTemp.id,
+            [e.target.name]: e.target.value
+          }))
         }
 
         const date = el.schedule.split("T")[0];
@@ -92,7 +102,7 @@ export default function Cart() {
             <div>{el.name}</div>
             <div>{date}</div>
             <div>{time}</div>
-            <select onChange={handleChange} id={el.id} name="variant">
+            <select onChange={handleCartDB} id={el.id} name="variant">
               <option value="1">Elegir tipo de entrada...</option>
               <option value="streamingPrice">
                 Streaming: $ {el.stock.streamingPrice}

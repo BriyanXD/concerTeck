@@ -52,7 +52,7 @@ export default function Detail() {
   let prueba =''
   if(Detail && Venues){
     prueba = Venues.find(e => e.id === Detail.venueId)
-    console.log('prueba', prueba)
+    //console.log('prueba', prueba)
   }
 
   const handleClick = async (data) => {
