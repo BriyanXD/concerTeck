@@ -138,7 +138,7 @@ export function register(value) {
         value
       );
       localStorage.setItem("token", register.data[2].token);
-      console.log(register.data[2].token, "datos de usuario")
+      // console.log(register.data[2].token, "datos de usuario")
       return dispatch({
         type: "LOGIN_USER",
         payload: register.data[1],
@@ -486,6 +486,15 @@ export function activeModalUsersPermisedAdminPanel(booleano) {
   };
 }
 
+export  function addCartDB(data){
+  return  async function () {
+    try {
+      await axios.post(`http://localhost:3001/api/cart`, data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
 export function findEventByName(name) {
   return async function (dispatch) {
     try {
@@ -506,6 +515,47 @@ export function findEventByName(name) {
       console.log(error.message);
     }
   };
+}
+
+export  function getCartDB(idUser){
+  return  async function (dispatch) {
+    try {
+      const getCartDB = await axios.get(`http://localhost:3001/api/cart?idUser=${idUser}`);
+      return dispatch({
+        type: "GET_CART_EVENT",
+        payload: getCartDB.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+
+export function deleteCart(id){
+  return async function (dispatch){
+    try{
+    await axios.delete(`http://localhost:3001/api/cart?id=${id}`);
+    return dispatch({
+      type: "DELETE_CART",
+      payload: id
+    })
+    }catch(error){
+      console.log(error);
+    }
+  }
+}
+
+export function putCartDB(value){
+  console.log("ENTRANDO 111", value)
+  return async function(dispatch){
+    try{
+      await axios.put("http://localhost:3001/api/cart", value);
+      console.log("ENTRANDO 2222")
+    }catch(error){
+      console.log(error)
+    }
+  }
 }
 
 /* export function getAllSolicits(allevents) {
