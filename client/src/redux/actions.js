@@ -1,8 +1,10 @@
 import axios from "axios";
+const url = "http://localhost:3001";
+
 export function getEvents() {
   return async function (dispatch) {
     try {
-      let events = await axios.get("http://localhost:3001/api/events");
+      let events = await axios.get(`${url}/api/events`);
       return dispatch({
         type: "GET_EVENTS",
         payload: events.data,
@@ -16,9 +18,7 @@ export function getEvents() {
 export function searchEvent(name) {
   return async function (dispatch) {
     try {
-      const events = await axios.get(
-        `http://localhost:3001/api/events?name=${name}`
-      );
+      const events = await axios.get(`${url}/api/events?name=${name}`);
       return dispatch({
         type: "GET_EVENT_BY_NAME",
         payload: events.data,
@@ -37,9 +37,7 @@ export function searchEvent(name) {
 export function EventById(id) {
   return async function (dispatch) {
     try {
-      const event = await axios.get(
-        `http://localhost:3001/api/events?id=${id}`
-      );
+      const event = await axios.get(`${url}/api/events?id=${id}`);
       // console.log(id)
       return dispatch({
         type: "GET_EVENT_DETAIL",
@@ -55,10 +53,7 @@ export function CreateEvent(value) {
   console.log(value);
   return async function (dispatch) {
     try {
-      const creation = await axios.post(
-        "http://localhost:3001/api/events",
-        value
-      );
+      const creation = await axios.post(`${url}/api/events`, value);
       console.log(creation.data, "creando");
       return creation;
     } catch (error) {
@@ -70,7 +65,7 @@ export function CreateEvent(value) {
 export function GetGenres() {
   return async function (dispatch) {
     try {
-      const genres = await axios.get("http://localhost:3001/api/genres");
+      const genres = await axios.get(`${url}/api/genres`);
       // console.log(genres.data);
       return dispatch({
         type: "GET_GENRES",
@@ -85,10 +80,7 @@ export function GetGenres() {
 export function CreateGenre(value) {
   return async function (dispatch) {
     try {
-      const creation = await axios.post(
-        "http://localhost:3001/api/genres",
-        value
-      );
+      const creation = await axios.post(`${url}/api/genres`, value);
       return creation;
     } catch (error) {
       console.log(error.message);
@@ -99,7 +91,7 @@ export function CreateGenre(value) {
 export function GetVenues() {
   return async function (dispatch) {
     try {
-      const venues = await axios.get("http://localhost:3001/api/venues");
+      const venues = await axios.get(`${url}/api/venues`);
       return dispatch({
         type: "GET_VENUES",
         payload: venues.data,
@@ -113,10 +105,7 @@ export function GetVenues() {
 export function CreateVenue(value) {
   return async function (dispatch) {
     try {
-      const creation = await axios.post(
-        "http://localhost:3001/api/venues",
-        value
-      );
+      const creation = await axios.post(`${url}/api/venues`, value);
       return creation;
     } catch (error) {
       console.log(error.message);
@@ -133,10 +122,7 @@ export function ClearDetail() {
 export function register(value) {
   return async function (dispatch) {
     try {
-      const register = await axios.post(
-        `http://localhost:3001/api/user`,
-        value
-      );
+      const register = await axios.post(`${url}/api/user`, value);
       localStorage.setItem("token", register.data[2].token);
       // console.log(register.data[2].token, "datos de usuario")
       return dispatch({
@@ -152,10 +138,7 @@ export function register(value) {
 export function LoginUser(value) {
   return async function (dispatch) {
     try {
-      const getUser = await axios.post(
-        `http://localhost:3001/api/login`,
-        value
-      );
+      const getUser = await axios.post(`${url}/api/login`, value);
       return dispatch({
         type: "LOGIN_USER",
         payload: getUser.data,
@@ -181,10 +164,7 @@ export function LogOut() {
 export function ValidationUser(value) {
   return async function (dispatch) {
     try {
-      const user = await axios.post(
-        `http://localhost:3001/api/validation/login`,
-        value
-      );
+      const user = await axios.post(`${url}/api/validation/login`, value);
       return dispatch({
         type: "VALIDATION_LOGIN",
         payload: user.data,
@@ -198,10 +178,9 @@ export function ValidationUser(value) {
 export function ValidationEmail(value) {
   return async function (dispatch) {
     try {
-      const email = await axios.post(
-        `http://localhost:3001/api/validation/email`,
-        { email: value }
-      );
+      const email = await axios.post(`${url}/api/validation/email`, {
+        email: value,
+      });
       return dispatch({
         type: "VALIDATION_EMAIL",
         payload: email.data,
@@ -215,10 +194,9 @@ export function ValidationEmail(value) {
 export function ValidationUsername(value) {
   return async function (dispatch) {
     try {
-      const username = await axios.post(
-        `http://localhost:3001/api/validation/username`,
-        { username: value }
-      );
+      const username = await axios.post(`${url}/api/validation/username`, {
+        username: value,
+      });
       return dispatch({
         type: "VALIDATION_USERNAME",
         payload: username.data,
@@ -283,7 +261,7 @@ export function getAllUsers() {
     try {
       let config = {
         method: "get",
-        url: "http://localhost:3001/api/user",
+        url: `${url}/api/user`,
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       };
       let token = localStorage.getItem("token");
@@ -305,7 +283,7 @@ export function getAllUsers() {
 export function getAllProducers() {
   return async function (dispatch) {
     try {
-      const adminState = await axios.get("http://localhost:3001/api/producers");
+      const adminState = await axios.get(`${url}/api/producers`);
       return dispatch({
         type: "GET_ALL_PRODUCERS",
         payload: adminState.data,
@@ -319,14 +297,11 @@ export function getAllProducers() {
 export function getAllSolicits() {
   return async function (dispatch) {
     try {
-      const adminState = await axios.post(
-        "http://localhost:3001/api/Solicits",
-        {
-          Headers: {
-            authorization: "",
-          },
-        }
-      );
+      const adminState = await axios.post(`${url}/api/Solicits`, {
+        Headers: {
+          authorization: "",
+        },
+      });
       return dispatch({
         type: "GET_ALL_SOLICITS",
         payload: adminState.data,
@@ -355,14 +330,11 @@ export function findEvent(allEvents, id) {
 export function deleteUser(id) {
   return async function (dispatch) {
     try {
-      const userDeleted = await axios.delete(
-        `http://localhost:3001/api/user?id=${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const userDeleted = await axios.delete(`${url}/api/user?id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       console.log("Ususario eliminado", userDeleted);
       return dispatch({
         type: "DELETE_USER",
@@ -377,14 +349,11 @@ export function deleteEvents(id) {
   return async function (dispatch) {
     try {
       console.log(id);
-      const eventDeleted = await axios.delete(
-        `http://localhost:3001/api/events?id=${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const eventDeleted = await axios.delete(`${url}/api/events?id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       console.log(eventDeleted);
       return dispatch({
         type: "DELETE_EVENT",
@@ -401,7 +370,7 @@ export function upgradeRank(id, boolean) {
       console.log(boolean, "admin estado");
       console.log(id, "id user");
       const userRanked = await axios.put(
-        `http://localhost:3001/api/upgrade`,
+        `${url}/api/upgrade`,
         { isAdmin: boolean, id: id },
         {
           headers: {
@@ -441,7 +410,7 @@ export function searchUserByUserName(username) {
   return async function (dispatch) {
     try {
       const userByUserName = await axios.get(
-        `http://localhost:3001/api/user?username=${username}`,
+        `${url}/api/user?username=${username}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -486,22 +455,20 @@ export function activeModalUsersPermisedAdminPanel(booleano) {
   };
 }
 
-export  function addCartDB(data){
-  return  async function () {
+export function addCartDB(data) {
+  return async function () {
     try {
-      await axios.post(`http://localhost:3001/api/cart`, data);
+      await axios.post(`${url}/api/cart`, data);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 }
 export function findEventByName(name) {
   return async function (dispatch) {
     try {
-      const eventos = await axios.get(
-        `http://localhost:3001/api/events?name=${name}`
-      );
-      console.log('ESTA PRUEBA NUEVA',eventos.data)
+      const eventos = await axios.get(`${url}/api/events?name=${name}`);
+      console.log("ESTA PRUEBA NUEVA", eventos.data);
       return dispatch({
         type: "FIND_EVENT_BY_NAME",
         payload: eventos.data,
@@ -517,10 +484,10 @@ export function findEventByName(name) {
   };
 }
 
-export  function getCartDB(idUser){
-  return  async function (dispatch) {
+export function getCartDB(idUser) {
+  return async function (dispatch) {
     try {
-      const getCartDB = await axios.get(`http://localhost:3001/api/cart?idUser=${idUser}`);
+      const getCartDB = await axios.get(`${url}/api/cart?idUser=${idUser}`);
       return dispatch({
         type: "GET_CART_EVENT",
         payload: getCartDB.data,
@@ -531,31 +498,30 @@ export  function getCartDB(idUser){
   };
 }
 
-
-export function deleteCart(id){
-  return async function (dispatch){
-    try{
-    await axios.delete(`http://localhost:3001/api/cart?id=${id}`);
-    return dispatch({
-      type: "DELETE_CART",
-      payload: id
-    })
-    }catch(error){
+export function deleteCart(id) {
+  return async function (dispatch) {
+    try {
+      await axios.delete(`${url}/api/cart?id=${id}`);
+      return dispatch({
+        type: "DELETE_CART",
+        payload: id,
+      });
+    } catch (error) {
       console.log(error);
     }
-  }
+  };
 }
 
-export function putCartDB(value){
-  console.log("ENTRANDO 111", value)
-  return async function(dispatch){
-    try{
-      await axios.put("http://localhost:3001/api/cart", value);
-      console.log("ENTRANDO 2222")
-    }catch(error){
-      console.log(error)
+export function putCartDB(value) {
+  console.log("ENTRANDO 111", value);
+  return async function (dispatch) {
+    try {
+      await axios.put(`${url}/api/cart`, value);
+      console.log("ENTRANDO 2222");
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 }
 
 /* export function getAllSolicits(allevents) {
