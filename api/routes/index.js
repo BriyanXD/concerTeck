@@ -75,7 +75,7 @@ routes.put("/cart", putShoppingCart);
 routes.delete("/cart", deleteShoppingCart);
 
 routes.post("/user", createUser);
-routes.get("/user", verifyToken, getUser); // verifyToken
+routes.get("/user", getUser); // verifyToken
 routes.put("/user", verifyToken, putUser);
 routes.delete("/user", verifyToken, deleteUser); //isAdmin
 
@@ -98,7 +98,7 @@ routes.delete("/ticket", verifyToken, isAdmin, deleteTicket);
 routes.get("/genres", getAllGenres);
 routes.post("/genres", verifyToken, verifyIsProducer, postOneGenre);
 
-routes.get("/venues", verifyToken, getVenues);
+routes.get("/venues", getVenues);
 routes.post("/venues", verifyToken, verifyIsProducer, postVenues);
 
 routes.get("/ticketstock", verifyToken, getTicketStock);

@@ -138,7 +138,7 @@ export function register(value) {
         value
       );
       localStorage.setItem("token", register.data[2].token);
-      console.log(register.data[2].token, "datos de usuario")
+      // console.log(register.data[2].token, "datos de usuario")
       return dispatch({
         type: "LOGIN_USER",
         payload: register.data[1],
@@ -484,6 +484,76 @@ export function activeModalUsersPermisedAdminPanel(booleano) {
     type: "MODAL_USERS_PERMISED_ADMIN_PANEL",
     payload: booleano,
   };
+}
+
+export  function addCartDB(data){
+  return  async function () {
+    try {
+      await axios.post(`http://localhost:3001/api/cart`, data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+export function findEventByName(name) {
+  return async function (dispatch) {
+    try {
+      const eventos = await axios.get(
+        `http://localhost:3001/api/events?name=${name}`
+      );
+      console.log('ESTA PRUEBA NUEVA',eventos.data)
+      return dispatch({
+        type: "FIND_EVENT_BY_NAME",
+        payload: eventos.data,
+      });
+    } catch (error) {
+      // alert('NO SE ENCONTRO EL EVENTO')
+      // return dispatch({
+      //   type: "FIND_EVENT_BY_NAME",
+      //   payload: [],
+      // });
+      console.log(error.message);
+    }
+  };
+}
+
+export  function getCartDB(idUser){
+  return  async function (dispatch) {
+    try {
+      const getCartDB = await axios.get(`http://localhost:3001/api/cart?idUser=${idUser}`);
+      return dispatch({
+        type: "GET_CART_EVENT",
+        payload: getCartDB.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+
+export function deleteCart(id){
+  return async function (dispatch){
+    try{
+    await axios.delete(`http://localhost:3001/api/cart?id=${id}`);
+    return dispatch({
+      type: "DELETE_CART",
+      payload: id
+    })
+    }catch(error){
+      console.log(error);
+    }
+  }
+}
+
+export function putCartDB(value){
+  return async function(dispatch){
+    try{
+      
+    }catch(error){
+      console.log(error)
+    }
+  }
 }
 
 /* export function getAllSolicits(allevents) {

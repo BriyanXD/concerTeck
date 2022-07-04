@@ -2,7 +2,7 @@ import React from "react";
 import Login from "../Login/Login";
 import Modal from "../Modals/Modal/Modal";
 import { useState } from "react";
-import UserNavBar from "../UserNavbar/UserNavbar";
+import NavBarProfile from '../ProfileUser/NavBarProfile/NavBarProfile'
 import { useDispatch, useSelector } from "react-redux";
 // import CardConteiner from "./adminCardConteiner";
 import {getAllUsers, getEvents, getAllSolicits} from "../../redux/actions"
@@ -76,13 +76,17 @@ export default function PanelAdmin({setUser}){
     }
     
     return(
-        <div className={Style.containerGeneral}>
+        <div>
+            <div className={Style.containerNavbar}>
+                <NavBarProfile/>
+            </div>
+            <div className={Style.containerGeneral}>
             <div className={Style.sideBar}>
                 <div className={Style.userContainer}>
                 <Modal active={active} toggle={toggle}>
                     <Login toggle={toggle} />
                 </Modal>
-                <UserNavBar/>
+                {/* <UserNavBar/> */}
                 </div>
                 <div className={Style.buttonsContainer}>
                     <button className={Style.button} onClick={handlerClickUsuarios}>Usuario</button>
@@ -95,6 +99,7 @@ export default function PanelAdmin({setUser}){
             <div className={Style.containersInfo}>
             {usersActive ? <AdminUserPanel/> : eventsActive ? <AdminEventPanel/>: solicitsActive ? <AdminSolicit/>: <h1>Error</h1> }
             </div>
+        </div>
         </div>
     )
 }

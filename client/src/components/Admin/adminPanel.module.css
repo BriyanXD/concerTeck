@@ -4,15 +4,21 @@
 .containerGeneral{
     display: grid;
     grid-template-columns:  25% 1fr;
+    background-color: #dbdada;
+    height: 92vh;
+}
+.containerNavbar{
+    background-color: rgb(85, 85, 85);
 }
 .sideBar{
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
+    height: 80vh;
 }
 .containersInfo{
-    height: 100vh;
+    margin-top: 70px;
+    height: 80vh;
     overflow: auto;
     padding-left: 10px;
 }
