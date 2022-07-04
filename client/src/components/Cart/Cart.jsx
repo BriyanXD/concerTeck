@@ -29,6 +29,7 @@ export default function Cart() {
  
 
   let events = [];
+  let eventsUser = [];
  
   useEffect(() => {
     dispatch(getEvents());
@@ -39,13 +40,24 @@ export default function Cart() {
 
   userData[0]? cartDB.forEach((el) => {
     AllEvents.forEach((e) => {
-      if (e.id === el.idEvent) return events.push(e);
+      if (e.id === el.idEvent) return eventsUser.push(e);
     });
   }):items.forEach((el) => {
     AllEvents.forEach((e) => {
       if (e.id === el.id) return events.push(e);
     });
   });
+  // function handleCartDB(e) {
+  //   let idTemp = eventsUser?.map((el) => { cartDB.find((cart)=> cart.idEvent === el.id)})
+  //   console.log("ID TEMP", idTemp)
+  //   dispatch(putCartDB({
+  //     id: idTemp.id,
+  //     price: el.stock[e.target.value],
+  //     //quantity: 1,
+  //     //itemTotal: price * quantity,
+  //     [e.target.name]: e.target.value
+  //   }))
+  // }
   //  if (isEmpty && cartDB) return <p>El carrito esta vacio</p>;
   console.log("evetos", events)
   return (
@@ -82,7 +94,7 @@ export default function Cart() {
             </select>
           </div>
         );
-      }):events?.map((el) => {
+      }):eventsUser?.map((el) => {
         let idTemp = cartDB.find((cart)=> cart.idEvent === el.id)
         console.log("ID TEMPORAL", idTemp)
         function handleCartDB(e) {
