@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 require("dotenv").config();
 const { AUTH_SECRET } = process.env;
 
@@ -24,6 +25,7 @@ function verifyToken(req, res, next) {
 }
 function isAdmin(req, res, next) {
   if (UserDate.user.isAdmin) {
+    console.log(UserDate, "Usuario antes de revisar");
     next();
   } else {
     return res.status(401).json({

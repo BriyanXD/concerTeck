@@ -45,22 +45,24 @@ async function createUser(req, res) {
 // "No se ha logrado crear el usuario"
 async function getUser(req, res) {
   const DBusers = await User.findAll({ include: { model: Ticket } });
-   const { username, password } = req.query; 
+  const { username, password } = req.query;
   try {
-    if(username){
-      const filt = DBusers.filter((user) => user.username.toLowerCase().includes(username.toLowerCase()));
-      if(filt.length > 0){
+    if (username) {
+      const filt = DBusers.filter((user) =>
+        user.username.toLowerCase().includes(username.toLowerCase())
+      );
+      if (filt.length > 0) {
         return res.send(filt);
       }
-    }else{
-    //  if (username && password) {
-    //   const userFound = DBusers.find((user) => {
-    //     if (user.username === username && user.password === password)
-    //       return user;
-    //   });
-    //   return res.send(userFound);
-    // } 
-    return res.send(DBusers);
+    } else {
+      //  if (username && password) {
+      //   const userFound = DBusers.find((user) => {
+      //     if (user.username === username && user.password === password)
+      //       return user;
+      //   });
+      //   return res.send(userFound);
+      // }
+      return res.send(DBusers);
     }
   } catch (error) {
     return res.status(404).send({ error: error.message });
@@ -151,17 +153,18 @@ async function UpgradeRank(req, res) {
 
 async function postAdminUser(req, res) {
   try {
-    const { username, password, email } = req.body;
-    let passcrypt = bcrypt.hashSync(password, parseInt(AUTH_ROUNDS));
-    const admin = User.findOrCreate({
+    const { username, email } = req.body;
+    const admin = await User.findOrCreate({
       where: {
         username: username,
-        password: passcrypt,
         email: email,
         isAdmin: true,
       },
     });
-    res.send(admin);
+    let token = jwt.sign({ user: admin }, AUTH_SECRET, {
+      expiresIn: AUTH_EXPIRES,
+    });
+    res.json({ admin: admin, token: token });
   } catch (error) {
     res.status(401).json({ error: error.message });
   }
