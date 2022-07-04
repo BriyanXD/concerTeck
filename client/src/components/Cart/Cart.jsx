@@ -3,6 +3,8 @@ import { useCart } from "react-use-cart";
 import { useSelector, useDispatch } from "react-redux";
 import { getEvents } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
+import Style from "./Cart.module.css"
+import NavBarProfile from '../ProfileUser/NavBarProfile/NavBarProfile'
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -30,9 +32,22 @@ export default function Cart() {
     });
   });
 
-  if (isEmpty) return <p>El carrito esta vacio</p>;
+  if (isEmpty) return(
+    <div className={Style.containerNavVacio}>
+      <div>
+    <NavBarProfile/>
+</div>
+    <div className={Style.carritoVacio}>
+      <p>El carrito esta vacio</p>
+    </div>
+    </div>
+  )
   return (
-    <>
+    <div className={Style.containerGeneral}>
+      <div className={Style.containerNavbar}>
+                <NavBarProfile/>
+      </div>
+    <div className={Style.containerInfo}>
       {events?.map((el) => {
         function handleChange(e) {
           updateItem(el.id, { variant: e.target.value });
@@ -45,11 +60,11 @@ export default function Cart() {
           ":" +
           el.schedule.split("T")[1].split(":")[1];
         return (
-          <div>
+          <div className={Style.containerDetail}>
             <div>{el.name}</div>
-            <div>{date}</div>
-            <div>{time}</div>
-            <select onChange={handleChange} id={el.id} name="variant">
+            <div className={Style.text}>{date}</div>
+            <div className={Style.text}>{time}</div>
+            <select className={Style.select} onChange={handleChange} id={el.id} name="variant">
               <option value="1">Elegir tipo de entrada...</option>
               <option value="streamingPrice">
                 Streaming: $ {el.stock.streamingPrice}
@@ -66,11 +81,10 @@ export default function Cart() {
           </div>
         );
       })}
-      <h1>Cart ({totalUniqueItems})</h1>
 
-      <ul>
+      <ul className={Style.containerCart}>
         {items.map((item) => (
-          <li key={item.id}>
+          <li key={item.id} className={Style.informacion}>
             {console.log(item)}
             {item.quantity} x {item.name} &mdash;
             <p>
@@ -92,7 +106,7 @@ export default function Cart() {
             </p>
             {item.price !== 0 ? <p>Precio: {item.price}</p>: null}
             <p>Total: {item.itemTotal === 0 ? null : item.itemTotal}</p>
-            <button
+            <button className={Style.btn}
               onClick={() =>
                 item.quantity > 1
                   ? updateItemQuantity(item.id, item.quantity - 1)
@@ -101,17 +115,17 @@ export default function Cart() {
             >
               -
             </button>
-            <button
+            <button className={Style.btn}
               onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
             >
               +
             </button>
-            <button onClick={() => removeItem(item.id)}>&times;</button>
-            <button>Comprar entrada/s</button>
+            <button className={Style.btn} onClick={() => removeItem(item.id)}>&times;</button>
+            <button className={Style.btncomprar}>Comprar entradas</button>
           </li>
         ))}
-        Total final: {cartTotal}
-        <button
+        <span className={Style.textTotal}>Total final: {cartTotal}</span>
+        <button className={Style.btncomprarpasarela}
           onClick={() =>
             !user ? loginWithRedirect() : alert("Pasarela de pagos")
           }
@@ -119,6 +133,7 @@ export default function Cart() {
           Comprar Todos
         </button>
       </ul>
-    </>
+      </div>
+    </div>
   );
 }
