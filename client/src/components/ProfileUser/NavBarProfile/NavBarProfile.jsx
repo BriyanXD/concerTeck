@@ -13,7 +13,7 @@ export default function NavBarProfile () {
          <Link to="/">
           <img className={style.logo} src={logoSombra} alt="Logo not found" />
         </Link>
-            <span className={style.titleData}>Nombre: {user[0].name}</span>
+            <span className={style.titleData}>Nombre: {user[0]?.name? user[0].name : "Te deslogueaste"}</span>
          <PerfilYLogoutAuth0/>
     </div>)
 }

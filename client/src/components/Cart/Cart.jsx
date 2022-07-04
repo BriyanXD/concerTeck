@@ -26,7 +26,7 @@ export default function Cart() {
   } = useCart();
   const { AllEvents } = useSelector((state) => state);
   const { cartDB } = useSelector(state => state);
-  console.log("🚀 ~ file: Cart.jsx ~ line 28 ~ Cart ~ cartDB", cartDB)
+  //console.log("🚀 ~ file: Cart.jsx ~ line 28 ~ Cart ~ cartDB", cartDB)
   const userData = useSelector(state => state.User);
  
 

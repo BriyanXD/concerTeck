@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import style from './PerfilYLogoutAuth0.module.css';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux"
 import { register } from "../../redux/actions";
+
 
 
 export default function PerfilYLogoutAuth0(){
@@ -11,18 +12,27 @@ export default function PerfilYLogoutAuth0(){
   const registro = useSelector((state) => {return state.User})
   console.log(registro,'prueba')
   const { user, isAuthenticated, logout } = useAuth0();
+  const navegate = useNavigate()
     
     useEffect(() => {
       findOrRegister()
     },[dispatch])
 
     function findOrRegister(){
-      const newUser={
-        username:user.nickname,
-        name:user.name,
-        email:user.email,
+      if(localStorage.getItem("userDate")){
+        const userLS = JSON.parse(localStorage.getItem("userDate"))
+      // if(!user){
+      //   //alert("Hubo un error")
+      //   navegate("/")
+      } else {
+        const newUser={
+          username:user.nickname,
+          name:user.name,
+          email:user.email,
+        }
+        dispatch(register(newUser))
+        localStorage.setItem("userDate",JSON.stringify(registro))  
       }
-      dispatch(register(newUser))
     }
     function clearLocalStorageToken(){
       localStorage.setItem("token"," ")
