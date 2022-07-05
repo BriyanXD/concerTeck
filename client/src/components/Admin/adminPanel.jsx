@@ -5,13 +5,13 @@ import { useState } from "react";
 import NavBarProfile from '../ProfileUser/NavBarProfile/NavBarProfile'
 import { useDispatch, useSelector } from "react-redux";
 // import CardConteiner from "./adminCardConteiner";
-import {getAllUsers, getEvents, getAllSolicits} from "../../redux/actions"
+import {getAllUsers, getEvents, getAllBlackList} from "../../redux/actions"
 import Style from "./adminPanel.module.css"
 
 import AdminUserPanel from "./AdminUserPanel";
 import AdminEventPanel from "./AdminEventPanel";
 //import AdminSolicitPanel from "./AdminSolicitPanel";
-import AdminSolicit from "./AdminSolicit";
+import AdminBlackListPanel from "./AdminBlackListPanel";
 
 export default function PanelAdmin({setUser}){
     
@@ -19,7 +19,7 @@ export default function PanelAdmin({setUser}){
     const [active, setActive] = useState(false);
     const [usersActive, setUsers] = useState(true);
     const [eventsActive, setEvents] = useState(false);
-    const [solicitsActive, setSolicits] = useState(false);
+    const [blackList, setBlackList] = useState(false);
 
 
     const user = useSelector((state) => state.User);
@@ -56,23 +56,23 @@ export default function PanelAdmin({setUser}){
     //     </div>
     //     )
     // }
-    function handlerClickUsuarios(){
+    function handlerClickUsers(){
         dispatch(getAllUsers())
         setEvents(false)
-        setSolicits(false)
+        setBlackList(false)
         setUsers(true)
     }
-    function handlerClickEventos(){
+    function handlerClickEvents(){
         dispatch(getEvents())
-        setSolicits(false)
+        setBlackList(false)
         setUsers(false)
         setEvents(true)
     }
-    function handlerClickSolicits(){
-        dispatch(getAllSolicits())
+    function handlerClickTicketReceipts(){
+        dispatch(getAllBlackList())
         setEvents(false)
         setUsers(false)
-        setSolicits(true)
+        setBlackList(true)
     }
     
     return(
@@ -89,15 +89,19 @@ export default function PanelAdmin({setUser}){
                 {/* <UserNavBar/> */}
                 </div>
                 <div className={Style.buttonsContainer}>
-                    <button className={Style.button} onClick={handlerClickUsuarios}>Usuario</button>
+                    <button className={Style.button} onClick={handlerClickUsers}>Usuario</button>
                     <br />
-                    <button className={Style.button} onClick={handlerClickEventos}>Eventos</button>
+                    <button className={Style.button} onClick={handlerClickEvents}>Eventos</button>
                     <br />
-{/*                     <button onClick={handlerClickSolicits}>Solicitudes</button> */}
+                    <button className={Style.button} onClick={handlerClickEvents}>Ordenes de compra</button>
+                    <br />
+                    <button className={Style.button} onClick={handlerClickTicketReceipts}>Lista negra</button>
+                    <br />
+                    <button className={Style.button} onClick={handlerClickEvents}>Crear evento</button>
                 </div>
         </div>
             <div className={Style.containersInfo}>
-            {usersActive ? <AdminUserPanel/> : eventsActive ? <AdminEventPanel/>: solicitsActive ? <AdminSolicit/>: <h1>Error</h1> }
+            {usersActive ? <AdminUserPanel/> : eventsActive ? <AdminEventPanel/>: blackList ? <AdminBlackListPanel/>: <h1>Error</h1> }
             </div>
         </div>
         </div>
