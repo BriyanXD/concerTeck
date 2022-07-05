@@ -25,7 +25,6 @@ function verifyToken(req, res, next) {
 }
 function isAdmin(req, res, next) {
   if (UserDate.user.isAdmin) {
-    console.log(UserDate, "Usuario antes de revisar");
     next();
   } else {
     return res.status(401).json({
