@@ -48,9 +48,11 @@ async function getUser(req, res) {
    const { username, password,id } = req.query; 
    const idUser = await User.findByPk(id);
   try {
-    if(username){
-      const filt = DBusers.filter((user) => user.username.toLowerCase().includes(username.toLowerCase()));
-      if(filt.length > 0){
+    if (username) {
+      const filt = DBusers.filter((user) =>
+        user.username.toLowerCase().includes(username.toLowerCase())
+      );
+      if (filt.length > 0) {
         return res.send(filt);
       }
     }else if(idUser){
@@ -112,6 +114,7 @@ async function deleteUser(req, res) {
       where: {
         email: user.email,
         username: user.username || "undefined",
+        name: user.name || "undefined",
       },
     });
     console.log("Usuario Eliminado y baneado", newBaned);
@@ -154,17 +157,19 @@ async function UpgradeRank(req, res) {
 
 async function postAdminUser(req, res) {
   try {
-    const { username, password, email } = req.body;
-    let passcrypt = bcrypt.hashSync(password, parseInt(AUTH_ROUNDS));
-    const admin = User.findOrCreate({
+    const { username, email, name } = req.body;
+    const admin = await User.findOrCreate({
       where: {
+        name: name,
         username: username,
-        password: passcrypt,
         email: email,
         isAdmin: true,
       },
     });
-    res.send(admin);
+    let token = jwt.sign({ user: admin }, AUTH_SECRET, {
+      expiresIn: AUTH_EXPIRES,
+    });
+    res.json({ admin: admin, token: token });
   } catch (error) {
     res.status(401).json({ error: error.message });
   }
