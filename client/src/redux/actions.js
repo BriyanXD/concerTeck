@@ -1,6 +1,6 @@
+import axios from "axios";
 const url = "http://localhost:3001";
 
-import axios from "axios";
 export function getEvents() {
   return async function (dispatch) {
     try {
