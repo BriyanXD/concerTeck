@@ -21,7 +21,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 export default function Home() {
   const dispatch = useDispatch();
   const { user, loginWithPopup } = useAuth0();
-  const {Likes} = useSelector((state)=> state)
+  const {Likes} = useSelector((state)=> state);
   // const { User } = useSelector((state) => state)
   console.log('Likes:',Likes)
   const allEventsPagination = useSelector((state) => {
