@@ -40,7 +40,7 @@ const {
 } = require("../controllers/Tickets");
 
 const { getVenues, postVenues } = require("../controllers/Venue");
-const { getTicketStock, putTicketStock } = require("../controllers/TicketStock");
+const { getTicketStock, putTicketStock, postTicketStock } = require("../controllers/TicketStock");
 
 const { LoginUser } = require("../controllers/Login");
 const {
@@ -106,7 +106,7 @@ routes.post("/venues", postVenues);
 
 //routes.get("/ticketstock", verifyToken, getTicketStock);
 routes.get("/ticketstock", getTicketStock);
-routes.post("/ticketstock", putTicketStock);
+routes.post("/ticketstock", postTicketStock);
 
 routes.post("/login", LoginUser);
 
