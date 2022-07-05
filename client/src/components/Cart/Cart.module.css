@@ -122,3 +122,8 @@
     color: var(--color4);
     font-weight: bold;
 }
+
+.image{
+    width: 200px;
+    height: 140px;
+}
