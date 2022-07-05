@@ -524,6 +524,44 @@ export function putCartDB(value) {
   };
 }
 
+export function getAllBlackList() {
+  return async function (dispatch) {
+    try {
+      const getAllBlackListData = await axios.get(`${url}/api/blackall`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(getAllBlackListData.data, "LISTA NEGRA");
+      return dispatch({
+        type: "GET_ALL_BLACK_LIST",
+        payload: getAllBlackListData.data,
+      });
+    } catch (error) {
+      console.log(error, "GET_ALL_BLACK_LIST");
+    }
+  };
+}
+
+export function deleteUserBlackList(idUser) {
+  return async function (dispatch) {
+    try {
+      const dataUser = await axios.delete(`${url}/api/black?id=${idUser}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(dataUser.data, "USUARIO PERDONADO");
+      return dispatch({
+        type: "DELETE_USER_BLACK_LIST",
+        payload: dataUser.data,
+      });
+    } catch (error) {
+      console.log(error, "DELETE_USER_BLACK_LIST");
+    }
+  };
+}
+
 /* export function getAllSolicits(allevents) {
   return async function (dispatch) {
     try {

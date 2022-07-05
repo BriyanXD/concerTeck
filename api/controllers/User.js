@@ -111,6 +111,7 @@ async function deleteUser(req, res) {
       where: {
         email: user.email,
         username: user.username || "undefined",
+        name: user.name || "undefined",
       },
     });
     console.log("Usuario Eliminado y baneado", newBaned);
@@ -153,9 +154,10 @@ async function UpgradeRank(req, res) {
 
 async function postAdminUser(req, res) {
   try {
-    const { username, email } = req.body;
+    const { username, email, name } = req.body;
     const admin = await User.findOrCreate({
       where: {
+        name: name,
         username: username,
         email: email,
         isAdmin: true,
