@@ -13,6 +13,7 @@ const initialState = {
   Events: [],
   Genres: [],
   Venues: [],
+  Stock: [],
   Basket: [],
   Likes: [],
   userValidation: "",
@@ -216,6 +217,11 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         Venues: payload,
       };
+    case "POST_STOCK":
+      return {
+        ...state,
+        Stock: payload,
+      }
     case "VALIDATION_LOGIN":
       return {
         ...state,

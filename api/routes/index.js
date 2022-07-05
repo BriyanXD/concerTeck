@@ -40,7 +40,7 @@ const {
 } = require("../controllers/Tickets");
 
 const { getVenues, postVenues } = require("../controllers/Venue");
-const { getTicketStock } = require("../controllers/TicketStock");
+const { getTicketStock, putTicketStock } = require("../controllers/TicketStock");
 
 const { LoginUser } = require("../controllers/Login");
 const {
@@ -87,7 +87,8 @@ routes.put("/producer", verifyToken, isAdmin, putProducer);
 routes.delete("/producer", verifyToken, isAdmin, deleteProducer); */
 
 routes.get("/events", loadEventsAndGetEvents);
-routes.post("/events", verifyToken, isAdmin, postEvents);
+//routes.post("/events", verifyToken, isAdmin, postEvents);
+routes.post("/events", postEvents);
 routes.put("/events", verifyToken, isAdmin, putEvents);
 routes.delete("/events", verifyToken, isAdmin, deleteEvent); //isAdmin
 
@@ -96,13 +97,16 @@ routes.post("/ticket", verifyToken, adminNotAuthorization, postTicket);
 routes.delete("/ticket", verifyToken, isAdmin, deleteTicket);
 
 routes.get("/genres", getAllGenres);
-routes.post("/genres", verifyToken, isAdmin, postOneGenre);
+//routes.post("/genres", verifyToken, isAdmin, postOneGenre);
+routes.post("/genres", postOneGenre);
 
-routes.get("/venues", verifyToken, getVenues);
-routes.post("/venues", verifyToken, isAdmin, postVenues);
+routes.get("/venues", getVenues);
+//routes.post("/venues", verifyToken, isAdmin, postVenues);
+routes.post("/venues", postVenues);
 
 //routes.get("/ticketstock", verifyToken, getTicketStock);
 routes.get("/ticketstock", getTicketStock);
+routes.post("/ticketstock", putTicketStock);
 
 routes.post("/login", LoginUser);
 

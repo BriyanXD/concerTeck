@@ -287,7 +287,8 @@ export default function RegisterEvent(){
 
 
     //console.log para chequear lo que se esta guardando
-    console.log(event)
+    console.log("SETEANDO EVENTO", event);
+
     return (
         <div className={style.container}>
             {/* <NavBar/> */}
