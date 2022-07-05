@@ -35,9 +35,11 @@ export function searchEvent(name) {
 }
 
 export function EventById(id) {
+  console.log("🚀 ~ file: actions.js ~ line 38 ~ EventById ~ id", id)
   return async function (dispatch) {
     try {
       const event = await axios.get(`${url}/api/events?id=${id}`);
+      console.log("🚀 ~ file: actions.js ~ line 42 ~ event", event.data)
       // console.log(id)
       return dispatch({
         type: "GET_EVENT_DETAIL",
