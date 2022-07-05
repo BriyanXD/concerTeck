@@ -96,6 +96,7 @@ height: 75vh;
     
 
 }
+
 .description{
     width: 90%;
     background-color: var(--color1);
@@ -113,6 +114,7 @@ height: 75vh;
     margin-top: 10vh;
     z-index: 15;
 }
+
 
 .buttonscontainer{
    display: flex;

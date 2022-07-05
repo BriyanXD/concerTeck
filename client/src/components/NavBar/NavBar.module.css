@@ -41,7 +41,11 @@
     width: 5vw;
     height: 5vw;
 }
-
+.cart{
+    color: var(--color4);
+    width: 25px;
+    height: 25px;
+}
 
 /* .btnRegister{
     background-color: #FF4C29;

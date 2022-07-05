@@ -290,7 +290,7 @@ export default function RegisterEvent(){
     console.log(event)
     return (
         <div className={style.container}>
-            <NavBar/>
+            {/* <NavBar/> */}
     <div className={style.card}>
         <div className={style.h2}><h2>Crear Evento</h2></div>
         <form onSubmit={handleSubmitEvent}>

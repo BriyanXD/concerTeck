@@ -75,11 +75,12 @@ const Events = sequelize.define(
     description: {
       type: DataTypes.TEXT,
     },
+    isAprobe: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
   { timestamps: false }
 );
-
-Producer.hasMany(Events);
-Events.belongsTo(Producer);
 
 module.exports = Events;

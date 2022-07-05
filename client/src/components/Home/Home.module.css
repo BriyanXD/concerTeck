@@ -49,3 +49,43 @@
     background-color: #FF4C29;
     border-radius: 5px;
 }
+
+.heart{
+    position: absolute;
+    color: red;
+    z-index: 20;
+    margin-left: 16px;
+    margin-top: -2.7rem;
+    cursor: pointer;
+ 
+}
+.heartWhite{
+    position: absolute;
+    color: white;
+    z-index: 20;
+    margin-left: 16px;
+    margin-top: -2.7rem;
+    cursor: pointer;
+ 
+}
+
+
+.heart2{
+    position: absolute;
+    color: red;
+    z-index: 20;
+    margin-left: 15px;
+    margin-top: -2rem;
+    cursor: pointer;
+ 
+}
+
+.heart2White{
+    position: absolute;
+    color: white;
+    z-index: 20;
+    margin-left: 15px;
+    margin-top: -2rem;
+    cursor: pointer;
+ 
+}
