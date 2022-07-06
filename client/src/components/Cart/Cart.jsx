@@ -43,7 +43,7 @@ export default function Cart() {
 
   //*isEmpty carrito vacio localstorage
   if (isEmpty)
-    return <p className={Style.carritoVacio}>Sin eventos en el carrito</p>;
+    return <p className={Style.carritoVacio}>Carrito vacio</p>;
   return (
     <div className={Style.containerGeneral}>
       <div>Carrito ({totalUniqueItems})</div>
@@ -135,7 +135,7 @@ export default function Cart() {
             !user ? loginWithPopup() : alert("Pasarela de pagos")
           }
         >
-          Comprar Todos
+          Comprar todo
         </button>
       {/* <button className={Style.btncomprar} onClick={() => navigate("/")}>
         Volver

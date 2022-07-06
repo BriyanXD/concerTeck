@@ -1,7 +1,7 @@
 
 .containerBase{
     position: absolute;
-    top: 15vh;
+    top: 10vh;
     right: 6vw;
     z-index: 21;
     width: 100vw;
@@ -42,6 +42,5 @@
     height: 100%;
     top: 0px;
     left: 0px;
-    /* background: #000;
-    opacity: 0.4; */
+  
 }
