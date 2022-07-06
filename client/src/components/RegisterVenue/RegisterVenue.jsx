@@ -12,6 +12,7 @@ export default function RegisterVenue(){
         lat: ""
     })
     const [venue, setVenue] = useState({
+        id: "",
         name: "",
         address: "",
         map: "",
@@ -98,6 +99,14 @@ export default function RegisterVenue(){
             });
             return 
         }
+        else if(e.target.name === "name"){
+            setVenue({
+                ...venue,
+                id: e.target.value,
+                [e.target.name]: e.target.value,
+            });
+            return 
+        }
         // else if(e.target.id === "alt"){
         //     setVenue({
         //         ...venue,
@@ -137,6 +146,7 @@ export default function RegisterVenue(){
             dispatch(GetVenues());
             alert("Establecimiento añadido a la lista de lugares")
             setVenue({
+                id: "",
                 name: "",
                 address: "",
                 map: "",

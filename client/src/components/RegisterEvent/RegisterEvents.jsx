@@ -35,7 +35,7 @@ export default function RegisterEvent(){
         performerImage: "",
         placeImage: "",
         description: "",
-        venueId: 0,
+        venueId: "",
         stockId: "",
     });
     const [errors, setErrors] = useState({
@@ -61,7 +61,7 @@ export default function RegisterEvent(){
         generalLateralPrice: 0,
         generalPrice:0,
         palcoPrice: 0,
-        venueId: 0,
+        venueId: "",
     });
     // const [errorStock, setErrorStock] = useState({
     //     stockStreaming: "",
@@ -94,6 +94,7 @@ export default function RegisterEvent(){
             return 
         }
         if(e.target.name === "schedule"){
+            //await setDateTime(e.taget.value);
             await setEvent({
                 ...event,
                 schedule: dateTime
@@ -211,7 +212,7 @@ export default function RegisterEvent(){
                 palcoPrice: 0,
                 venueId: 0,
             });
-            setActiveStock(!activeStock);
+            //setActiveStock(!activeStock);
         }
     };
 
@@ -236,7 +237,7 @@ export default function RegisterEvent(){
         //event.duration === "" ||
         event.performerImage === "" ||
         event.placeImage === "" ||
-        event.venueId === 0 ||
+        event.venueId === "" ||
         event.stockId === "" ){
             setErrors({
                 name: event.name === "" ? "Ingrese el nombre del Evento" : "",
@@ -251,7 +252,7 @@ export default function RegisterEvent(){
             });
             return
         }
-        //await handleAddStock(e);
+        await handleAddStock(e);
         await dispatch(CreateEvent(event));
         //console.log("creacion de evento", eventCreated);
             alert("Evento creado exitosamente");
@@ -263,8 +264,8 @@ export default function RegisterEvent(){
                 performerImage: "",
                 placeImage: "",
                 description: "",
-                venueId: 0,
-                stockId: 0,
+                venueId: "",
+                stockId: "",
             });
             navigate("/")
     };
@@ -432,6 +433,9 @@ export default function RegisterEvent(){
             <div> <label>Nombre del evento:* </label> <input name="name" value={event.name}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Nombre del evento" /> {errors.name && <label className={style.error}>{errors.name}</label>}</div>
             <div> <label>Nombre del artista:* </label> <input name="artist" value={event.artist}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Artista" /> {errors.artist && <label className={style.error}>{errors.artist}</label>}</div>
 
+            <div> <label>Fecha y Hora del evento:* </label></div>
+            <div> <DateTimePicker name="schedule" value={dateTime} onChange={setDateTime} minDate={new Date()} format="y-MM-dd h:mm:ss a"/> {errors.schedule && <label className={style.error}>{errors.schedule}</label>} </div>
+            
             <div>
                 <label className={style.label}>Seleccionar genero existente: </label>
                 <select name="genreId" onChange={handleChange}>
@@ -443,8 +447,6 @@ export default function RegisterEvent(){
             </div>
             <div>{activeGenre ? <RegisterGenre/>:null}</div>
 
-            <div> <label>Fecha y Hora del evento:* </label></div>
-            <div> <DateTimePicker name="schedule" value={dateTime} onChange={setDateTime} minDate={new Date()} format="y-MM-dd h:mm:ss a"/> {errors.schedule && <label className={style.error}>{errors.schedule}</label>} </div>
             
             {/* <div> <input id="duration" name="file" onChange={(e) => handleChange(e)} onBlur={handleBlur} type="time" placeholder="Duracion del evento" /> {errors.duration && <label className={style.error}>{errors.duration}</label>}</div> */}
 
@@ -462,7 +464,7 @@ export default function RegisterEvent(){
             </div>
             <div>{activeVenue ? <RegisterVenue/>:null}</div>
             
-            <div> <label>Descripcion del evento: </label> <textarea name="description" value={event.description}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Descripcion" /> {errors.description && <label>{errors.description}</label>}</div>
+            <div> <label>Descripcion del evento: </label> <textarea name="description" value={event.description}  onChange={handleChange} type="text" placeholder="Descripcion" /> </div>
 
             <div> <button type="button" onClick={()=>setActiveStock(!activeStock)}>Desplegar seleccion de stock y precios</button> </div>
             <div>{activeStock ? 
@@ -493,8 +495,8 @@ export default function RegisterEvent(){
                     <label>Precio: </label> <input name="vipPrice" value={stock.vipPrice} onChange={handleStock} type="text" placeholder="Precio" />
                     </div>
 
-                    {errors.stockId && <label>{errors.stockId}</label>}
-                    <button type="button" onClick={handleAddStock}>Añadir stock</button>
+                    {/* {errors.stockId && <label>{errors.stockId}</label>} */}
+                    {/* <button type="button" onClick={handleAddStock}>Añadir stock</button> */}
                 </div> 
             : null }</div>
 
