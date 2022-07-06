@@ -239,19 +239,63 @@ export function AddToBasket(payload) {
   };
 }
 
-export function AddToFav(payload) {
-  // console.log('payload',payload)
-  return {
-    type: "ADD_TO_FAV",
-    payload: payload,
+export function getLikes(idUser) {
+  return async function (dispatch) {
+    try {
+      const allLikes = await axios.get(`${url}/api/like?idUser=${idUser}`,{
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      }
+    })
+      return dispatch({
+        type: "GET_ALL_LIKES",
+        payload: allLikes.data,       
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 }
 
-export function RemoveFavorite(id) {
-  console.log("payload id:", id);
-  return {
-    type: "REMOVE_FAVORITE",
-    payload: id,
+export function postLikes( idEvent, idUser, allLikes) {
+  return async function (dispatch) {
+    const findLikes = allLikes.find(el =>el.idEvent===idEvent)
+    if(findLikes){
+      console.log('Ya existe')
+      return 
+    } 
+    try {
+      const getLikes = await axios.post(`${url}/api/like`,{ idEvent:idEvent, idUser:idUser},
+      {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+      return dispatch({
+        type: "POST_LIKES",
+        payload: getLikes.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+
+export function deleteLikes(id) {
+  return async function (dispatch) {
+    try {
+      const deleteLikes = await axios.delete(`${url}/api/like?id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return dispatch({
+        type: "DELETE_LIKES",
+        payload: deleteLikes,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 }
 
@@ -499,11 +543,12 @@ export function getCartDB(idUser) {
 export function deleteCart(id) {
   return async function (dispatch) {
     try {
-      await axios.delete(`${url}/api/cart?id=${id}`);
-      // return dispatch({
-      //   type: "DELETE_CART",
-      //   payload: id,
-      // });
+      const data = await axios.delete(`${url}/api/cart?id=${id}`);
+      console.log("🚀 ~ file: actions.js ~ line 547 ~ data", data.data.ShoppingSave)
+      return dispatch({
+        type: "DELETE_CART",
+        payload: data.data,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -513,11 +558,12 @@ export function deleteCart(id) {
 export function putCartDB(value) {
   return async function (dispatch) {
     try {
-      await axios.put(`${url}/api/cart`, value);
-    //  return dispatch({
-    //   type: "UPDATE_CART",
-    //   payload: data.data,
-    // })
+     const data = await axios.put(`${url}/api/cart`, value);
+     console.log("🚀 ~ file: actions.js ~ line 562 ~ data", data.data)
+     return dispatch({
+      type: "UPDATE_CART",
+      payload: data.data,
+    })
     } catch (error) {
       console.log(error);
     }

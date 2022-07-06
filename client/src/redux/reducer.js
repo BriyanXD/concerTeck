@@ -72,26 +72,28 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         Basket: [...state.Basket, payload],
       };
-    case "ADD_TO_FAV":
-      if (state.Likes.find((l) => l.id === payload.id)) {
+    case "POST_LIKES":
+      if(state.Likes.find(l => l.id === payload.id)){ 
         return {
           ...state,
-          Likes: state.Likes.filter((f) => f.id !== payload.id),
-        };
-      } else {
+          Likes:state.Likes.filter((f) => f.id !== payload.id) 
+        }
+        } else{
         return {
           ...state,
           Likes: [...state.Likes, payload],
-        };
-      }
-    case "REMOVE_FAVORITE":
-      // console.log('likes:', state.Likes)
-      // console.log('payload:', payload)
+        }
+        }
+    case "DELETE_LIKES":
       return {
         ...state,
         Likes: state.Likes.filter((f) => f.id !== payload.id),
-      };
-
+    }
+      case "GET_ALL_LIKES":
+        return{
+          ...state,
+          Likes: payload
+    }
     case "GET_EVENT_BY_NAME": {
       const bigEvents = payload.filter((e) => e.venue.isBigEvent === true);
       const smallEvents = payload.filter((e) => e.venue.isBigEvent === false);
@@ -339,9 +341,14 @@ function reducers(state = initialState, { type, payload }) {
     case "UPDATE_CART":
       return{
         ...state,
-        cartDB: state.cartDB.update.map((e)=> {
+        cartDB: state.cartDB.map((e)=> {
           return e.id === payload.id ? payload : e;
         })
+      }
+    case "DELETE_CART":
+      return{
+       ...state,
+       cartDB:  state.cartDB.filter((e)=> e.id !== payload.ShoppingSave.id)
       }
     case  "FIND_EVENT_BY_NAME":
       return {

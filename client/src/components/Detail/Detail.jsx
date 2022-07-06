@@ -11,6 +11,7 @@ import { MdDetails, MdOutlineAddShoppingCart } from 'react-icons/md';
 import Tooltip from '@mui/material/Tooltip';
 import { useCart } from "react-use-cart";
 import Leaflet from '../Leaflet/Leaflet';
+import swal from 'sweetalert';
 
 //resolver problema de necesitar 2 click para agregar el evento en la base de datos
 
@@ -19,10 +20,8 @@ export default function Detail() {
   const { addItem } = useCart();
   const user = useSelector(state => state.User);
   const cartDB = useSelector(state =>state.cartDB);
-  console.log("🚀 ~ file: Detail.jsx ~ line 22 ~ Detail ~ cartDB", cartDB)
   const [flag, setFlag] = useState(false)
   let temporal = localStorage.getItem("user")
-  console.log("🚀 ~ file: Detail.jsx ~ line 24 ~ Detail ~ temporal", temporal)
   let userStorage 
   if(temporal !== "nada"){
     userStorage = JSON.parse(temporal)
@@ -52,14 +51,7 @@ export default function Detail() {
     }
   },[flag])
   const {Detail} = useSelector((state)=> state)
-  console.log("🚀 ~ file: Detail.jsx ~ line 55 ~ Detail ~ Detail", Detail)
   const {Venues} = useSelector((state => state))
-
-  const [add , setAdd] =useState({
-    idUser: "",
-    idEvent: ""
-  })
-  console.log(cartDB)
   
   let date = ''
   let time = ''
@@ -189,7 +181,7 @@ export default function Detail() {
       <NavBar/>
         <div className={style.card}>
           <br />
-          {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3286.3259476513035!2d-58.451963585088734!3d-34.545301761915844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb43ae6018ddf%3A0x3d7f60a75bfa308a!2sEstadio%20Monumental%20Antonio%20Vespucio%20Liberti!5e0!3m2!1ses-419!2sar!4v1656420898046!5m2!1ses-419!2sar" width="300" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> */}
+        
           <img src = {Detail.placeImage} alt={Detail.name} className={style.imgPlace}/>
         <div className={style.midcontainer}>
           <div>
@@ -205,37 +197,44 @@ export default function Detail() {
           </div>
         </div>
         {/**Agregar condicional en el caso de que stock este en 0 */}
+        {console.log(Detail)}
         {Detail.stock?<div className={style.containerCarrito}>
-            <div className={style.detailTicket}>
-                <div>
-                  <h3>Tipo de entrada: General</h3><h3>${Detail.stock.generalPrice}</h3><div><MdOutlineAddShoppingCart onClick={() => handleClick("general")} className={style.addicon}/></div> 
-                  <h6>disponibles {Detail.stock.stockGeneral}</h6>
-                  </div>
-            </div>
-            <div className={style.detailTicket}>
-                <div>
-                  <h3>Tipo de entrada: General Lateral</h3><h3>${Detail.stock.generalLateralPrice}</h3><div> <MdOutlineAddShoppingCart onClick={() => handleClick("generallateral")} className={style.addicon}/></div> 
-                  <h6>disponibles {Detail.stock.stockGeneralLateral}</h6>
-                  </div>
-            </div>
-            <div className={style.detailTicket}>
-                <div>
-                  <h3>Tipo de entrada: Palco</h3><h3>${Detail.stock.palcoPrice}</h3><div> <MdOutlineAddShoppingCart onClick={() => handleClick("palco")} className={style.addicon}/></div> 
-                  <h6>disponibles {Detail.stock.stockPalco}</h6>
-                  </div>
-            </div>
-            <div className={style.detailTicket}>
-                <div>
-                  <h3>Tipo de entrada: Streaming</h3><h3>${Detail.stock.streamingPrice}</h3><div> <MdOutlineAddShoppingCart onClick={() => handleClick("streaming")} className={style.addicon}/></div> 
-                  <h6>disponibles {Detail.stock.stockStreaming}</h6>
-                  </div>
-            </div>
-            <div className={style.detailTicket}>
-                <div>
-                  <h3>Tipo de entrada: Vip</h3><h3>${Detail.stock.vipPrice}</h3><div > <MdOutlineAddShoppingCart onClick={() => handleClick("vip")} className={style.addicon}/></div> 
-                  <h6>disponibles {Detail.stock.stockkVIP}</h6>
-                  </div>
-            </div>
+            {Detail.stock?.stockGeneral?<div className={style.detailTicket}>
+            <div className={style.buttonadditem}>
+                  <div>General ${Detail.stock.generalPrice}</div> 
+                  <div>disponibles {Detail.stock.stockGeneral}</div>
+                      </div>
+                  <MdOutlineAddShoppingCart onClick={() => {handleClick("general"); swal('Item agregado al carrito')}} className={style.addicon}/>
+                  
+            </div>:null}
+           {Detail.stock?.stockGeneralLateral?<div className={style.detailTicket}>
+               <div className={style.buttonadditem}>
+                  <div>General Lat. ${Detail.stock.generalLateralPrice} </div> 
+                  <div>disponibles {Detail.stock.stockGeneralLateral}</div>
+                </div>
+                  <MdOutlineAddShoppingCart onClick={() => {handleClick("generallateral"); swal('Item agregado al carrito')}} className={style.addicon}/>
+            </div>: null}
+            {Detail.stock?.stockPalco?<div className={style.detailTicket}>
+                <div className={style.buttonadditem}>
+                  <div>Palco ${Detail.stock.palcoPrice} </div> 
+                 <div>disponibles {Detail.stock.stockPalco}</div>
+                </div>
+                  <MdOutlineAddShoppingCart onClick={() =>{handleClick("palco"); swal('Item agregado al carrito')}} className={style.addicon}/>
+            </div>:null}
+            {Detail.stock?.stockStreaming?<div className={style.detailTicket}>
+                <div className={style.buttonadditem}>
+                  <div>Streaming ${Detail.stock.streamingPrice} </div> 
+                  <div>disponibles {Detail.stock.stockStreaming}</div>
+                </div>
+                  <MdOutlineAddShoppingCart onClick={() => {handleClick("streaming"); swal('Item agregado al carrito')}} className={style.addicon}/>
+            </div>:null}
+            {Detail.stock?.stockkVIP?<div className={style.detailTicket}>
+              <div className={style.buttonadditem}> 
+                <div>Vip ${Detail.stock.vipPrice} </div> 
+                <div>disponibles {Detail.stock.stockkVIP}</div>
+              </div>
+                <MdOutlineAddShoppingCart onClick={() => {handleClick("vip"); swal('Item agregado al carrito')}} className={style.addicon}/>
+            </div>:null}
         </div>:null}
         
           <Leaflet  data={coord} />

@@ -15,6 +15,7 @@ import { useLocation } from "react-router-dom";
 import {MdOutlineShoppingCart } from 'react-icons/md';
 import Tooltip from '@mui/material/Tooltip';
 import Cart from '../Cart/Cart';
+import { useCart } from "react-use-cart";
 
 export default function NavBar({ setCurrenPag, setCurrentPage }) {
   const user = useSelector((state) => state.User);
@@ -22,7 +23,16 @@ export default function NavBar({ setCurrenPag, setCurrentPage }) {
   let path = location.pathname.split("/");
 
   const [active, setActive] = useState(false);
-  
+  const { totalUniqueItems } = useCart();
+  const {cartDB} = useSelector(state => state);
+  console.log("🚀 ~ file: NavBar.jsx ~ line 28 ~ NavBar ~ cartDB", cartDB)
+  let temporal = localStorage.getItem("user")
+  let userStorage 
+  if(temporal !== "nada"){
+    userStorage = JSON.parse(temporal)
+  }else{
+    userStorage = ""
+  }
 
   const toggle = () => {
     setActive(!active);
@@ -49,7 +59,7 @@ export default function NavBar({ setCurrenPag, setCurrentPage }) {
             />
             <Date setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage} />
           </div>
-          {/* <Link to="/Cart"> */}
+          {userStorage !== ""? <div className={style.Items}>{cartDB.length}</div> : <div className={style.Items}>{totalUniqueItems}</div> }
           <Tooltip title="Ver carrito" arrow>
           <div onClick={toggle} className={style.cart}>
           <MdOutlineShoppingCart className={style.cartlogo}/>
@@ -59,7 +69,7 @@ export default function NavBar({ setCurrenPag, setCurrentPage }) {
           <Modal2 active={active} toggle={toggle}>
             <Cart/>
           </Modal2>
-          {/* </Link> */}
+         
           <div className={style.registerAndLogin}>
             {/* <Link to="/events"><button className={style.btnRegister} type="button">Crear Evento</button></Link>  */}
             {/* {user === "" ? (

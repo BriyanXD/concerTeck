@@ -13,7 +13,7 @@ export default function Cart() {
 
   //*Auth0 datos de usuario logeado y popUp de logeo
   const { user, loginWithPopup } = useAuth0();
-  const [flag, setFlag] = useState(false);
+  // const [flag, setFlag] = useState(false);
   //*datos de carrito
   const {
     isEmpty,
@@ -43,15 +43,18 @@ export default function Cart() {
     }
   }, []);
 
-  useEffect(()=>{
-    if(userStorage !== ""){
-    dispatch(getCartDB(userStorage.id))
-    }
-  },[flag])
+  // useEffect(()=>{
+  //   if(userStorage !== ""){
+  //   dispatch(getCartDB(userStorage.id))
+  //   }
+  // },[flag])
 
   let ambos= [];
   if(userStorage !== ""){
-    ambos = [...cartDB]
+    let data = [...cartDB]
+    ambos = data.sort((a,b) => {
+      return (a.variant - b.variant)
+    })
    }else{
      ambos= [...items]
    }
@@ -64,15 +67,15 @@ export default function Cart() {
     }
 
   if (userStorage !== "" && cartDB.length === 0){
-    return <p className={Style.carritoVacio}>Sin eventos en el carrito DB</p>;
+    return <p className={Style.carritoVacio}>Sin eventos en el carrito </p>;
   }else if(userStorage === "" && isEmpty){
-    return <p className={Style.carritoVacio}>Sin eventos en el carrito LocalStorage</p>;
+    return <p className={Style.carritoVacio}>Sin eventos en el carrito </p>;
   }
 
  const handleDelete = async (id) => {
   if(userStorage !== ""){
   await dispatch(deleteCart(id))
-    setFlag(!flag)
+    // setFlag(!flag)
   }else{
     removeItem(id)
   }
@@ -82,10 +85,10 @@ export default function Cart() {
   if(userStorage !== ""){
     if(operador === "-"){
      await dispatch(putCartDB({id:item.id, quantity:item.quantity- 1}))
-      setFlag(!flag)
+      // setFlag(!flag)
     }else{
       await dispatch(putCartDB({id:item.id, quantity:item.quantity+ 1}))
-      setFlag(!flag)
+      // setFlag(!flag)
     }
   }else{
     if(operador === "-"){
@@ -95,7 +98,13 @@ export default function Cart() {
     }
   }
 }
+
 let totalTodos;
+if(userStorage !== ""){
+  totalTodos = cartDB.map(item => item.itemTotal).reduce((prev, curr) => prev + curr, 0);
+ }else{
+  totalTodos = cartTotal
+ }
   return (
     <div className={Style.containerGeneral}>
       <h3>Carrito ({cantidadEventos})</h3>
@@ -156,7 +165,7 @@ let totalTodos;
         ))}
       </ul>
         <div>
-        Total final: ${cartTotal} ARS.
+        Total final: ${totalTodos} ARS.
           </div>
         <button
           className={Style.btncomprar}
@@ -164,7 +173,7 @@ let totalTodos;
             !user ? loginWithPopup() : alert("Pasarela de pagos")
           }
         >
-          Comprar Todos
+          Comprar todo
         </button>
       {/* <button className={Style.btncomprar} onClick={() => navigate("/")}>
         Volver
