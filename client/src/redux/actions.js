@@ -500,10 +500,10 @@ export function deleteCart(id) {
   return async function (dispatch) {
     try {
       await axios.delete(`${url}/api/cart?id=${id}`);
-      return dispatch({
-        type: "DELETE_CART",
-        payload: id,
-      });
+      // return dispatch({
+      //   type: "DELETE_CART",
+      //   payload: id,
+      // });
     } catch (error) {
       console.log(error);
     }

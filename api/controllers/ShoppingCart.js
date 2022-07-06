@@ -85,7 +85,9 @@ async function putShoppingCart(req, res) {
   } = req.body;
   try {
     const ShoppingSave = await ShoppingCart.findOne({ where: { id: id } });
+    const total = ShoppingSave.price* quantity;
     if (ShoppingSave) {
+      console.log("1121")
       const ShoppingUpdate = await ShoppingSave.update({
         idUser: idUser,
         idEvent: idEvent,
@@ -93,7 +95,7 @@ async function putShoppingCart(req, res) {
         schedule: schedule,
         quantity: quantity,
         variant: variant,
-        itemTotal: itemTotal,
+        itemTotal: total,
         price: price,
       });
       return res.json({

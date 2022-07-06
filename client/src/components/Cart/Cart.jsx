@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useCart } from "react-use-cart";
 import { useSelector, useDispatch } from "react-redux";
 import { getEvents, getCartDB, deleteCart, putCartDB } from "../../redux/actions";
@@ -12,7 +12,7 @@ export default function Cart() {
 
   //*Auth0 datos de usuario logeado y popUp de logeo
   const { user, loginWithPopup } = useAuth0();
-
+  const [flag, setFlag] = useState(false);
   //*datos de carrito
   const {
     isEmpty,
@@ -41,6 +41,10 @@ export default function Cart() {
       dispatch(getCartDB(userStorage.id))
     }
   }, []);
+
+  useEffect(()=>{
+    dispatch(getCartDB(userStorage.id))
+  },[flag])
   let ambos= [];
   if(userStorage !== ""){
     ambos = [...cartDB]
@@ -56,6 +60,7 @@ export default function Cart() {
  const handleDelete = (id) => {
   if(userStorage !== ""){
     dispatch(deleteCart(id))
+    setFlag(!flag)
   }else{
     removeItem(id)
   }
@@ -63,11 +68,13 @@ export default function Cart() {
  const handleUpdate = (item, operador) => {
   if(userStorage !== ""){
     if(operador === "-"){
-      console.log(item.quantity--, "desde if -")
-      dispatch(putCartDB({id:item.id, quantity: --item.quantity}))
+      // console.log(item.quantity-1, "desde if -")
+      dispatch(putCartDB({id:item.id, quantity:item.quantity- 1}))
+      setFlag(!flag)
     }else{
-      console.log(item.quantity++, "desde if +")
-      dispatch(putCartDB({id:item.id, quantity: ++item.quantity}))
+      // console.log(item.quantity+1, "desde if +")
+      dispatch(putCartDB({id:item.id, quantity:item.quantity+ 1}))
+      setFlag(!flag)
     }
   }else{
     if(operador === "-"){
