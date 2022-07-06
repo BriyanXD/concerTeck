@@ -4,7 +4,7 @@ import Style from "./PerfilEventAdmin.module.css"
 import { activeModalEventsAdminPanel } from "../../redux/actions"
 import BarGraph from "../BarGraph/BarGraph"
 import PolarGraph from "../PolarGraph/PolarGraph"
-
+import LikesAdminPanel from "./LikesAdminPanel/LikesAdminPanel"
 export default function PerfilEventAdmin(){
     const eventSaved = useSelector((state) => state.eventSaved)
     const dispatch = useDispatch()
@@ -28,6 +28,7 @@ export default function PerfilEventAdmin(){
                     <div className={Style.containerdate}><span className={Style.dataone}>Description:</span><span>{eventSaved.description}</span></div>
                    </div>
                    <div>
+                   <LikesAdminPanel idEvent={eventSaved}/>
                    <PolarGraph event={eventSaved}/>
                    </div>
                 </div>

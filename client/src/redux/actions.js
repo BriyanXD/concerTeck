@@ -242,14 +242,14 @@ export function AddToBasket(payload) {
 export function getLikes(idUser) {
   return async function (dispatch) {
     try {
-      const allLikes = await axios.get(`${url}/api/like?idUser=${idUser}`,{
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      }
-    })
+      const allLikes = await axios.get(`${url}/api/like?idUser=${idUser}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       return dispatch({
         type: "GET_ALL_LIKES",
-        payload: allLikes.data,       
+        payload: allLikes.data,
       });
     } catch (error) {
       console.log(error.message);
@@ -257,20 +257,23 @@ export function getLikes(idUser) {
   };
 }
 
-export function postLikes( idEvent, idUser, allLikes) {
+export function postLikes(idEvent, idUser, allLikes) {
   return async function (dispatch) {
-    const findLikes = allLikes.find(el =>el.idEvent===idEvent)
-    if(findLikes){
-      console.log('Ya existe')
-      return 
-    } 
+    const findLikes = allLikes.find((el) => el.idEvent === idEvent);
+    if (findLikes) {
+      console.log("Ya existe");
+      return;
+    }
     try {
-      const getLikes = await axios.post(`${url}/api/like`,{ idEvent:idEvent, idUser:idUser},
-      {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+      const getLikes = await axios.post(
+        `${url}/api/like`,
+        { idEvent: idEvent, idUser: idUser },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       return dispatch({
         type: "POST_LIKES",
         payload: getLikes.data,
@@ -604,6 +607,29 @@ export function deleteUserBlackList(idUser) {
       });
     } catch (error) {
       console.log(error, "DELETE_USER_BLACK_LIST");
+    }
+  };
+}
+export function getAllLikesEventId(idEvent) {
+  return async function (dispatch) {
+    try {
+      console.log(idEvent, "ID DEL EVENTO");
+
+      const allLikesEventId = await axios.get(
+        `${url}/api/like?idEvent=${idEvent}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(allLikesEventId.data, "USUARIO PERDONADO");
+      return dispatch({
+        type: "GET_ALL_LIKES_EVENT_ID",
+        payload: allLikesEventId.data,
+      });
+    } catch (error) {
+      console.log(error, "GET_ALL_LIKES_EVENT_ID");
     }
   };
 }

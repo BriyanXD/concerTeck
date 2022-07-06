@@ -170,10 +170,10 @@ export default function Detail() {
     }
     
   }
-  let coord = ''
+ let coord = ''
   
 
-  coord = prueba? prueba.map : '-34.545306 -58.449775'
+coord = prueba? prueba.map : '-34.545306 -58.449775'
  
 
   return (
