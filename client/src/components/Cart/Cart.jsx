@@ -5,6 +5,7 @@ import { getEvents, getCartDB, deleteCart, putCartDB } from "../../redux/actions
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 import Style from "./Cart.module.css";
+import { style } from "@mui/system";
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -32,9 +33,9 @@ export default function Cart() {
   }else{
     userStorage = ""
   }
+
   const {cartDB} = useSelector(state =>state);
 
-  //*Llama a todos los eventos
   useEffect(() => {
     dispatch(getEvents());
     if(userStorage !== ""){
@@ -43,8 +44,11 @@ export default function Cart() {
   }, []);
 
   useEffect(()=>{
+    if(userStorage !== ""){
     dispatch(getCartDB(userStorage.id))
+    }
   },[flag])
+
   let ambos= [];
   if(userStorage !== ""){
     ambos = [...cartDB]
@@ -52,28 +56,35 @@ export default function Cart() {
      ambos= [...items]
    }
 
-  if (userStorage !== "" && cartDB.lenght === 0){
+   let cantidadEventos= 0;
+   if(userStorage !== ""){
+     cantidadEventos = cartDB.length
+    }else{
+     cantidadEventos = totalUniqueItems
+    }
+
+  if (userStorage !== "" && cartDB.length === 0){
     return <p className={Style.carritoVacio}>Sin eventos en el carrito DB</p>;
-  }else if(isEmpty){
+  }else if(userStorage === "" && isEmpty){
     return <p className={Style.carritoVacio}>Sin eventos en el carrito LocalStorage</p>;
   }
- const handleDelete = (id) => {
+
+ const handleDelete = async (id) => {
   if(userStorage !== ""){
-    dispatch(deleteCart(id))
+  await dispatch(deleteCart(id))
     setFlag(!flag)
   }else{
     removeItem(id)
   }
  }
- const handleUpdate = (item, operador) => {
+
+ const handleUpdate = async (item, operador) => {
   if(userStorage !== ""){
     if(operador === "-"){
-      // console.log(item.quantity-1, "desde if -")
-      dispatch(putCartDB({id:item.id, quantity:item.quantity- 1}))
+     await dispatch(putCartDB({id:item.id, quantity:item.quantity- 1}))
       setFlag(!flag)
     }else{
-      // console.log(item.quantity+1, "desde if +")
-      dispatch(putCartDB({id:item.id, quantity:item.quantity+ 1}))
+      await dispatch(putCartDB({id:item.id, quantity:item.quantity+ 1}))
       setFlag(!flag)
     }
   }else{
@@ -84,18 +95,22 @@ export default function Cart() {
     }
   }
 }
+let totalTodos;
   return (
     <div className={Style.containerGeneral}>
-      <h3>Carrito ({totalUniqueItems})</h3>
+      <h3>Carrito ({cantidadEventos})</h3>
       <ul>
         {ambos.map((item) => (
           
-          <li key={item.id}>
-            {item.quantity} x {item.nombre} &mdash;
-            <img src={item.performerImage} alt={item.nombre} />
-            <p>
-              {" "}
-              <div>
+          <li key={item.id} className={Style.items}>
+            <div>
+            {item.quantity} x {item.nombre} 
+            <img src={item.performerImage} alt={item.nombre} className={Style.image} />
+            </div>
+           <div className={Style.tipo}>
+             
+           
+              <div >
                 Tipo de entrada:{" "}
                 {item.variant === "streamingPrice"
                   ? "Streaming"
@@ -109,11 +124,13 @@ export default function Cart() {
                   ? "Palco"
                   : null}
               </div>
-            </p>
-            <p> {item.schedule.split("T")[0]}</p>
-            <p>{item.schedule.split("T")[1].split(":")[0] + ":" + item.schedule.split("T")[1].split(":")[1]}</p>
-            <p>Precio: {item.price}</p>
-            <p>Total: {item.itemTotal === 0 ? null : item.itemTotal}</p>
+            
+            <div> {item.schedule.split("T")[0]} {'  '}
+            {item.schedule.split("T")[1].split(":")[0] + ":" + item.schedule.split("T")[1].split(":")[1]} h</div>
+            <div>Precio: ${item.price} Total: ${item.itemTotal === 0 ? null : item.itemTotal}</div>
+            <div>
+
+           
             <button
               className={Style.btn}
               onClick={() =>
@@ -133,9 +150,14 @@ export default function Cart() {
             <button className={Style.btn} onClick={() => handleDelete(item.id)}>
               &times;
             </button>
+            </div>
+            </div>
           </li>
         ))}
-        Total final: {cartTotal}
+      </ul>
+        <div>
+        Total final: ${cartTotal} ARS.
+          </div>
         <button
           className={Style.btncomprar}
           onClick={() =>
@@ -144,10 +166,10 @@ export default function Cart() {
         >
           Comprar Todos
         </button>
-      </ul>
-      <button className={Style.btncomprar} onClick={() => navigate("/")}>
+      {/* <button className={Style.btncomprar} onClick={() => navigate("/")}>
         Volver
-      </button>
+      </button> */}
     </div>
   );
 }
+

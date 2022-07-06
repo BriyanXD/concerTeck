@@ -19,6 +19,7 @@ export default function Detail() {
   const { addItem } = useCart();
   const user = useSelector(state => state.User);
   const cartDB = useSelector(state =>state.cartDB);
+  console.log("🚀 ~ file: Detail.jsx ~ line 22 ~ Detail ~ cartDB", cartDB)
   const [flag, setFlag] = useState(false)
   let temporal = localStorage.getItem("user")
   console.log("🚀 ~ file: Detail.jsx ~ line 24 ~ Detail ~ temporal", temporal)
@@ -51,6 +52,7 @@ export default function Detail() {
     }
   },[flag])
   const {Detail} = useSelector((state)=> state)
+  console.log("🚀 ~ file: Detail.jsx ~ line 55 ~ Detail ~ Detail", Detail)
   const {Venues} = useSelector((state => state))
 
   const [add , setAdd] =useState({
@@ -246,12 +248,12 @@ export default function Detail() {
             <button className={style.button}>Volver</button>
             </Tooltip>
           </Link>
-            <Tooltip title="Agregar al carrito" arrow>
+            {/* <Tooltip title="Agregar al carrito" arrow>
               <div className={style.add}>
             
            <MdOutlineAddShoppingCart onClick={() => handleClick(Detail)} className={style.addicon}/>
               </div>
-            </Tooltip>
+            </Tooltip> */}
          </div>
            
         </div>

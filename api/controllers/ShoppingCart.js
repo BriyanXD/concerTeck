@@ -87,7 +87,6 @@ async function putShoppingCart(req, res) {
     const ShoppingSave = await ShoppingCart.findOne({ where: { id: id } });
     const total = ShoppingSave.price* quantity;
     if (ShoppingSave) {
-      console.log("1121")
       const ShoppingUpdate = await ShoppingSave.update({
         idUser: idUser,
         idEvent: idEvent,
@@ -98,11 +97,7 @@ async function putShoppingCart(req, res) {
         itemTotal: total,
         price: price,
       });
-      return res.json({
-        message: "Carrito Actualizado",
-        ShoppingSave,
-        ShoppingUpdate,
-      });
+      return res.json(ShoppingUpdate);
     } else {
       res
         .status(401)

@@ -7,7 +7,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import logoSombra from "../../assets/LogoSombra.png";
 import Date from "../Filters/Date/Date";
 import UserNavBar from "../UserNavbar/UserNavbar";
-import Modal from "../Modals/Modal/Modal";
+import Modal2 from "../Modals/Modal/Modal2";
 // import Login from "../Login/Login";
 import LoginAuth0  from '../LoginAuth0/LoginAuth0';
 // import PerfilYLogoutAuth0 from '../LogoutAuth0/PerfilYLogoutAuth0';
@@ -52,13 +52,13 @@ export default function NavBar({ setCurrenPag, setCurrentPage }) {
           {/* <Link to="/Cart"> */}
           <Tooltip title="Ver carrito" arrow>
           <div onClick={toggle} className={style.cart}>
-          <MdOutlineShoppingCart/>
+          <MdOutlineShoppingCart className={style.cartlogo}/>
           </div>
           </Tooltip>  
 
-          <Modal active={active} toggle={toggle}>
+          <Modal2 active={active} toggle={toggle}>
             <Cart/>
-          </Modal>
+          </Modal2>
           {/* </Link> */}
           <div className={style.registerAndLogin}>
             {/* <Link to="/events"><button className={style.btnRegister} type="button">Crear Evento</button></Link>  */}

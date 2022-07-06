@@ -511,14 +511,53 @@ export function deleteCart(id) {
 }
 
 export function putCartDB(value) {
-  console.log("🚀 ~ file: actions.js ~ line 514 ~ putCartDB ~ value", value)
   return async function (dispatch) {
     try {
-     const data=  await axios.put(`${url}/api/cart`, value);
-     
-      console.log("ENTRANDO 2222", data.data);
+      await axios.put(`${url}/api/cart`, value);
+    //  return dispatch({
+    //   type: "UPDATE_CART",
+    //   payload: data.data,
+    // })
     } catch (error) {
       console.log(error);
+    }
+  };
+}
+
+export function getAllBlackList() {
+  return async function (dispatch) {
+    try {
+      const getAllBlackListData = await axios.get(`${url}/api/blackall`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(getAllBlackListData.data, "LISTA NEGRA");
+      return dispatch({
+        type: "GET_ALL_BLACK_LIST",
+        payload: getAllBlackListData.data,
+      });
+    } catch (error) {
+      console.log(error, "GET_ALL_BLACK_LIST");
+    }
+  };
+}
+
+export function deleteUserBlackList(idUser) {
+  return async function (dispatch) {
+    try {
+      const dataUser = await axios.delete(`${url}/api/black?id=${idUser}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(dataUser.data, "USUARIO PERDONADO");
+      return dispatch({
+        type: "DELETE_USER_BLACK_LIST",
+        payload: dataUser.data,
+      });
+    } catch (error) {
+      console.log(error, "DELETE_USER_BLACK_LIST");
     }
   };
 }
