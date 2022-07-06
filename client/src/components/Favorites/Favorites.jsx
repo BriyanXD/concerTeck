@@ -26,38 +26,38 @@ export default function Favorites(){
     }
 
     return(
-        <div className={s.all}>
+        <div>
+        <div className={s.container}>
             <div className={s.title}>
                 <h3>Eventos guardados como Favoritos: </h3>
             </div>
             <div>
-            <div className={s.container}>
-            {
-                Likes.map((e)=>{
-                    return bigEvents?.map((el)=>{
-
-                        if(e.idEvent===el.id){
-                            return (
-                                <div className={s.containerClose}>
-                                   <Link style={{ textDecoration: "none" }} to={`/${el.id}`}>
-                                   <CardBigEvent
-                                   name={el.name}
-                                   genreId={el.genreId}
-                                   image={el.performerImage}
-                                   schedule={el.schedule}
-                                   id={el.id}
-                                 />
-                                 </Link>
-                                 <button className={s.btn} onClick={()=>handleDelete(e.id)}>X</button>
-           
-                            </div>
-                           )
-                        } return
+            <div >
+                <div className={s.bigcontainer}>
+                    {Likes.map((e)=> {
+                        return bigEvents?.map((el)=>{
+                            if(e.idEvent===el.id){
+                                return (
+                                    <div className={s.containerClose}>
+                                       <Link style={{ textDecoration: "none" }} to={`/${el.id}`}>
+                                       <CardBigEvent
+                                       name={el.name}
+                                       genreId={el.genreId}
+                                       image={el.performerImage}
+                                       schedule={el.schedule}
+                                       id={el.id}
+                                     />
+                                     </Link>
+                                     <button className={s.btn} onClick={()=>handleDelete(e.id)}>X</button>
+                                </div>
+                               )
+                            } return
+                        })
                     })
-                })
-            }
-            {
-                Likes.map((e)=>{
+                }
+                </div>
+                <div className={s.litlecontainer}>
+                {Likes.map((e)=>{
                     return events?.map((el)=>{
 
                         if(e.idEvent===el.id){
@@ -73,7 +73,6 @@ export default function Favorites(){
                                  />
                                  </Link>
                                  <button className={s.btn2} onClick={()=>handleDelete(e.id)}>X</button>
-           
                             </div>
                            )
                         } return
@@ -82,15 +81,17 @@ export default function Favorites(){
                 }
                 </div>
                 </div>
+                </div>
                 <div>
                     <Link to='/perfil/:id'>
                          <button className={s.buttonBack}>Volver</button>
                     </Link>
                 </div>
-                <div>
+                <div className={s.footer}>
                     <FooterFav/>
                 </div>
             </div>
+        </div>
     )
 
 }
