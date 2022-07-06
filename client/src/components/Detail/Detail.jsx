@@ -213,12 +213,12 @@ export default function Detail() {
             <button className={style.button}>Volver</button>
             </Tooltip>
           </Link>
-            <Tooltip title="Agregar al carrito" arrow>
+            {/* <Tooltip title="Agregar al carrito" arrow>
               <div className={style.add}>
             
            <MdOutlineAddShoppingCart onClick={() => handleClick(Detail)} className={style.addicon}/>
               </div>
-            </Tooltip>
+            </Tooltip> */}
          </div>
            
         </div>
