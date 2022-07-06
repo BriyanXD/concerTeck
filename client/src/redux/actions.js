@@ -35,9 +35,11 @@ export function searchEvent(name) {
 }
 
 export function EventById(id) {
+  console.log("🚀 ~ file: actions.js ~ line 38 ~ EventById ~ id", id);
   return async function (dispatch) {
     try {
       const event = await axios.get(`${url}/api/events?id=${id}`);
+      console.log("🚀 ~ file: actions.js ~ line 42 ~ event", event.data);
       // console.log(id)
       return dispatch({
         type: "GET_EVENT_DETAIL",
@@ -240,19 +242,66 @@ export function AddToBasket(payload) {
   };
 }
 
-export function AddToFav(payload) {
-  // console.log('payload',payload)
-  return {
-    type: "ADD_TO_FAV",
-    payload: payload,
+export function getLikes(idUser) {
+  return async function (dispatch) {
+    try {
+      const allLikes = await axios.get(`${url}/api/like?idUser=${idUser}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return dispatch({
+        type: "GET_ALL_LIKES",
+        payload: allLikes.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 }
 
-export function RemoveFavorite(id) {
-  console.log("payload id:", id);
-  return {
-    type: "REMOVE_FAVORITE",
-    payload: id,
+export function postLikes(idEvent, idUser, allLikes) {
+  return async function (dispatch) {
+    const findLikes = allLikes.find((el) => el.idEvent === idEvent);
+    if (findLikes) {
+      console.log("Ya existe");
+      return;
+    }
+    try {
+      const getLikes = await axios.post(
+        `${url}/api/like`,
+        { idEvent: idEvent, idUser: idUser },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      return dispatch({
+        type: "POST_LIKES",
+        payload: getLikes.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+
+export function deleteLikes(id) {
+  return async function (dispatch) {
+    try {
+      const deleteLikes = await axios.delete(`${url}/api/like?id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return dispatch({
+        type: "DELETE_LIKES",
+        payload: deleteLikes,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 }
 
@@ -520,6 +569,67 @@ export function putCartDB(value) {
       console.log("ENTRANDO 2222");
     } catch (error) {
       console.log(error);
+    }
+  };
+}
+
+export function getAllBlackList() {
+  return async function (dispatch) {
+    try {
+      const getAllBlackListData = await axios.get(`${url}/api/blackall`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(getAllBlackListData.data, "LISTA NEGRA");
+      return dispatch({
+        type: "GET_ALL_BLACK_LIST",
+        payload: getAllBlackListData.data,
+      });
+    } catch (error) {
+      console.log(error, "GET_ALL_BLACK_LIST");
+    }
+  };
+}
+
+export function deleteUserBlackList(idUser) {
+  return async function (dispatch) {
+    try {
+      const dataUser = await axios.delete(`${url}/api/black?id=${idUser}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(dataUser.data, "USUARIO PERDONADO");
+      return dispatch({
+        type: "DELETE_USER_BLACK_LIST",
+        payload: dataUser.data,
+      });
+    } catch (error) {
+      console.log(error, "DELETE_USER_BLACK_LIST");
+    }
+  };
+}
+export function getAllLikesEventId(idEvent) {
+  return async function (dispatch) {
+    try {
+      console.log(idEvent, "ID DEL EVENTO");
+
+      const allLikesEventId = await axios.get(
+        `${url}/api/like?idEvent=${idEvent}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(allLikesEventId.data, "USUARIO PERDONADO");
+      return dispatch({
+        type: "GET_ALL_LIKES_EVENT_ID",
+        payload: allLikesEventId.data,
+      });
+    } catch (error) {
+      console.log(error, "GET_ALL_LIKES_EVENT_ID");
     }
   };
 }

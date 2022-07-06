@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 require("dotenv").config();
 const { AUTH_SECRET } = process.env;
 
@@ -10,7 +11,6 @@ function verifyToken(req, res, next) {
     return res.status(401).json({ error: "Acceso no autorizado" });
   } else {
     let token = req.headers.authorization.split(" ")[1];
-    console.log(token);
     jwt.verify(token, AUTH_SECRET, (err, decoded) => {
       if (err)
         return res.status(500).json({ error: "Error al decodificar el token" });
@@ -22,8 +22,9 @@ function verifyToken(req, res, next) {
     });
   }
 }
+
 function isAdmin(req, res, next) {
-  if (UserDate.user.isAdmin) {
+  if (UserDate.user[0].isAdmin) {
     next();
   } else {
     return res.status(401).json({
@@ -31,6 +32,7 @@ function isAdmin(req, res, next) {
     });
   }
 }
+
 function verifyIsProducer(req, res, next) {
   try {
     if (UserDate.user.isProducer) {
@@ -52,6 +54,7 @@ function adminNotAuthorization(req, res, next) {
       .json({ error: "Acceso no autorizado eres administrador" });
   }
 }
+
 function producerNotAuthorization(req, res, next) {
   try {
     if (!UserDate.user.isProducer) {

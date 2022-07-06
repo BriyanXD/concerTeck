@@ -22,10 +22,12 @@ const initialState = {
     isVisbleModal: false,
     eventsForCalendar: [],
   },
-  cartDB:[],
+  cartDB: [],
   stateAdminPanel: {
     allUsers: [],
-    tdosEvents:[],
+    tdosEvents: [],
+    allBlackList: [],
+    userSaveBlackList: "",
     // UserByName:[],
     UserByUserName: [],
     allProducers: [],
@@ -33,6 +35,7 @@ const initialState = {
     modalEvent: false,
     modalUser: false,
     modalUserPermised: false,
+    allLikesEventId: [],
   },
   token: "",
 };
@@ -70,26 +73,28 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         Basket: [...state.Basket, payload],
       };
-    case "ADD_TO_FAV":
-      if(state.Likes.find(l => l.id === payload.id)){ 
+    case "POST_LIKES":
+      if (state.Likes.find((l) => l.id === payload.id)) {
         return {
           ...state,
-          Likes:state.Likes.filter((f) => f.id !== payload.id) 
-        }
-        } else{
-          return {
-            ...state,
-            Likes: [...state.Likes, payload]
-        }
-        }
-    case "REMOVE_FAVORITE":
-      // console.log('likes:', state.Likes)
-      // console.log('payload:', payload)
+          Likes: state.Likes.filter((f) => f.id !== payload.id),
+        };
+      } else {
+        return {
+          ...state,
+          Likes: [...state.Likes, payload],
+        };
+      }
+    case "DELETE_LIKES":
       return {
         ...state,
         Likes: state.Likes.filter((f) => f.id !== payload.id),
       };
-
+    case "GET_ALL_LIKES":
+      return {
+        ...state,
+        Likes: payload,
+      };
     case "GET_EVENT_BY_NAME": {
       const bigEvents = payload.filter((e) => e.venue.isBigEvent === true);
       const smallEvents = payload.filter((e) => e.venue.isBigEvent === false);
@@ -247,6 +252,7 @@ function reducers(state = initialState, { type, payload }) {
       return {
         ...state,
         stateAdminPanel: {
+          ...state.stateAdminPanel,
           allUsers: payload,
         },
       };
@@ -329,22 +335,48 @@ function reducers(state = initialState, { type, payload }) {
         },
       };
     case "GET_CART_EVENT":
-      return{
-        ...state,
-        cartDB: payload
-      }
-    case "DELETE_CART":
-      return{
-        ...state,
-        cartDB: state.cartDB.filter(e => e.id !== payload)
-      }
-    case  "FIND_EVENT_BY_NAME":
       return {
         ...state,
-        stateAdminPanel:{
-          tdosEvents:payload
-        }
-      }
+        cartDB: payload,
+      };
+    case "DELETE_CART":
+      return {
+        ...state,
+        cartDB: state.cartDB.filter((e) => e.id !== payload),
+      };
+    case "FIND_EVENT_BY_NAME":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          tdosEvents: payload,
+        },
+      };
+    case "GET_ALL_BLACK_LIST":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allBlackList: payload,
+        },
+      };
+    case "DELETE_USER_BLACK_LIST":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          userSaveBlackList: payload,
+        },
+      };
+    //GET_ALL_LIKES_EVENT_ID
+    case "GET_ALL_LIKES_EVENT_ID":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allLikesEventId: payload,
+        },
+      };
     default:
       return state;
   }

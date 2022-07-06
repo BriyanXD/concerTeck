@@ -13,17 +13,18 @@ import PaginadoBigEvents from "../Paginado/PaginadoBigEvents";
 import PaginadoEvents from "../Paginado/PaginadoEvents";
 import ModalCalendar from "../ModalCalendar/ModalCalendar";
 import { BsFillHeartFill } from 'react-icons/bs';
-import { AddToFav } from '../../redux/actions';
-import Favorites from "../Favorites/Favorites";
+import { postLikes } from '../../redux/actions';
 import { useAuth0 } from "@auth0/auth0-react";
+/* import Streaming from "../Streaming/Streaming"; */
 
 
 export default function Home() {
   const dispatch = useDispatch();
   const { user, loginWithPopup } = useAuth0();
   const {Likes} = useSelector((state)=> state);
-  // const { User } = useSelector((state) => state)
-  console.log('Likes:',Likes)
+  const { User } = useSelector((state) => state)
+
+
   const allEventsPagination = useSelector((state) => {
     return state.BigEvents;
   });
@@ -93,9 +94,8 @@ export default function Home() {
                         id={el.id}
                       />
                     </Link>
-                      <div className={Likes.find(e => e.id === el.id) ? style.heart : style.heartWhite}>
-                        <BsFillHeartFill size={30} onClick={()=> user ? dispatch(AddToFav(el)) : loginWithPopup()}/>
-                        {/* <BsFillHeartFill size={30} onClick={()=>dispatch(AddToFav(el))}/> */}
+                      <div className={Likes.find(e => e.idEvent === el.id) ? style.heart : style.heartWhite}>
+                        <BsFillHeartFill size={30} onClick={()=> user ? dispatch(postLikes(el.id, User[0].id, Likes )) : loginWithPopup()}/>
                       </div>
                   </div>
                 );
@@ -120,7 +120,7 @@ export default function Home() {
                         id={el.id}
                       />
                     </Link>
-                    <div className={Likes.find(e => e.id === el.id) ? style.heart2 : style.heart2White}><BsFillHeartFill size={20} onClick={()=> user ? dispatch(AddToFav(el)) : loginWithPopup()}/></div>
+                    <div className={Likes.find(e => e.idEvent === el.id) ? style.heart2 : style.heart2White}><BsFillHeartFill size={20} onClick={()=> user ? dispatch(postLikes(el.id, User[0].id, Likes)) : loginWithPopup()}/></div>
                   </div>
                 );
               })}
@@ -134,7 +134,6 @@ export default function Home() {
       <br />
       <Footer />
       <ModalCalendar />
-      {/* <Favorites/> */}
     </div>
   );
 }

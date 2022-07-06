@@ -39,3 +39,10 @@
 .titleData{
     color: white;
 }
+
+.titleData2{
+    color: white;
+}
+.titleData2:hover{
+    text-decoration: underline;
+}
