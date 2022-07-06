@@ -22,8 +22,6 @@ export default function Home() {
   const dispatch = useDispatch();
   const { user, loginWithPopup } = useAuth0();
   const {Likes} = useSelector((state)=> state);
-  // const { User } = useSelector((state) => state)
-  console.log('Likes:',Likes)
   const allEventsPagination = useSelector((state) => {
     return state.BigEvents;
   });
@@ -67,8 +65,7 @@ export default function Home() {
     view= true;
   }
 
-  
-// console.log(currentBigEvents)
+
   return (
     <div className={style.container}>
       <NavBar setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage} />

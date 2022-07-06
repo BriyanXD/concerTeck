@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useCart } from "react-use-cart";
 import { useSelector, useDispatch } from "react-redux";
-import { getEvents } from "../../redux/actions";
+import { getEvents, getCartDB, deleteCart, putCartDB } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 import Style from "./Cart.module.css";
@@ -24,56 +24,66 @@ export default function Cart() {
     updateItem,
   } = useCart();
   
-  //*Trae todos los eventos
-  const { AllEvents } = useSelector((state) => state);
-  let events = [];
+  let temporal = localStorage.getItem("user");
+
+  let userStorage 
+  if(temporal !== "nada"){
+    userStorage = JSON.parse(temporal)
+  }else{
+    userStorage = ""
+  }
+  const {cartDB} = useSelector(state =>state);
 
   //*Llama a todos los eventos
   useEffect(() => {
     dispatch(getEvents());
+    if(userStorage !== ""){
+      dispatch(getCartDB(userStorage.id))
+    }
   }, []);
+  let ambos= [];
+  if(userStorage !== ""){
+    ambos = [...cartDB]
+   }else{
+     ambos= [...items]
+   }
 
-  //*Items de localStorage recorre todos los eventos
-  items.forEach((el) => {
-    AllEvents.forEach((e) => {
-      if (e.id === el.id) return events.push(e);
-    });
-  });
-
-  //*isEmpty carrito vacio localstorage
-  if (isEmpty)
-    return <p className={Style.carritoVacio}>Sin eventos en el carrito</p>;
+  if (userStorage !== "" && cartDB.lenght === 0){
+    return <p className={Style.carritoVacio}>Sin eventos en el carrito DB</p>;
+  }else if(isEmpty){
+    return <p className={Style.carritoVacio}>Sin eventos en el carrito LocalStorage</p>;
+  }
+ const handleDelete = (id) => {
+  if(userStorage !== ""){
+    dispatch(deleteCart(id))
+  }else{
+    removeItem(id)
+  }
+ }
+ const handleUpdate = (item, operador) => {
+  if(userStorage !== ""){
+    if(operador === "-"){
+      console.log(item.quantity--, "desde if -")
+      dispatch(putCartDB({id:item.id, quantity: --item.quantity}))
+    }else{
+      console.log(item.quantity++, "desde if +")
+      dispatch(putCartDB({id:item.id, quantity: ++item.quantity}))
+    }
+  }else{
+    if(operador === "-"){
+      updateItemQuantity(item.id, item.quantity - 1)
+    }else{
+      updateItemQuantity(item.id, item.quantity + 1)
+    }
+  }
+}
   return (
     <div className={Style.containerGeneral}>
       <h3>Carrito ({totalUniqueItems})</h3>
-      {/* {events?.map((el) => {
-        function handleChange(e) {
-          updateItem(el.id, { variant: e.target.value });
-          updateItem(el.id, { price: el.stock[e.target.value] });
-        }
-
-        const date = el.schedule.split("T")[0];
-        const time =
-          el.schedule.split("T")[1].split(":")[0] +
-          ":" +
-          el.schedule.split("T")[1].split(":")[1];
-        return (
-          <div className={Style.containerDetail}>
-            <div>{el.name}</div>
-            <div className={Style.text}>{date}</div>
-            <div className={Style.text}>{time}</div>
-            <div className={Style.containerImage}>
-             <img className={Style.image} src={el.performerImage} alt={el.name} />
-            </div>
-          </div>
-        );
-      })} */}
       <ul>
-    
-        {items.map((item) => (
+        {ambos.map((item) => (
           
           <li key={item.id}>
-            {console.log(item)}
             {item.quantity} x {item.nombre} &mdash;
             <img src={item.performerImage} alt={item.nombre} />
             <p>
@@ -101,7 +111,7 @@ export default function Cart() {
               className={Style.btn}
               onClick={() =>
                 item.quantity > 1
-                  ? updateItemQuantity(item.id, item.quantity - 1)
+                  ? handleUpdate(item, "-")
                   : null
               }
             >
@@ -109,11 +119,11 @@ export default function Cart() {
             </button>
             <button
               className={Style.btn}
-              onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
+              onClick={() => handleUpdate(item, "+")}
             >
               +
             </button>
-            <button className={Style.btn} onClick={() => removeItem(item.id)}>
+            <button className={Style.btn} onClick={() => handleDelete(item.id)}>
               &times;
             </button>
           </li>

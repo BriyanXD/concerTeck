@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {EventById,ClearDetail,GetVenues,addCartDB} from '../../redux/actions'
+import {EventById,ClearDetail,GetVenues,addCartDB, getCartDB} from '../../redux/actions'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import NavBar from '../NavBar/NavBar';
@@ -18,31 +18,47 @@ export default function Detail() {
   const {id} = useParams();
   const { addItem } = useCart();
   const user = useSelector(state => state.User);
+  const cartDB = useSelector(state =>state.cartDB);
+  const [flag, setFlag] = useState(false)
+  let temporal = localStorage.getItem("user")
+  console.log("🚀 ~ file: Detail.jsx ~ line 24 ~ Detail ~ temporal", temporal)
+  let userStorage 
+  if(temporal !== "nada"){
+    userStorage = JSON.parse(temporal)
+  }else{
+    userStorage = ""
+  }
   
   const dispatch =  useDispatch()
   useEffect(()=>{
      dispatch(EventById(id))
+    
     return ()=>{
       dispatch(ClearDetail())
   }
   },[dispatch, id])
   
   useEffect(()=>{
+    if(userStorage !== ""){
+      dispatch(getCartDB(userStorage.id))
+    }
     dispatch(GetVenues())
   },[dispatch])
 
+  useEffect(()=>{
+    if(userStorage !== ""){
+      dispatch(getCartDB(userStorage.id))
+    }
+  },[flag])
   const {Detail} = useSelector((state)=> state)
-  console.log("🚀 ~ file: Detail.jsx ~ line 35 ~ Detail ~ Detail", Detail)
   const {Venues} = useSelector((state => state))
 
   const [add , setAdd] =useState({
     idUser: "",
     idEvent: ""
   })
+  console.log(cartDB)
   
- 
-  // Detail["price"] = 0;
- 
   let date = ''
   let time = ''
   if(Detail){
@@ -56,52 +72,50 @@ export default function Detail() {
   }
 
   //tiene que llegar desde DB de esta misma forma con todos los datos
-
   const handleClick = async (data) => {
-    // if(user[0]){
-    //   await setAdd({
-    //     idUser: user[0].id,
-    //     idEvent: data.id,
-    //     nombre: data.name,
-    //     schedule: data.schedule
-    //   })
-    //   addItem(data)
-    //  dispatch(addCartDB(add))
-    // }else{
-    //   addItem(data)
-    // }
-
   let temp;
+  let estado;
     switch(data){
       case "general":
       temp = {
-          idUser:user[0].id,
-          idEvent:Detail.id,
-          nombre:Detail.name,
-          schedule:Detail.schedule,
-          variant: "generalPrice",
-          price:Detail.stock.generalPrice,
-          performerImage: Detail.performerImage
-        }
+        idEvent:Detail.id,
+        nombre:Detail.name,
+        schedule:Detail.schedule,
+        variant: "generalPrice",
+        price:Detail.stock.generalPrice,
+        performerImage: Detail.performerImage
+      }
+      if(!userStorage){
         addItem({...temp,id:`${Detail.id}general`})
-        dispatch(addCartDB(temp))
+      }else{
+        estado = cartDB.find(e => e.idEvent === Detail.id && e.variant === temp.variant)
+        if(!estado){
+          dispatch(addCartDB({...temp, idUser:userStorage.id}))
+        }
+        setFlag(!flag)
+      }
         return;
     case "generallateral":
       temp = {
-          idUser:user[0].id,
           idEvent:Detail.id,
           nombre:Detail.name,
           schedule:Detail.schedule,
           variant: "generalLateralPrice",
           price:Detail.stock.generalLateralPrice,
           performerImage: Detail.performerImage
+        } 
+        if(!userStorage){
+          addItem({...temp,id:`${Detail.id}generallateral`})
+        }else{
+          estado = cartDB.find(e => e.idEvent === Detail.id && e.variant === temp.variant)
+          if(!estado){
+            dispatch(addCartDB({...temp, idUser:userStorage.id}))
+          }
+          setFlag(!flag)
         }
-        addItem({...temp,id:`${Detail.id}generallateral`})
-        dispatch(addCartDB(temp))
         return;
     case "palco":
       temp = {
-          idUser:user[0].id,
           idEvent:Detail.id,
           nombre:Detail.name,
           schedule:Detail.schedule,
@@ -109,12 +123,18 @@ export default function Detail() {
           price:Detail.stock.palcoPrice,
           performerImage: Detail.performerImage
         }
-        addItem({...temp,id:`${Detail.id}palco`})
-        dispatch(addCartDB(temp))
+        if(!userStorage){
+          addItem({...temp,id:`${Detail.id}palco`})
+        }else{
+          estado = cartDB.find(e => e.idEvent === Detail.id && e.variant === temp.variant)
+          if(!estado){
+            dispatch(addCartDB({...temp, idUser:userStorage.id}))
+          }
+          setFlag(!flag)
+        }
         return;
     case "streaming":
           temp = {
-              idUser:user[0].id,
               idEvent:Detail.id,
               nombre:Detail.name,
               schedule:Detail.schedule,
@@ -122,12 +142,18 @@ export default function Detail() {
               price:Detail.stock.streamingPrice,
               performerImage: Detail.performerImage
             }
-            addItem({...temp,id:`${Detail.id}streaming`})
-            dispatch(addCartDB(temp))
+            if(!userStorage){
+              addItem({...temp,id:`${Detail.id}streaming`})
+            }else{
+              estado = cartDB.find(e => e.idEvent === Detail.id && e.variant === temp.variant)
+              if(!estado){
+                dispatch(addCartDB({...temp, idUser:userStorage.id}))
+              }
+              setFlag(!flag)
+            }
             return;
     case "vip":
               temp = {
-                  idUser:user[0].id,
                   idEvent:Detail.id,
                   nombre:Detail.name,
                   schedule:Detail.schedule,
@@ -135,8 +161,15 @@ export default function Detail() {
                   price:Detail.stock.vipPrice,
                   performerImage: Detail.performerImage
                 }
-                addItem({...temp,id:`${Detail.id}generallateral`})
-                dispatch(addCartDB(temp))
+                if(!userStorage){
+                  addItem({...temp,id:`${Detail.id}vip`})
+                }else{
+                  estado = cartDB.find(e => e.idEvent === Detail.id && e.variant === temp.variant)
+                  if(!estado){
+                    dispatch(addCartDB({...temp, idUser:userStorage.id}))
+                  }
+                  setFlag(!flag)
+                }
                 return;
     default:
       return;
