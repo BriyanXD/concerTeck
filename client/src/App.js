@@ -7,6 +7,7 @@ import Detail from './components/Detail/Detail';
 import PageNotFound from './components/PageNotFound/PageNotFound';
 import ProfileUser from './components/ProfileUser/ProfileUser.jsx';
 import PanelAdmin from './components/Admin/adminPanel'
+import Favorites from './components/Favorites/Favorites';
 
 
 
@@ -24,6 +25,7 @@ function App() {
             <Route exact path='' element= {<Ruta/>}/>  */} 
             <Route exact path='/events' element={<RegisterEvent/>}/>
             <Route path='/events' element={<RegisterEvent/>}/>
+            <Route path='/favs' element={<Favorites/>}/>
             <Route path='*' element={<PageNotFound/>}/>
           </Routes>
       </div>
