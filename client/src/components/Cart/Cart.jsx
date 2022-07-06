@@ -5,6 +5,7 @@ import { getEvents } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 import Style from "./Cart.module.css";
+import { style } from "@mui/system";
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -45,8 +46,8 @@ export default function Cart() {
     return <p className={Style.carritoVacio}>Sin eventos en el carrito</p>;
   return (
     <div className={Style.containerGeneral}>
-      <h3>Carrito ({totalUniqueItems})</h3>
-      {events?.map((el) => {
+      <div>Carrito ({totalUniqueItems})</div>
+      {/* {events?.map((el) => {
         function handleChange(e) {
           updateItem(el.id, { variant: e.target.value });
           updateItem(el.id, { price: el.stock[e.target.value] });
@@ -62,41 +63,25 @@ export default function Cart() {
             <div>{el.name}</div>
             <div className={Style.text}>{date}</div>
             <div className={Style.text}>{time}</div>
-            <div className={Style.ContainerSelect}>
-            <select
-              className={Style.select}
-              onChange={handleChange}
-              id={el.id}
-              name="variant"
-            >
-              <option value="1">Elegir tipo de entrada...</option>
-              <option value="streamingPrice">
-                Streaming: $ {el.stock.streamingPrice}
-              </option>
-              <option value="generalPrice">
-                General: $ {el.stock.generalPrice}
-              </option>
-              <option value="generalLateralPrice">
-                General lateral: $ {el.stock.generalLateralPrice}
-              </option>
-              <option value="vipPrice">Vip: $ {el.stock.vipPrice}</option>
-              <option value="palcoPrice">Palco: $ {el.stock.palcoPrice}</option>
-            </select>
-            </div>
             <div className={Style.containerImage}>
              <img className={Style.image} src={el.performerImage} alt={el.name} />
             </div>
           </div>
         );
-      })}
+      })} */}
       <ul>
+    
         {items.map((item) => (
-          <li key={item.id}>
-            {console.log(item)}
-            {item.quantity} x {item.name} &mdash;
-            <p>
-              {" "}
-              <div>
+          
+          <li key={item.id} className={Style.items}>
+            <div>
+            {item.quantity} x {item.nombre} 
+            <img src={item.performerImage} alt={item.nombre} className={Style.image} />
+            </div>
+           <div className={Style.tipo}>
+             
+           
+              <div >
                 Tipo de entrada:{" "}
                 {item.variant === "streamingPrice"
                   ? "Streaming"
@@ -110,9 +95,13 @@ export default function Cart() {
                   ? "Palco"
                   : null}
               </div>
-            </p>
-            <p>Precio: {item.price}</p>
-            <p>Total: {item.itemTotal === 0 ? null : item.itemTotal}</p>
+            
+            <div> {item.schedule.split("T")[0]} {'  '}
+            {item.schedule.split("T")[1].split(":")[0] + ":" + item.schedule.split("T")[1].split(":")[1]} h</div>
+            <div>Precio: ${item.price} Total: ${item.itemTotal === 0 ? null : item.itemTotal}</div>
+            <div>
+
+           
             <button
               className={Style.btn}
               onClick={() =>
@@ -132,10 +121,14 @@ export default function Cart() {
             <button className={Style.btn} onClick={() => removeItem(item.id)}>
               &times;
             </button>
-            <button className={Style.btncomprar}>Comprar entrada/s</button>
+            </div>
+            </div>
           </li>
         ))}
-        Total final: {cartTotal}
+      </ul>
+        <div>
+        Total final: ${cartTotal} ARS.
+          </div>
         <button
           className={Style.btncomprar}
           onClick={() =>
@@ -144,10 +137,9 @@ export default function Cart() {
         >
           Comprar Todos
         </button>
-      </ul>
-      <button className={Style.btncomprar} onClick={() => navigate("/")}>
+      {/* <button className={Style.btncomprar} onClick={() => navigate("/")}>
         Volver
-      </button>
+      </button> */}
     </div>
   );
 }

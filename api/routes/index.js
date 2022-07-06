@@ -64,6 +64,7 @@ const {
 } = require("../controllers/ShoppingCart");
 
 const { getLikes, postLikes, deleteLikes } = require("../controllers/Likes");
+const { ticketVoucher } = require('../controllers/TicketVoucher')
 
 routes.get("/like", verifyToken, getLikes);
 routes.post("/like", verifyToken, postLikes);
@@ -87,8 +88,8 @@ routes.put("/producer", verifyToken, isAdmin, putProducer);
 routes.delete("/producer", verifyToken, isAdmin, deleteProducer); */
 
 routes.get("/events", loadEventsAndGetEvents);
-//routes.post("/events", verifyToken, isAdmin, postEvents);
-routes.post("/events", postEvents);
+routes.post("/events", verifyToken, isAdmin, postEvents);
+//routes.post("/events", postEvents); //ruta de prueba
 routes.put("/events", verifyToken, isAdmin, putEvents);
 routes.delete("/events", verifyToken, isAdmin, deleteEvent); //isAdmin
 
@@ -97,15 +98,15 @@ routes.post("/ticket", verifyToken, adminNotAuthorization, postTicket);
 routes.delete("/ticket", verifyToken, isAdmin, deleteTicket);
 
 routes.get("/genres", getAllGenres);
-//routes.post("/genres", verifyToken, isAdmin, postOneGenre);
-routes.post("/genres", postOneGenre);
+routes.post("/genres", verifyToken, isAdmin, postOneGenre);
+//routes.post("/genres", postOneGenre); //ruta de prueba
 
 routes.get("/venues", getVenues);
-//routes.post("/venues", verifyToken, isAdmin, postVenues);
-routes.post("/venues", postVenues);
+routes.post("/venues", verifyToken, isAdmin, postVenues);
+//routes.post("/venues", postVenues); //ruta de prueba
 
-//routes.get("/ticketstock", verifyToken, getTicketStock);
-routes.get("/ticketstock", getTicketStock);
+routes.get("/ticketstock", verifyToken, getTicketStock);
+//routes.get("/ticketstock", getTicketStock); //ruta de prueba
 routes.post("/ticketstock", postTicketStock);
 
 routes.post("/login", LoginUser);
@@ -120,5 +121,7 @@ routes.get("/blackall", verifyToken, isAdmin, getAllBlackList);
 routes.get("/black", verifyToken, isAdmin, getAOneBlackList);
 routes.post("/black", verifyToken, isAdmin, postOneBlackList);
 routes.delete("/black", verifyToken, isAdmin, deleteOneBlackList);
+
+routes.post("/voucher", ticketVoucher)
 
 module.exports = routes;

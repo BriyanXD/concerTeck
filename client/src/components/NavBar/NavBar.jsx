@@ -7,13 +7,14 @@ import SearchBar from "../SearchBar/SearchBar";
 import logoSombra from "../../assets/LogoSombra.png";
 import Date from "../Filters/Date/Date";
 import UserNavBar from "../UserNavbar/UserNavbar";
-import Modal from "../Modals/Modal/Modal";
+import Modal2 from "../Modals/Modal/Modal2";
 // import Login from "../Login/Login";
 import LoginAuth0  from '../LoginAuth0/LoginAuth0';
 // import PerfilYLogoutAuth0 from '../LogoutAuth0/PerfilYLogoutAuth0';
 import { useLocation } from "react-router-dom";
 import {MdOutlineShoppingCart } from 'react-icons/md';
 import Tooltip from '@mui/material/Tooltip';
+import Cart from '../Cart/Cart';
 
 export default function NavBar({ setCurrenPag, setCurrentPage }) {
   const user = useSelector((state) => state.User);
@@ -48,13 +49,17 @@ export default function NavBar({ setCurrenPag, setCurrentPage }) {
             />
             <Date setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage} />
           </div>
-          <Link to="/Cart">
+          {/* <Link to="/Cart"> */}
           <Tooltip title="Ver carrito" arrow>
-          <div className={style.cart}>
-          <MdOutlineShoppingCart/>
+          <div onClick={toggle} className={style.cart}>
+          <MdOutlineShoppingCart className={style.cartlogo}/>
           </div>
           </Tooltip>  
-          </Link>
+
+          <Modal2 active={active} toggle={toggle}>
+            <Cart/>
+          </Modal2>
+          {/* </Link> */}
           <div className={style.registerAndLogin}>
             {/* <Link to="/events"><button className={style.btnRegister} type="button">Crear Evento</button></Link>  */}
             {/* {user === "" ? (

@@ -11,19 +11,6 @@ export default function RegisterVenue(){
         alt: "",
         lat: ""
     })
-    // const [stock, setStock] = useState({
-    //     stockStreaming: 0,
-    //     stockkVIP: 0,
-    //     stockGeneral: 0,
-    //     stockGeneralLateral: 0,
-    //     stockPalco: 0,
-    //     streamingPrice: 0,
-    //     vipPrice:0,
-    //     generalLateralPrice: 0,
-    //     generalPrice:0,
-    //     palcoPrice: 0,
-    //     venueId: 0,
-    // })
     const [venue, setVenue] = useState({
         name: "",
         address: "",
@@ -41,32 +28,31 @@ export default function RegisterVenue(){
         map: "",
         maxStockGeneral: ""
     });
-    //const [errStock, setErrStock] = useState({})
 
     const handleMap = async(e) => {
         if(e.target.name === "alt"){
-            if(e.target.value[0] !== "-"){
-                return alert("La coordenada debe empezar con un signo -")
-            } else if (e.target.value[3] !== "."){
-                return alert("Error en la sintaxis de la coordenada, debe contener un punto")
-            } else {
+            // if(e.target.value[0] !== "-"){
+            //     return alert("La coordenada debe empezar con un signo -")
+            // } else if (e.target.value[3] !== "."){
+            //     return alert("Error en la sintaxis de la coordenada, debe contener un punto")
+            // } else {
                 await setMapCord({
                     ...mapCord,
                     alt: e.target.value
                 })
-            }
+            //}
         }
         if(e.target.name === "lat"){
-            if(e.target.value[0] !== "-"){
-                return alert("La coordenada debe empezar con un signo -")
-            } else if (e.target.value[3] !== "."){
-                return alert("Error en la sintaxis de la coordenada, debe contener un punto")
-            } else {
+            // if(e.target.value[0] !== "-"){
+            //     return alert("La coordenada debe empezar con un signo -")
+            // } else if (e.target.value[3] !== "."){
+            //     return alert("Error en la sintaxis de la coordenada, debe contener un punto")
+            // } else {
                 await setMapCord({
                     ...mapCord,
                     lat: e.target.value
                 })
-            } 
+            //} 
         }
         if(mapCord.alt !== "" && mapCord.lat !== ""){
             await setVenue({
@@ -82,12 +68,6 @@ export default function RegisterVenue(){
                 ...venue,
                 [e.target.name]: Number(e.target.value),
             });
-            // if(venue.maxStockGeneral !== 0){
-            //     setStock({
-            //         ...stock,
-            //         stockGeneral: venue.maxStockGeneral
-            //     });
-            // }
             return 
         }
         else if(e.target.name === "maxStockGeneralLateral"){
@@ -95,12 +75,6 @@ export default function RegisterVenue(){
                 ...venue,
                 [e.target.name]: Number(e.target.value),
             });
-            // if(venue.maxStockGeneralLateral !== 0){
-            //     setStock({
-            //         ...stock,
-            //         stockGeneralLateral: venue.maxStockGeneralLateral
-            //     });
-            // }
             return 
         }
         else if(e.target.name === "maxStockPalco"){
@@ -108,12 +82,6 @@ export default function RegisterVenue(){
                 ...venue,
                 [e.target.name]: Number(e.target.value),
             });
-            // if(venue.maxStockPalco !== 0){
-            //     setStock({
-            //         ...stock,
-            //         stockPalco: venue.maxStockPalco
-            //     });
-            // }
             return 
         }
         else if(e.target.name === "maxStockStreaming"){
@@ -121,12 +89,6 @@ export default function RegisterVenue(){
                 ...venue,
                 [e.target.name]: Number(e.target.value),
             });
-            // if(venue.maxStockStreaming !== 0){
-            //     setStock({
-            //         ...stock,
-            //         stockStreaming: venue.maxStockStreaming
-            //     });
-            // }
             return 
         }
         else if(e.target.name === "maxStockVIP"){
@@ -134,12 +96,6 @@ export default function RegisterVenue(){
                 ...venue,
                 [e.target.name]: Number(e.target.value),
             });
-            // if(venue.maxStockVIP !== 0){
-            //     setStock({
-            //         ...stock,
-            //         stockkVIP: venue.maxStockVIP
-            //     });
-            // }
             return 
         }
         // else if(e.target.id === "alt"){
@@ -156,17 +112,10 @@ export default function RegisterVenue(){
         // }
         setVenue({
             ...venue,
-            //minStock: Math.floor((venue.maxStockGeneral+(venue.maxStockGeneralLateral || 0)+(venue.maxStockPalco || 0)+(venue.maxStockStreaming || 0)+(venue.maxStockVIP || 0))*0.7),
             [e.target.name]: e.target.value
         })
     };
 
-    // const handleStock = (e) =>{
-    //     setStock({
-    //         ...stock,
-    //         [e.target.name]: Number(e.target.value)
-    //     })
-    // };
 
     const handleAddVenue = async(e) =>{
         e.preventDefault();
@@ -202,19 +151,6 @@ export default function RegisterVenue(){
                 alt: "",
                 lat: ""
             });
-            // setStock({
-            //     stockStreaming: 0,
-            //     stockkVIP: 0,
-            //     stockGeneral: 0,
-            //     stockGeneralLateral: 0,
-            //     stockPalco: 0,
-            //     streamingPrice: 0,
-            //     vipPrice:0,
-            //     generalLateralPrice: 0,
-            //     generalPrice:0,
-            //     palcoPrice: 0,
-            //     venueId: 0,
-            // });
             setActiveVenue(!activeVenue)
         }
     };
@@ -309,30 +245,24 @@ export default function RegisterVenue(){
 
         <div> 
             <label>Maxima capacidad general de espectadores:*</label> <input name="maxStockGeneral" value={venue.maxStockGeneral} onChange={handleVenue} onBlur={handleBlurVenue} type="text" placeholder="Cantidad maxima general de expectadores" />{error.maxStockGeneral && (<label>{error.maxStockGeneral}</label>)}
-            {/* <label>Precio general:* </label> <input name="generalPrice" value={stock.generalPrice} onChange={handleStock} type="text" placeholder="Precio" /> */}
         </div>
 
         <div> 
             <label>Maxima capacidad lateral de espectadores:</label> <input name="maxStockGeneralLateral" value={venue.maxStockGeneralLateral}  onChange={handleVenue} type="text" placeholder="Cantidad maxima de expectadores en zonas laterales" />{error.maxStockGeneralLateral && (<label>{error.maxStockGeneralLateral}</label>)}
-            {/* <label>Precio lateral: </label> <input name="generalLateralPrice" value={stock.generalLateralPrice} onChange={handleStock} type="text" placeholder="Precio" /> */}
         </div>
 
         <div> 
             <label>Maxima capacidad palco de espectadores:</label> <input name="maxStockPalco" value={venue.maxStockPalco}  onChange={handleVenue} type="text" placeholder="Cantidad maxima de expectadores en zonas palco" />{error.maxStockPalco && (<label>{error.maxStockPalco}</label>)} 
-            {/* <label>Precio palco: </label> <input name="palcoPrice" value={stock.palcoPrice} onChange={handleStock} type="text" placeholder="Precio" /> */}
         </div>
 
         <div> 
             <label>Maxima capacidad de espectadores via streaming:</label> <input name="maxStockStreaming" value={venue.maxStockStreaming}  onChange={handleVenue} type="text" placeholder="Cantidad maxima de expectadores via streaming" />{error.maxStockStreaming && (<label>{error.maxStockStreaming}</label>)} 
-            {/* <label>Precio streaming: </label> <input name="streamingPrice" value={stock.streamingPrice} onChange={handleStock} type="text" placeholder="Precio" /> */}
         </div>
 
         <div> 
             <label>Maxima capacidad de espectadores VIP:</label> <input name="maxStockVIP" value={venue.maxStockVIP}  onChange={handleVenue} type="text" placeholder="Cantidad maxima de expectadores VIP" />{error.maxStockVIP && (<label>{error.maxStockVIP}</label>)} 
-            {/* <label>Precio VIP: </label> <input name="vipPrice" value={stock.vipPrice} onChange={handleStock} type="text" placeholder="Precio" /> */}
         </div>
 
-        {/* <div><span>Stock minimo de espectadores registrado: {venue.minStock}</span></div> */}
 
         <button onClick={handleAddVenue}>Añadir</button>
 
