@@ -7,7 +7,7 @@ import Footer from '../Footer/Footer';
 import style from './Detail.module.css'
 import { Link, useParams } from 'react-router-dom';
 //import Map from '../Map/Map';
-import { MdOutlineAddShoppingCart } from 'react-icons/md';
+import { MdDetails, MdOutlineAddShoppingCart } from 'react-icons/md';
 import Tooltip from '@mui/material/Tooltip';
 import { useCart } from "react-use-cart";
 import Leaflet from '../Leaflet/Leaflet';
@@ -21,7 +21,7 @@ export default function Detail() {
   
   const dispatch =  useDispatch()
   useEffect(()=>{
-    dispatch(EventById(id))
+     dispatch(EventById(id))
     return ()=>{
       dispatch(ClearDetail())
   }
@@ -32,6 +32,7 @@ export default function Detail() {
   },[dispatch])
 
   const {Detail} = useSelector((state)=> state)
+  console.log("🚀 ~ file: Detail.jsx ~ line 35 ~ Detail ~ Detail", Detail)
   const {Venues} = useSelector((state => state))
 
   const [add , setAdd] =useState({
@@ -40,7 +41,7 @@ export default function Detail() {
   })
   
  
-  Detail["price"] = 0;
+  // Detail["price"] = 0;
  
   let date = ''
   let time = ''
@@ -52,22 +53,95 @@ export default function Detail() {
   let prueba =''
   if(Detail && Venues){
     prueba = Venues.find(e => e.id === Detail.venueId)
-    //console.log('prueba', prueba)
   }
 
+  //tiene que llegar desde DB de esta misma forma con todos los datos
+
   const handleClick = async (data) => {
-    if(user[0]){
-      await setAdd({
-        idUser: user[0].id,
-        idEvent: data.id,
-        nombre: data.name,
-        schedule: data.schedule
-      })
-      addItem(data)
-     dispatch(addCartDB(add))
-    }else{
-      addItem(data)
+    // if(user[0]){
+    //   await setAdd({
+    //     idUser: user[0].id,
+    //     idEvent: data.id,
+    //     nombre: data.name,
+    //     schedule: data.schedule
+    //   })
+    //   addItem(data)
+    //  dispatch(addCartDB(add))
+    // }else{
+    //   addItem(data)
+    // }
+
+  let temp;
+    switch(data){
+      case "general":
+      temp = {
+          idUser:user[0].id,
+          idEvent:Detail.id,
+          nombre:Detail.name,
+          schedule:Detail.schedule,
+          variant: "generalPrice",
+          price:Detail.stock.generalPrice,
+          performerImage: Detail.performerImage
+        }
+        addItem({...temp,id:`${Detail.id}general`})
+        dispatch(addCartDB(temp))
+        return;
+    case "generallateral":
+      temp = {
+          idUser:user[0].id,
+          idEvent:Detail.id,
+          nombre:Detail.name,
+          schedule:Detail.schedule,
+          variant: "generalLateralPrice",
+          price:Detail.stock.generalLateralPrice,
+          performerImage: Detail.performerImage
+        }
+        addItem({...temp,id:`${Detail.id}generallateral`})
+        dispatch(addCartDB(temp))
+        return;
+    case "palco":
+      temp = {
+          idUser:user[0].id,
+          idEvent:Detail.id,
+          nombre:Detail.name,
+          schedule:Detail.schedule,
+          variant: "palcoPrice",
+          price:Detail.stock.palcoPrice,
+          performerImage: Detail.performerImage
+        }
+        addItem({...temp,id:`${Detail.id}palco`})
+        dispatch(addCartDB(temp))
+        return;
+    case "streaming":
+          temp = {
+              idUser:user[0].id,
+              idEvent:Detail.id,
+              nombre:Detail.name,
+              schedule:Detail.schedule,
+              variant: "streamingPrice",
+              price:Detail.stock.streamingPrice,
+              performerImage: Detail.performerImage
+            }
+            addItem({...temp,id:`${Detail.id}streaming`})
+            dispatch(addCartDB(temp))
+            return;
+    case "vip":
+              temp = {
+                  idUser:user[0].id,
+                  idEvent:Detail.id,
+                  nombre:Detail.name,
+                  schedule:Detail.schedule,
+                  variant: "vipPrice",
+                  price:Detail.stock.vipPrice,
+                  performerImage: Detail.performerImage
+                }
+                addItem({...temp,id:`${Detail.id}generallateral`})
+                dispatch(addCartDB(temp))
+                return;
+    default:
+      return;
     }
+    
   }
   let coord = ''
   
@@ -95,7 +169,39 @@ export default function Detail() {
           <div className={style.description}>{Detail.description}</div>
           </div>
         </div>
-        
+        {/**Agregar condicional en el caso de que stock este en 0 */}
+        {Detail.stock?<div className={style.containerCarrito}>
+            <div className={style.detailTicket}>
+                <div>
+                  <h3>Tipo de entrada: General</h3><h3>${Detail.stock.generalPrice}</h3><div><MdOutlineAddShoppingCart onClick={() => handleClick("general")} className={style.addicon}/></div> 
+                  <h6>disponibles {Detail.stock.stockGeneral}</h6>
+                  </div>
+            </div>
+            <div className={style.detailTicket}>
+                <div>
+                  <h3>Tipo de entrada: General Lateral</h3><h3>${Detail.stock.generalLateralPrice}</h3><div> <MdOutlineAddShoppingCart onClick={() => handleClick("generallateral")} className={style.addicon}/></div> 
+                  <h6>disponibles {Detail.stock.stockGeneralLateral}</h6>
+                  </div>
+            </div>
+            <div className={style.detailTicket}>
+                <div>
+                  <h3>Tipo de entrada: Palco</h3><h3>${Detail.stock.palcoPrice}</h3><div> <MdOutlineAddShoppingCart onClick={() => handleClick("palco")} className={style.addicon}/></div> 
+                  <h6>disponibles {Detail.stock.stockPalco}</h6>
+                  </div>
+            </div>
+            <div className={style.detailTicket}>
+                <div>
+                  <h3>Tipo de entrada: Streaming</h3><h3>${Detail.stock.streamingPrice}</h3><div> <MdOutlineAddShoppingCart onClick={() => handleClick("streaming")} className={style.addicon}/></div> 
+                  <h6>disponibles {Detail.stock.stockStreaming}</h6>
+                  </div>
+            </div>
+            <div className={style.detailTicket}>
+                <div>
+                  <h3>Tipo de entrada: Vip</h3><h3>${Detail.stock.vipPrice}</h3><div > <MdOutlineAddShoppingCart onClick={() => handleClick("vip")} className={style.addicon}/></div> 
+                  <h6>disponibles {Detail.stock.stockkVIP}</h6>
+                  </div>
+            </div>
+        </div>:null}
         
           <Leaflet  data={coord} />
         
@@ -107,12 +213,12 @@ export default function Detail() {
             <button className={style.button}>Volver</button>
             </Tooltip>
           </Link>
-            <Tooltip title="Agregar al carrito" arrow>
+            {/* <Tooltip title="Agregar al carrito" arrow>
               <div className={style.add}>
             
            <MdOutlineAddShoppingCart onClick={() => handleClick(Detail)} className={style.addicon}/>
               </div>
-            </Tooltip>
+            </Tooltip> */}
          </div>
            
         </div>

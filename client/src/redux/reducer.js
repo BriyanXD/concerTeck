@@ -22,10 +22,12 @@ const initialState = {
     isVisbleModal: false,
     eventsForCalendar: [],
   },
-  cartDB:[],
+  cartDB: [],
   stateAdminPanel: {
     allUsers: [],
-    tdosEvents:[],
+    tdosEvents: [],
+    allBlackList: [],
+    userSaveBlackList: "",
     // UserByName:[],
     UserByUserName: [],
     allProducers: [],
@@ -249,6 +251,7 @@ function reducers(state = initialState, { type, payload }) {
       return {
         ...state,
         stateAdminPanel: {
+          ...state.stateAdminPanel,
           allUsers: payload,
         },
       };
@@ -331,22 +334,39 @@ function reducers(state = initialState, { type, payload }) {
         },
       };
     case "GET_CART_EVENT":
-      return{
-        ...state,
-        cartDB: payload
-      }
-    case "DELETE_CART":
-      return{
-        ...state,
-        cartDB: state.cartDB.filter(e => e.id !== payload)
-      }
-    case  "FIND_EVENT_BY_NAME":
       return {
         ...state,
-        stateAdminPanel:{
-          tdosEvents:payload
-        }
-      }
+        cartDB: payload,
+      };
+    case "DELETE_CART":
+      return {
+        ...state,
+        cartDB: state.cartDB.filter((e) => e.id !== payload),
+      };
+    case "FIND_EVENT_BY_NAME":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          tdosEvents: payload,
+        },
+      };
+    case "GET_ALL_BLACK_LIST":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allBlackList: payload,
+        },
+      };
+    case "DELETE_USER_BLACK_LIST":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          userSaveBlackList: payload,
+        },
+      };
     default:
       return state;
   }

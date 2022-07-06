@@ -35,9 +35,11 @@ export function searchEvent(name) {
 }
 
 export function EventById(id) {
+  console.log("🚀 ~ file: actions.js ~ line 38 ~ EventById ~ id", id)
   return async function (dispatch) {
     try {
       const event = await axios.get(`${url}/api/events?id=${id}`);
+      console.log("🚀 ~ file: actions.js ~ line 42 ~ event", event.data)
       // console.log(id)
       return dispatch({
         type: "GET_EVENT_DETAIL",
@@ -564,6 +566,44 @@ export function putCartDB(value) {
       console.log("ENTRANDO 2222");
     } catch (error) {
       console.log(error);
+    }
+  };
+}
+
+export function getAllBlackList() {
+  return async function (dispatch) {
+    try {
+      const getAllBlackListData = await axios.get(`${url}/api/blackall`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(getAllBlackListData.data, "LISTA NEGRA");
+      return dispatch({
+        type: "GET_ALL_BLACK_LIST",
+        payload: getAllBlackListData.data,
+      });
+    } catch (error) {
+      console.log(error, "GET_ALL_BLACK_LIST");
+    }
+  };
+}
+
+export function deleteUserBlackList(idUser) {
+  return async function (dispatch) {
+    try {
+      const dataUser = await axios.delete(`${url}/api/black?id=${idUser}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(dataUser.data, "USUARIO PERDONADO");
+      return dispatch({
+        type: "DELETE_USER_BLACK_LIST",
+        payload: dataUser.data,
+      });
+    } catch (error) {
+      console.log(error, "DELETE_USER_BLACK_LIST");
     }
   };
 }
