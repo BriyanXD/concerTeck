@@ -1,4 +1,4 @@
-
+//grafico de barra
 import {
     Chart as ChartJS,
     CategoryScale,
