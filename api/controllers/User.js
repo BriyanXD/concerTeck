@@ -7,8 +7,6 @@ const BlackList = require("../models/BlackList");
 require("dotenv").config();
 const { AUTH_ROUNDS, AUTH_SECRET, AUTH_EXPIRES } = process.env;
 require("../db.js");
-const diego = require("./TicketVoucher")
-
 
 async function createUser(req, res) {
   const { name, username, email } = req.body;
@@ -32,8 +30,6 @@ async function createUser(req, res) {
           let token = jwt.sign({ user: newUser }, AUTH_SECRET, {
             expiresIn: AUTH_EXPIRES,
           });
-          console.log(newUser)
-           await diego(newUser)
           return res.json(["Usuario", { user: newUser }, { token: token }]);
         } else {
           res.status(500).json({ error: "Error al crear el Usuario" });
