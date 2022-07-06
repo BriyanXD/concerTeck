@@ -15,6 +15,7 @@ import ModalCalendar from "../ModalCalendar/ModalCalendar";
 import { BsFillHeartFill } from 'react-icons/bs';
 import { postLikes } from '../../redux/actions';
 import { useAuth0 } from "@auth0/auth0-react";
+/* import Streaming from "../Streaming/Streaming"; */
 
 
 export default function Home() {
