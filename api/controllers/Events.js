@@ -60,7 +60,8 @@ async function loadEventsAndGetEvents(req, res) {
           .json({ error: "No se encontro Eventos con ese Nombre" });
       }
     } else if (id) {
-      const eventId = await Event.findByPk(id);
+      const eventId = await Event.findByPk(id,{include:[        { model: Venue, as: "venue" },
+      { model: TicketStock, as: "stock" },],});
       if (eventId) {
         return res.send(eventId);
       } else {

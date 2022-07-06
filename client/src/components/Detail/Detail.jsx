@@ -23,6 +23,7 @@ export default function Detail() {
   const dispatch =  useDispatch()
   useEffect(()=>{
      dispatch(EventById(id))
+    
     return ()=>{
       dispatch(ClearDetail())
   }
@@ -40,6 +41,7 @@ export default function Detail() {
     idUser: "",
     idEvent: ""
   })
+ // const [map, setmap] = useState([Detail.venue.map])
   
  
   // Detail["price"] = 0;
@@ -144,10 +146,10 @@ export default function Detail() {
     }
     
   }
-  let coord = ''
+ let coord = ''
   
 
-  coord = prueba? prueba.map : '-34.545306 -58.449775'
+coord = prueba? prueba.map : '-34.545306 -58.449775'
  
 
   return (
