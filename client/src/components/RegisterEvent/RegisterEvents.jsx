@@ -19,11 +19,19 @@ import RegisterVenue from '../RegisterVenue/RegisterVenue';
 export default function RegisterEvent(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const [activeGenre, setActiveGenre] = useState(false);
     const [activeVenue, setActiveVenue] = useState(false);
     const [activeStock, setActiveStock] = useState(false);
+
+    const [activeLateralStock, setActiveLateralStock] = useState(false);
+    const [activePalcoStock, setActivePalcoStock] = useState(false);
+    const [activeVIPStock, setActiveVIPStock] = useState(false);
+    const [activeStreamingStock, setActiveStreamingStock] = useState(false);
+    const foundVenue = null
+
     const [dateTime, setDateTime] = useState(new Date());
-    //const Allevents = useSelector((state) => state.AllEvents);
+    const Allevents = useSelector((state) => state.AllEvents);
     const genres = useSelector((state)=> state.Genres);
     const venues = useSelector((state) => state.Venues);
     const [event, setEvent] = useState({
@@ -91,6 +99,7 @@ export default function RegisterEvent(){
                 ...stock,
                 venueId: e.target.value,
             });
+            foundVenue = venues.find(v => v.id === e.target.value)
             return 
         }
         if(e.target.name === "schedule"){
@@ -121,38 +130,17 @@ export default function RegisterEvent(){
     };
 
     const handleStock = async(e) =>{
-        // if(event.venueId !== 0){
-            // const foundVenue = venues.find(v => v.id === event.venueId);
-            // if(foundVenue){
-                // await setStock({
-                //     ...stock,
-                //     venueId: event.id,
-                    //[e.target.name]: Number(e.target.value)
-                // });
-                //return
-            //} 
-            // else {
-            //     return alert("No se a encontrado el lugar seleccionado")
-            // }
-            // if(event.name !== "" && event.artist !== "" && event.schedule !== ""){
-            //     await setStock({
-            //         ...stock,
-            //         id: event.name + event.artist + event.schedule
-            //     });
-            // }
-            await setStock({
-                ...stock,
-                [e.target.name]: Number(e.target.value)
+        
+        await setStock({
+            ...stock,
+            [e.target.name]: Number(e.target.value)
+        });
+        if(stock.id !== ""){
+            await setEvent({
+                ...event,
+                stockId: stock.id
             });
-            if(stock.id !== ""){
-                await setEvent({
-                    ...event,
-                    stockId: stock.id
-                });
-            }
-        // } else {
-        //     return alert("Aun no selecciono un lugar para escribir el stock y precios")
-        // }
+        }
     };
 
     const handleAddStock = async(e) => {
@@ -453,6 +441,8 @@ export default function RegisterEvent(){
             <div> <label>Imagen del Artista:* </label> <input id="performerImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del artista" /> {errors.performerImage && <label className={style.error}>{errors.performerImage}</label>}</div>
             <div> <label>Imagen del Lugar:* </label> <input id="placeImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del lugar" />  {errors.placeImage && <label className={style.error}>{errors.placeImage}</label>}</div>
 
+            <div> <label>Descripcion del evento: </label> <textarea name="description" value={event.description}  onChange={handleChange} type="text" placeholder="Descripcion" /> </div>
+            
             <div>
                 <label className={style.label}>Seleccionar lugar del evento: </label>
                 <select name="venueId" onChange={handleChange}>
@@ -464,8 +454,6 @@ export default function RegisterEvent(){
             </div>
             <div>{activeVenue ? <RegisterVenue/>:null}</div>
             
-            <div> <label>Descripcion del evento: </label> <textarea name="description" value={event.description}  onChange={handleChange} type="text" placeholder="Descripcion" /> </div>
-
             <div> <button type="button" onClick={()=>setActiveStock(!activeStock)}>Desplegar seleccion de stock y precios</button> </div>
             <div>{activeStock ? 
                 <div>
