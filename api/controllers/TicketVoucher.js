@@ -306,5 +306,6 @@ padding:15px 30px 15px 30px!important;
     // } catch (error) {
     //     res.status(400).json({error: error.message})
     // }
+    // console.log()
 }
 module.exports={ticketVoucher}
