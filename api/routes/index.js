@@ -64,6 +64,7 @@ const {
 } = require("../controllers/ShoppingCart");
 
 const { getLikes, postLikes, deleteLikes } = require("../controllers/Likes");
+const { ticketVoucher } = require('../controllers/TicketVoucher')
 
 routes.get("/like", verifyToken, getLikes);
 routes.post("/like", verifyToken, postLikes);
@@ -115,5 +116,7 @@ routes.get("/blackall", verifyToken, isAdmin, getAllBlackList);
 routes.get("/black", verifyToken, isAdmin, getAOneBlackList);
 routes.post("/black", verifyToken, isAdmin, postOneBlackList);
 routes.delete("/black", verifyToken, isAdmin, deleteOneBlackList);
+
+routes.post("/voucher", ticketVoucher)
 
 module.exports = routes;
