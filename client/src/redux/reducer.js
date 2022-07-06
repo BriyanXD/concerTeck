@@ -215,12 +215,12 @@ function reducers(state = initialState, { type, payload }) {
     case "POST_VENUE":
       return {
         ...state,
-        Venues: payload,
+        Venues: [...state.Venues, payload],
       };
     case "POST_STOCK":
       return {
         ...state,
-        Stock: payload,
+        Stock: [...state.Stock, payload],
       }
     case "VALIDATION_LOGIN":
       return {

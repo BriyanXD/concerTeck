@@ -34,7 +34,7 @@ async function getTicketStock(req, res) {
   }
 }
 
-async function putTicketStock() {
+async function putTicketStock(req, res) {
   try {
     const allTicketStock = await TicketStock.findAll({
       include: { model: Venue },
@@ -45,7 +45,7 @@ async function putTicketStock() {
   }
 }
 
-async function postTicketStock(){
+async function postTicketStock(req, res){
   try{
     const {
       id, 

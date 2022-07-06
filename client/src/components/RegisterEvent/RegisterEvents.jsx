@@ -139,16 +139,16 @@ export default function RegisterEvent(){
             //         id: event.name + event.artist + event.schedule
             //     });
             // }
+            await setStock({
+                ...stock,
+                [e.target.name]: Number(e.target.value)
+            });
             if(stock.id !== ""){
                 await setEvent({
                     ...event,
                     stockId: stock.id
                 });
             }
-            await setStock({
-                ...stock,
-                [e.target.name]: Number(e.target.value)
-            });
         // } else {
         //     return alert("Aun no selecciono un lugar para escribir el stock y precios")
         // }
@@ -251,7 +251,7 @@ export default function RegisterEvent(){
             });
             return
         }
-        await handleAddStock(e);
+        //await handleAddStock(e);
         await dispatch(CreateEvent(event));
         //console.log("creacion de evento", eventCreated);
             alert("Evento creado exitosamente");
@@ -468,12 +468,33 @@ export default function RegisterEvent(){
             <div>{activeStock ? 
                 <div>
                     <h4>Entradas y Precios</h4>
-                    <label>Stock entradas generales:* </label> <input name="stockGeneral" value={stock.stockGeneral} onChange={handleStock} type="text" placeholder="Precio" /> <label>Precio:* </label> <input name="generalPrice" value={stock.generalPrice} onChange={handleStock} type="text" placeholder="Precio" />
-                    <label>Stock entradas zona Lateral: </label> <input name="stockGeneralLateral" value={stock.stockGeneralLateral} onChange={handleStock} type="text" placeholder="Precio" /> <label>Precio: </label> <input name="generalLateralPrice" value={stock.generalLateralPrice} onChange={handleStock} type="text" placeholder="Precio" />
-                    <label>Stock entradas palco: </label> <input name="stockPalco" value={stock.stockPalco} onChange={handleStock} type="text" placeholder="Precio" /> <label>Precio: </label> <input name="palcoPrice" value={stock.palcoPrice} onChange={handleStock} type="text" placeholder="Precio" />
-                    <label>Stock entradas via streaming: </label> <input name="stockStreaming" value={stock.stockStreaming} onChange={handleStock} type="text" placeholder="Precio" /> <label>Precio: </label> <input name="streamingPrice" value={stock.streamingPrice} onChange={handleStock} type="text" placeholder="Precio" />
-                    <label>Stock entradas VIP: </label> <input name="stockkVIP" value={stock.stockkVIP} onChange={handleStock} type="text" placeholder="Precio" /> <label>Precio: </label> <input name="vipPrice" value={stock.vipPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                    <div>
+                    <label>Stock entradas generales:* </label> <input name="stockGeneral" value={stock.stockGeneral} onChange={handleStock} type="text" placeholder="Precio" /> 
+                    <label>Precio:* </label> <input name="generalPrice" value={stock.generalPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                    </div>
+
+                    <div>
+                    <label>Stock entradas zona Lateral: </label> <input name="stockGeneralLateral" value={stock.stockGeneralLateral} onChange={handleStock} type="text" placeholder="Precio" /> 
+                    <label>Precio: </label> <input name="generalLateralPrice" value={stock.generalLateralPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                    </div>
+
+                    <div>
+                    <label>Stock entradas palco: </label> <input name="stockPalco" value={stock.stockPalco} onChange={handleStock} type="text" placeholder="Precio" /> 
+                    <label>Precio: </label> <input name="palcoPrice" value={stock.palcoPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                    </div>
+
+                    <div>
+                    <label>Stock entradas via streaming: </label> <input name="stockStreaming" value={stock.stockStreaming} onChange={handleStock} type="text" placeholder="Precio" />
+                    <label>Precio: </label> <input name="streamingPrice" value={stock.streamingPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                    </div>
+
+                    <div>
+                    <label>Stock entradas VIP: </label> <input name="stockkVIP" value={stock.stockkVIP} onChange={handleStock} type="text" placeholder="Precio" /> 
+                    <label>Precio: </label> <input name="vipPrice" value={stock.vipPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                    </div>
+
                     {errors.stockId && <label>{errors.stockId}</label>}
+                    <button type="button" onClick={handleAddStock}>Añadir stock</button>
                 </div> 
             : null }</div>
 
