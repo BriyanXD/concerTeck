@@ -1,8 +1,12 @@
 const Likes = require("../models/Likes");
 
 async function getLikes(req, res) {
+  const { idUser }= req.query
   try {
-    const allLikes = await Likes.findAll();
+    const allLikes = await Likes.findAll({
+      where:{
+      idUser: idUser,
+    }});
     res.json(allLikes);
   } catch (error) {
     res.status(404).json({ error: error.message });
