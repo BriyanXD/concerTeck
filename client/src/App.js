@@ -7,7 +7,8 @@ import Detail from './components/Detail/Detail';
 import PageNotFound from './components/PageNotFound/PageNotFound';
 import Cart from './components/Cart/Cart';
 import ProfileUser from './components/ProfileUser/ProfileUser.jsx';
-import PanelAdmin from './components/Admin/adminPanel'
+import PanelAdmin from './components/Admin/adminPanel';
+
 
 
 
