@@ -9,7 +9,6 @@ import { register } from "../../redux/actions";
 export default function PerfilYLogoutAuth0(){
   const dispatch = useDispatch()
   const registro = useSelector((state) => {return state.User})
-  console.log(registro,'prueba')
   const { user, isAuthenticated, logout } = useAuth0();
     
     useEffect(() => {
@@ -25,7 +24,8 @@ export default function PerfilYLogoutAuth0(){
       dispatch(register(newUser))
     }
     function clearLocalStorageToken(){
-      localStorage.setItem("token"," ")
+      localStorage.setItem("token"," ");
+      localStorage.setItem("user", "nada");
       logout({ returnTo: window.location.origin })
     }
   return (

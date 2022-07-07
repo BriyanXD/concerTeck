@@ -68,8 +68,7 @@ export default function Home() {
     view= true;
   }
 
-  
-// console.log(currentBigEvents)
+
   return (
     <div className={style.container}>
       <NavBar setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage} />
