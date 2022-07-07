@@ -641,6 +641,7 @@ export function searchBlackList(name) {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+      console.log('ALLBLACKLIST EN ACTION:', allBlackList.data)
       return dispatch({
         type: "GET_NAME_BY_BLACKLIST",
         payload: allBlackList.data,
