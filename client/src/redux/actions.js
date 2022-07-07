@@ -634,6 +634,26 @@ export function getAllLikesEventId(idEvent) {
   };
 }
 
+
+
+export function getTicketById(id) {
+  return async function (dispatch) {
+    try {
+      const ticket = await axios.get(`${url}/api/ticket?id=${id}`,{
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return dispatch({
+        type: "GET_TICKET_BY_ID",
+        payload: ticket.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 /* export function getAllSolicits(allevents) {
   return async function (dispatch) {
     try {
