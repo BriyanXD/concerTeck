@@ -28,7 +28,8 @@ export default function RegisterEvent(){
     const [activePalcoStock, setActivePalcoStock] = useState(false);
     const [activeVIPStock, setActiveVIPStock] = useState(false);
     const [activeStreamingStock, setActiveStreamingStock] = useState(false);
-    const foundVenue = null
+    const [stockAllOk, setStockAllOk] = useState(false);
+    const [foundVenue, setFoundVenue] = useState(null);
 
     const [dateTime, setDateTime] = useState(new Date());
     const Allevents = useSelector((state) => state.AllEvents);
@@ -71,18 +72,6 @@ export default function RegisterEvent(){
         palcoPrice: 0,
         venueId: "",
     });
-    // const [errorStock, setErrorStock] = useState({
-    //     stockStreaming: "",
-    //     stockkVIP: "",
-    //     stockGeneral: "",
-    //     stockGeneralLateral: "",
-    //     stockPalco: "",
-    //     streamingPrice: "",
-    //     vipPrice: "",
-    //     generalLateralPrice: "",
-    //     generalPrice: "",
-    //     palcoPrice: "",
-    // });
 
     useEffect(()=>{
         dispatch(GetGenres());
@@ -99,7 +88,10 @@ export default function RegisterEvent(){
                 ...stock,
                 venueId: e.target.value,
             });
-            foundVenue = venues.find(v => v.id === e.target.value)
+            await setFoundVenue(
+                venues.find(v => v.id === e.target.value)
+            );
+            console.log("Se Encontro El Venue Relacionado", foundVenue)
             return 
         }
         if(e.target.name === "schedule"){
@@ -130,7 +122,6 @@ export default function RegisterEvent(){
     };
 
     const handleStock = async(e) =>{
-        
         await setStock({
             ...stock,
             [e.target.name]: Number(e.target.value)
@@ -145,62 +136,43 @@ export default function RegisterEvent(){
 
     const handleAddStock = async(e) => {
         e.preventDefault();
-        // if( errorStock.stockStreaming !== "" ||
-        // errorStock.stockkVIP !== "" ||
-        // errorStock.stockGeneral !== "" ||
-        // errorStock.stockGeneralLateral !== "" ||
-        // errorStock.stockPalco !== "" ||
-        // errorStock.streamingPrice !== "" ||
-        // errorStock.vipPrice !== "" ||
-        // errorStock.generalLateralPrice !== "" ||
-        // errorStock.generalPrice !== "" ||
-        // errorStock.palcoPrice !== "" ||
-        // errorStock.venueId !== "" ){
-        //     alert("Errores detectados en formulario del stock");
-        // }
-        // if ( stock.stockStreaming === 0 ||
-        // stock.stockkVIP === 0 ||
-        // stock.stockGeneral === 0 ||
-        // stock.stockGeneralLateral === 0 ||
-        // stock.stockPalco === 0 ||
-        // stock.streamingPrice === 0 ||
-        // stock.vipPrice === 0 ||
-        // stock.generalLateralPrice === 0 ||
-        // stock.generalPrice ===0 ||
-        // stock.palcoPrice === 0 ){
-        //     setErrorStock({
-        //         stockStreaming: stock.stockStreaming === 0 ? "Ingrese stock de streaming" : "",
-        //         stockkVIP: stock.stockkVIP === 0 ? "Ingrese stock VIP" : "",
-        //         stockGeneral: stock.stockGeneral === 0 ? "Ingrese stock general" : "",
-        //         stockGeneralLateral: stock.stockGeneralLateral === 0 ? "Ingrese stock lateral" : "",
-        //         stockPalco: stock.stockPalco === 0 ? "Ingrese stock palco" : "",
-        //         streamingPrice: stock.streamingPrice === 0 ? "Ingrese precio de streaming" : "",
-        //         vipPrice: stock.vipPrice === 0 ? "Ingrese precio VIP" : "",
-        //         generalLateralPrice: stock.generalLateralPrice === 0 ? "Ingrese precio lateral" : "",
-        //         generalPrice: stock.generalPrice ===0 ? "Ingrese precio general" : "",
-        //         palcoPrice: stock.palcoPrice === 0 ? "Ingrese precio palco" : ""
-        //     });
-        //     return
-        // }
-        const stockCreated = await dispatch(CreateStock(stock));
-        console.log("AQUI EL STOCK CREADO", stockCreated);
-        if(stockCreated.data[0]){
-            alert("Stock añadido con exito")
-            setStock({
-                id: "",
-                stockStreaming: 0,
-                stockkVIP: 0,
-                stockGeneral: 0,
-                stockGeneralLateral: 0,
-                stockPalco: 0,
-                streamingPrice: 0,
-                vipPrice:0,
-                generalLateralPrice: 0,
-                generalPrice:0,
-                palcoPrice: 0,
-                venueId: 0,
-            });
-            //setActiveStock(!activeStock);
+        if(stock.stockGeneral === 0 || stock.stockGeneral > foundVenue.maxStockGeneral ){
+            return alert(`El stock genera NO debe ser nulo y NO debe superar las ${foundVenue.maxStockGeneral} entradas`)
+        }
+        else if (foundVenue.maxStockGeneralLateral !== 0 && (stock.stockGeneralLateral === 0 || stock.stockGeneralLateral > foundVenue.maxStockGeneralLateral)){
+            return alert(`El stock lateral NO debe ser nulo y NO debe supear las ${foundVenue.maxStockGeneralLateral} entradas`)
+        }
+        else if (foundVenue.maxStockPalco !== 0 && (stock.stockPalco === 0 || stock.stockPalco > foundVenue.maxStockPalco)){
+            return alert(`El stock palco NO debe ser nulo y NO debe superar las ${foundVenue.maxStockPalco} entradas`)
+        }
+        else if (foundVenue.maxStockStreaming !== 0 && (stock.stockStreaming === 0 || stock.stockStreaming > foundVenue.maxStockStreaming)){
+            return alert(`El stock de streaming NO debe ser nulo y NO debe superar las ${foundVenue.maxStockStreaming} entradas`)
+        }
+        else if (foundVenue.maxStockVIP !== 0 && (stock.stockkVIP === 0 || stock.stockkVIP > foundVenue.maxStockVIP)){
+            return alert(`El stock VIP NO debe ser nulo y NO debe superar las ${foundVenue.maxStockVIP} entradas`)
+        }
+        else {
+            const stockCreated = await dispatch(CreateStock(stock));
+            console.log("AQUI EL STOCK CREADO", stockCreated);
+            if(stockCreated.data[0]){
+                setStockAllOk(!stockAllOk)
+                alert("Stock añadido con exito")
+                setStock({
+                    id: "",
+                    stockStreaming: 0,
+                    stockkVIP: 0,
+                    stockGeneral: 0,
+                    stockGeneralLateral: 0,
+                    stockPalco: 0,
+                    streamingPrice: 0,
+                    vipPrice:0,
+                    generalLateralPrice: 0,
+                    generalPrice:0,
+                    palcoPrice: 0,
+                    venueId: 0,
+                });
+                //setActiveStock(!activeStock);
+            }
         }
     };
 
@@ -241,21 +213,24 @@ export default function RegisterEvent(){
             return
         }
         await handleAddStock(e);
-        await dispatch(CreateEvent(event));
-        //console.log("creacion de evento", eventCreated);
-            alert("Evento creado exitosamente");
-            setEvent({
-                name: "",
-                artist: "",
-                genreId: "",
-                schedule: "",
-                performerImage: "",
-                placeImage: "",
-                description: "",
-                venueId: "",
-                stockId: "",
-            });
-            navigate("/")
+        if(stockAllOk === true){
+            await dispatch(CreateEvent(event));
+            //console.log("creacion de evento", eventCreated);
+                alert("Evento creado exitosamente");
+                setEvent({
+                    name: "",
+                    artist: "",
+                    genreId: "",
+                    schedule: "",
+                    performerImage: "",
+                    placeImage: "",
+                    description: "",
+                    venueId: "",
+                    stockId: "",
+                });
+                setFoundVenue(null);
+                navigate("/")
+        }
     };
 
     const handleBlur = (e) => {
@@ -454,8 +429,8 @@ export default function RegisterEvent(){
             </div>
             <div>{activeVenue ? <RegisterVenue/>:null}</div>
             
-            <div> <button type="button" onClick={()=>setActiveStock(!activeStock)}>Desplegar seleccion de stock y precios</button> </div>
-            <div>{activeStock ? 
+            {/* <div> <button type="button" onClick={()=>setActiveStock(!activeStock)}>Desplegar seleccion de stock y precios</button> </div> */}
+            <div>{event.venueId !== "" && foundVenue !== null ? 
                 <div>
                     <h4>Entradas y Precios</h4>
                     <div>
@@ -463,24 +438,32 @@ export default function RegisterEvent(){
                     <label>Precio:* </label> <input name="generalPrice" value={stock.generalPrice} onChange={handleStock} type="text" placeholder="Precio" />
                     </div>
 
-                    <div>
-                    <label>Stock entradas zona Lateral: </label> <input name="stockGeneralLateral" value={stock.stockGeneralLateral} onChange={handleStock} type="text" placeholder="Precio" /> 
-                    <label>Precio: </label> <input name="generalLateralPrice" value={stock.generalLateralPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                    <div>{foundVenue.maxStockGeneralLateral !== 0 ? 
+                        <div>
+                            <label>Stock entradas zona Lateral: </label> <input name="stockGeneralLateral" value={stock.stockGeneralLateral} onChange={handleStock} type="text" placeholder="Precio" /> 
+                            <label>Precio: </label> <input name="generalLateralPrice" value={stock.generalLateralPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                        </div> : null }
                     </div>
 
-                    <div>
-                    <label>Stock entradas palco: </label> <input name="stockPalco" value={stock.stockPalco} onChange={handleStock} type="text" placeholder="Precio" /> 
-                    <label>Precio: </label> <input name="palcoPrice" value={stock.palcoPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                    <div>{foundVenue.maxStockPalco !== 0 ? 
+                        <div>
+                            <label>Stock entradas palco: </label> <input name="stockPalco" value={stock.stockPalco} onChange={handleStock} type="text" placeholder="Precio" /> 
+                            <label>Precio: </label> <input name="palcoPrice" value={stock.palcoPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                        </div> : null}
                     </div>
 
-                    <div>
-                    <label>Stock entradas via streaming: </label> <input name="stockStreaming" value={stock.stockStreaming} onChange={handleStock} type="text" placeholder="Precio" />
-                    <label>Precio: </label> <input name="streamingPrice" value={stock.streamingPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                    <div>{foundVenue.maxStockStreaming !== 0 ? 
+                        <div>
+                            <label>Stock entradas via streaming: </label> <input name="stockStreaming" value={stock.stockStreaming} onChange={handleStock} type="text" placeholder="Precio" />
+                            <label>Precio: </label> <input name="streamingPrice" value={stock.streamingPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                        </div> : null}
                     </div>
 
-                    <div>
-                    <label>Stock entradas VIP: </label> <input name="stockkVIP" value={stock.stockkVIP} onChange={handleStock} type="text" placeholder="Precio" /> 
-                    <label>Precio: </label> <input name="vipPrice" value={stock.vipPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                    <div>{foundVenue.maxStockVIP !== 0 ? 
+                        <div>
+                            <label>Stock entradas VIP: </label> <input name="stockkVIP" value={stock.stockkVIP} onChange={handleStock} type="text" placeholder="Precio" /> 
+                            <label>Precio: </label> <input name="vipPrice" value={stock.vipPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                        </div> : null}
                     </div>
 
                     {/* {errors.stockId && <label>{errors.stockId}</label>} */}
@@ -490,7 +473,7 @@ export default function RegisterEvent(){
 
             <Link to='/'><button >Volver a inicio</button></Link>
             
-            <button type="submit">Crear</button>
+            <button type="submit">Crear Evento</button>
         </form>
 
        </div>
