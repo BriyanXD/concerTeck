@@ -1,16 +1,24 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const User = require('../models/User');
+const Ticket = require('../models/Ticket')
+const Events = require('../models/Events')
 const {google} = require('googleapis');
+const qrcode = require('qrcode')
+// const QrPrueba = require('../../client/src/assets/QrPrueba.png')
 // const transport = require('../transport.json')
 
 async function ticketVoucher (req,res){
     const {id} = req.query
     // const {name , username ,email } = req.body
-
+    let url = `http://localhost:3000/api/tickets/${id}`
     // try {
-        let Comprador = await User.findByPk(id)
-        // if(Comprador.length > 0){
+        let Comprador = await Ticket.findByPk(id,{include:[{ model: User, as: "user" },
+        { model: Events, as: "event" },]})
+
+        let QR = await qrcode.toDataURL(url)
+        console.log(QR)
+        // console.log(Comprador)
         const contentHtml=`
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" style="width:100%;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
@@ -188,7 +196,7 @@ padding:15px 30px 15px 30px!important;
 <td valign="top" align="center" style="padding:0;Margin:0;width:530px">
 <table style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-top:3px solid #eeeeee;border-bottom:3px solid #eeeeee" width="100%" cellspacing="0" cellpadding="0" role="presentation">
 <tr style="border-collapse:collapse">
-<td align="left" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">Querid@ ${Comprador.name}. Te agradecemos por tu compra! Queríamos recordarte que recomendamos presentarte unos momentos antes al comienzo del evento.</p></td>
+<td align="left" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">Querid@ ${Comprador.user.name}. Te agradecemos por tu compra! Queríamos recordarte que recomendamos presentarte unos momentos antes al comienzo del evento.</p></td>
 </tr>
 </table></td>
 </tr>
@@ -208,7 +216,7 @@ padding:15px 30px 15px 30px!important;
 <td valign="top" align="center" style="padding:0;Margin:0;width:530px">
 <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
 <tr style="border-collapse:collapse">
-<td align="left" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">A continuación te adjuntamos el codigo qr con el que podras ingresar a disfrutar del show!<br></p></td>
+<td align="left" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">A continuación te adjuntamos el codigo qr con el que podras ingresar a disfrutar del show!</p></td>
 </tr>
 </table></td>
 </tr>
@@ -228,7 +236,7 @@ padding:15px 30px 15px 30px!important;
 <td valign="top" align="center" style="padding:0;Margin:0;width:530px">
 <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
 <tr style="border-collapse:collapse">
-<td align="center" style="padding:0;Margin:0;font-size:0px"><img class="adapt-img" src="https://jpjhfi.stripocdn.email/content/guids/CABINET_f674cb09635fe64c7e06b9d0c8f4ecd5/images/logosombra_Phr.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="530"></td>
+<td align="center" style="padding:0;Margin:0;font-size:0px"><img class="adapt-img" src="${QR}" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="530"></td>
 </tr>
 </table></td>
 </tr>
@@ -241,7 +249,7 @@ padding:15px 30px 15px 30px!important;
 <td valign="top" align="center" style="padding:0;Margin:0;width:530px">
 <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
 <tr style="border-collapse:collapse">
-<td align="left" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#333333;font-size:14px">Para: ${Comprador.email} <br>Nombre de usuario: ${Comprador.username}<br></p></td>
+<td align="left" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#333333;font-size:14px">Para: ${Comprador.user.email}<br>Nombre de usuario: ${Comprador.user.username}</p></td>
 </tr>
 </table></td>
 </tr>
@@ -284,7 +292,7 @@ padding:15px 30px 15px 30px!important;
                 })
             let mailOptions ={
                 from:"concerteck@gmail.com",
-                to:`${Comprador.email}`,
+                to:`${Comprador.user.email}`,
                 subject:"Compra de entradas Prueba",
                 html:contentHtml
             };
@@ -308,4 +316,112 @@ padding:15px 30px 15px 30px!important;
     // }
     // console.log()
 }
+
 module.exports={ticketVoucher}
+
+// ticket {
+//     dataValues: {
+//       id: '62c86df9-c620-47ab-9808-9083f2de45aa',
+//       name: 'palco',
+//       price: 2500,
+//       eventId: '697c2c5a-83e0-4558-8d31-f08f9b65762e',
+//       userId: '8a6968fb-e7b1-4e2c-81ca-98eae69d065c',
+//       user: user {
+//         dataValues: [Object],
+//         _previousDataValues: [Object],
+//         uniqno: 1,
+//         _changed: Set(0) {},
+//         _options: [Object],
+//         isNewRecord: false
+//       },
+//       event: events {
+//         dataValues: [Object],
+//         _previousDataValues: [Object],
+//         uniqno: 1,
+//         _changed: Set(0) {},
+//         _options: [Object],
+//         isNewRecord: false
+//       }
+//     },
+//     _previousDataValues: {
+//       id: '62c86df9-c620-47ab-9808-9083f2de45aa',
+//       name: 'palco',
+//       price: 2500,
+//       eventId: '697c2c5a-83e0-4558-8d31-f08f9b65762e',
+//       userId: '8a6968fb-e7b1-4e2c-81ca-98eae69d065c',
+//       user: user {
+//         dataValues: [Object],
+//         _previousDataValues: [Object],
+//         uniqno: 1,
+//         _changed: Set(0) {},
+//         _options: [Object],
+//         isNewRecord: false
+//       },
+//       event: events {
+//         dataValues: [Object],
+//         _previousDataValues: [Object],
+//         uniqno: 1,
+//         _changed: Set(0) {},
+//         _options: [Object],
+//         isNewRecord: false
+//       }
+//     isNewRecord: false,
+//     user: user {
+//       dataValues: {
+//         id: '8a6968fb-e7b1-4e2c-81ca-98eae69d065c',
+//         username: 'troseneitor',
+//         name: 'Agustin Trossero',
+//         isAdmin: false,
+//         email: 'troseneitor@gmail.com'
+//       },
+//       _previousDataValues: {
+//         id: '8a6968fb-e7b1-4e2c-81ca-98eae69d065c',
+//         username: 'troseneitor',
+//         name: 'Agustin Trossero',
+//         isAdmin: false,
+//         email: 'troseneitor@gmail.com'
+//       },
+//       uniqno: 1,
+//       _changed: Set(0) {},
+//       _options: {
+//         isNewRecord: false,
+//         _schema: null,
+//         _schemaDelimiter: '',
+//         include: undefined,
+//         includeNames: undefined,
+//         includeMap: undefined,
+//         includeValidated: true,
+//         raw: true,
+//         attributes: undefined
+//       },
+//       isNewRecord: false
+//     },
+//     event: events {
+//       dataValues: {
+//         id: '697c2c5a-83e0-4558-8d31-f08f9b65762e',
+//         name: 'Divididos en vivo',
+//         artist: 'Divididos',
+//         schedule: 2022-08-17T21:00:00.000Z,
+//         performerImage: 'https://lastfm.freetls.fastly.net/i/u/770x0/c680cb0c72de80e17656d75121b6155d.jpg',
+//         placeImage: 'https://billboard.com.ar/wp-content/uploads/2018/06/69111417b33d14147714a0e09de29e71.jpg',
+//         description: 'La aplanadora del Rock vuelve al Luna Park para hacer delirar a todo los presentes con sus mejores temas, festejando sus 30 años de carrera.',
+//         isAprobe: false,
+//         genreId: 2,
+//         venueId: 'lunapark',
+//         stockId: 'Divididoslunapark2022-08-17T21:00:00.000Z'
+//       },
+//       _previousDataValues: {
+//         id: '697c2c5a-83e0-4558-8d31-f08f9b65762e',
+//         name: 'Divididos en vivo',
+//         artist: 'Divididos',
+//         schedule: 2022-08-17T21:00:00.000Z,
+//         performerImage: 'https://lastfm.freetls.fastly.net/i/u/770x0/c680cb0c72de80e17656d75121b6155d.jpg',
+//         placeImage: 'https://billboard.com.ar/wp-content/uploads/2018/06/69111417b33d14147714a0e09de29e71.jpg',
+//         description: 'La aplanadora del Rock vuelve al Luna Park para hacer delirar a todo los presentes con sus mejores temas, festejando sus 30 años de carrera.',
+//         isAprobe: false,
+//         genreId: 2,
+//         venueId: 'lunapark',
+//         stockId: 'Divididoslunapark2022-08-17T21:00:00.000Z'
+//       }
+//     }
+//   }
