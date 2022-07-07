@@ -1,0 +1,36 @@
+.conteiner{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100vw;
+    align-items: center;
+    background: url(../../img/bk.jpg);
+}
+
+.entrada{
+    color: white;
+}
+
+.contenido{
+    display: flex;
+    flex-direction: row;
+    color: rgb(255, 255, 255);
+}
+.datos{
+    display: flex;
+    flex-direction: column;
+    margin-right: 10vw;
+    margin-bottom: 7.5vw;
+}
+
+.id{
+    color: white;
+}
+
+.img{
+    width: 40vw;
+    height: 45vh;
+    border-radius: 2%;
+    margin-top: 2vw;
+}
