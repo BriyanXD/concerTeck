@@ -231,6 +231,16 @@ export default function RegisterEvent(){
         }    
     };
 
+    const ControlDoNotRepeat = async(newEvent) =>{
+        const sameVenue = Allevents.find(e => e.venueId === newEvent.venueId);
+        const sameTime = Allevents.find(e => e.schedule === newEvent.schedule);
+        const sameArtist = Allevents.find(e => e.artist === newEvent.artist);
+        if((sameVenue && sameTime) && (sameVenue.schedule === sameTime.schedule) && (sameVenue.venueId === sameTime)){
+            alert("Ya existe otro evento en el mismo lugar a la misma Fecha y Hora")
+            return false
+        }
+    }
+
     const handleSubmitEvent = async(e) => {
         e.preventDefault();
         if( errors.name !== "" ||
@@ -267,11 +277,12 @@ export default function RegisterEvent(){
             });
             return
         }
+        // const Control = ControlDoNotRepeat(event)
+        // if(Control === true){
+
+        // }
         await handleAddStock(e);
-        //console.log("AQUI EL STOCK CREADO", stockCreated)
-        //if(stockCreated.data[0]){
         await dispatch(CreateEvent(event));
-        //console.log("creacion de evento", eventCreated);
         alert("Evento creado exitosamente");
         setEvent({
             name: "",
@@ -285,9 +296,7 @@ export default function RegisterEvent(){
             stockId: "",
         });
         setFoundVenue(null);
-        //setStockAllOk(false)
         navigate("/")
-        //}
     };
 
     const handleBlur = (e) => {
