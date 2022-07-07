@@ -35,6 +35,7 @@ const initialState = {
     modalEvent: false,
     modalUser: false,
     modalUserPermised: false,
+    allLikesEventId: [],
   },
   token: "",
 };
@@ -73,27 +74,27 @@ function reducers(state = initialState, { type, payload }) {
         Basket: [...state.Basket, payload],
       };
     case "POST_LIKES":
-      if(state.Likes.find(l => l.id === payload.id)){ 
+      if (state.Likes.find((l) => l.id === payload.id)) {
         return {
           ...state,
-          Likes:state.Likes.filter((f) => f.id !== payload.id) 
-        }
-        } else{
+          Likes: state.Likes.filter((f) => f.id !== payload.id),
+        };
+      } else {
         return {
           ...state,
           Likes: [...state.Likes, payload],
-        }
-        }
+        };
+      }
     case "DELETE_LIKES":
       return {
         ...state,
         Likes: state.Likes.filter((f) => f.id !== payload.id),
-    }
-      case "GET_ALL_LIKES":
-        return{
-          ...state,
-          Likes: payload
-    }
+      };
+    case "GET_ALL_LIKES":
+      return {
+        ...state,
+        Likes: payload,
+      };
     case "GET_EVENT_BY_NAME": {
       const bigEvents = payload.filter((e) => e.venue.isBigEvent === true);
       const smallEvents = payload.filter((e) => e.venue.isBigEvent === false);
@@ -365,6 +366,15 @@ function reducers(state = initialState, { type, payload }) {
         stateAdminPanel: {
           ...state.stateAdminPanel,
           userSaveBlackList: payload,
+        },
+      };
+    //GET_ALL_LIKES_EVENT_ID
+    case "GET_ALL_LIKES_EVENT_ID":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allLikesEventId: payload,
         },
       };
     default:
