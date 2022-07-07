@@ -9,6 +9,8 @@ import { BsFillStarFill } from 'react-icons/bs';
 export default function NavBarProfile () {
 
     const user = useSelector(state => state.User);
+    const userdates = JSON.parse(localStorage.getItem("userdates"))
+    console.log(userdates,"EXTRAIDOS")
 
     return(<div className={style.containerNavBarProfile}>
          <Link to="/">
@@ -17,7 +19,7 @@ export default function NavBarProfile () {
         <Link to='/favs' style={{ textDecoration: "none" }}>
             <span className={style.titleData2}><BsFillStarFill size={15}/> Favoritos </span>
         </Link>
-            <span className={style.titleData}>Nombre: {user[0].name}</span>
+            <span className={style.titleData}>Nombre: {userdates.name}</span>
          <PerfilYLogoutAuth0/>
     </div>)
 }
