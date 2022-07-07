@@ -35,7 +35,7 @@ export default function AdminBlackListPanel(){
                         <BlackListCard id={user.id} name={user.name} email={user.email}/>
                     </div> )}) 
                  : <h1>No se encontraron datos</h1> }</div>
-            {modalEvent ? <PerfilEventAdmin/> : <></>}
+            { modalEvent ? <PerfilEventAdmin/> : <></>}
         </div>
     )
 }
