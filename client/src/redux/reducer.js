@@ -27,6 +27,7 @@ const initialState = {
     allUsers: [],
     tdosEvents: [],
     allBlackList: [],
+    blackListByName: [],
     userSaveBlackList: "",
     // UserByName:[],
     UserByUserName: [],
@@ -402,7 +403,10 @@ function reducers(state = initialState, { type, payload }) {
       case "GET_NAME_BY_BLACKLIST":
         return {
           ...state,
-          allBlackList: payload
+          stateAdminPanel:{
+            ...state.stateAdminPanel,
+            blackListByName: payload,
+          }
         };
     default:
       return state;
