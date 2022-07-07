@@ -118,5 +118,4 @@ routes.post("/black", verifyToken, isAdmin, postOneBlackList);
 routes.delete("/black", verifyToken, isAdmin, deleteOneBlackList);
 
 routes.post("/voucher", ticketVoucher)
-
 module.exports = routes;
