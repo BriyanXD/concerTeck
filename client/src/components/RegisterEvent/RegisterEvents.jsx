@@ -22,7 +22,7 @@ export default function RegisterEvent(){
 
     const [activeGenre, setActiveGenre] = useState(false);
     const [activeVenue, setActiveVenue] = useState(false);
-    const [activeStock, setActiveStock] = useState(false);
+    //const [activeStock, setActiveStock] = useState(false);
 
     const [activeStockGeneral , setActiveStockGeneral] = useState({
         stock: "",
@@ -163,22 +163,6 @@ export default function RegisterEvent(){
             ...stock,
             [e.target.name]: Number(e.target.value)
         });
-        // if(event.name !== "" && event.artist !== "" && event.schedule !== ""){
-        //     // let eventName = event.name;
-        //     // let eventArtist = event.artist;
-        //     // let eventSchedule = event.schedule;
-        //     await setStock({
-        //         ...stock,
-        //         id: event.name + event.artist + event.schedule
-        //     });
-        //     //if(stock.id !== ""){
-        //         await setEvent({
-        //             ...event,
-        //             stockId: stock.id
-        //         });
-        //     //}
-        //     return
-        // }
         if(stock.id !== ""){
             await setEvent({
                 ...event,
