@@ -13,7 +13,7 @@ export default function LoginAuth0(){
     loginWithPopup
   } = useAuth0();
 
-
+  localStorage.setItem("userdates",JSON.stringify(user))
   return(
   <div>
     {
