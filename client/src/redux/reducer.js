@@ -36,8 +36,10 @@ const initialState = {
     modalUser: false,
     modalUserPermised: false,
     allLikesEventId: [],
+    putUrlStreaming: "",
   },
   token: "",
+  ticket: {},
 };
 
 function reducers(state = initialState, { type, payload }) {
@@ -339,10 +341,17 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         cartDB: payload,
       };
+    case "UPDATE_CART":
+      return {
+        ...state,
+        cartDB: state.cartDB.map((e) => {
+          return e.id === payload.id ? payload : e;
+        }),
+      };
     case "DELETE_CART":
       return {
         ...state,
-        cartDB: state.cartDB.filter((e) => e.id !== payload),
+        cartDB: state.cartDB.filter((e) => e.id !== payload.ShoppingSave.id),
       };
     case "FIND_EVENT_BY_NAME":
       return {
@@ -376,6 +385,19 @@ function reducers(state = initialState, { type, payload }) {
           ...state.stateAdminPanel,
           allLikesEventId: payload,
         },
+      };
+    case "PUT_URL_STREAMING_FOR_EVENT":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          putUrlStreaming: payload,
+        },
+      };
+    case "GET_TICKET_BY_ID":
+      return {
+        ...state,
+        ticket: payload,
       };
     default:
       return state;

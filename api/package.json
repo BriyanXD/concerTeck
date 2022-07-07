@@ -23,7 +23,8 @@
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.20.1",
-    "stripe": "^9.11.0"
+    "stripe": "^9.11.0",
+    "qrcode": "^1.5.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.18"

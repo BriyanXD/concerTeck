@@ -10,13 +10,17 @@ let priceId = "";
 // mercadopago.configure({
 //   access_token: "TEST_ACCESS_TOKEN",
 // });
+const User = require('../models/User');
+const Events = require('../models/Events')
 
 async function getTicketByID(req, res) {
-  const { id, userId } = req.body;
+  const { id } = req.query
+  const { userId } = req.body;
   const allTickets = await Ticket.findAll();
   try {
     if (id) {
-      const findTicketForID = await Ticket.findByPk(id);
+      const findTicketForID = await Ticket.findByPk(id,{include:[{ model: User, as: "user" },
+      { model: Events, as: "event" },]});
       return res.json(findTicketForID);
     }
     if (userId) {
