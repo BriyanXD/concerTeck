@@ -60,8 +60,12 @@ async function loadEventsAndGetEvents(req, res) {
           .json({ error: "No se encontro Eventos con ese Nombre" });
       }
     } else if (id) {
-      const eventId = await Event.findByPk(id,{include:[        { model: Venue, as: "venue" },
-      { model: TicketStock, as: "stock" },],});
+      const eventId = await Event.findByPk(id, {
+        include: [
+          { model: Venue, as: "venue" },
+          { model: TicketStock, as: "stock" },
+        ],
+      });
       if (eventId) {
         return res.send(eventId);
       } else {
@@ -229,6 +233,23 @@ async function deleteEvent(req, res) {
   }
 }
 
+async function putUrlStreaming(req, res) {
+  const { idEvent, urlStraming } = req.body;
+  try {
+    if (idEvent && urlStraming) {
+      const addUrlStreaming = await Event.update(
+        { streaming: urlStraming },
+        { where: { id: idEvent } }
+      );
+      return res.json(addUrlStreaming);
+    } else {
+      return res.status(400).json({ error: "Faltan datos" });
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
 module.exports = {
   chargeEvents,
   deleteEvent,
@@ -236,4 +257,5 @@ module.exports = {
   postEvents,
   putEvents,
   loadEventsAndGetEvents,
+  putUrlStreaming,
 };
