@@ -581,7 +581,6 @@ export function getAllBlackList() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(getAllBlackListData.data, "LISTA NEGRA");
       return dispatch({
         type: "GET_ALL_BLACK_LIST",
         payload: getAllBlackListData.data,
@@ -613,8 +612,6 @@ export function deleteUserBlackList(idUser) {
 export function getAllLikesEventId(idEvent) {
   return async function (dispatch) {
     try {
-      console.log(idEvent, "ID DEL EVENTO");
-
       const allLikesEventId = await axios.get(
         `${url}/api/like?idEvent=${idEvent}`,
         {
@@ -623,13 +620,37 @@ export function getAllLikesEventId(idEvent) {
           },
         }
       );
-      console.log(allLikesEventId.data, "USUARIO PERDONADO");
       return dispatch({
         type: "GET_ALL_LIKES_EVENT_ID",
         payload: allLikesEventId.data,
       });
     } catch (error) {
       console.log(error, "GET_ALL_LIKES_EVENT_ID");
+    }
+  };
+}
+
+export function putUrlStreamingEvent(urlStreaming, idEvent) {
+  return async function (dispatch) {
+    try {
+      const putUrlStreaming = await axios.put(
+        `${url}/api/eventurl`,
+        {
+          urlStraming: urlStreaming,
+          idEvent: idEvent,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      return dispatch({
+        type: "PUT_URL_STREAMING_FOR_EVENT",
+        payload: putUrlStreaming.data,
+      });
+    } catch (error) {
+      console.log(error, "PUT_URL_STREAMING_FOR_EVENT");
     }
   };
 }

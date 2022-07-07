@@ -31,6 +31,7 @@ const {
   postEvents,
   putEvents,
   deleteEvent,
+  putUrlStreaming,
 } = require("../controllers/Events");
 
 const {
@@ -64,7 +65,8 @@ const {
 } = require("../controllers/ShoppingCart");
 
 const { getLikes, postLikes, deleteLikes } = require("../controllers/Likes");
-const { ticketVoucher } = require('../controllers/TicketVoucher')
+const { ticketVoucher } = require("../controllers/TicketVoucher");
+const { verifiedaccess } = require("googleapis/build/src/apis/verifiedaccess");
 
 routes.get("/like", verifyToken, getLikes);
 routes.post("/like", verifyToken, postLikes);
@@ -91,6 +93,7 @@ routes.get("/events", loadEventsAndGetEvents);
 routes.post("/events", verifyToken, isAdmin, postEvents);
 routes.put("/events", verifyToken, isAdmin, putEvents);
 routes.delete("/events", verifyToken, isAdmin, deleteEvent); //isAdmin
+routes.put("/eventurl", verifyToken, isAdmin, putUrlStreaming);
 
 routes.get("/ticket", verifyToken, getTicketByID);
 routes.post("/ticket", verifyToken, adminNotAuthorization, postTicket);
@@ -117,6 +120,6 @@ routes.get("/black", verifyToken, isAdmin, getAOneBlackList);
 routes.post("/black", verifyToken, isAdmin, postOneBlackList);
 routes.delete("/black", verifyToken, isAdmin, deleteOneBlackList);
 
-routes.post("/voucher", ticketVoucher)
+routes.post("/voucher", ticketVoucher);
 
 module.exports = routes;

@@ -36,6 +36,7 @@ const initialState = {
     modalUser: false,
     modalUserPermised: false,
     allLikesEventId: [],
+    putUrlStreaming: "",
   },
   token: "",
 };
@@ -375,6 +376,14 @@ function reducers(state = initialState, { type, payload }) {
         stateAdminPanel: {
           ...state.stateAdminPanel,
           allLikesEventId: payload,
+        },
+      };
+    case "PUT_URL_STREAMING_FOR_EVENT":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          putUrlStreaming: payload,
         },
       };
     default:
