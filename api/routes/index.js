@@ -70,10 +70,10 @@ routes.get("/like", verifyToken, getLikes);
 routes.post("/like", verifyToken, postLikes);
 routes.delete("/like", verifyToken, deleteLikes);
 
-routes.get("/cart", verifyToken, getShoppingCart);
-routes.post("/cart", verifyToken, postShoppingCart);
-routes.put("/cart", verifyToken, putShoppingCart);
-routes.delete("/cart", verifyToken, deleteShoppingCart);
+routes.get("/cart", getShoppingCart);
+routes.post("/cart", postShoppingCart);
+routes.put("/cart", putShoppingCart);
+routes.delete("/cart", deleteShoppingCart);
 
 routes.post("/user", createUser);
 routes.get("/user", getUser); // verifyToken
@@ -118,5 +118,4 @@ routes.post("/black", verifyToken, isAdmin, postOneBlackList);
 routes.delete("/black", verifyToken, isAdmin, deleteOneBlackList);
 
 routes.post("/voucher", ticketVoucher)
-
 module.exports = routes;
