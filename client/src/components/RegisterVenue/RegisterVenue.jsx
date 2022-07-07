@@ -100,13 +100,13 @@ export default function RegisterVenue(){
             return 
         }
         else if(e.target.name === "name"){
-            let nameIdVenue = e.target.value
-            nameIdVenue.join('')
-            nameIdVenue.toLowerCase()
-            console.log("Nombre ID del Venue", nameIdVenue)
+            //let nameIdVenue = e.target.value
+            //nameIdVenue.join('')
+            //nameIdVenue.toLowerCase()
+            //console.log("Nombre ID del Venue", nameIdVenue)
             setVenue({
                 ...venue,
-                id: nameIdVenue, //e.target.value,
+                id: e.target.value, // nameIdVenue,
                 [e.target.name]: e.target.value,
             });
             return 

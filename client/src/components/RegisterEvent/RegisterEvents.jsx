@@ -24,11 +24,27 @@ export default function RegisterEvent(){
     const [activeVenue, setActiveVenue] = useState(false);
     const [activeStock, setActiveStock] = useState(false);
 
-    const [activeLateralStock, setActiveLateralStock] = useState(false);
-    const [activePalcoStock, setActivePalcoStock] = useState(false);
-    const [activeVIPStock, setActiveVIPStock] = useState(false);
-    const [activeStreamingStock, setActiveStreamingStock] = useState(false);
-    const [stockAllOk, setStockAllOk] = useState(false);
+    const [activeStockGeneral , setActiveStockGeneral] = useState({
+        stock: "",
+        price:""
+    });
+    const [activeLateralStock, setActiveLateralStock] = useState({
+        stock: "",
+        price:""
+    });
+    const [activePalcoStock, setActivePalcoStock] = useState({
+        stock: "",
+        price:""
+    });
+    const [activeVIPStock, setActiveVIPStock] = useState({
+        stock: "",
+        price:""
+    });
+    const [activeStreamingStock, setActiveStreamingStock] = useState({
+        stock: "",
+        price:""
+    });
+    //const [stockAllOk, setStockAllOk] = useState(false);
     const [foundVenue, setFoundVenue] = useState(null);
 
     const [dateTime, setDateTime] = useState(new Date());
@@ -102,18 +118,39 @@ export default function RegisterEvent(){
             })
             return 
         }
+        if(e.target.name === "name"){
+            await setEvent({
+                ...event,
+                name: e.target.value
+            })
+            return 
+        }
+        if(e.target.name === "artist"){
+            await setEvent({
+                ...event,
+                artist: e.target.value
+            })
+            return 
+        }
+        if(e.target.name === "description"){
+            await setEvent({
+                ...event,
+                description: e.target.value
+            })
+            return 
+        }
         if(event.name !== "" && event.artist !== "" && event.schedule !== ""){
             await setStock({
                 ...stock,
                 id: event.name + event.artist + event.schedule
             });
         }
-        // if(stock.id !== ""){
-        //     await setEvent({
-        //         ...event,
-        //         stockId: stock.id
-        //     });
-        // }
+        if(stock.id !== ""){
+            await setEvent({
+                ...event,
+                stockId: stock.id
+            });
+        }
         await setEvent({
             ...event,
             schedule: dateTime,
@@ -126,6 +163,22 @@ export default function RegisterEvent(){
             ...stock,
             [e.target.name]: Number(e.target.value)
         });
+        // if(event.name !== "" && event.artist !== "" && event.schedule !== ""){
+        //     // let eventName = event.name;
+        //     // let eventArtist = event.artist;
+        //     // let eventSchedule = event.schedule;
+        //     await setStock({
+        //         ...stock,
+        //         id: event.name + event.artist + event.schedule
+        //     });
+        //     //if(stock.id !== ""){
+        //         await setEvent({
+        //             ...event,
+        //             stockId: stock.id
+        //         });
+        //     //}
+        //     return
+        // }
         if(stock.id !== ""){
             await setEvent({
                 ...event,
@@ -136,44 +189,62 @@ export default function RegisterEvent(){
 
     const handleAddStock = async(e) => {
         e.preventDefault();
-        if(stock.stockGeneral === 0 || stock.stockGeneral > foundVenue.maxStockGeneral ){
-            return alert(`El stock genera NO debe ser nulo y NO debe superar las ${foundVenue.maxStockGeneral} entradas`)
+        if(stock.stockGeneral === 0 || stock.generalPrice === 0){
+            setActiveStockGeneral({
+                stock: stock.stockGeneral === 0 ? "Ingrese la cantidad de entradas disponibles" : "",
+                price: stock.generalPrice === 0 ? "Ingrese el precio de las entradas" : ""
+            })
+            return 
         }
-        else if (foundVenue.maxStockGeneralLateral !== 0 && (stock.stockGeneralLateral === 0 || stock.stockGeneralLateral > foundVenue.maxStockGeneralLateral)){
-            return alert(`El stock lateral NO debe ser nulo y NO debe supear las ${foundVenue.maxStockGeneralLateral} entradas`)
+        if (foundVenue.maxStockGeneralLateral !== 0 && (stock.stockGeneralLateral === 0 || stock.generalLateralPrice === 0)){
+            setActiveLateralStock({
+                stock: stock.stockGeneralLateral === 0 ? "Ingrese la cantidad de entradas disponibles" : "",
+                price: stock.generalLateralPrice === 0 ? "Ingrese el precio de las entradas" : ""
+            })
+            return 
         }
-        else if (foundVenue.maxStockPalco !== 0 && (stock.stockPalco === 0 || stock.stockPalco > foundVenue.maxStockPalco)){
-            return alert(`El stock palco NO debe ser nulo y NO debe superar las ${foundVenue.maxStockPalco} entradas`)
+        if (foundVenue.maxStockPalco !== 0 && (stock.stockPalco === 0 || stock.palcoPrice === 0)){
+            setActivePalcoStock({
+                stock: stock.stockPalco === 0 ? "Ingrese la cantidad de entradas disponibles" : "",
+                price: stock.palcoPrice === 0 ? "Ingrese el precio de las entradas" : ""
+            })
+            return 
         }
-        else if (foundVenue.maxStockStreaming !== 0 && (stock.stockStreaming === 0 || stock.stockStreaming > foundVenue.maxStockStreaming)){
-            return alert(`El stock de streaming NO debe ser nulo y NO debe superar las ${foundVenue.maxStockStreaming} entradas`)
+        if (foundVenue.maxStockStreaming !== 0 && (stock.stockStreaming === 0 || stock.streamingPrice === 0)){
+            setActiveStreamingStock({
+                stock: stock.stockStreaming === 0 ? "Ingrese la cantidad de entradas disponibles" : "",
+                price: stock.streamingPrice === 0 ? "Ingrese el precio de las entradas" : ""
+            })
+            return 
         }
-        else if (foundVenue.maxStockVIP !== 0 && (stock.stockkVIP === 0 || stock.stockkVIP > foundVenue.maxStockVIP)){
-            return alert(`El stock VIP NO debe ser nulo y NO debe superar las ${foundVenue.maxStockVIP} entradas`)
+        if (foundVenue.maxStockVIP !== 0 && (stock.stockkVIP === 0 || stock.vipPrice === 0)){
+            setActiveVIPStock({
+                stock: stock.stockkVIP === 0 ? "Ingrese la cantidad de entradas disponibles" : "",
+                price: stock.vipPrice === 0 ? "Ingrese el precio de las entradas" : ""
+            })
+            return 
         }
-        else {
-            const stockCreated = await dispatch(CreateStock(stock));
-            console.log("AQUI EL STOCK CREADO", stockCreated);
-            if(stockCreated.data[0]){
-                setStockAllOk(!stockAllOk)
-                alert("Stock añadido con exito")
-                setStock({
-                    id: "",
-                    stockStreaming: 0,
-                    stockkVIP: 0,
-                    stockGeneral: 0,
-                    stockGeneralLateral: 0,
-                    stockPalco: 0,
-                    streamingPrice: 0,
-                    vipPrice:0,
-                    generalLateralPrice: 0,
-                    generalPrice:0,
-                    palcoPrice: 0,
-                    venueId: 0,
-                });
-                //setActiveStock(!activeStock);
-            }
-        }
+        const stockCreated = await dispatch(CreateStock(stock));
+        console.log("AQUI EL STOCK CREADO", stockCreated);
+        if(stockCreated.data[0]){
+            //setStockAllOk(true)
+            alert("Stock añadido con exito")
+            setStock({
+                id: "",
+                stockStreaming: 0,
+                stockkVIP: 0,
+                stockGeneral: 0,
+                stockGeneralLateral: 0,
+                stockPalco: 0,
+                streamingPrice: 0,
+                vipPrice:0,
+                generalLateralPrice: 0,
+                generalPrice:0,
+                palcoPrice: 0,
+                venueId: "",
+            });
+            //setActiveStock(!activeStock);
+        }    
     };
 
     const handleSubmitEvent = async(e) => {
@@ -207,34 +278,35 @@ export default function RegisterEvent(){
                 //duration: event.duration === "" ? "Ingrese la duracion del Evento" : "",
                 performerImage: event.performerImage === "" ? "Ingrese la imagen del artista" : "",
                 placeImage: event.placeImage === "" ? "Ingrese la imagen del lugar del Evento" : "",
-                venueId: event.venueId === 0 ? "Ingrese el lugar del evento" : "",
+                venueId: event.venueId === "" ? "Ingrese el lugar del evento" : "",
                 stockId: event.stockId === "" ? "Se debe llenar el formulario de stock" : ""
             });
             return
         }
         await handleAddStock(e);
-        if(stockAllOk === true){
-            await dispatch(CreateEvent(event));
-            //console.log("creacion de evento", eventCreated);
-                alert("Evento creado exitosamente");
-                setEvent({
-                    name: "",
-                    artist: "",
-                    genreId: "",
-                    schedule: "",
-                    performerImage: "",
-                    placeImage: "",
-                    description: "",
-                    venueId: "",
-                    stockId: "",
-                });
-                setFoundVenue(null);
-                navigate("/")
-        }
+        //console.log("AQUI EL STOCK CREADO", stockCreated)
+        //if(stockCreated.data[0]){
+        await dispatch(CreateEvent(event));
+        //console.log("creacion de evento", eventCreated);
+        alert("Evento creado exitosamente");
+        setEvent({
+            name: "",
+            artist: "",
+            genreId: "",
+            schedule: "",
+            performerImage: "",
+            placeImage: "",
+            description: "",
+            venueId: "",
+            stockId: "",
+        });
+        setFoundVenue(null);
+        //setStockAllOk(false)
+        navigate("/")
+        //}
     };
 
     const handleBlur = (e) => {
-        
         //validar nombre
         if(e.target.name === "name"){
             if(e.target.value === ""){
@@ -254,7 +326,6 @@ export default function RegisterEvent(){
                 })
             }    
         }
-
         //validar artista
         if(e.target.name === "artist"){
             if(e.target.value === ""){
@@ -274,7 +345,6 @@ export default function RegisterEvent(){
                 })
             }    
         }
-
         //validar genero
         if(e.target.name === "genreId"){
             if(e.target.value === ""){
@@ -289,7 +359,6 @@ export default function RegisterEvent(){
                 })
             }    
         }
-
         //validar fecha/calendario
         if(e.target.name === "schedule"){
             if(e.target.value === ""){
@@ -304,22 +373,6 @@ export default function RegisterEvent(){
                 })
             }
         }
-
-        //validar la duracion
-        // if(e.target.name === "duration"){
-        //     if(e.target.value === ""){
-        //         setErrors({
-        //             ...errors,
-        //             [e.target.name]: "Ingrese la duracion del Evento"
-        //         })
-        //     } else {
-        //         setErrors({
-        //             ...errors,
-        //             [e.target.name]: ""
-        //         })
-        //     }
-        // }
-
         //validar imagen del artista
         if(e.target.name === "performerImage"){
             if(e.target.value === ""){
@@ -334,7 +387,6 @@ export default function RegisterEvent(){
                 })
             }    
         }
-
         //validar imagen del evento
         if(e.target.name === "placeImage"){
             if(e.target.value === ""){
@@ -349,10 +401,9 @@ export default function RegisterEvent(){
                 })
             }    
         }
-
         //validar Lugar/Venue
         if(e.target.name === "venueId"){
-            if(e.target.value === 0){
+            if(e.target.value === ""){
                 setErrors({
                     ...errors,
                     [e.target.name]: "Ingrese el lugar del evento"
@@ -366,6 +417,249 @@ export default function RegisterEvent(){
         }
     };
 
+    const handleBlurStock = (e) => {
+        //STOCK GENERAL
+        if(e.target.name === "stockGeneral"){
+            if(e.target.value === 0){
+                setActiveStockGeneral({
+                    ...activeStockGeneral,
+                    stock: "Ingrese la cantidad de entradas disponibles"
+                })
+            }
+            else if (!/^[0-9,$]*$/.test(e.target.value)){
+                setActiveStockGeneral({
+                    ...activeStockGeneral,
+                    stock: "Ingrese un valor numerico"
+                })
+            }
+            else if(e.target.value > foundVenue.maxStockGeneral){
+                setActiveStockGeneral({
+                    ...activeStockGeneral,
+                    stock: `El stock genera NO debe superar las ${foundVenue.maxStockGeneral} entradas`
+                })
+            }
+            else {
+                setActiveStockGeneral({
+                    ...activeStockGeneral,
+                    stock: ""
+                })
+            }
+        }
+        //PRECIO GENERAL
+        if(e.target.name === "generalPrice"){
+            if(e.target.value === 0){
+                setActiveStockGeneral({
+                    ...activeStockGeneral,
+                    price: "Ingrese el precio de las entradas"
+                })
+            }
+            else if (!/^[0-9,$]*$/.test(e.target.value)){
+                setActiveStockGeneral({
+                    ...activeStockGeneral,
+                    price: "Ingrese un valor numerico"
+                })
+            }
+            else {
+                setActiveStockGeneral({
+                    ...activeStockGeneral,
+                    price: ""
+                })
+            }
+        }
+        //STOCK LATERAL
+        if(foundVenue.maxStockGeneralLateral !== 0 && e.target.name === "stockGeneralLateral"){
+            if(e.target.value === 0){
+                setActiveLateralStock({
+                    ...activeLateralStock,
+                    stock: "Ingrese la cantidad de entradas disponibles"
+                })
+            }
+            else if (!/^[0-9,$]*$/.test(e.target.value)){
+                setActiveLateralStock({
+                    ...activeLateralStock,
+                    stock: "Ingrese un valor numerico"
+                })
+            }
+            else if(e.target.value > foundVenue.maxStockGeneralLateral){
+                setActiveLateralStock({
+                    ...activeLateralStock,
+                    stock: `El stock genera NO debe superar las ${foundVenue.maxStockGeneralLateral} entradas`
+                })
+            }
+            else {
+                setActiveLateralStock({
+                    ...activeLateralStock,
+                    stock: ""
+                })
+            }
+        }
+        //PRECIO LATERAL
+        if(foundVenue.maxStockGeneralLateral !== 0 && e.target.name === "generalLateralPrice"){
+            if(e.target.value === 0){
+                setActiveLateralStock({
+                    ...activeLateralStock,
+                    price: "Ingrese el precio de las entradas"
+                })
+            }
+            else if (!/^[0-9,$]*$/.test(e.target.value)){
+                setActiveLateralStock({
+                    ...activeLateralStock,
+                    price: "Ingrese un valor numerico"
+                })
+            }
+            else {
+                setActiveLateralStock({
+                    ...activeLateralStock,
+                    price: ""
+                })
+            }
+        }
+        //STOCK PALCO
+        if(foundVenue.maxStockPalco !== 0 && e.target.name === "stockPalco"){
+            if(e.target.value === 0){
+                setActivePalcoStock({
+                    ...activePalcoStock,
+                    stock: "Ingrese la cantidad de entradas disponibles"
+                })
+            }
+            else if (!/^[0-9,$]*$/.test(e.target.value)){
+                setActivePalcoStock({
+                    ...activePalcoStock,
+                    stock: "Ingrese un valor numerico"
+                })
+            }
+            else if(e.target.value > foundVenue.maxStockPalco){
+                setActivePalcoStock({
+                    ...activePalcoStock,
+                    stock: `El stock genera NO debe superar las ${foundVenue.maxStockPalco} entradas`
+                })
+            }
+            else {
+                setActivePalcoStock({
+                    ...activePalcoStock,
+                    stock: ""
+                })
+            }
+        }
+        //PRECIO PALCO
+        if(foundVenue.maxStockPalco !== 0 && e.target.name === "palcoPrice"){
+            if(e.target.value === 0){
+                setActivePalcoStock({
+                    ...activePalcoStock,
+                    price: "Ingrese el precio de las entradas"
+                })
+            }
+            else if (!/^[0-9,$]*$/.test(e.target.value)){
+                setActivePalcoStock({
+                    ...activePalcoStock,
+                    price: "Ingrese un valor numerico"
+                })
+            }
+            else {
+                setActivePalcoStock({
+                    ...activePalcoStock,
+                    price: ""
+                })
+            }
+        }
+        //STOCK STREAMING
+        if(foundVenue.maxStockStreaming !== 0 && e.target.name === "stockStreaming"){
+            if(e.target.value === 0){
+                setActiveStreamingStock({
+                    ...activeStreamingStock,
+                    stock: "Ingrese la cantidad de entradas disponibles"
+                })
+            }
+            else if (!/^[0-9,$]*$/.test(e.target.value)){
+                setActiveStreamingStock({
+                    ...activeStreamingStock,
+                    stock: "Ingrese un valor numerico"
+                })
+            }
+            else if(e.target.value > foundVenue.maxStockStreaming){
+                setActiveStreamingStock({
+                    ...activeStreamingStock,
+                    stock: `El stock genera NO debe superar las ${foundVenue.maxStockStreaming} entradas`
+                })
+            }
+            else {
+                setActiveStreamingStock({
+                    ...activeStreamingStock,
+                    stock: ""
+                })
+            }
+        }
+        //PRECIO STREAMING
+        if(foundVenue.maxStockStreaming !== 0 && e.target.name === "streamingPrice"){
+            if(e.target.value === 0){
+                setActiveStreamingStock({
+                    ...activeStreamingStock,
+                    price: "Ingrese el precio de las entradas"
+                })
+            }
+            else if (!/^[0-9,$]*$/.test(e.target.value)){
+                setActiveStreamingStock({
+                    ...activeStreamingStock,
+                    price: "Ingrese un valor numerico"
+                })
+            }
+            else {
+                setActiveStreamingStock({
+                    ...activeStreamingStock,
+                    price: ""
+                })
+            }
+        }
+        //STOCK VIP
+        if(foundVenue.maxStockVIP !== 0 && e.target.name === "stockkVIP"){
+            if(e.target.value === 0){
+                setActiveVIPStock({
+                    ...activeVIPStock,
+                    stock: "Ingrese la cantidad de entradas disponibles"
+                })
+            }
+            else if (!/^[0-9,$]*$/.test(e.target.value)){
+                setActiveVIPStock({
+                    ...activeVIPStock,
+                    stock: "Ingrese un valor numerico"
+                })
+            }
+            else if(e.target.value > foundVenue.maxStockVIP){
+                setActiveVIPStock({
+                    ...activeVIPStock,
+                    stock: `El stock genera NO debe superar las ${foundVenue.maxStockVIP} entradas`
+                })
+            }
+            else {
+                setActiveVIPStock({
+                    ...activeVIPStock,
+                    stock: ""
+                })
+            }
+        }
+        //PRECIO VIP
+        if(foundVenue.maxStockVIP !== 0 && e.target.name === "vipPrice"){
+            if(e.target.value === 0){
+                setActiveVIPStock({
+                    ...activeVIPStock,
+                    price: "Ingrese el precio de las entradas"
+                })
+            }
+            else if (!/^[0-9,$]*$/.test(e.target.value)){
+                setActiveVIPStock({
+                    ...activeVIPStock,
+                    price: "Ingrese un valor numerico"
+                })
+            }
+            else {
+                setActiveVIPStock({
+                    ...activeVIPStock,
+                    price: ""
+                })
+            }
+        }
+
+    }
 
     //k484vqmp codigo carpeta clodinari
     const uploadImage = async (e) => {
@@ -434,35 +728,40 @@ export default function RegisterEvent(){
                 <div>
                     <h4>Entradas y Precios</h4>
                     <div>
-                    <label>Stock entradas generales:* </label> <input name="stockGeneral" value={stock.stockGeneral} onChange={handleStock} type="text" placeholder="Precio" /> 
-                    <label>Precio:* </label> <input name="generalPrice" value={stock.generalPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                        <label>Maximo de {foundVenue.maxStockGeneral} </label>
+                        <label>Stock entradas generales:* </label> <input name="stockGeneral" value={stock.stockGeneral} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activeStockGeneral.stock && <label className={style.error}>{activeStockGeneral.stock}</label>} 
+                        <label>Precio:* </label> <input name="generalPrice" value={stock.generalPrice} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activeStockGeneral.price && <label className={style.error}>{activeStockGeneral.price}</label>}
                     </div>
 
                     <div>{foundVenue.maxStockGeneralLateral !== 0 ? 
                         <div>
-                            <label>Stock entradas zona Lateral: </label> <input name="stockGeneralLateral" value={stock.stockGeneralLateral} onChange={handleStock} type="text" placeholder="Precio" /> 
-                            <label>Precio: </label> <input name="generalLateralPrice" value={stock.generalLateralPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                            <label>Maximo de {foundVenue.maxStockGeneralLateral} </label>
+                            <label>Stock entradas zona Lateral: </label> <input name="stockGeneralLateral" value={stock.stockGeneralLateral} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activeLateralStock.stock && <label className={style.error}>{activeLateralStock.stock}</label>}
+                            <label>Precio: </label> <input name="generalLateralPrice" value={stock.generalLateralPrice} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activeLateralStock.price && <label className={style.error}>{activeLateralStock.price}</label>}
                         </div> : null }
                     </div>
 
                     <div>{foundVenue.maxStockPalco !== 0 ? 
                         <div>
-                            <label>Stock entradas palco: </label> <input name="stockPalco" value={stock.stockPalco} onChange={handleStock} type="text" placeholder="Precio" /> 
-                            <label>Precio: </label> <input name="palcoPrice" value={stock.palcoPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                            <label>Maximo de {foundVenue.maxStockPalco} </label>
+                            <label>Stock entradas palco: </label> <input name="stockPalco" value={stock.stockPalco} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activePalcoStock.stock && <label className={style.error}>{activePalcoStock.stock}</label>}
+                            <label>Precio: </label> <input name="palcoPrice" value={stock.palcoPrice} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activePalcoStock.price && <label className={style.error}>{activePalcoStock.price}</label>}
                         </div> : null}
                     </div>
 
                     <div>{foundVenue.maxStockStreaming !== 0 ? 
                         <div>
-                            <label>Stock entradas via streaming: </label> <input name="stockStreaming" value={stock.stockStreaming} onChange={handleStock} type="text" placeholder="Precio" />
-                            <label>Precio: </label> <input name="streamingPrice" value={stock.streamingPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                            <label>Maximo de {foundVenue.maxStockStreaming} </label>
+                            <label>Stock entradas via streaming: </label> <input name="stockStreaming" value={stock.stockStreaming} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activeStreamingStock.stock && <label className={style.error}>{activeStreamingStock.stock}</label>}
+                            <label>Precio: </label> <input name="streamingPrice" value={stock.streamingPrice} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activeStreamingStock.price && <label className={style.error}>{activeStreamingStock.price}</label>}
                         </div> : null}
                     </div>
 
                     <div>{foundVenue.maxStockVIP !== 0 ? 
                         <div>
-                            <label>Stock entradas VIP: </label> <input name="stockkVIP" value={stock.stockkVIP} onChange={handleStock} type="text" placeholder="Precio" /> 
-                            <label>Precio: </label> <input name="vipPrice" value={stock.vipPrice} onChange={handleStock} type="text" placeholder="Precio" />
+                            <label>Maximo de {foundVenue.maxStockVIP} </label>
+                            <label>Stock entradas VIP: </label> <input name="stockkVIP" value={stock.stockkVIP} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activeVIPStock.stock && <label className={style.error}>{activeVIPStock.stock}</label>}
+                            <label>Precio: </label> <input name="vipPrice" value={stock.vipPrice} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activeVIPStock.price && <label className={style.error}>{activeVIPStock.price}</label>}
                         </div> : null}
                     </div>
 

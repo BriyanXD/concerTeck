@@ -64,16 +64,16 @@ async function postTicketStock(req, res){
     console.log("LLEGARON LOS PARAMETROS DEL STOCK")
     if (
       !id ||
-      !stockStreaming ||
-      !stockkVIP ||
+      //!stockStreaming ||
+      //!stockkVIP ||
       !stockGeneral ||
-      !stockGeneralLateral ||
-      !stockPalco ||
-      !streamingPrice ||
-      !vipPrice ||
-      !generalLateralPrice ||
+      //!stockGeneralLateral ||
+      //!stockPalco ||
+      //!streamingPrice ||
+      //!vipPrice ||
+      //!generalLateralPrice ||
       !generalPrice ||
-      !palcoPrice ||
+      //!palcoPrice ||
       !venueId
     ) {
       console.log("FALTARON DATOS DEL STOCK")
