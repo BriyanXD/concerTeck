@@ -11,7 +11,6 @@ export default function AdminUserPanel(){
     const UserByUserName = useSelector((state) => state.stateAdminPanel?.UserByUserName)
     const modalUser = useSelector((state) => state.stateAdminPanel?.modalUser)
     const modalUserPermised = useSelector((state) => state.stateAdminPanel?.modalUserPermised)
-    console.log('Prueba',UserByUserName)
     const dispatch = useDispatch()
 
     function handleInputChange(e){
