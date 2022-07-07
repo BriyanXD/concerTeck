@@ -337,14 +337,21 @@ function reducers(state = initialState, { type, payload }) {
     case "GET_CART_EVENT":
       return {
         ...state,
-        cartDB: payload,
-      };
-    case "DELETE_CART":
-      return {
+        cartDB: payload
+      }
+    case "UPDATE_CART":
+      return{
         ...state,
-        cartDB: state.cartDB.filter((e) => e.id !== payload),
-      };
-    case "FIND_EVENT_BY_NAME":
+        cartDB: state.cartDB.map((e)=> {
+          return e.id === payload.id ? payload : e;
+        })
+      }
+    case "DELETE_CART":
+      return{
+       ...state,
+       cartDB:  state.cartDB.filter((e)=> e.id !== payload.ShoppingSave.id)
+      }
+    case  "FIND_EVENT_BY_NAME":
       return {
         ...state,
         stateAdminPanel: {
