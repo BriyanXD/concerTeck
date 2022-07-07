@@ -123,7 +123,7 @@ export function register(value) {
     try {
       const register = await axios.post(`${url}/api/user`, value);
       localStorage.setItem("token", register.data[2].token);
-      localStorage.setItem("user",JSON.stringify(register.data[1].user[0]));
+      localStorage.setItem("user", JSON.stringify(register.data[1].user[0]));
       return dispatch({
         type: "LOGIN_USER",
         payload: register.data[1],
@@ -547,7 +547,10 @@ export function deleteCart(id) {
   return async function (dispatch) {
     try {
       const data = await axios.delete(`${url}/api/cart?id=${id}`);
-      console.log("🚀 ~ file: actions.js ~ line 547 ~ data", data.data.ShoppingSave)
+      console.log(
+        "🚀 ~ file: actions.js ~ line 547 ~ data",
+        data.data.ShoppingSave
+      );
       return dispatch({
         type: "DELETE_CART",
         payload: data.data,
@@ -561,12 +564,12 @@ export function deleteCart(id) {
 export function putCartDB(value) {
   return async function (dispatch) {
     try {
-     const data = await axios.put(`${url}/api/cart`, value);
-     console.log("🚀 ~ file: actions.js ~ line 562 ~ data", data.data)
-     return dispatch({
-      type: "UPDATE_CART",
-      payload: data.data,
-    })
+      const data = await axios.put(`${url}/api/cart`, value);
+      console.log("🚀 ~ file: actions.js ~ line 562 ~ data", data.data);
+      return dispatch({
+        type: "UPDATE_CART",
+        payload: data.data,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -581,7 +584,6 @@ export function getAllBlackList() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(getAllBlackListData.data, "LISTA NEGRA");
       return dispatch({
         type: "GET_ALL_BLACK_LIST",
         payload: getAllBlackListData.data,
@@ -613,8 +615,6 @@ export function deleteUserBlackList(idUser) {
 export function getAllLikesEventId(idEvent) {
   return async function (dispatch) {
     try {
-      console.log(idEvent, "ID DEL EVENTO");
-
       const allLikesEventId = await axios.get(
         `${url}/api/like?idEvent=${idEvent}`,
         {
@@ -623,7 +623,6 @@ export function getAllLikesEventId(idEvent) {
           },
         }
       );
-      console.log(allLikesEventId.data, "USUARIO PERDONADO");
       return dispatch({
         type: "GET_ALL_LIKES_EVENT_ID",
         payload: allLikesEventId.data,
@@ -634,12 +633,34 @@ export function getAllLikesEventId(idEvent) {
   };
 }
 
-
-
+export function putUrlStreamingEvent(urlStreaming, idEvent) {
+  return async function (dispatch) {
+    try {
+      const putUrlStreaming = await axios.put(
+        `${url}/api/eventurl`,
+        {
+          urlStraming: urlStreaming,
+          idEvent: idEvent,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      return dispatch({
+        type: "PUT_URL_STREAMING_FOR_EVENT",
+        payload: putUrlStreaming.data,
+      });
+    } catch (error) {
+      console.log(error, "PUT_URL_STREAMING_FOR_EVENT");
+    }
+  };
+}
 export function getTicketById(id) {
   return async function (dispatch) {
     try {
-      const ticket = await axios.get(`${url}/api/ticket?id=${id}`,{
+      const ticket = await axios.get(`${url}/api/ticket?id=${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
