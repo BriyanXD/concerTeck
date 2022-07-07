@@ -8,8 +8,7 @@ import PageNotFound from './components/PageNotFound/PageNotFound';
 import ProfileUser from './components/ProfileUser/ProfileUser.jsx';
 import PanelAdmin from './components/Admin/adminPanel'
 import Favorites from './components/Favorites/Favorites';
-
-
+import TicketVoucher from './components/TicketVoucher/TicketVoucher.jsx';
 
 function App() {
   return (
@@ -21,6 +20,7 @@ function App() {
             <Route path='/perfil/panelAdmin' element={<PanelAdmin/>}/>
             <Route exact path='/registrar/:usuario' element= {<RegisterUser/>}/>
             <Route exact path='/perfil/:id' element={<ProfileUser/>}/>
+            <Route exact path='/ticket/:id' element={<TicketVoucher/>}/>
             {/* <Route exact path='' element= {<Ruta/>}/> 
             <Route exact path='' element= {<Ruta/>}/>  */} 
             <Route exact path='/events' element={<RegisterEvent/>}/>
