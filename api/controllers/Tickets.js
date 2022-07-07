@@ -1,6 +1,10 @@
 const Ticket = require("../models/Ticket");
-const stripe = require('stripe')('pk_test_51LIBe4EZzNuiTFe6lP1cZbuwaoqo0TIvQ1ADkMjyUCIUaaksRilWpiGHOvvs365L3K7YWsl1sJg9i2kQRO8UwNMi008icNJL95')
+require("dotenv").config()
+const { STRIPE_KEY } = process.env
+const stripe = require('stripe')(STRIPE_KEY);
 const Events = require("../models/Events");
+const TicketStock = require("../models/TicketStock");
+let priceId = "";
 
 
 // mercadopago.configure({
@@ -93,52 +97,90 @@ async function deleteTicket(req, res) {
 
 async function getRaro(req, res, next){
 
-  const id_orden= 1
 
-  //Cargamos el carrido de la bd
-  const carrito = [
-    {title: "Producto 1", quantity: 5, price: 10.52},
-    {title: "Producto 2", quantity: 15, price: 100.52},
-    {title: "Producto 3", quantity: 6, price: 200}
-  ]
+  // const findEvent = await Events.findAll()
+  // findEvent.map(async event =>{
+    const product = await stripe.products.create({
+      name: "Divididos",
+      description: "adscsdsfd" ,
+      images: []
+    });
+  // })
+  console.log(product)
+
+
+
+  // const session = await stripe.checkout.sessions.create({
+  //   line_items: [{
+  //     price:'price_1LIvH3EZzNuiTFe67vUd1guS',
+  //     quantity: 1,
+  //   },
+  // {
+  //   price: 'price_1LIvKfEZzNuiTFe6tu11nMDt',
+  //   quantity: 3
+  // }],
+  //   mode: 'payment',
+  //   success_url: 'https://localhost:3001/',
+  //   cancel_url: 'https://localhost:3001/',
+  // });
+  // console.log(session)
+  // res.send("se creo2")
+  res.send("se creo1")
+  // console.log(price)
+}
+
+
+async function getRaro2(req, res, next){
+  const {name, description, images, eventId} = req.body
+
+  const findStock = await Events.findByPk("e63dbb71-f299-4218-a076-b670c3d8a686")
+    const price1 = await stripe.prices.create({
+      product: 'prod_M0xp1GFYyl2RPd',
+      unit_amount: findStock.stock.streamingPrice,
+      currency: 'ars',
+    });
+    
   
-  const items_ml = carrito.map(i => ({
-    title: i.title,
-    unit_price: i.price,
-    quantity: i.quantity,
-  }))
+    const price2 = await stripe.prices.create({
+      product: 'prod_M0xp1GFYyl2RPd',
+      unit_amount: findStock.stock.vipPrice,
+      currency: 'ars',
+    });
+  
+  
+    const price3 = await stripe.prices.create({
+      product: 'prod_M0xp1GFYyl2RPd',
+      unit_amount: findStock.stock.generalLateralPrice,
+      currency: 'ars',
+    });
 
-  // Crea un objeto de preferencia
-  let preference = {
-    items: items_ml,
-    external_reference : `${id_orden}`,
-    payment_methods: {
-      excluded_payment_types: [
-        {
-          id: "atm"
-        }
-      ],
-      installments: 3  //Cantidad máximo de cuotas
-    },
-    back_urls: {
-      success: 'http://localhost:3001/mercadopago/pagos',
-      failure: 'http://localhost:3001/mercadopago/pagos',
-      pending: 'http://localhost:3001/mercadopago/pagos',
-    },
-  };
 
-  mercadopago.preferences.create(preference)
+    const price4 = await stripe.prices.create({
+      product: 'prod_M0xp1GFYyl2RPd',
+      unit_amount: findStock.stock.generalPrice,
+      currency: 'ars',
+    });
 
-  .then(function(response){
-    console.info('respondio')
-  //Este valor reemplazará el string"<%= global.id %>" en tu HTML
-    global.id = response.body.id;
-    console.log(response.body)
-    res.json({ id: global.id });
-  })
-  .catch(function(error){
-    console.log(error);
-  })
+
+  
+    const price5 = await stripe.prices.create({
+      product: 'prod_M0xp1GFYyl2RPd',
+      unit_amount: findStock.stock.palcoPrice,
+      currency: 'ars',
+    });
+
+    console.log(price1)
+    console.log(price2)
+    console.log(price3)
+    
+    res.send("creado")
+    
+
+}
+
+async function postCheck(req,res,next){
+  // priceId = price.id
+
 }
 
 
@@ -147,5 +189,7 @@ module.exports = {
   getTicketByID,
   postTicket,
   deleteTicket,
-  getRaro
+  getRaro,
+  postCheck,
+  getRaro2
 };

@@ -7,11 +7,11 @@
                 "stockGeneralLateral": 5000,
                 "stockGeneral": 11000,
                 "stockPalco": 0,
-                "streamingPrice": 200,
-                "vipPrice": 1000,
-                "generalLateralPrice": 400,
-                "generalPrice": 700,
-                "palcoPrice": 1000,
+                "streamingPrice": 1500,
+                "vipPrice": 3000,
+                "generalLateralPrice": 2000,
+                "generalPrice": 1900,
+                "palcoPrice": 3000,
                 "venueId":"lunapark"
             },
             {

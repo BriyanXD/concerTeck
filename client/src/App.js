@@ -6,13 +6,8 @@ import RegisterEvent from './components/RegisterEvent/RegisterEvents';
 import Detail from './components/Detail/Detail';
 import PageNotFound from './components/PageNotFound/PageNotFound';
 import ProfileUser from './components/ProfileUser/ProfileUser.jsx';
-<<<<<<< HEAD
-import PanelAdmin from './components/Admin/adminPanel';
-
-=======
 import PanelAdmin from './components/Admin/adminPanel'
 import Favorites from './components/Favorites/Favorites';
->>>>>>> f3092a3c775a5cf484ab95d9a495e9c7e260c61e
 
 
 
