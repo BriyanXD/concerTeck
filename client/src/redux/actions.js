@@ -35,12 +35,9 @@ export function searchEvent(name) {
 }
 
 export function EventById(id) {
-  console.log("🚀 ~ file: actions.js ~ line 38 ~ EventById ~ id", id);
   return async function (dispatch) {
     try {
       const event = await axios.get(`${url}/api/events?id=${id}`);
-      console.log("🚀 ~ file: actions.js ~ line 42 ~ event", event.data);
-      // console.log(id)
       return dispatch({
         type: "GET_EVENT_DETAIL",
         payload: event.data,
@@ -126,7 +123,7 @@ export function register(value) {
     try {
       const register = await axios.post(`${url}/api/user`, value);
       localStorage.setItem("token", register.data[2].token);
-      // console.log(register.data[2].token, "datos de usuario")
+      localStorage.setItem("user", JSON.stringify(register.data[1].user[0]));
       return dispatch({
         type: "LOGIN_USER",
         payload: register.data[1],
@@ -397,7 +394,6 @@ export function deleteUser(id) {
 export function deleteEvents(id) {
   return async function (dispatch) {
     try {
-      console.log(id);
       const eventDeleted = await axios.delete(`${url}/api/events?id=${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -550,10 +546,14 @@ export function getCartDB(idUser) {
 export function deleteCart(id) {
   return async function (dispatch) {
     try {
-      await axios.delete(`${url}/api/cart?id=${id}`);
+      const data = await axios.delete(`${url}/api/cart?id=${id}`);
+      console.log(
+        "🚀 ~ file: actions.js ~ line 547 ~ data",
+        data.data.ShoppingSave
+      );
       return dispatch({
         type: "DELETE_CART",
-        payload: id,
+        payload: data.data,
       });
     } catch (error) {
       console.log(error);
@@ -562,11 +562,14 @@ export function deleteCart(id) {
 }
 
 export function putCartDB(value) {
-  console.log("ENTRANDO 111", value);
   return async function (dispatch) {
     try {
-      await axios.put(`${url}/api/cart`, value);
-      console.log("ENTRANDO 2222");
+      const data = await axios.put(`${url}/api/cart`, value);
+      console.log("🚀 ~ file: actions.js ~ line 562 ~ data", data.data);
+      return dispatch({
+        type: "UPDATE_CART",
+        payload: data.data,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -651,6 +654,23 @@ export function putUrlStreamingEvent(urlStreaming, idEvent) {
       });
     } catch (error) {
       console.log(error, "PUT_URL_STREAMING_FOR_EVENT");
+    }
+  };
+}
+export function getTicketById(id) {
+  return async function (dispatch) {
+    try {
+      const ticket = await axios.get(`${url}/api/ticket?id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return dispatch({
+        type: "GET_TICKET_BY_ID",
+        payload: ticket.data,
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
 }

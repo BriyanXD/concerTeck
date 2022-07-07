@@ -24,6 +24,15 @@ export default function NavBar({ setCurrenPag, setCurrentPage }) {
 
   const [active, setActive] = useState(false);
   const { totalUniqueItems } = useCart();
+  const {cartDB} = useSelector(state => state);
+  console.log("🚀 ~ file: NavBar.jsx ~ line 28 ~ NavBar ~ cartDB", cartDB)
+  let temporal = localStorage.getItem("user")
+  let userStorage 
+  if(temporal !== "nada"){
+    userStorage = JSON.parse(temporal)
+  }else{
+    userStorage = ""
+  }
 
   const toggle = () => {
     setActive(!active);
@@ -50,7 +59,7 @@ export default function NavBar({ setCurrenPag, setCurrentPage }) {
             />
             <Date setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage} />
           </div>
-          {totalUniqueItems>0? <div className={style.Items}>{totalUniqueItems}</div> : <div></div> }
+          {userStorage !== ""? <div className={style.Items}>{cartDB.length}</div> : <div className={style.Items}>{totalUniqueItems}</div> }
           <Tooltip title="Ver carrito" arrow>
           <div onClick={toggle} className={style.cart}>
           <MdOutlineShoppingCart className={style.cartlogo}/>
