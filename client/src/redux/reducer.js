@@ -377,6 +377,11 @@ function reducers(state = initialState, { type, payload }) {
           allLikesEventId: payload,
         },
       };
+      case "GET_NAME_BY_BLACKLIST":
+        return {
+          ...state,
+          allBlackList: payload
+        };
     default:
       return state;
   }

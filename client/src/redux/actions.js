@@ -634,6 +634,26 @@ export function getAllLikesEventId(idEvent) {
   };
 }
 
+export function searchBlackList(name) {
+  return async function (dispatch) {
+    try {
+      const allBlackList = await axios.get(`${url}/api/blackall?name=${name}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log('ALLBLACKLIST EN ACTION:', allBlackList)
+      return dispatch({
+        type: "GET_NAME_BY_BLACKLIST",
+        payload: allBlackList.data,
+      });
+    } catch (error) {
+      console.log(error, "GET_NAME_BY_BLACKLIST");
+    }
+  }
+}
+
 /* export function getAllSolicits(allevents) {
   return async function (dispatch) {
     try {
