@@ -38,6 +38,7 @@ const initialState = {
     allLikesEventId: [],
   },
   token: "",
+  ticket:{},
 };
 
 function reducers(state = initialState, { type, payload }) {
@@ -384,6 +385,11 @@ function reducers(state = initialState, { type, payload }) {
           allLikesEventId: payload,
         },
       };
+    case "GET_TICKET_BY_ID":
+      return{
+        ...state,
+        ticket:payload
+      }
     default:
       return state;
   }
