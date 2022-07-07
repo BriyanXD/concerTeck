@@ -34,11 +34,8 @@ async function getTicketByID(req, res) {
 
 async function postTicket(req, res) {
   try{
-
   const {name, price, eventId, userId, quantity } = req.body;
     if (name && price && eventId && userId && quantity) {
-      // console.log(saveEvent)
-      const saveEvent = await Events.findByPk(eventId)
       const newTicket = await Ticket.create({
         name: name,
         price: price,
@@ -46,34 +43,8 @@ async function postTicket(req, res) {
         userId: userId,
         quantity: quantity,
       });
-      
-    //   if(newTicket){
-    //     const array = []
-    //     array.push(newTicket)
-    
-    //     let preference={
-    //       items: array,
-    //       external_reference: `${saveEvent}`,
-    //       payment_methods: {
-    //         excluded_payment_types: [
-    //           {
-    //             id: "atm"
-    //           }
-    //         ],
-    //     },
-    //     back_urls: {
-    //       success: 'http://localhost:3001/home',
-    //       failure: 'http://localhost:3001/*',
-    //     },
-    //   }
-    //  const mercado = await mercadopago.preferences.create(preference)
-    //   console.log("respondio")
-    //   const response = mercado.body.id
-    //     console.log("body", mercado.body)
-    //     // console.log(newTicket, "ticket")
-    // }
     }
-  res.json({response});
+  res.json({newTicket});
   }
   catch(error){
     res.status(401).send({error: error.message})
@@ -95,28 +66,78 @@ async function deleteTicket(req, res) {
   }
 }
 
-async function getRaro(req, res, next){
+async function postCreatEventAndPrice(req, res, next){
 
+  try {
+    const findEvent = await Events.findAll()
+    for (let i = 4; i < 8 ; i++ ) {
+      const product = await stripe.products.create({
+        name: findEvent[i].name,
+        description: findEvent[i].description ,
+        images: [findEvent[i].performerImage]
+      });
+      if(product){
+        console.log("🚀 ~ file: Tickets.js ~ line 108 ~ getRaro ~ product", product)
+        const findStock = await Events.findByPk(findEvent[i].id,{include:[{ model: TicketStock, as: "stock" },],});
+        if(findStock){
+          const price1 = await stripe.prices.create({
+            product: product.id,
+            unit_amount: (findStock.stock.streamingPrice)*100,
+            currency: 'ars',
+          });
+          //logica de relacion de tablas price/idprice/event
+        
+          const price2 = await stripe.prices.create({
+            product: product.id,
+            unit_amount: (findStock.stock.vipPrice)*100,
+            currency: 'ars',
+          });
+        
+          const price3 = await stripe.prices.create({
+            product: product.id,
+            unit_amount: (findStock.stock.generalLateralPrice)*100,
+            currency: 'ars',
+          });
+      
+      
+          const price4 = await stripe.prices.create({
+            product: product.id,
+            unit_amount: (findStock.stock.generalPrice)*100,
+            currency: 'ars',
+          });
+  
+          const price5 = await stripe.prices.create({
+            product: product.id,
+            unit_amount: (findStock.stock.palcoPrice)*100,
+            currency: 'ars',
+          });
+        }else{
+          console.log("Evento No tiene stock relacionado")
+        }
+      }
+    }
 
+  } catch (error) {
+    console.log(error)
+  }
   // const findEvent = await Events.findAll()
   // findEvent.map(async event =>{
-    const product = await stripe.products.create({
-      name: "Divididos",
-      description: "adscsdsfd" ,
-      images: []
-    });
+    // const product = await stripe.products.create({
+    //   name: "Divididos",
+    //   description: "adscsdsfd" ,
+    //   images: []
+    // });
   // })
-  console.log(product)
-
+  // console.log(product)
 
 
   // const session = await stripe.checkout.sessions.create({
   //   line_items: [{
-  //     price:'price_1LIvH3EZzNuiTFe67vUd1guS',
+  //     price: 'price_1LJ01eEZzNuiTFe6CHhOssWk',
   //     quantity: 1,
   //   },
   // {
-  //   price: 'price_1LIvKfEZzNuiTFe6tu11nMDt',
+  //   price: 'price_1LJ01bEZzNuiTFe6YGzxVr89',
   //   quantity: 3
   // }],
   //   mode: 'payment',
@@ -124,63 +145,66 @@ async function getRaro(req, res, next){
   //   cancel_url: 'https://localhost:3001/',
   // });
   // console.log(session)
-  // res.send("se creo2")
-  res.send("se creo1")
+ 
+  // res.send("se creo1")
   // console.log(price)
 }
 
+// async function getRaro2(data, product){
 
-async function getRaro2(req, res, next){
-  const {name, description, images, eventId} = req.body
-
-  const findStock = await Events.findByPk("e63dbb71-f299-4218-a076-b670c3d8a686")
-    const price1 = await stripe.prices.create({
-      product: 'prod_M0xp1GFYyl2RPd',
-      unit_amount: findStock.stock.streamingPrice,
-      currency: 'ars',
-    });
-    
+//   const findStock = await TicketStock.findByPk(data)
+//     const price1 = await stripe.prices.create({
+//       product: product.id,
+//       unit_amount: findStock.stock.streamingPrice,
+//       currency: 'ars',
+//     });
+//     //logica de relacion de tablas price/idprice/event
   
-    const price2 = await stripe.prices.create({
-      product: 'prod_M0xp1GFYyl2RPd',
-      unit_amount: findStock.stock.vipPrice,
-      currency: 'ars',
-    });
+//     const price2 = await stripe.prices.create({
+//       product: product.id,
+//       unit_amount: findStock.stock.vipPrice,
+//       currency: 'ars',
+//     });
   
-  
-    const price3 = await stripe.prices.create({
-      product: 'prod_M0xp1GFYyl2RPd',
-      unit_amount: findStock.stock.generalLateralPrice,
-      currency: 'ars',
-    });
+//     const price3 = await stripe.prices.create({
+//       product: product.id,
+//       unit_amount: findStock.stock.generalLateralPrice,
+//       currency: 'ars',
+//     });
 
 
-    const price4 = await stripe.prices.create({
-      product: 'prod_M0xp1GFYyl2RPd',
-      unit_amount: findStock.stock.generalPrice,
-      currency: 'ars',
-    });
+//     const price4 = await stripe.prices.create({
+//       product: product.id,
+//       unit_amount: findStock.stock.generalPrice,
+//       currency: 'ars',
+//     });
 
 
   
-    const price5 = await stripe.prices.create({
-      product: 'prod_M0xp1GFYyl2RPd',
-      unit_amount: findStock.stock.palcoPrice,
-      currency: 'ars',
-    });
+//     const price5 = await stripe.prices.create({
+//       product: product.id,
+//       unit_amount: findStock.stock.palcoPrice,
+//       currency: 'ars',
+//     });
 
-    console.log(price1)
-    console.log(price2)
-    console.log(price3)
-    
-    res.send("creado")
-    
+//     console.log(price1)
+//     console.log(price2)
+//     console.log(price3)
 
-}
+//     res.send("creado")
+// }
 
-async function postCheck(req,res,next){
-  // priceId = price.id
+async function postCheckout(req, res, next){
+  const { line_items } = req.body
 
+  const session = await stripe.checkout.sessions.create({
+    line_items,
+    mode: 'payment',
+    success_url: 'https://localhost:3001/',
+    cancel_url: 'https://localhost:3001/',
+  });
+  console.log(session)
+  res.send("se creo2")
 }
 
 
@@ -189,7 +213,7 @@ module.exports = {
   getTicketByID,
   postTicket,
   deleteTicket,
-  getRaro,
-  postCheck,
-  getRaro2
+  postCreatEventAndPrice,
+  postCheckout,
+  // getRaro2
 };

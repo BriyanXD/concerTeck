@@ -37,9 +37,8 @@ const {
   getTicketByID,
   postTicket,
   deleteTicket,
-  getRaro,
-  postCheck,
-  getRaro2
+  postCreatEventAndPrice,
+  postCheckout,
 } = require("../controllers/Tickets");
 
 const { getVenues, postVenues } = require("../controllers/Venue");
@@ -98,9 +97,9 @@ routes.delete("/events", verifyToken, isAdmin, deleteEvent); //isAdmin
 routes.get("/ticket", getTicketByID);
 routes.post("/ticket", postTicket); // verifyToken, adminNotAuthorization,
 routes.delete("/ticket", verifyToken, isAdmin, deleteTicket);
-routes.post("/tickets", getRaro)
-routes.post("/ticketss", postCheck)
-routes.post("/tickect2", getRaro2)
+routes.post("/tickets", postCreatEventAndPrice)
+routes.post("/tickets2", postCheckout)
+// routes.post("/tickect2", getRaro2)
 
 routes.get("/genres", getAllGenres);
 routes.post("/genres", verifyToken, isAdmin, postOneGenre);
