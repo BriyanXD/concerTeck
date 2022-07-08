@@ -1,6 +1,6 @@
 @import url(../../index.css);
 
-.searchBar{
+/* .searchBar{
     color: var(--color2);
     background-color: #dbdada;
     width: 22vw;
@@ -8,9 +8,28 @@
     border-radius: 5px;
     font-size: 16px;
     outline: 0;
-    
     margin-bottom: 5px;
-}
+} */
+
+.searchBar {
+    border: 2px solid #2D4059;
+    padding: 15px;
+    width: 22vw;
+    border-radius: 10px;
+    background-color: #222831;
+    font-size: small;
+    font-weight: bold;
+    text-align: center;
+   }
+   
+   .searchBar:focus {
+    outline-color: #FF5722;
+    background-color: #222831;
+    color: #ffffff;
+    box-shadow: 5px 5px #f9b5a1;
+    transition: 0.4s;
+   }
+
 .close{
     margin-left: -30px;
     background-color: transparent;
