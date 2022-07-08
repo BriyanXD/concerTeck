@@ -18,10 +18,20 @@ const Ticket = sequelize.define(
         "general",
         "palco"
       ),
-      allowNull: false,
+      // allowNull: false,
+    },
+    userName: {
+      type: DataTypes.STRING,
+    },
+    eventName: {
+      type: DataTypes.STRING,
     },
     price: {
       type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    quantity:{
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
