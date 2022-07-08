@@ -26,7 +26,7 @@ export default function Favorites(){
     }
 
     return(
-        <div>
+        <div className={s.all}>
         <div className={s.container}>
             <div className={s.title}>
                 <h3>Eventos guardados como Favoritos: </h3>
