@@ -365,11 +365,18 @@ export function findUser(allusers, id) {
     payload: userSaved,
   };
 }
-export function findEvent(allEvents, id) {
-  const eventSave = allEvents?.find((event) => event.id === id);
+export function findEvent(allTickets, id) {
+  const eventSave = allTickets?.find((event) => event.id === id);
   return {
     type: "FIND_EVENT",
     payload: eventSave,
+  };
+}
+export function findTicket(allTickets, id) {
+  const ticketSave = allTickets?.find((event) => event.id === id);
+  return {
+    type: "FIND_TICKET",
+    payload: ticketSave,
   };
 }
 
@@ -493,9 +500,16 @@ export function activeModalUsersAdminPanel(booleano) {
     payload: booleano,
   };
 }
+
 export function activeModalUsersPermisedAdminPanel(booleano) {
   return {
     type: "MODAL_USERS_PERMISED_ADMIN_PANEL",
+    payload: booleano,
+  };
+}
+export function activeModalOrdersAdminPanel(booleano) {
+  return {
+    type: "MODAL_ORDERS_ADMIN_PANEL",
     payload: booleano,
   };
 }
@@ -633,6 +647,24 @@ export function getAllLikesEventId(idEvent) {
   };
 }
 
+export function searchBlackList(name) {
+  return async function (dispatch) {
+    try {
+      const allBlackList = await axios.get(`${url}/api/blackall?name=${name}`,{
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return dispatch({
+        type: "GET_NAME_BY_BLACKLIST",
+        payload: allBlackList.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}      
+
 export function putUrlStreamingEvent(urlStreaming, idEvent) {
   return async function (dispatch) {
     try {
@@ -668,6 +700,23 @@ export function getTicketById(id) {
       return dispatch({
         type: "GET_TICKET_BY_ID",
         payload: ticket.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+export function getAllTickets() {
+  return async function (dispatch) {
+    try {
+      const getAllTickets = await axios.get(`${url}/api/ticket`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return dispatch({
+        type: "GET_ALL_TICKETS",
+        payload: getAllTickets.data,
       });
     } catch (error) {
       console.log(error);
