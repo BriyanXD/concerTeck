@@ -4,14 +4,9 @@ const { STRIPE_KEY } = process.env
 const stripe = require('stripe')(STRIPE_KEY);
 const Events = require("../models/Events");
 const TicketStock = require("../models/TicketStock");
-let priceId = "";
-
-
-// mercadopago.configure({
-//   access_token: "TEST_ACCESS_TOKEN",
-// });
 const User = require('../models/User');
-const Events = require('../models/Events')
+let priceId = ""
+
 
 async function getTicketByID(req, res) {
   const { id } = req.query
