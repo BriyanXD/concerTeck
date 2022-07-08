@@ -633,6 +633,24 @@ export function getAllLikesEventId(idEvent) {
   };
 }
 
+export function searchBlackList(name) {
+  return async function (dispatch) {
+    try {
+      const allBlackList = await axios.get(`${url}/api/blackall?name=${name}`,{
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return dispatch({
+        type: "GET_NAME_BY_BLACKLIST",
+        payload: allBlackList.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}      
+
 export function putUrlStreamingEvent(urlStreaming, idEvent) {
   return async function (dispatch) {
     try {
