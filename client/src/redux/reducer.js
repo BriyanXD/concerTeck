@@ -41,6 +41,7 @@ const initialState = {
     allLikesEventId: [],
     putUrlStreaming: "",
     allTickets: [],
+    allTiketsByName:[],
     saveFindTicket: "",
   },
   token: "",
@@ -444,6 +445,14 @@ function reducers(state = initialState, { type, payload }) {
           blackListByName: payload,
         },
       };
+      case "GET_NAME_BY_ORDER":
+        return {
+          ...state,
+          stateAdminPanel: {
+            ...state.stateAdminPanel,
+            allTiketsByName: payload,
+          },
+        };
     default:
       return state;
   }
