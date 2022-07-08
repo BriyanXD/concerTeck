@@ -14,7 +14,7 @@ import DateTimePicker from 'react-datetime-picker';
 import Footer from '../Footer/Footer';
 import RegisterGenre from '../RegisterGenre/RegisterGenre';
 import RegisterVenue from '../RegisterVenue/RegisterVenue';
-//Working
+
 
 export default function RegisterEvent(){
     const dispatch = useDispatch();
