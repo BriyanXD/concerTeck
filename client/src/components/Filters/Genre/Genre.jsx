@@ -25,10 +25,10 @@ export default function Genre({setCurrenPag,setCurrentPage}) {
   return (
     <div>
       <select onChange={e =>{ HandleFilterByGenres(e)}} className={style.selectGenre} name="" id="">
-        <option value='all' >Géneros</option>
+        <option value='all'  className={style.option}>Géneros</option>
         {
           Genres.map(e => {return(
-            <option value={e.id}>{e.name}</option>
+            <option value={e.id} className={style.option}>{e.name}</option>
           )})
         }
       </select>
