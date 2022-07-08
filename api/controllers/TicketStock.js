@@ -34,7 +34,7 @@ async function getTicketStock(req, res) {
   }
 }
 
-async function putTicketStock() {
+async function putTicketStock(req, res) {
   try {
     const allTicketStock = await TicketStock.findAll({
       include: { model: Venue },
@@ -45,8 +45,68 @@ async function putTicketStock() {
   }
 }
 
+async function postTicketStock(req, res){
+  try{
+    const {
+      id, 
+      stockStreaming,
+      stockkVIP,
+      stockGeneral,
+      stockGeneralLateral,
+      stockPalco,
+      streamingPrice,
+      vipPrice,
+      generalLateralPrice,
+      generalPrice,
+      palcoPrice,
+      venueId,
+    } = req.body;
+    console.log("LLEGARON LOS PARAMETROS DEL STOCK")
+    if (
+      !id ||
+      //!stockStreaming ||
+      //!stockkVIP ||
+      !stockGeneral ||
+      //!stockGeneralLateral ||
+      //!stockPalco ||
+      //!streamingPrice ||
+      //!vipPrice ||
+      //!generalLateralPrice ||
+      !generalPrice ||
+      //!palcoPrice ||
+      !venueId
+    ) {
+      console.log("FALTARON DATOS DEL STOCK")
+      return res.status(404).send("Faltan datos obligatorios");
+    } else {
+      console.log("ENTRO A LA CREACION DEL STOCK")
+      const stock = await TicketStock.findOrCreate({
+        where: {
+          id: id, 
+          stockStreaming: stockStreaming,
+          stockkVIP: stockkVIP,
+          stockGeneral: stockGeneral,
+          stockGeneralLateral: stockGeneralLateral,
+          stockPalco: stockPalco,
+          streamingPrice: streamingPrice,
+          vipPrice: vipPrice,
+          generalLateralPrice: generalLateralPrice,
+          generalPrice: generalPrice,
+          palcoPrice: palcoPrice,
+          venueId: venueId,
+        }
+      });
+      console.log("SE LOGRO CREAR EL STOCK")
+      return res.send(stock);
+    }
+  }catch(error){
+    return res.status(404).json({ error: error.message });
+  }
+}
+
 module.exports = {
   chargeTicketStock,
   getTicketStock,
   putTicketStock,
+  postTicketStock,
 };
