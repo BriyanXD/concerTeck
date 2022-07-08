@@ -13,6 +13,7 @@ const initialState = {
   Events: [],
   Genres: [],
   Venues: [],
+  Stock: [],
   Basket: [],
   Likes: [],
   userValidation: "",
@@ -27,6 +28,7 @@ const initialState = {
     allUsers: [],
     tdosEvents: [],
     allBlackList: [],
+    blackListByName: [],
     userSaveBlackList: "",
     // UserByName:[],
     UserByUserName: [],
@@ -34,9 +36,12 @@ const initialState = {
     allSolicits: [],
     modalEvent: false,
     modalUser: false,
+    modalOrder: false,
     modalUserPermised: false,
     allLikesEventId: [],
     putUrlStreaming: "",
+    allTickets: [],
+    saveFindTicket: "",
   },
   token: "",
   ticket: {},
@@ -221,8 +226,13 @@ function reducers(state = initialState, { type, payload }) {
     case "POST_VENUE":
       return {
         ...state,
-        Venues: payload,
+        Venues: [...state.Venues, payload],
       };
+    case "POST_STOCK":
+      return {
+        ...state,
+        Stock: [...state.Stock, payload],
+      }
     case "VALIDATION_LOGIN":
       return {
         ...state,
@@ -398,6 +408,41 @@ function reducers(state = initialState, { type, payload }) {
       return {
         ...state,
         ticket: payload,
+      };
+    //GET_ALL_TICKETS
+    case "GET_ALL_TICKETS":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allTickets: payload,
+        },
+      };
+    //MODAL_ORDERS_ADMIN_PANEL
+    case "MODAL_ORDERS_ADMIN_PANEL":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          modalOrder: payload,
+        },
+      };
+    //FIND_TICKET
+    case "FIND_TICKET":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          saveFindTicket: payload,
+        },
+      };
+    case "GET_NAME_BY_BLACKLIST":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          blackListByName: payload,
+        },
       };
     default:
       return state;

@@ -9,13 +9,17 @@ let priceId = ""
 
 
 async function getTicketByID(req, res) {
-  const { id } = req.query
+  const { id } = req.query;
   const { userId } = req.body;
   const allTickets = await Ticket.findAll();
   try {
     if (id) {
-      const findTicketForID = await Ticket.findByPk(id,{include:[{ model: User, as: "user" },
-      { model: Events, as: "event" },]});
+      const findTicketForID = await Ticket.findByPk(id, {
+        include: [
+          { model: User, as: "user" },
+          { model: Events, as: "event" },
+        ],
+      });
       return res.json(findTicketForID);
     }
     if (userId) {
@@ -32,15 +36,19 @@ async function getTicketByID(req, res) {
 
 
 async function postTicket(req, res) {
-  try{
-  const {name, price, eventId, userId, quantity } = req.body;
-    if (name && price && eventId && userId && quantity) {
+  const { name, price, eventId, userId } = req.body;
+  try {
+    if (name && price && eventId && userId) {
+      const saveEvent = await Events.findByPk(eventId);
+      const saveUser = await User.findByPk(userId);
       const newTicket = await Ticket.create({
         name: name,
         price: price,
         eventId: eventId,
         userId: userId,
-        quantity: quantity,
+ 
+        eventName: saveEvent.id || "undefined",
+        userName: saveUser.id || "undefined",
       });
     }
   res.json({newTicket});
