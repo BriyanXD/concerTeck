@@ -60,7 +60,6 @@ export default function PerfilYLogoutAuth0(){
        Log Out
        </button>
       </div>
-        
     </div>
   );
 };
