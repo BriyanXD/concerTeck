@@ -41,7 +41,11 @@ const {
 } = require("../controllers/Tickets");
 
 const { getVenues, postVenues } = require("../controllers/Venue");
-const { getTicketStock, putTicketStock, postTicketStock } = require("../controllers/TicketStock");
+const {
+  getTicketStock,
+  putTicketStock,
+  postTicketStock,
+} = require("../controllers/TicketStock");
 
 const { LoginUser } = require("../controllers/Login");
 const {
@@ -55,6 +59,7 @@ const {
   getAllBlackList,
   deleteOneBlackList,
   postOneBlackList,
+  verifiUser,
 } = require("../controllers/BlackList");
 
 const {
@@ -120,7 +125,8 @@ routes.post("/validation/email", ValidationEmail);
 
 routes.post("/admin", postAdminUser);
 
-routes.get("/blackall", verifyToken, isAdmin, getAllBlackList);
+routes.get("/verifibaned", verifiUser);
+routes.get("/blackall", verifyToken, getAllBlackList); //isAdmin
 routes.get("/black", verifyToken, isAdmin, getAOneBlackList);
 routes.post("/black", verifyToken, isAdmin, postOneBlackList);
 routes.delete("/black", verifyToken, isAdmin, deleteOneBlackList);

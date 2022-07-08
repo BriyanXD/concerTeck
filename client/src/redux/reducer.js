@@ -42,6 +42,7 @@ const initialState = {
     putUrlStreaming: "",
     allTickets: [],
     saveFindTicket: "",
+    userBanned: "",
   },
   token: "",
   ticket: {},
@@ -232,7 +233,7 @@ function reducers(state = initialState, { type, payload }) {
       return {
         ...state,
         Stock: [...state.Stock, payload],
-      }
+      };
     case "VALIDATION_LOGIN":
       return {
         ...state,
@@ -442,6 +443,15 @@ function reducers(state = initialState, { type, payload }) {
         stateAdminPanel: {
           ...state.stateAdminPanel,
           blackListByName: payload,
+        },
+      };
+    //VERIFY_USER_BANNED
+    case "VERIFY_USER_BANNED":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          userBanned: payload,
         },
       };
     default:
