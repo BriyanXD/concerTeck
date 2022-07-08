@@ -661,7 +661,7 @@ export function getAllLikesEventId(idEvent) {
 export function searchBlackList(name) {
   return async function (dispatch) {
     try {
-      const allBlackList = await axios.get(`${url}/api/blackall?name=${name}`,{
+      const allBlackList = await axios.get(`${url}/api/blackall?name=${name}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -674,7 +674,7 @@ export function searchBlackList(name) {
       console.log(error);
     }
   };
-}      
+}
 
 export function putUrlStreamingEvent(urlStreaming, idEvent) {
   return async function (dispatch) {
@@ -734,16 +734,39 @@ export function getAllTickets() {
     }
   };
 }
+export function verifiUserBanned(email) {
+  return async function (dispatch) {
+    try {
+      console.log(email, "EMAIL USER BANNED");
+      const userSave = await axios.get(
+        `${url}/api/verifibaned?email=${email}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(userSave.data, "BANEADO DESDE EL ACCIONS");
+      return dispatch({
+        type: "VERIFY_USER_BANNED",
+        payload: userSave.data,
+      });
+    } catch (error) {
+      console.log(error, "VERIFY_USER_BANNED");
+    }
+  };
+}
+//verifibaned
 
 export function searchOrder(name) {
   return async function (dispatch) {
     try {
-      const allOrder = await axios.get(`${url}/api/ticket?name=${name}`,{
+      const allOrder = await axios.get(`${url}/api/ticket?name=${name}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log('ALLORDER EN ACTION',allOrder)
+      console.log("ALLORDER EN ACTION", allOrder);
       return dispatch({
         type: "GET_NAME_BY_ORDER",
         payload: allOrder.data,
@@ -752,7 +775,7 @@ export function searchOrder(name) {
       console.log(error);
     }
   };
-} 
+}
 
 /* export function getAllSolicits(allevents) {
   return async function (dispatch) {

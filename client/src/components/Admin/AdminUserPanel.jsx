@@ -21,7 +21,7 @@ export default function AdminUserPanel(){
 
      useEffect(()=>{
         dispatch(getAllUsers())
-     })
+     },[])
 
     return(
         <div>

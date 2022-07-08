@@ -43,6 +43,7 @@ const initialState = {
     allTickets: [],
     allTiketsByName:[],
     saveFindTicket: "",
+    userBanned: "",
   },
   token: "",
   ticket: {},
@@ -233,7 +234,7 @@ function reducers(state = initialState, { type, payload }) {
       return {
         ...state,
         Stock: [...state.Stock, payload],
-      }
+      };
     case "VALIDATION_LOGIN":
       return {
         ...state,
@@ -445,6 +446,17 @@ function reducers(state = initialState, { type, payload }) {
           blackListByName: payload,
         },
       };
+<<<<<<< HEAD
+    //VERIFY_USER_BANNED
+    case "VERIFY_USER_BANNED":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          userBanned: payload,
+        },
+      };
+=======
       case "GET_NAME_BY_ORDER":
         return {
           ...state,
@@ -453,6 +465,7 @@ function reducers(state = initialState, { type, payload }) {
             allTiketsByName: payload,
           },
         };
+>>>>>>> e659e79b69cf36892c278bdb85164dd650a0da23
     default:
       return state;
   }
