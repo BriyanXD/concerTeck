@@ -777,6 +777,29 @@ export function searchOrder(name) {
   };
 }
 
+export function searchEventIDEmails(eventId) {
+  return async function (dispatch) {
+    try {
+      console.log(eventId, "ID DEL EVENTO A BUSCAR");
+      const allEmails = await axios.get(
+        `${url}/api/ticket?eventId=${eventId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log("ALL EMAILS", allEmails.data);
+      return dispatch({
+        type: "GET_ALL_EMAILS_TICKET",
+        payload: allEmails.data,
+      });
+    } catch (error) {
+      console.log(error, "GET_ALL_EMAILS_TICKET");
+    }
+  };
+}
+
 /* export function getAllSolicits(allevents) {
   return async function (dispatch) {
     try {

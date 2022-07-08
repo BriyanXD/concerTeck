@@ -44,6 +44,7 @@ const initialState = {
     allTiketsByName: [],
     saveFindTicket: "",
     userBanned: "",
+    allEmails: [],
   },
   token: "",
   ticket: {},
@@ -463,6 +464,16 @@ function reducers(state = initialState, { type, payload }) {
           allTiketsByName: payload,
         },
       };
+    //GET_ALL_EMAILS_TICKET
+    case "GET_ALL_EMAILS_TICKET":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allEmails: payload,
+        },
+      };
+
     default:
       return state;
   }
