@@ -4,7 +4,7 @@ import {findTicket, getEvents, activeModalOrdersAdminPanel } from "../../redux/a
 import swal from 'sweetalert'
 import Style from "./UserCard.module.css"
 
-export default function CardOrder({id,name}){
+export default function CardOrder({id,userName}){
 
     const dispatch = useDispatch()
     const allTickets = useSelector((state) => state.stateAdminPanel.allTickets)
@@ -35,7 +35,7 @@ function handlerDeleteUser(){
     return(
         <div className={Style.cardEvent}>
             <p className={Style.id}>{id}</p>
-            <p className={Style.name}>{name}</p>
+            <p className={Style.name}>{userName}</p>
             <div className={Style.buttonsCard}>
             <button className={Style.button} onClick={handlerDeleteUser}>Borrar</button>
             <button className={Style.button} onClick={filterTicket}>Detalles</button>
