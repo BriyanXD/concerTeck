@@ -59,7 +59,7 @@ export default function RegisterGenre(){
 
     return (<div>
             {activeGenre ? <div>
-                <div> <input name="name" value={genre.name}  onChange={handleGenre} type="text" placeholder="Nombrar nuevo genero" />{error.name && (<label>{error.name}</label>)} </div>
+                <div> <label>Nombre del nuevo genero:* </label> <input name="name" value={genre.name}  onChange={handleGenre} type="text" placeholder="Nombrar nuevo genero" />{error.name && (<label>{error.name}</label>)} </div>
                 <button onClick={handeSubmitGenre}>Añadir</button>
             </div>:null }
         </div>)
