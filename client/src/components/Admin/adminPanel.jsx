@@ -108,15 +108,3 @@ export default function PanelAdmin({setUser}){
     )
 }
 
-
-{/*             {
-                userInfo?.map((e,k) =>{
-                    return(
-                        <div>
-                            <UserCard key={k} id={e.id} username={e.username}/>
-                        </div>
-                    )
-                })
-            } */}
-
-
