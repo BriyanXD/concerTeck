@@ -758,6 +758,25 @@ export function verifiUserBanned(email) {
 }
 //verifibaned
 
+export function searchOrder(name) {
+  return async function (dispatch) {
+    try {
+      const allOrder = await axios.get(`${url}/api/ticket?name=${name}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log("ALLORDER EN ACTION", allOrder);
+      return dispatch({
+        type: "GET_NAME_BY_ORDER",
+        payload: allOrder.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 /* export function getAllSolicits(allevents) {
   return async function (dispatch) {
     try {
