@@ -112,6 +112,17 @@ export function CreateVenue(value) {
   };
 }
 
+export function CreateStock(value) {
+  return async function (dispatch) {
+    try {
+      const creation = await axios.post(`${url}/api/ticketstock`, value);
+      return creation;
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+
 export function ClearDetail() {
   return function () {
     return { type: "CLEAR_DETAIL" };
