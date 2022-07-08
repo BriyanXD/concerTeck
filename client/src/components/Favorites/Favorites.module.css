@@ -1,4 +1,7 @@
-
+.all{
+    height: 140vh;
+    background: url(../../img/bk.jpg);
+}
 .title{
     color: rgb(202, 177, 177);
     font-size: 20px;
@@ -13,7 +16,7 @@
     flex-direction: column;
     width: 100vw;
     align-items: center;
-    background: url(../../img/bk.jpg);
+    
 }
 .btn{
     border: 0;
@@ -92,3 +95,8 @@
     box-sizing: border-box;
     justify-content: space-evenly;
 }
+
+/* .footer{
+    height: 90vh;
+    
+} */

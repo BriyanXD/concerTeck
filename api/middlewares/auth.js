@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const BlackList = require("../models/BlackList");
 const User = require("../models/User");
 require("dotenv").config();
 const { AUTH_SECRET } = process.env;
@@ -11,13 +12,19 @@ function verifyToken(req, res, next) {
     return res.status(401).json({ error: "Acceso no autorizado" });
   } else {
     let token = req.headers.authorization.split(" ")[1];
-    jwt.verify(token, AUTH_SECRET, (err, decoded) => {
+    jwt.verify(token, AUTH_SECRET, async (err, decoded) => {
       if (err)
         return res.status(500).json({ error: "Error al decodificar el token" });
       else {
-        console.log("usuario autorizado");
         UserDate = decoded;
-        next();
+        const userSave = await BlackList.findOne({
+          where: { email: decoded.user[0].email },
+        });
+        if (!userSave) {
+          next();
+        } else {
+          res.status(400).json({ message: "Usuario Baneado no puede acceder" });
+        }
       }
     });
   }

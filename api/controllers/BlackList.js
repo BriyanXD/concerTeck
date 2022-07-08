@@ -2,9 +2,36 @@ const BlackList = require("../models/BlackList");
 const { use } = require("../routes");
 
 async function getAllBlackList(req, res) {
+  const { name, email } = req.query;
+  const allBaned = await BlackList.findAll();
   try {
-    const allBaned = await BlackList.findAll();
-    res.json(allBaned);
+    if (name) {
+      const blackNameFiltred = allBaned.filter((n) =>
+        n.name.toLowerCase().includes(name.toLowerCase())
+      );
+      if (blackNameFiltred.length >= 1) {
+        return res.send(blackNameFiltred);
+      } else {
+        // return res
+        //   .status(404)
+        //   .json({ error: "No se encontro Usuario con ese Nombre" });
+        return res.send(allBaned);
+      }
+    } else {
+      res.send(allBaned);
+    }
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+}
+
+async function verifiUser(req, res) {
+  const { email } = req.query;
+  try {
+    const blackEmailFiltred = await BlackList.findOne({
+      where: { email: email },
+    });
+    return res.send(blackEmailFiltred);
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
@@ -64,4 +91,5 @@ module.exports = {
   getAllBlackList,
   deleteOneBlackList,
   postOneBlackList,
+  verifiUser,
 };

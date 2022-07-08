@@ -43,7 +43,11 @@ const {
 } = require("../controllers/Tickets");
 
 const { getVenues, postVenues } = require("../controllers/Venue");
-const { getTicketStock } = require("../controllers/TicketStock");
+const {
+  getTicketStock,
+  putTicketStock,
+  postTicketStock,
+} = require("../controllers/TicketStock");
 
 const { LoginUser } = require("../controllers/Login");
 const {
@@ -57,6 +61,7 @@ const {
   getAllBlackList,
   deleteOneBlackList,
   postOneBlackList,
+  verifiUser,
 } = require("../controllers/BlackList");
 
 const {
@@ -93,6 +98,7 @@ routes.delete("/producer", verifyToken, isAdmin, deleteProducer); */
 
 routes.get("/events", loadEventsAndGetEvents);
 routes.post("/events", verifyToken, isAdmin, postEvents);
+//routes.post("/events", postEvents); //ruta de prueba
 routes.put("/events", verifyToken, isAdmin, putEvents);
 routes.delete("/events", verifyToken, isAdmin, deleteEvent); //isAdmin
 routes.put("/eventurl", verifyToken, isAdmin, putUrlStreaming);
@@ -106,11 +112,16 @@ routes.post("/tickets2", postCheckout)
 
 routes.get("/genres", getAllGenres);
 routes.post("/genres", verifyToken, isAdmin, postOneGenre);
+//routes.post("/genres", postOneGenre); //ruta de prueba
 
 routes.get("/venues", getVenues);
 routes.post("/venues", verifyToken, isAdmin, postVenues);
+//routes.post("/venues", postVenues); //ruta de prueba
 
-routes.get("/ticketstock", getTicketStock); //verifyToken
+routes.get("/ticketstock", verifyToken, getTicketStock); 
+//routes.get("/ticketstock", getTicketStock); //ruta de prueba
+routes.post("/ticketstock", postTicketStock); //reuta de prueba
+
 
 routes.post("/login", LoginUser);
 
@@ -120,7 +131,8 @@ routes.post("/validation/email", ValidationEmail);
 
 routes.post("/admin", postAdminUser);
 
-routes.get("/blackall", verifyToken, isAdmin, getAllBlackList);
+routes.get("/verifibaned", verifiUser);
+routes.get("/blackall", verifyToken, getAllBlackList); //isAdmin
 routes.get("/black", verifyToken, isAdmin, getAOneBlackList);
 routes.post("/black", verifyToken, isAdmin, postOneBlackList);
 routes.delete("/black", verifyToken, isAdmin, deleteOneBlackList);
