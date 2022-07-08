@@ -38,6 +38,8 @@ const {
   getTicketByID,
   postTicket,
   deleteTicket,
+  postCreatEventAndPrice,
+  postCheckout,
 } = require("../controllers/Tickets");
 
 const { getVenues, postVenues } = require("../controllers/Venue");
@@ -101,9 +103,12 @@ routes.put("/events", verifyToken, isAdmin, putEvents);
 routes.delete("/events", verifyToken, isAdmin, deleteEvent); //isAdmin
 routes.put("/eventurl", verifyToken, isAdmin, putUrlStreaming);
 
-routes.get("/ticket", verifyToken, getTicketByID);
-routes.post("/ticket", verifyToken, adminNotAuthorization, postTicket);
+routes.get("/ticket", getTicketByID);
+routes.post("/ticket", postTicket); // verifyToken, adminNotAuthorization,
 routes.delete("/ticket", verifyToken, isAdmin, deleteTicket);
+routes.post("/tickets", postCreatEventAndPrice)
+routes.post("/tickets2", postCheckout)
+// routes.post("/tickect2", getRaro2)
 
 routes.get("/genres", getAllGenres);
 routes.post("/genres", verifyToken, isAdmin, postOneGenre);
@@ -113,9 +118,10 @@ routes.get("/venues", getVenues);
 routes.post("/venues", verifyToken, isAdmin, postVenues);
 //routes.post("/venues", postVenues); //ruta de prueba
 
-routes.get("/ticketstock", verifyToken, getTicketStock);
+routes.get("/ticketstock", verifyToken, getTicketStock); 
 //routes.get("/ticketstock", getTicketStock); //ruta de prueba
-routes.post("/ticketstock", postTicketStock);
+routes.post("/ticketstock", postTicketStock); //reuta de prueba
+
 
 routes.post("/login", LoginUser);
 
