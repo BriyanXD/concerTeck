@@ -1,16 +1,23 @@
-.container{
+.all{
+    height: 140vh;
+    background: url(../../img/bk.jpg);
+}
+.title{
+    color: rgb(202, 177, 177);
+    font-size: 20px;
     display: flex;
-    flex-wrap: wrap;
-    width: 100vw;
-    box-sizing: border-box;
-    justify-content: space-evenly;
-    /* display: flex;
-    justify-content: space-around;
-    align-content: space-around;
-    flex-wrap: wrap;
-    padding-top: 10px; */
+    justify-content: center;
+    padding-top: 1%;
 }
 
+.container{
+    justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    align-items: center;
+    
+}
 .btn{
     border: 0;
     width: 30px;
@@ -58,3 +65,38 @@
     background-color: #f80303;
 }
 
+.buttonBack{
+    width: 100vw;
+    margin-left: 50%;
+    background-color: #FF4C29;
+    margin-right: 10px;
+    width: 90px;
+    height: 40px;
+    border-radius: 3px;
+}
+
+.buttonBack:hover{
+    box-shadow:  0px 0px 50px rgba(0, 0, 0, 0.41);
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.bigcontainer{
+    display: flex;
+    flex-wrap: wrap;
+    width: 50vw;
+    box-sizing: border-box;
+    justify-content: space-evenly;
+}
+.litlecontainer{
+    display: flex;
+    flex-wrap: wrap;
+    width: 50vw;
+    box-sizing: border-box;
+    justify-content: space-evenly;
+}
+
+/* .footer{
+    height: 90vh;
+    
+} */

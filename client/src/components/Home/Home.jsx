@@ -4,7 +4,7 @@ import Footer from "../Footer/Footer";
 import style from "./Home.module.css";
 import CardEvent from "../CardEvent/CardEvent";
 import CardBigEvent from "../CardBigEvent/CardBigEvent";
-import Carrousel from "../Carousel/Carousel";
+//import Carrousel from "../Carousel/Carousel";
 import { useDispatch, useSelector } from "react-redux";
 import { getEvents } from "../../redux/actions";
 import { Link } from "react-router-dom";
@@ -13,17 +13,21 @@ import PaginadoBigEvents from "../Paginado/PaginadoBigEvents";
 import PaginadoEvents from "../Paginado/PaginadoEvents";
 import ModalCalendar from "../ModalCalendar/ModalCalendar";
 import { BsFillHeartFill } from 'react-icons/bs';
-import { AddToFav } from '../../redux/actions';
-import Favorites from "../Favorites/Favorites";
+import { postLikes } from '../../redux/actions';
 import { useAuth0 } from "@auth0/auth0-react";
+/* import Streaming from "../Streaming/Streaming"; */
+import Carousel2 from "../Carousel2/Carousel2";
+import notfound from '../../img/no result.png'
 
 
 export default function Home() {
   const dispatch = useDispatch();
   const { user, loginWithPopup } = useAuth0();
   const {Likes} = useSelector((state)=> state);
-  // const { User } = useSelector((state) => state)
-  console.log('Likes:',Likes)
+  const { User, AllEvents } = useSelector((state) => state)
+  
+
+
   const allEventsPagination = useSelector((state) => {
     return state.BigEvents;
   });
@@ -67,13 +71,15 @@ export default function Home() {
     view= true;
   }
 
-  
-// console.log(currentBigEvents)
+
   return (
     <div className={style.container}>
       <NavBar setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage} />
-      <Carrousel />
-      {view === true ? <div className={style.eventcontainer}>
+      <Carousel2 />
+      {
+        AllEvents.length>0? <div> 
+        
+        {view === true ? <div className={style.eventcontainer}>
         <div className={style.midcontainer}>
           <PaginadoBigEvents
             eventsPerPag={eventsPerPag}
@@ -91,11 +97,10 @@ export default function Home() {
                         image={el.performerImage}
                         schedule={el.schedule}
                         id={el.id}
-                      />
+                        />
                     </Link>
-                      <div className={Likes.find(e => e.id === el.id) ? style.heart : style.heartWhite}>
-                        <BsFillHeartFill size={30} onClick={()=> user ? dispatch(AddToFav(el)) : loginWithPopup()}/>
-                        {/* <BsFillHeartFill size={30} onClick={()=>dispatch(AddToFav(el))}/> */}
+                      <div className={Likes.find(e => e.idEvent === el.id) ? style.heart : style.heartWhite}>
+                        <BsFillHeartFill size={30} onClick={()=> user ? dispatch(postLikes(el.id, User[0].id, Likes )) : loginWithPopup()}/>
                       </div>
                   </div>
                 );
@@ -107,26 +112,30 @@ export default function Home() {
             eventPerPage={eventPerPage}
             allSmallEventsPagination={allSmallEventsPagination.length}
             pagination2={pagination2}
-          />
+            />
           <div className={style.litlecontainer}>
             {currentEvents?.map((el) => {
-                return (
-                  <div key={el.id}>
+              return (
+                <div key={el.id}>
                     <Link style={{ textDecoration: "none" }} to={`/${el.id}`}>
                       <CardEvent
                         name={el.name}
                         image={el.performerImage}
                         schedule={el.schedule}
                         id={el.id}
-                      />
+                        />
                     </Link>
-                    <div className={Likes.find(e => e.id === el.id) ? style.heart2 : style.heart2White}><BsFillHeartFill size={20} onClick={()=> user ? dispatch(AddToFav(el)) : loginWithPopup()}/></div>
+                    <div className={Likes.find(e => e.idEvent === el.id) ? style.heart2 : style.heart2White}><BsFillHeartFill size={20} onClick={()=> user ? dispatch(postLikes(el.id, User[0].id, Likes)) : loginWithPopup()}/></div>
                   </div>
                 );
               })}
           </div>
         </div>
-      </div>: <div> <h1>No se encontraron eventos</h1></div>}
+      </div>: <div className={style.noevents}> 
+      <h1>Búsqueda sin resultados</h1>
+      <img className={style.notfound} src={notfound} alt=''/>
+      </div>} </div> : <div class={style.loader}> <span>Cargando...</span></div>
+    }
       <br />
       <div>
         <Calendar />
@@ -134,7 +143,6 @@ export default function Home() {
       <br />
       <Footer />
       <ModalCalendar />
-      {/* <Favorites/> */}
     </div>
   );
 }

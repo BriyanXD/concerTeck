@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {EventById,ClearDetail,GetVenues,addCartDB} from '../../redux/actions'
+import {EventById,ClearDetail,GetVenues,addCartDB, getCartDB} from '../../redux/actions'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import NavBar from '../NavBar/NavBar';
@@ -11,6 +11,7 @@ import { MdDetails, MdOutlineAddShoppingCart } from 'react-icons/md';
 import Tooltip from '@mui/material/Tooltip';
 import { useCart } from "react-use-cart";
 import Leaflet from '../Leaflet/Leaflet';
+import swal from 'sweetalert';
 
 //resolver problema de necesitar 2 click para agregar el evento en la base de datos
 
@@ -18,31 +19,40 @@ export default function Detail() {
   const {id} = useParams();
   const { addItem } = useCart();
   const user = useSelector(state => state.User);
+  const cartDB = useSelector(state =>state.cartDB);
+  const [flag, setFlag] = useState(false)
+  let temporal = localStorage.getItem("user")
+  let userStorage 
+  if(temporal !== "nada"){
+    userStorage = JSON.parse(temporal)
+  }else{
+    userStorage = ""
+  }
   
   const dispatch =  useDispatch()
   useEffect(()=>{
      dispatch(EventById(id))
+    
     return ()=>{
       dispatch(ClearDetail())
   }
   },[dispatch, id])
   
   useEffect(()=>{
+    if(userStorage !== ""){
+      dispatch(getCartDB(userStorage.id))
+    }
     dispatch(GetVenues())
   },[dispatch])
 
+  useEffect(()=>{
+    if(userStorage !== ""){
+      dispatch(getCartDB(userStorage.id))
+    }
+  },[flag])
   const {Detail} = useSelector((state)=> state)
-  console.log("🚀 ~ file: Detail.jsx ~ line 35 ~ Detail ~ Detail", Detail)
   const {Venues} = useSelector((state => state))
-
-  const [add , setAdd] =useState({
-    idUser: "",
-    idEvent: ""
-  })
   
- 
-  // Detail["price"] = 0;
- 
   let date = ''
   let time = ''
   if(Detail){
@@ -56,52 +66,50 @@ export default function Detail() {
   }
 
   //tiene que llegar desde DB de esta misma forma con todos los datos
-
   const handleClick = async (data) => {
-    // if(user[0]){
-    //   await setAdd({
-    //     idUser: user[0].id,
-    //     idEvent: data.id,
-    //     nombre: data.name,
-    //     schedule: data.schedule
-    //   })
-    //   addItem(data)
-    //  dispatch(addCartDB(add))
-    // }else{
-    //   addItem(data)
-    // }
-
   let temp;
+  let estado;
     switch(data){
       case "general":
       temp = {
-          idUser:user[0].id,
-          idEvent:Detail.id,
-          nombre:Detail.name,
-          schedule:Detail.schedule,
-          variant: "generalPrice",
-          price:Detail.stock.generalPrice,
-          performerImage: Detail.performerImage
-        }
+        idEvent:Detail.id,
+        nombre:Detail.name,
+        schedule:Detail.schedule,
+        variant: "generalPrice",
+        price:Detail.stock.generalPrice,
+        performerImage: Detail.performerImage
+      }
+      if(!userStorage){
         addItem({...temp,id:`${Detail.id}general`})
-        dispatch(addCartDB(temp))
+      }else{
+        estado = cartDB.find(e => e.idEvent === Detail.id && e.variant === temp.variant)
+        if(!estado){
+          dispatch(addCartDB({...temp, idUser:userStorage.id}))
+        }
+        setFlag(!flag)
+      }
         return;
     case "generallateral":
       temp = {
-          idUser:user[0].id,
           idEvent:Detail.id,
           nombre:Detail.name,
           schedule:Detail.schedule,
           variant: "generalLateralPrice",
           price:Detail.stock.generalLateralPrice,
           performerImage: Detail.performerImage
+        } 
+        if(!userStorage){
+          addItem({...temp,id:`${Detail.id}generallateral`})
+        }else{
+          estado = cartDB.find(e => e.idEvent === Detail.id && e.variant === temp.variant)
+          if(!estado){
+            dispatch(addCartDB({...temp, idUser:userStorage.id}))
+          }
+          setFlag(!flag)
         }
-        addItem({...temp,id:`${Detail.id}generallateral`})
-        dispatch(addCartDB(temp))
         return;
     case "palco":
       temp = {
-          idUser:user[0].id,
           idEvent:Detail.id,
           nombre:Detail.name,
           schedule:Detail.schedule,
@@ -109,12 +117,18 @@ export default function Detail() {
           price:Detail.stock.palcoPrice,
           performerImage: Detail.performerImage
         }
-        addItem({...temp,id:`${Detail.id}palco`})
-        dispatch(addCartDB(temp))
+        if(!userStorage){
+          addItem({...temp,id:`${Detail.id}palco`})
+        }else{
+          estado = cartDB.find(e => e.idEvent === Detail.id && e.variant === temp.variant)
+          if(!estado){
+            dispatch(addCartDB({...temp, idUser:userStorage.id}))
+          }
+          setFlag(!flag)
+        }
         return;
     case "streaming":
           temp = {
-              idUser:user[0].id,
               idEvent:Detail.id,
               nombre:Detail.name,
               schedule:Detail.schedule,
@@ -122,12 +136,18 @@ export default function Detail() {
               price:Detail.stock.streamingPrice,
               performerImage: Detail.performerImage
             }
-            addItem({...temp,id:`${Detail.id}streaming`})
-            dispatch(addCartDB(temp))
+            if(!userStorage){
+              addItem({...temp,id:`${Detail.id}streaming`})
+            }else{
+              estado = cartDB.find(e => e.idEvent === Detail.id && e.variant === temp.variant)
+              if(!estado){
+                dispatch(addCartDB({...temp, idUser:userStorage.id}))
+              }
+              setFlag(!flag)
+            }
             return;
     case "vip":
               temp = {
-                  idUser:user[0].id,
                   idEvent:Detail.id,
                   nombre:Detail.name,
                   schedule:Detail.schedule,
@@ -135,18 +155,25 @@ export default function Detail() {
                   price:Detail.stock.vipPrice,
                   performerImage: Detail.performerImage
                 }
-                addItem({...temp,id:`${Detail.id}generallateral`})
-                dispatch(addCartDB(temp))
+                if(!userStorage){
+                  addItem({...temp,id:`${Detail.id}vip`})
+                }else{
+                  estado = cartDB.find(e => e.idEvent === Detail.id && e.variant === temp.variant)
+                  if(!estado){
+                    dispatch(addCartDB({...temp, idUser:userStorage.id}))
+                  }
+                  setFlag(!flag)
+                }
                 return;
     default:
       return;
     }
     
   }
-  let coord = ''
+ let coord = ''
   
 
-  coord = prueba? prueba.map : '-34.545306 -58.449775'
+coord = prueba? prueba.map : '-34.545306 -58.449775'
  
 
   return (
@@ -154,7 +181,7 @@ export default function Detail() {
       <NavBar/>
         <div className={style.card}>
           <br />
-          {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3286.3259476513035!2d-58.451963585088734!3d-34.545301761915844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb43ae6018ddf%3A0x3d7f60a75bfa308a!2sEstadio%20Monumental%20Antonio%20Vespucio%20Liberti!5e0!3m2!1ses-419!2sar!4v1656420898046!5m2!1ses-419!2sar" width="300" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> */}
+        
           <img src = {Detail.placeImage} alt={Detail.name} className={style.imgPlace}/>
         <div className={style.midcontainer}>
           <div>
@@ -170,37 +197,44 @@ export default function Detail() {
           </div>
         </div>
         {/**Agregar condicional en el caso de que stock este en 0 */}
+        {console.log(Detail)}
         {Detail.stock?<div className={style.containerCarrito}>
-            <div className={style.detailTicket}>
-                <div>
-                  <h3>Tipo de entrada: General</h3><h3>${Detail.stock.generalPrice}</h3><div><MdOutlineAddShoppingCart onClick={() => handleClick("general")} className={style.addicon}/></div> 
-                  <h6>disponibles {Detail.stock.stockGeneral}</h6>
-                  </div>
-            </div>
-            <div className={style.detailTicket}>
-                <div>
-                  <h3>Tipo de entrada: General Lateral</h3><h3>${Detail.stock.generalLateralPrice}</h3><div> <MdOutlineAddShoppingCart onClick={() => handleClick("generallateral")} className={style.addicon}/></div> 
-                  <h6>disponibles {Detail.stock.stockGeneralLateral}</h6>
-                  </div>
-            </div>
-            <div className={style.detailTicket}>
-                <div>
-                  <h3>Tipo de entrada: Palco</h3><h3>${Detail.stock.palcoPrice}</h3><div> <MdOutlineAddShoppingCart onClick={() => handleClick("palco")} className={style.addicon}/></div> 
-                  <h6>disponibles {Detail.stock.stockPalco}</h6>
-                  </div>
-            </div>
-            <div className={style.detailTicket}>
-                <div>
-                  <h3>Tipo de entrada: Streaming</h3><h3>${Detail.stock.streamingPrice}</h3><div> <MdOutlineAddShoppingCart onClick={() => handleClick("streaming")} className={style.addicon}/></div> 
-                  <h6>disponibles {Detail.stock.stockStreaming}</h6>
-                  </div>
-            </div>
-            <div className={style.detailTicket}>
-                <div>
-                  <h3>Tipo de entrada: Vip</h3><h3>${Detail.stock.vipPrice}</h3><div > <MdOutlineAddShoppingCart onClick={() => handleClick("vip")} className={style.addicon}/></div> 
-                  <h6>disponibles {Detail.stock.stockkVIP}</h6>
-                  </div>
-            </div>
+            {Detail.stock?.stockGeneral?<div className={style.detailTicket}>
+            <div className={style.buttonadditem}>
+                  <div>General ${Detail.stock.generalPrice}</div> 
+                  <div>disponibles {Detail.stock.stockGeneral}</div>
+                      </div>
+                  <MdOutlineAddShoppingCart onClick={() => {handleClick("general"); swal('Item agregado al carrito')}} className={style.addicon}/>
+                  
+            </div>:null}
+           {Detail.stock?.stockGeneralLateral?<div className={style.detailTicket}>
+               <div className={style.buttonadditem}>
+                  <div>General Lat. ${Detail.stock.generalLateralPrice} </div> 
+                  <div>disponibles {Detail.stock.stockGeneralLateral}</div>
+                </div>
+                  <MdOutlineAddShoppingCart onClick={() => {handleClick("generallateral"); swal('Item agregado al carrito')}} className={style.addicon}/>
+            </div>: null}
+            {Detail.stock?.stockPalco?<div className={style.detailTicket}>
+                <div className={style.buttonadditem}>
+                  <div>Palco ${Detail.stock.palcoPrice} </div> 
+                 <div>disponibles {Detail.stock.stockPalco}</div>
+                </div>
+                  <MdOutlineAddShoppingCart onClick={() =>{handleClick("palco"); swal('Item agregado al carrito')}} className={style.addicon}/>
+            </div>:null}
+            {Detail.stock?.stockStreaming?<div className={style.detailTicket}>
+                <div className={style.buttonadditem}>
+                  <div>Streaming ${Detail.stock.streamingPrice} </div> 
+                  <div>disponibles {Detail.stock.stockStreaming}</div>
+                </div>
+                  <MdOutlineAddShoppingCart onClick={() => {handleClick("streaming"); swal('Item agregado al carrito')}} className={style.addicon}/>
+            </div>:null}
+            {Detail.stock?.stockkVIP?<div className={style.detailTicket}>
+              <div className={style.buttonadditem}> 
+                <div>Vip ${Detail.stock.vipPrice} </div> 
+                <div>disponibles {Detail.stock.stockkVIP}</div>
+              </div>
+                <MdOutlineAddShoppingCart onClick={() => {handleClick("vip"); swal('Item agregado al carrito')}} className={style.addicon}/>
+            </div>:null}
         </div>:null}
         
           <Leaflet  data={coord} />

@@ -79,6 +79,9 @@ const Events = sequelize.define(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    streaming: {
+      type: DataTypes.STRING,
+    },
   },
   { timestamps: false }
 );

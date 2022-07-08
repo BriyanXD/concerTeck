@@ -35,12 +35,9 @@ export function searchEvent(name) {
 }
 
 export function EventById(id) {
-  console.log("🚀 ~ file: actions.js ~ line 38 ~ EventById ~ id", id)
   return async function (dispatch) {
     try {
       const event = await axios.get(`${url}/api/events?id=${id}`);
-      console.log("🚀 ~ file: actions.js ~ line 42 ~ event", event.data)
-      // console.log(id)
       return dispatch({
         type: "GET_EVENT_DETAIL",
         payload: event.data,
@@ -137,7 +134,7 @@ export function register(value) {
     try {
       const register = await axios.post(`${url}/api/user`, value);
       localStorage.setItem("token", register.data[2].token);
-      // console.log(register.data[2].token, "datos de usuario")
+      localStorage.setItem("user", JSON.stringify(register.data[1].user[0]));
       return dispatch({
         type: "LOGIN_USER",
         payload: register.data[1],
@@ -253,19 +250,66 @@ export function AddToBasket(payload) {
   };
 }
 
-export function AddToFav(payload) {
-  // console.log('payload',payload)
-  return {
-    type: "ADD_TO_FAV",
-    payload: payload,
+export function getLikes(idUser) {
+  return async function (dispatch) {
+    try {
+      const allLikes = await axios.get(`${url}/api/like?idUser=${idUser}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return dispatch({
+        type: "GET_ALL_LIKES",
+        payload: allLikes.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 }
 
-export function RemoveFavorite(id) {
-  console.log("payload id:", id);
-  return {
-    type: "REMOVE_FAVORITE",
-    payload: id,
+export function postLikes(idEvent, idUser, allLikes) {
+  return async function (dispatch) {
+    const findLikes = allLikes.find((el) => el.idEvent === idEvent);
+    if (findLikes) {
+      console.log("Ya existe");
+      return;
+    }
+    try {
+      const getLikes = await axios.post(
+        `${url}/api/like`,
+        { idEvent: idEvent, idUser: idUser },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      return dispatch({
+        type: "POST_LIKES",
+        payload: getLikes.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+
+export function deleteLikes(id) {
+  return async function (dispatch) {
+    try {
+      const deleteLikes = await axios.delete(`${url}/api/like?id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return dispatch({
+        type: "DELETE_LIKES",
+        payload: deleteLikes,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 }
 
@@ -332,11 +376,18 @@ export function findUser(allusers, id) {
     payload: userSaved,
   };
 }
-export function findEvent(allEvents, id) {
-  const eventSave = allEvents?.find((event) => event.id === id);
+export function findEvent(allTickets, id) {
+  const eventSave = allTickets?.find((event) => event.id === id);
   return {
     type: "FIND_EVENT",
     payload: eventSave,
+  };
+}
+export function findTicket(allTickets, id) {
+  const ticketSave = allTickets?.find((event) => event.id === id);
+  return {
+    type: "FIND_TICKET",
+    payload: ticketSave,
   };
 }
 
@@ -361,7 +412,6 @@ export function deleteUser(id) {
 export function deleteEvents(id) {
   return async function (dispatch) {
     try {
-      console.log(id);
       const eventDeleted = await axios.delete(`${url}/api/events?id=${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -461,9 +511,16 @@ export function activeModalUsersAdminPanel(booleano) {
     payload: booleano,
   };
 }
+
 export function activeModalUsersPermisedAdminPanel(booleano) {
   return {
     type: "MODAL_USERS_PERMISED_ADMIN_PANEL",
+    payload: booleano,
+  };
+}
+export function activeModalOrdersAdminPanel(booleano) {
+  return {
+    type: "MODAL_ORDERS_ADMIN_PANEL",
     payload: booleano,
   };
 }
@@ -514,10 +571,14 @@ export function getCartDB(idUser) {
 export function deleteCart(id) {
   return async function (dispatch) {
     try {
-      await axios.delete(`${url}/api/cart?id=${id}`);
+      const data = await axios.delete(`${url}/api/cart?id=${id}`);
+      console.log(
+        "🚀 ~ file: actions.js ~ line 547 ~ data",
+        data.data.ShoppingSave
+      );
       return dispatch({
         type: "DELETE_CART",
-        payload: id,
+        payload: data.data,
       });
     } catch (error) {
       console.log(error);
@@ -526,11 +587,14 @@ export function deleteCart(id) {
 }
 
 export function putCartDB(value) {
-  console.log("ENTRANDO 111", value);
   return async function (dispatch) {
     try {
-      await axios.put(`${url}/api/cart`, value);
-      console.log("ENTRANDO 2222");
+      const data = await axios.put(`${url}/api/cart`, value);
+      console.log("🚀 ~ file: actions.js ~ line 562 ~ data", data.data);
+      return dispatch({
+        type: "UPDATE_CART",
+        payload: data.data,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -545,7 +609,6 @@ export function getAllBlackList() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(getAllBlackListData.data, "LISTA NEGRA");
       return dispatch({
         type: "GET_ALL_BLACK_LIST",
         payload: getAllBlackListData.data,
@@ -571,6 +634,103 @@ export function deleteUserBlackList(idUser) {
       });
     } catch (error) {
       console.log(error, "DELETE_USER_BLACK_LIST");
+    }
+  };
+}
+export function getAllLikesEventId(idEvent) {
+  return async function (dispatch) {
+    try {
+      const allLikesEventId = await axios.get(
+        `${url}/api/like?idEvent=${idEvent}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      return dispatch({
+        type: "GET_ALL_LIKES_EVENT_ID",
+        payload: allLikesEventId.data,
+      });
+    } catch (error) {
+      console.log(error, "GET_ALL_LIKES_EVENT_ID");
+    }
+  };
+}
+
+export function searchBlackList(name) {
+  return async function (dispatch) {
+    try {
+      const allBlackList = await axios.get(`${url}/api/blackall?name=${name}`,{
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return dispatch({
+        type: "GET_NAME_BY_BLACKLIST",
+        payload: allBlackList.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}      
+
+export function putUrlStreamingEvent(urlStreaming, idEvent) {
+  return async function (dispatch) {
+    try {
+      const putUrlStreaming = await axios.put(
+        `${url}/api/eventurl`,
+        {
+          urlStraming: urlStreaming,
+          idEvent: idEvent,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      return dispatch({
+        type: "PUT_URL_STREAMING_FOR_EVENT",
+        payload: putUrlStreaming.data,
+      });
+    } catch (error) {
+      console.log(error, "PUT_URL_STREAMING_FOR_EVENT");
+    }
+  };
+}
+export function getTicketById(id) {
+  return async function (dispatch) {
+    try {
+      const ticket = await axios.get(`${url}/api/ticket?id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return dispatch({
+        type: "GET_TICKET_BY_ID",
+        payload: ticket.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+export function getAllTickets() {
+  return async function (dispatch) {
+    try {
+      const getAllTickets = await axios.get(`${url}/api/ticket`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return dispatch({
+        type: "GET_ALL_TICKETS",
+        payload: getAllTickets.data,
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
 }

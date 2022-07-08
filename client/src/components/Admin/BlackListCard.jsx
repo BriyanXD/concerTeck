@@ -4,7 +4,7 @@ import {deleteUserBlackList, getAllBlackList} from "../../redux/actions";
 import swal from 'sweetalert'
 import Style from "./UserCard.module.css"
 
-    export default function BlackListCard({id,email,aux}){
+    export default function BlackListCard({id,email,aux,name}){
 
     const dispatch = useDispatch()
    /*  const userDeleted = useSelector((state) => state.userDeleted) */
@@ -19,8 +19,7 @@ async function handlerUnlockClick(){
             text: 'El usuario se elimino con exito',
             icon: 'success',
         })  }else{
-            return swal({
-                title: 'Usuario no eliminado',
+            return swal({ 
                 text: 'El usuario no se elimino',
                 icon: 'error',
                 dangerMode:true
@@ -31,6 +30,7 @@ async function handlerUnlockClick(){
     return(
         <div className={Style.cardEvent}>
             <p className={Style.id}>{id}</p>
+            <p>{name}</p>
             <p className={Style.name}>{email}</p>
             <div className={Style.buttonsCard}>
             <button className={Style.button} onClick={handlerUnlockClick}>Desbloquear</button>

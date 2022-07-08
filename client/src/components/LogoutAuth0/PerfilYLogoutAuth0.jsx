@@ -9,23 +9,25 @@ import { register } from "../../redux/actions";
 export default function PerfilYLogoutAuth0(){
   const dispatch = useDispatch()
   const registro = useSelector((state) => {return state.User})
-  console.log(registro,'prueba')
   const { user, isAuthenticated, logout } = useAuth0();
-    
+  const userdates = JSON.parse(localStorage.getItem("userdates"))
     useEffect(() => {
       findOrRegister()
     },[dispatch])
 
     function findOrRegister(){
+      console.log(user, "USER")
+      console.log(userdates.nickname, "USERSAVE")
       const newUser={
-        username:user.nickname,
-        name:user.name,
-        email:user.email,
+        username: userdates.nickname,
+        name: userdates.name,
+        email: userdates.email,
       }
       dispatch(register(newUser))
     }
     function clearLocalStorageToken(){
-      localStorage.setItem("token"," ")
+      localStorage.setItem("token"," ");
+      localStorage.setItem("user", "nada");
       logout({ returnTo: window.location.origin })
     }
   return (
@@ -34,16 +36,16 @@ export default function PerfilYLogoutAuth0(){
       {registro[0]?.isAdmin===true?
        <Link to={'/perfil/panelAdmin'} style={{ textDecoration: "none", color: "inherit" }}>
          <div className={style.box}>
-            <img src={user?.picture} alt={user.name} className={style.img}/>
-       <p className={style.p}>{user.name}</p>
+            <img src={userdates?.picture} alt={userdates.name} className={style.img}/>
+       <p className={style.p}>{userdates.name}</p>
        </div> 
         </Link> 
       :
       register?isAuthenticated ?
           <Link to={`/perfil/${registro[0]?.id}`} style={{ textDecoration: "none", color: "inherit" }}>
         <div className={style.box}>
-            <img src={user?.picture} alt={user.name} className={style.img}/>
-       <p className={style.p}>{user.name}</p>
+            <img src={userdates?.picture} alt={userdates.name} className={style.img}/>
+       <p className={style.p}>{userdates.name}</p>
        </div> 
        </Link> 
       /*  :  registro?.isAdmin===true ?

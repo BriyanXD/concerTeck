@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useCart } from "react-use-cart";
 import { useSelector, useDispatch } from "react-redux";
-import { getEvents } from "../../redux/actions";
+import { getEvents, getCartDB, deleteCart, putCartDB } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 import Style from "./Cart.module.css";
@@ -13,7 +13,7 @@ export default function Cart() {
 
   //*Auth0 datos de usuario logeado y popUp de logeo
   const { user, loginWithPopup } = useAuth0();
-
+  // const [flag, setFlag] = useState(false);
   //*datos de carrito
   const {
     isEmpty,
@@ -25,53 +25,91 @@ export default function Cart() {
     updateItem,
   } = useCart();
   
-  //*Trae todos los eventos
-  const { AllEvents } = useSelector((state) => state);
-  let events = [];
+  let temporal = localStorage.getItem("user");
 
-  //*Llama a todos los eventos
+  let userStorage 
+  if(temporal !== "nada"){
+    userStorage = JSON.parse(temporal)
+  }else{
+    userStorage = ""
+  }
+
+  const {cartDB} = useSelector(state =>state);
+
   useEffect(() => {
     dispatch(getEvents());
+    if(userStorage !== ""){
+      dispatch(getCartDB(userStorage.id))
+    }
   }, []);
 
-  //*Items de localStorage recorre todos los eventos
-  items.forEach((el) => {
-    AllEvents.forEach((e) => {
-      if (e.id === el.id) return events.push(e);
-    });
-  });
+  // useEffect(()=>{
+  //   if(userStorage !== ""){
+  //   dispatch(getCartDB(userStorage.id))
+  //   }
+  // },[flag])
 
-  //*isEmpty carrito vacio localstorage
-  if (isEmpty)
-    return <p className={Style.carritoVacio}>Sin eventos en el carrito</p>;
+  let ambos= [];
+  if(userStorage !== ""){
+    let data = [...cartDB]
+    ambos = data.sort((a,b) => {
+      return (a.variant - b.variant)
+    })
+   }else{
+     ambos= [...items]
+   }
+
+   let cantidadEventos= 0;
+   if(userStorage !== ""){
+     cantidadEventos = cartDB.length
+    }else{
+     cantidadEventos = totalUniqueItems
+    }
+
+  if (userStorage !== "" && cartDB.length === 0){
+    return <p className={Style.carritoVacio}>Sin eventos en el carrito </p>;
+  }else if(userStorage === "" && isEmpty){
+    return <p className={Style.carritoVacio}>Sin eventos en el carrito </p>;
+  }
+
+ const handleDelete = async (id) => {
+  if(userStorage !== ""){
+  await dispatch(deleteCart(id))
+    // setFlag(!flag)
+  }else{
+    removeItem(id)
+  }
+ }
+
+ const handleUpdate = async (item, operador) => {
+  if(userStorage !== ""){
+    if(operador === "-"){
+     await dispatch(putCartDB({id:item.id, quantity:item.quantity- 1}))
+      // setFlag(!flag)
+    }else{
+      await dispatch(putCartDB({id:item.id, quantity:item.quantity+ 1}))
+      // setFlag(!flag)
+    }
+  }else{
+    if(operador === "-"){
+      updateItemQuantity(item.id, item.quantity - 1)
+    }else{
+      updateItemQuantity(item.id, item.quantity + 1)
+    }
+  }
+}
+
+let totalTodos;
+if(userStorage !== ""){
+  totalTodos = cartDB.map(item => item.itemTotal).reduce((prev, curr) => prev + curr, 0);
+ }else{
+  totalTodos = cartTotal
+ }
   return (
     <div className={Style.containerGeneral}>
-      <div>Carrito ({totalUniqueItems})</div>
-      {/* {events?.map((el) => {
-        function handleChange(e) {
-          updateItem(el.id, { variant: e.target.value });
-          updateItem(el.id, { price: el.stock[e.target.value] });
-        }
-
-        const date = el.schedule.split("T")[0];
-        const time =
-          el.schedule.split("T")[1].split(":")[0] +
-          ":" +
-          el.schedule.split("T")[1].split(":")[1];
-        return (
-          <div className={Style.containerDetail}>
-            <div>{el.name}</div>
-            <div className={Style.text}>{date}</div>
-            <div className={Style.text}>{time}</div>
-            <div className={Style.containerImage}>
-             <img className={Style.image} src={el.performerImage} alt={el.name} />
-            </div>
-          </div>
-        );
-      })} */}
+      <h3>Carrito ({cantidadEventos})</h3>
       <ul>
-    
-        {items.map((item) => (
+        {ambos.map((item) => (
           
           <li key={item.id} className={Style.items}>
             <div>
@@ -106,7 +144,7 @@ export default function Cart() {
               className={Style.btn}
               onClick={() =>
                 item.quantity > 1
-                  ? updateItemQuantity(item.id, item.quantity - 1)
+                  ? handleUpdate(item, "-")
                   : null
               }
             >
@@ -114,11 +152,11 @@ export default function Cart() {
             </button>
             <button
               className={Style.btn}
-              onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
+              onClick={() => handleUpdate(item, "+")}
             >
               +
             </button>
-            <button className={Style.btn} onClick={() => removeItem(item.id)}>
+            <button className={Style.btn} onClick={() => handleDelete(item.id)}>
               &times;
             </button>
             </div>
@@ -127,7 +165,7 @@ export default function Cart() {
         ))}
       </ul>
         <div>
-        Total final: ${cartTotal} ARS.
+        Total final: ${totalTodos} ARS.
           </div>
         <button
           className={Style.btncomprar}
@@ -135,7 +173,7 @@ export default function Cart() {
             !user ? loginWithPopup() : alert("Pasarela de pagos")
           }
         >
-          Comprar Todos
+          Comprar todo
         </button>
       {/* <button className={Style.btncomprar} onClick={() => navigate("/")}>
         Volver
@@ -143,3 +181,4 @@ export default function Cart() {
     </div>
   );
 }
+

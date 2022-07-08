@@ -28,6 +28,7 @@ const initialState = {
     allUsers: [],
     tdosEvents: [],
     allBlackList: [],
+    blackListByName: [],
     userSaveBlackList: "",
     // UserByName:[],
     UserByUserName: [],
@@ -35,9 +36,15 @@ const initialState = {
     allSolicits: [],
     modalEvent: false,
     modalUser: false,
+    modalOrder: false,
     modalUserPermised: false,
+    allLikesEventId: [],
+    putUrlStreaming: "",
+    allTickets: [],
+    saveFindTicket: "",
   },
   token: "",
+  ticket: {},
 };
 
 function reducers(state = initialState, { type, payload }) {
@@ -73,7 +80,7 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         Basket: [...state.Basket, payload],
       };
-    case "ADD_TO_FAV":
+    case "POST_LIKES":
       if (state.Likes.find((l) => l.id === payload.id)) {
         return {
           ...state,
@@ -85,14 +92,16 @@ function reducers(state = initialState, { type, payload }) {
           Likes: [...state.Likes, payload],
         };
       }
-    case "REMOVE_FAVORITE":
-      // console.log('likes:', state.Likes)
-      // console.log('payload:', payload)
+    case "DELETE_LIKES":
       return {
         ...state,
         Likes: state.Likes.filter((f) => f.id !== payload.id),
       };
-
+    case "GET_ALL_LIKES":
+      return {
+        ...state,
+        Likes: payload,
+      };
     case "GET_EVENT_BY_NAME": {
       const bigEvents = payload.filter((e) => e.venue.isBigEvent === true);
       const smallEvents = payload.filter((e) => e.venue.isBigEvent === false);
@@ -342,10 +351,17 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         cartDB: payload,
       };
+    case "UPDATE_CART":
+      return {
+        ...state,
+        cartDB: state.cartDB.map((e) => {
+          return e.id === payload.id ? payload : e;
+        }),
+      };
     case "DELETE_CART":
       return {
         ...state,
-        cartDB: state.cartDB.filter((e) => e.id !== payload),
+        cartDB: state.cartDB.filter((e) => e.id !== payload.ShoppingSave.id),
       };
     case "FIND_EVENT_BY_NAME":
       return {
@@ -369,6 +385,63 @@ function reducers(state = initialState, { type, payload }) {
         stateAdminPanel: {
           ...state.stateAdminPanel,
           userSaveBlackList: payload,
+        },
+      };
+    //GET_ALL_LIKES_EVENT_ID
+    case "GET_ALL_LIKES_EVENT_ID":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allLikesEventId: payload,
+        },
+      };
+    case "PUT_URL_STREAMING_FOR_EVENT":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          putUrlStreaming: payload,
+        },
+      };
+    case "GET_TICKET_BY_ID":
+      return {
+        ...state,
+        ticket: payload,
+      };
+    //GET_ALL_TICKETS
+    case "GET_ALL_TICKETS":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allTickets: payload,
+        },
+      };
+    //MODAL_ORDERS_ADMIN_PANEL
+    case "MODAL_ORDERS_ADMIN_PANEL":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          modalOrder: payload,
+        },
+      };
+    //FIND_TICKET
+    case "FIND_TICKET":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          saveFindTicket: payload,
+        },
+      };
+    case "GET_NAME_BY_BLACKLIST":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          blackListByName: payload,
         },
       };
     default:
