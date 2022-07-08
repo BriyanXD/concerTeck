@@ -110,7 +110,7 @@ export default function RegisterEvent(){
             console.log("Se Encontro El Venue Relacionado", foundVenue)
             return 
         }
-        if(e.target.name === "schedule"){
+         else if(e.target.name === "schedule"){
             //await setDateTime(e.taget.value);
             await setEvent({
                 ...event,
@@ -118,49 +118,50 @@ export default function RegisterEvent(){
             })
             return 
         }
-        if(e.target.name === "name"){
+        else if(e.target.name === "name"){
             await setEvent({
                 ...event,
                 name: e.target.value
             })
             return 
         }
-        if(e.target.name === "artist"){
+        else if(e.target.name === "artist"){
             await setEvent({
                 ...event,
                 artist: e.target.value
             })
             return 
         }
-        if(e.target.name === "description"){
+        else if(e.target.name === "description"){
             await setEvent({
                 ...event,
                 description: e.target.value
             })
             return 
         }
-        if(event.name !== "" && event.artist !== "" && event.schedule !== ""){
-            await setStock({
-                ...stock,
-                id: event.name + event.artist + event.schedule
-            });
-        }
-        if(stock.id !== ""){
-            await setEvent({
-                ...event,
-                stockId: stock.id
-            });
-        }
         await setEvent({
             ...event,
             schedule: dateTime,
             [e.target.name]: e.target.value
         })
+            // if(event.name !== "" && event.artist !== "" && event.schedule !== ""){
+            //     await setStock({
+            //         ...stock,
+            //         id: event.name + event.artist + event.schedule
+            //     });
+            // }
+            // if(stock.id !== ""){
+            //     await setEvent({
+            //         ...event,
+            //         stockId: stock.id
+            //     });
+            // }
     };
 
     const handleStock = async(e) =>{
         await setStock({
             ...stock,
+            id: event.name + event.artist + event.schedule,
             [e.target.name]: Number(e.target.value)
         });
         if(stock.id !== ""){
@@ -236,8 +237,15 @@ export default function RegisterEvent(){
         const sameTime = Allevents.find(e => e.schedule === newEvent.schedule);
         const sameArtist = Allevents.find(e => e.artist === newEvent.artist);
         if((sameVenue && sameTime) && (sameVenue.schedule === sameTime.schedule) && (sameVenue.venueId === sameTime)){
-            alert("Ya existe otro evento en el mismo lugar a la misma Fecha y Hora")
+            alert("Ya existe otro evento ocupando el mismo lugar a la misma fecha y hora")
             return false
+        }
+        else if((sameTime && sameArtist) && (sameTime.artist === sameArtist.artist) && (sameTime.schedule === sameArtist.schedule) && (sameTime.venueId !== sameArtist.venueId)){
+            alert("Ya existe otro evento en otro lugar donde el artista deba cantar en la misma fecha y hora")
+            return false
+        }
+        else {
+            return true
         }
     }
 
@@ -254,6 +262,7 @@ export default function RegisterEvent(){
         errors.venueId !== "" ||
         errors.stockId !== "" ){
             alert("Para poder registrar el Evento deben solucionarse los errores");
+            console.log("ERRORES EVENTO", errors)
         }
         if ( event.name === "" ||
         event.artist === "" ||
@@ -277,26 +286,25 @@ export default function RegisterEvent(){
             });
             return
         }
-        // const Control = ControlDoNotRepeat(event)
-        // if(Control === true){
-
-        // }
-        await handleAddStock(e);
-        await dispatch(CreateEvent(event));
-        alert("Evento creado exitosamente");
-        setEvent({
-            name: "",
-            artist: "",
-            genreId: "",
-            schedule: "",
-            performerImage: "",
-            placeImage: "",
-            description: "",
-            venueId: "",
-            stockId: "",
-        });
-        setFoundVenue(null);
-        navigate("/")
+        const Control = ControlDoNotRepeat(event)
+        if(Control){
+            await handleAddStock(e);
+            await dispatch(CreateEvent(event));
+            alert("Evento creado exitosamente");
+            setEvent({
+                name: "",
+                artist: "",
+                genreId: "",
+                schedule: "",
+                performerImage: "",
+                placeImage: "",
+                description: "",
+                venueId: "",
+                stockId: "",
+            });
+            setFoundVenue(null);
+            navigate("/")
+        }
     };
 
     const handleBlur = (e) => {
