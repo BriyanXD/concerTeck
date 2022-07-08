@@ -115,7 +115,7 @@ routes.post("/venues", verifyToken, isAdmin, postVenues);
 
 routes.get("/ticketstock", verifyToken, getTicketStock); 
 //routes.get("/ticketstock", getTicketStock); //ruta de prueba
-routes.post("/ticketstock", postTicketStock);
+routes.post("/ticketstock", postTicketStock); //reuta de prueba
 
 
 routes.post("/login", LoginUser);
