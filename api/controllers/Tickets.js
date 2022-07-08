@@ -3,10 +3,19 @@ const User = require("../models/User");
 const Events = require("../models/Events");
 
 async function getTicketByID(req, res) {
+  const { name } = req.query;
   const { id } = req.query;
   const { userId } = req.body;
   const allTickets = await Ticket.findAll();
   try {
+    if (name) {
+      const nameUserOrder = allTickets.filter((n) =>
+        n.userName.toLowerCase().includes(name.toLowerCase())
+      )      
+      if (nameUserOrder.length >= 1) {
+        return res.send(nameUserOrder);
+      } 
+    }
     if (id) {
       const findTicketForID = await Ticket.findByPk(id, {
         include: [
@@ -39,8 +48,8 @@ async function postTicket(req, res) {
         price: price,
         eventId: eventId,
         userId: userId,
-        eventName: saveEvent.id || "undefined",
-        userName: saveUser.id || "undefined",
+        eventName: saveEvent.name || "undefined",
+        userName: saveUser.name || "undefined",
       });
       res.json(newTicket);
     }
