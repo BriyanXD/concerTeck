@@ -23,6 +23,9 @@ const Ticket = sequelize.define(
     userName: {
       type: DataTypes.STRING,
     },
+    email: {
+      type: DataTypes.STRING,
+    },
     eventName: {
       type: DataTypes.STRING,
     },
@@ -30,9 +33,8 @@ const Ticket = sequelize.define(
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    quantity:{
+    quantity: {
       type: DataTypes.INTEGER,
-      allowNull: false,
     },
   },
   { timestamps: false }
