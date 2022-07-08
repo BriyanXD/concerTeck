@@ -14,7 +14,7 @@ import DateTimePicker from 'react-datetime-picker';
 import Footer from '../Footer/Footer';
 import RegisterGenre from '../RegisterGenre/RegisterGenre';
 import RegisterVenue from '../RegisterVenue/RegisterVenue';
-
+//Working
 
 export default function RegisterEvent(){
     const dispatch = useDispatch();
@@ -23,6 +23,7 @@ export default function RegisterEvent(){
     const [activeGenre, setActiveGenre] = useState(false);
     const [activeVenue, setActiveVenue] = useState(false);
     //const [activeStock, setActiveStock] = useState(false);
+    const [repitedEvent, setRepitedEvent] = useState("");
 
     const [activeStockGeneral , setActiveStockGeneral] = useState({
         stock: "",
@@ -115,21 +116,33 @@ export default function RegisterEvent(){
             await setEvent({
                 ...event,
                 schedule: dateTime
-            })
+            });
+            await setStock({
+                ...stock,
+                id: event.name + event.artist + event.schedule
+            });
             return 
         }
         else if(e.target.name === "name"){
             await setEvent({
                 ...event,
                 name: e.target.value
-            })
+            });
+            await setStock({
+                ...stock,
+                id: event.name + event.artist + event.schedule
+            });
             return 
         }
         else if(e.target.name === "artist"){
             await setEvent({
                 ...event,
                 artist: e.target.value
-            })
+            });
+            await setStock({
+                ...stock,
+                id: event.name + event.artist + event.schedule
+            });
             return 
         }
         else if(e.target.name === "description"){
@@ -143,7 +156,11 @@ export default function RegisterEvent(){
             ...event,
             schedule: dateTime,
             [e.target.name]: e.target.value
-        })
+        });
+        await setStock({
+            ...stock,
+            id: event.name + event.artist + event.schedule
+        });
             // if(event.name !== "" && event.artist !== "" && event.schedule !== ""){
             //     await setStock({
             //         ...stock,
@@ -237,15 +254,18 @@ export default function RegisterEvent(){
         const sameTime = Allevents.find(e => e.schedule === newEvent.schedule);
         const sameArtist = Allevents.find(e => e.artist === newEvent.artist);
         if((sameVenue && sameTime) && (sameVenue.schedule === sameTime.schedule) && (sameVenue.venueId === sameTime)){
-            alert("Ya existe otro evento ocupando el mismo lugar a la misma fecha y hora")
-            return false
+            //alert("Ya existe otro evento ocupando el mismo lugar a la misma fecha y hora")
+            setRepitedEvent("Ya existe otro evento ocupando el mismo lugar a la misma fecha y hora")
+            return 
         }
         else if((sameTime && sameArtist) && (sameTime.artist === sameArtist.artist) && (sameTime.schedule === sameArtist.schedule) && (sameTime.venueId !== sameArtist.venueId)){
-            alert("Ya existe otro evento en otro lugar donde el artista deba cantar en la misma fecha y hora")
-            return false
+            //alert("Ya existe otro evento en otro lugar donde el artista deba cantar en la misma fecha y hora")
+            setRepitedEvent("Ya existe otro evento en otro lugar donde el artista deba cantar en la misma fecha y hora")
+            return 
         }
         else {
-            return true
+            setRepitedEvent("")
+            return 
         }
     }
 
@@ -286,8 +306,8 @@ export default function RegisterEvent(){
             });
             return
         }
-        const Control = ControlDoNotRepeat(event)
-        if(Control){
+        ControlDoNotRepeat(event);
+        if(repitedEvent === ""){
             await handleAddStock(e);
             await dispatch(CreateEvent(event));
             alert("Evento creado exitosamente");
@@ -304,6 +324,9 @@ export default function RegisterEvent(){
             });
             setFoundVenue(null);
             navigate("/")
+        }
+        else {
+            return alert(`${repitedEvent}`)
         }
     };
 
