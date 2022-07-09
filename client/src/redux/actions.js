@@ -800,6 +800,20 @@ export function searchEventIDEmails(eventId) {
   };
 }
 
+export function ticketVoucher (id){
+  return async function (dispatch) {
+    try {
+      const tick = axios.post(`http://localhost:3001/api/voucher?${id}`)
+      return dispatch ({
+        type: "TICKET_VOUCHER",
+        payload: tick.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 /* export function getAllSolicits(allevents) {
   return async function (dispatch) {
     try {

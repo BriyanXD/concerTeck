@@ -18,22 +18,6 @@ export default function TicketVoucher(){
     useEffect(()=>{
         dispatch(getTicketById(id))
     },[dispatch, id])
-<<<<<<< HEAD
-    
-    useEffect(() =>{
-        dispatch(GetVenues())
-    },[dispatch])
-    
-    let lugar = ''
-    if(Venues){
-        lugar = Venues.find(e => e.id === ticket.event?.venueId)
-        console.log(lugar,'ACA ESTOY')
-    }
-    let date ='';
-    let time = '';
-    // let prueba ='';
-
-=======
 
     useEffect(() =>{
         dispatch(GetVenues())
@@ -49,7 +33,6 @@ export default function TicketVoucher(){
     let time = '';
     let artista = '';
     
->>>>>>> 942922cf88b2cee61b8c722b456f2678231f6543
     if(ticket){
         date = ticket.event?.schedule !== undefined? ticket.event.schedule.split('T')[0] : null
         // prueba = date? date?.split('-')[2] : null

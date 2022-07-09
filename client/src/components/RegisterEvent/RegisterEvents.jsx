@@ -15,7 +15,7 @@ import Footer from '../Footer/Footer';
 import RegisterGenre from '../RegisterGenre/RegisterGenre';
 import RegisterVenue from '../RegisterVenue/RegisterVenue';
 import swal from 'sweetalert';
-import Form from 'react-bootstrap/Form';
+// import Form from 'react-bootstrap/Form';
 
 
 export default function RegisterEvent(){

@@ -48,6 +48,7 @@ const initialState = {
   },
   token: "",
   ticket: {},
+  Voucher:{},
 };
 
 function reducers(state = initialState, { type, payload }) {
@@ -473,6 +474,11 @@ function reducers(state = initialState, { type, payload }) {
           allEmails: payload,
         },
       };
+    case "TICKET_VOUCHER":
+      return {
+        ...state,
+        Voucher:payload
+      }
 
     default:
       return state;
