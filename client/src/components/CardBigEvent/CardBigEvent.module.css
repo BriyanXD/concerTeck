@@ -34,17 +34,18 @@
 .top{
     
     width: 100%;
-    margin-top: -2rem;
+    margin-top: -2.2vw;
 }
 .topname{
     text-shadow:  1px 1px 10px white;
+    color: #ffff;
     text-align: center;
-    margin-top: -4.5rem;
-    font-size: 1.8rem;
+    margin-top: -5vw;
+    font-size: 2vw;
 }
 .name{
     display: flex;
-    font-size: 1.6rem;
+    font-size: 1.6vw;
     margin-top: 5%;
    align-items: center;
    text-align: center;
@@ -54,5 +55,5 @@
     margin-top: 2%;
     display: flex;
     justify-content: center;
-    font-size: medium;
+    font-size: 1.3vw;
 }

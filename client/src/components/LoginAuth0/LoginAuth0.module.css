@@ -5,8 +5,9 @@
     height: 2vw;
     text-align: center;
     border-radius: 3px;
+    color: #EEEEEE;
     /* margin-bottom: 5px; */
-    font-size: 15px;
+    font-size: 1vw;
     /* margin-right: 35px; */
     border-color: #FF4C29;
     /* margin: 13px; */
@@ -17,7 +18,7 @@
 
 .img{
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 50vw;
+    height: 50vw;
     padding: 10px;
 }
