@@ -59,7 +59,7 @@
     padding-bottom: 3vh;
 }
 
-.inputTicket{
+.inputTicket, .inputPrice{
     width:15%;
     background-color: #dbdada;
     display: flex;
@@ -70,7 +70,21 @@
     font-size: 15px;
     margin-bottom: 1rem;
 }
-.inputPrice{
+
+.inputTicket::-webkit-outer-spin-button,
+.inputTicket::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.inputPrice::-webkit-outer-spin-button,
+.inputPrice::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+/* .inputPrice{
     width:15%;
     background-color: #dbdada;
     display: flex;
@@ -79,7 +93,7 @@
     height: 30px;
     font-size: 15px;
     margin-bottom: 1rem;
-}
+} */
 
 .priceTicket{
     display: flex;
@@ -150,7 +164,8 @@
     justify-content: center;
 }
 .genreLocation{
-    background-color: #FF4C29;
+    /* background-color: #FF4C29; */
+    background-color: var(--color4);
     width: 10vw;
     height: 2.5vw;
     text-align: center;
@@ -162,7 +177,7 @@
 
 
 .btnGenre, .btnLocation{
-    background-color: #FF4C29;
+    background-color: var(--color4);
     width: 10vw;
     height: 2.5vw;
     text-align: center;
@@ -177,6 +192,7 @@
     background-color: #ff3f18;
     transform: translate(-0.05em, -0.05em);
     box-shadow: 0.15em 0.15em;
+    cursor: pointer;
 }
 .btnGenre:active, .btnLocation:active{
     transform: translate(0.05em, 0.05em);
