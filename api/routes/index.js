@@ -101,8 +101,8 @@ routes.put("/producer", verifyToken, isAdmin, putProducer);
 routes.delete("/producer", verifyToken, isAdmin, deleteProducer); */
 
 routes.get("/events", loadEventsAndGetEvents);
-routes.post("/events", postEvents);
-//routes.post("/events", postEvents); //ruta de prueba
+// routes.post("/events", verifyToken, isAdmin, postEvents);
+routes.post("/events", postEvents); //ruta de prueba
 routes.put("/events", verifyToken, isAdmin, putEvents);
 routes.delete("/events", verifyToken, isAdmin, deleteEvent); //isAdmin
 routes.put("/eventurl", verifyToken, isAdmin, putUrlStreaming);
@@ -115,15 +115,15 @@ routes.post("/tickets2", postCheckout)
 // routes.post("/tickect2", getRaro2)
 
 routes.get("/genres", getAllGenres);
-routes.post("/genres", verifyToken, isAdmin, postOneGenre);
-//routes.post("/genres", postOneGenre); //ruta de prueba
+// routes.post("/genres", verifyToken, isAdmin, postOneGenre);
+routes.post("/genres", postOneGenre); //ruta de prueba
 
 routes.get("/venues", getVenues);
-routes.post("/venues", verifyToken, isAdmin, postVenues);
-//routes.post("/venues", postVenues); //ruta de prueba
+// routes.post("/venues", verifyToken, isAdmin, postVenues);
+routes.post("/venues", postVenues); //ruta de prueba
 
-routes.get("/ticketstock", verifyToken, getTicketStock); 
-//routes.get("/ticketstock", getTicketStock); //ruta de prueba
+// routes.get("/ticketstock", verifyToken, getTicketStock); 
+routes.get("/ticketstock", getTicketStock); //ruta de prueba
 routes.post("/ticketstock", postTicketStock); //reuta de prueba
 routes.get("/ticketstock2", getTicketStockByid);
 
