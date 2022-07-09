@@ -41,7 +41,10 @@ const initialState = {
     allLikesEventId: [],
     putUrlStreaming: "",
     allTickets: [],
+    allTiketsByName: [],
     saveFindTicket: "",
+    userBanned: "",
+    allEmails: [],
   },
   token: "",
   ticket: {},
@@ -232,7 +235,7 @@ function reducers(state = initialState, { type, payload }) {
       return {
         ...state,
         Stock: [...state.Stock, payload],
-      }
+      };
     case "VALIDATION_LOGIN":
       return {
         ...state,
@@ -444,6 +447,33 @@ function reducers(state = initialState, { type, payload }) {
           blackListByName: payload,
         },
       };
+    //VERIFY_USER_BANNED
+    case "VERIFY_USER_BANNED":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          userBanned: payload,
+        },
+      };
+    case "GET_NAME_BY_ORDER":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allTiketsByName: payload,
+        },
+      };
+    //GET_ALL_EMAILS_TICKET
+    case "GET_ALL_EMAILS_TICKET":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allEmails: payload,
+        },
+      };
+
     default:
       return state;
   }
