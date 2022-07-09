@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import style from './RegisterEvents.module.css';
-import { CreateEvent, GetGenres, GetVenues, CreateStock } from '../../redux/actions';
+import { CreateEvent, GetGenres, GetVenues, CreateStock, getEvents } from '../../redux/actions';
 import { Link, useNavigate } from "react-router-dom";
 //import { LocalizationProvider } from '@mui/x-date-pickers';
 //import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
@@ -14,6 +14,8 @@ import DateTimePicker from 'react-datetime-picker';
 import Footer from '../Footer/Footer';
 import RegisterGenre from '../RegisterGenre/RegisterGenre';
 import RegisterVenue from '../RegisterVenue/RegisterVenue';
+import swal from 'sweetalert';
+import Form from 'react-bootstrap/Form';
 
 
 export default function RegisterEvent(){
@@ -92,7 +94,8 @@ export default function RegisterEvent(){
 
     useEffect(()=>{
         dispatch(GetGenres());
-        dispatch(GetVenues());  
+        dispatch(GetVenues());
+        dispatch(getEvents())  
     }, [dispatch])
 
     const handleChange = async(e) => {
@@ -108,7 +111,7 @@ export default function RegisterEvent(){
             await setFoundVenue(
                 venues.find(v => v.id === e.target.value)
             );
-            console.log("Se Encontro El Venue Relacionado", foundVenue)
+            console.log("Se Encontró El Venue Relacionado", foundVenue)
             return 
         }
          else if(e.target.name === "schedule"){
@@ -230,7 +233,10 @@ export default function RegisterEvent(){
         console.log("AQUI EL STOCK CREADO", stockCreated);
         if(stockCreated.data[0]){
             //setStockAllOk(true)
-            alert("Stock añadido con exito")
+            swal({
+                text: "Stock añadido con éxito",
+                icon: 'success',
+            })
             setStock({
                 id: "",
                 stockStreaming: 0,
@@ -281,7 +287,12 @@ export default function RegisterEvent(){
         //errors.description !== "" ||
         errors.venueId !== "" ||
         errors.stockId !== "" ){
-            alert("Para poder registrar el Evento deben solucionarse los errores");
+            swal({
+                title: 'No se pudo registrar evento.',
+                text: "Solucione los errores",
+                icon: 'warning',
+                dangerMode:true})
+
             console.log("ERRORES EVENTO", errors)
         }
         if ( event.name === "" ||
@@ -296,7 +307,7 @@ export default function RegisterEvent(){
             setErrors({
                 name: event.name === "" ? "Ingrese el nombre del Evento" : "",
                 artist: event.artist === "" ? "Ingrese el nombre del artista del Evento" : "",
-                genreId: event.genreId === "" ? "Ingrese el genero del Evento" : "",
+                genreId: event.genreId === "" ? "Ingrese el género del Evento" : "",
                 schedule: event.schedule === "" ? "Ingrese la fecha y hora del Evento" : "",
                 //duration: event.duration === "" ? "Ingrese la duracion del Evento" : "",
                 performerImage: event.performerImage === "" ? "Ingrese la imagen del artista" : "",
@@ -310,7 +321,11 @@ export default function RegisterEvent(){
         if(repitedEvent === ""){
             await handleAddStock(e);
             await dispatch(CreateEvent(event));
-            alert("Evento creado exitosamente");
+            swal({
+                text: "Evento creado exitosamente",
+                icon: 'success',
+            })
+
             setEvent({
                 name: "",
                 artist: "",
@@ -326,7 +341,11 @@ export default function RegisterEvent(){
             navigate("/")
         }
         else {
-            return alert(`${repitedEvent}`)
+            swal({
+                title: `${repitedEvent}`,
+                icon: 'warning',
+                dangerMode:true})
+
         }
     };
 
@@ -341,7 +360,7 @@ export default function RegisterEvent(){
             }else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(e.target.value)){
                 setErrors({
                     ...errors,
-                    [e.target.name]: "Ingrese un nombre sin numeros o caracteres especiales"
+                    [e.target.name]: "Ingrese un nombre sin números o caracteres especiales"
                 })
             } else {
                 setErrors({
@@ -360,7 +379,7 @@ export default function RegisterEvent(){
             }else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(e.target.value)){
                 setErrors({
                     ...errors,
-                    [e.target.name]: "Ingrese un nombre sin numeros o caracteres especiales"
+                    [e.target.name]: "Ingrese un nombre sin números o caracteres especiales"
                 })
             } else {
                 setErrors({
@@ -374,7 +393,7 @@ export default function RegisterEvent(){
             if(e.target.value === ""){
                 setErrors({
                     ...errors,
-                    [e.target.name]: "Ingrese el genero del Evento"
+                    [e.target.name]: "Ingrese el género del Evento"
                 })
             } else {
                 setErrors({
@@ -453,13 +472,13 @@ export default function RegisterEvent(){
             else if (!/^[0-9,$]*$/.test(e.target.value)){
                 setActiveStockGeneral({
                     ...activeStockGeneral,
-                    stock: "Ingrese un valor numerico"
+                    stock: "Ingrese un valor numérico"
                 })
             }
             else if(e.target.value > foundVenue.maxStockGeneral){
                 setActiveStockGeneral({
                     ...activeStockGeneral,
-                    stock: `El stock genera NO debe superar las ${foundVenue.maxStockGeneral} entradas`
+                    stock: `El stock general NO debe superar las ${foundVenue.maxStockGeneral} entradas`
                 })
             }
             else {
@@ -480,7 +499,7 @@ export default function RegisterEvent(){
             else if (!/^[0-9,$]*$/.test(e.target.value)){
                 setActiveStockGeneral({
                     ...activeStockGeneral,
-                    price: "Ingrese un valor numerico"
+                    price: "Ingrese un valor numérico"
                 })
             }
             else {
@@ -501,13 +520,13 @@ export default function RegisterEvent(){
             else if (!/^[0-9,$]*$/.test(e.target.value)){
                 setActiveLateralStock({
                     ...activeLateralStock,
-                    stock: "Ingrese un valor numerico"
+                    stock: "Ingrese un valor numérico"
                 })
             }
             else if(e.target.value > foundVenue.maxStockGeneralLateral){
                 setActiveLateralStock({
                     ...activeLateralStock,
-                    stock: `El stock genera NO debe superar las ${foundVenue.maxStockGeneralLateral} entradas`
+                    stock: `El stock general lateral NO debe superar las ${foundVenue.maxStockGeneralLateral} entradas`
                 })
             }
             else {
@@ -528,7 +547,7 @@ export default function RegisterEvent(){
             else if (!/^[0-9,$]*$/.test(e.target.value)){
                 setActiveLateralStock({
                     ...activeLateralStock,
-                    price: "Ingrese un valor numerico"
+                    price: "Ingrese un valor numérico"
                 })
             }
             else {
@@ -549,13 +568,13 @@ export default function RegisterEvent(){
             else if (!/^[0-9,$]*$/.test(e.target.value)){
                 setActivePalcoStock({
                     ...activePalcoStock,
-                    stock: "Ingrese un valor numerico"
+                    stock: "Ingrese un valor numérico"
                 })
             }
             else if(e.target.value > foundVenue.maxStockPalco){
                 setActivePalcoStock({
                     ...activePalcoStock,
-                    stock: `El stock genera NO debe superar las ${foundVenue.maxStockPalco} entradas`
+                    stock: `El stock de Palco NO debe superar las ${foundVenue.maxStockPalco} entradas`
                 })
             }
             else {
@@ -576,7 +595,7 @@ export default function RegisterEvent(){
             else if (!/^[0-9,$]*$/.test(e.target.value)){
                 setActivePalcoStock({
                     ...activePalcoStock,
-                    price: "Ingrese un valor numerico"
+                    price: "Ingrese un valor numérico"
                 })
             }
             else {
@@ -597,13 +616,13 @@ export default function RegisterEvent(){
             else if (!/^[0-9,$]*$/.test(e.target.value)){
                 setActiveStreamingStock({
                     ...activeStreamingStock,
-                    stock: "Ingrese un valor numerico"
+                    stock: "Ingrese un valor numérico"
                 })
             }
             else if(e.target.value > foundVenue.maxStockStreaming){
                 setActiveStreamingStock({
                     ...activeStreamingStock,
-                    stock: `El stock genera NO debe superar las ${foundVenue.maxStockStreaming} entradas`
+                    stock: `El stockde Streaming NO debe superar las ${foundVenue.maxStockStreaming} entradas`
                 })
             }
             else {
@@ -624,7 +643,7 @@ export default function RegisterEvent(){
             else if (!/^[0-9,$]*$/.test(e.target.value)){
                 setActiveStreamingStock({
                     ...activeStreamingStock,
-                    price: "Ingrese un valor numerico"
+                    price: "Ingrese un valor numérico"
                 })
             }
             else {
@@ -645,13 +664,13 @@ export default function RegisterEvent(){
             else if (!/^[0-9,$]*$/.test(e.target.value)){
                 setActiveVIPStock({
                     ...activeVIPStock,
-                    stock: "Ingrese un valor numerico"
+                    stock: "Ingrese un valor numérico"
                 })
             }
             else if(e.target.value > foundVenue.maxStockVIP){
                 setActiveVIPStock({
                     ...activeVIPStock,
-                    stock: `El stock genera NO debe superar las ${foundVenue.maxStockVIP} entradas`
+                    stock: `El stock VIP NO debe superar las ${foundVenue.maxStockVIP} entradas`
                 })
             }
             else {
@@ -672,7 +691,7 @@ export default function RegisterEvent(){
             else if (!/^[0-9,$]*$/.test(e.target.value)){
                 setActiveVIPStock({
                     ...activeVIPStock,
-                    price: "Ingrese un valor numerico"
+                    price: "Ingrese un valor numérico"
                 })
             }
             else {
@@ -711,92 +730,305 @@ export default function RegisterEvent(){
     <div className={style.card}>
         <div className={style.h2}><h2>Crear Evento</h2></div>
         <form onSubmit={handleSubmitEvent}>
-            <div> <label>Nombre del evento:* </label> <input name="name" value={event.name}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Nombre del evento" /> {errors.name && <label className={style.error}>{errors.name}</label>}</div>
-            <div> <label>Nombre del artista:* </label> <input name="artist" value={event.artist}  onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Artista" /> {errors.artist && <label className={style.error}>{errors.artist}</label>}</div>
+            <div> 
+                <input
+                    name="name" 
+                    value={event.name}  
+                    onChange={handleChange} 
+                    onBlur={handleBlur} 
+                    type="text"
+                    className={errors.name?.length> 0 ? style.error : style.inputText}
+                    placeholder={errors.name?.length> 0 ? errors.name : "Nombre del evento"}/>
+            </div>
+            <div> 
+                <input 
+                    name="artist" 
+                    value={event.artist}  
+                    onChange={handleChange} 
+                    onBlur={handleBlur} 
+                    type="text"
+                    className={errors.artist?.length> 0 ? style.error : style.inputText}
+                    placeholder={errors.artist?.length> 0 ? errors.artist : "Artista"}/>
+            </div>
 
-            <div> <label>Fecha y Hora del evento:* </label></div>
-            <div> <DateTimePicker name="schedule" value={dateTime} onChange={setDateTime} minDate={new Date()} format="y-MM-dd h:mm:ss a"/> {errors.schedule && <label className={style.error}>{errors.schedule}</label>} </div>
+            <div className={style.select}> 
+                <label 
+                    className={errors.schedule?.length > 0 ? style.errorSchedule : style.schedule}>
+                    {errors.schedule?.length > 0 ? errors.schedule : "Fecha y Hora del evento:"} 
+                </label>
+            </div>
+            <div> 
+                <DateTimePicker 
+                name="schedule" 
+                value={dateTime} 
+                onChange={setDateTime} 
+                minDate={new Date()} format="y-MM-dd h:mm:ss a"/> 
+            </div>
             
-            <div>
-                <label className={style.label}>Seleccionar genero existente: </label>
-                <select name="genreId" onChange={handleChange}>
-                    <option>Generos</option>
+            <div className={style.select}>
+                <label 
+                className={errors.genreId?.length > 0 ? style.errorGenre : style.label}>
+                    {errors.genreId?.length > 0 ? errors.genreId :"Seleccionar género existente:"} 
+                </label>
+            </div>
+            <div className={style.filter}>
+                <select name="genreId" onChange={handleChange} className={style.genreLocation}>
+                    <option>Géneros</option>
                     {genres.map(g =>(<option key={g.id} value={g.name}>{g.name}</option>))}
                 </select>
-                {errors.genreId && <label>{errors.genreId}</label>}
-                <button type="button" onClick={()=>setActiveGenre(!activeGenre)}>Añadir nuevo genero +</button>
+                <button 
+                    type="button" 
+                    onClick={()=>setActiveGenre(!activeGenre)}
+                    className={style.btnGenre}
+                    >Añadir nuevo género</button>
             </div>
             <div>{activeGenre ? <RegisterGenre/>:null}</div>
-
-            
             {/* <div> <input id="duration" name="file" onChange={(e) => handleChange(e)} onBlur={handleBlur} type="time" placeholder="Duracion del evento" /> {errors.duration && <label className={style.error}>{errors.duration}</label>}</div> */}
-
-            <div> <label>Imagen del Artista:* </label> <input id="performerImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del artista" /> {errors.performerImage && <label className={style.error}>{errors.performerImage}</label>}</div>
-            <div> <label>Imagen del Lugar:* </label> <input id="placeImage" name="file" onChange={(e) => uploadImage(e)} onBlur={handleBlur} type="file" placeholder="Imagen del lugar" />  {errors.placeImage && <label className={style.error}>{errors.placeImage}</label>}</div>
-
-            <div> <label>Descripcion del evento: </label> <textarea name="description" value={event.description}  onChange={handleChange} type="text" placeholder="Descripcion" /> </div>
+                
+            <div className={style.select}>
+                <label className={errors.performerImage?.length > 0 ? style.errorImg : style.img}>
+                    {errors.performerImage?.length > 0 ? errors.performerImage : "Imagen del Artista:"} 
+                 </label>
+            </div>    
+            <div className={style.file}>
+                <input 
+                    id="performerImage" 
+                    name="file" 
+                    onChange={(e) => uploadImage(e)} 
+                    onBlur={handleBlur} 
+                    type="file"
+                    className={errors.performerImage?.length > 0 ? style.errorImg : style.img}/>
+                    
             
+            </div>
+            <div className={style.select}>
+                 <label className={errors.placeImage?.length > 0 ? style.errorImg : style.img}>
+                    {errors.placeImage?.length > 0 ? errors.placeImage : "Imagen del lugar"}
+                 </label>
+            </div>
             <div>
+                  <input 
+                    id="placeImage" 
+                    name="file" 
+                    onChange={(e) => uploadImage(e)} 
+                    onBlur={handleBlur} 
+                    type="file"
+                    className={errors.placeImage?.length > 0 ? style.errorImg : style.img}
+                    /> 
+            </div>
+
+            <div className={style.containerDescription}> 
+                <textarea 
+                    name="description" 
+                    value={event.description}  
+                    onChange={handleChange} 
+                    type="text"
+                    className={style.description} 
+                    placeholder="Descripción del evento" 
+                /> 
+            </div>
+            
+            <div className={style.select}>
                 <label className={style.label}>Seleccionar lugar del evento: </label>
-                <select name="venueId" onChange={handleChange}>
+            </div>
+            <div className={style.filter}>
+                <select name="venueId" onChange={handleChange} className={style.genreLocation}>
                     <option>Lugares</option>
                     {venues.map(v =>(<option key={v.id} value={v.id}>{v.name}</option>))}
                 </select>
                 {errors.venueId && <label>{errors.venueId}</label>}
-                <button type="button" onClick={()=>setActiveVenue(!activeVenue)}>Añadir nuevo Establecimiento +</button>
+                <button 
+                    type="button" 
+                    onClick={()=>setActiveVenue(!activeVenue)}
+                    className={style.btnLocation}
+                    >Añadir nuevo Establecimiento</button>
             </div>
             <div>{activeVenue ? <RegisterVenue/>:null}</div>
             
             {/* <div> <button type="button" onClick={()=>setActiveStock(!activeStock)}>Desplegar seleccion de stock y precios</button> </div> */}
-            <div>{event.venueId !== "" && foundVenue !== null ? 
+            <div>{event.venueId !== "" && foundVenue !== null ?
+
+            <div>
+                <h3 className={style.titlePrice}>Entradas y Precios</h3>
+                <div className={style.priceTicket}>
+                    <p className={style.ticket}>Tickets General</p>
+                    <p>Precio entrada General</p>
+                </div>
                 <div>
-                    <h4>Entradas y Precios</h4>
-                    <div>
-                        <label>Maximo de {foundVenue.maxStockGeneral} </label>
-                        <label>Stock entradas generales:* </label> <input name="stockGeneral" value={stock.stockGeneral} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activeStockGeneral.stock && <label className={style.error}>{activeStockGeneral.stock}</label>} 
-                        <label>Precio:* </label> <input name="generalPrice" value={stock.generalPrice} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activeStockGeneral.price && <label className={style.error}>{activeStockGeneral.price}</label>}
+                    <div className={style.inputContainer}>
+
+                        <input 
+                            name="stockGeneral" 
+                            value={stock.stockGeneral} 
+                            onChange={handleStock} 
+                            onBlur={handleBlurStock} 
+                            type="text"
+                            className={activeStockGeneral.stock?.length > 0 ? style.error : style.inputTicket}
+                            placeholder={activeStockGeneral.stock?.length > 0 ? activeStockGeneral.stock : "Stock General"} 
+                        />  
+               
+                        <input 
+                        name="generalPrice" 
+                        value={stock.generalPrice} 
+                        onChange={handleStock} 
+                        onBlur={handleBlurStock} 
+                        type="text"
+                        className={activeStockGeneral.price?.length > 0 ? style.error : style.inputPrice}
+                        placeholder={activeStockGeneral.price?.length > 0 ? activeStockGeneral.price : "Precio General"}
+                        />
                     </div>
+
+                     <div className={style.maxTickets}>
+                         <label>Tickets Generales: máximo {foundVenue.maxStockGeneral} entradas.</label>     
+                     </div>
+                </div>
 
                     <div>{foundVenue.maxStockGeneralLateral !== 0 ? 
                         <div>
-                            <label>Maximo de {foundVenue.maxStockGeneralLateral} </label>
-                            <label>Stock entradas zona Lateral: </label> <input name="stockGeneralLateral" value={stock.stockGeneralLateral} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activeLateralStock.stock && <label className={style.error}>{activeLateralStock.stock}</label>}
-                            <label>Precio: </label> <input name="generalLateralPrice" value={stock.generalLateralPrice} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activeLateralStock.price && <label className={style.error}>{activeLateralStock.price}</label>}
-                        </div> : null }
-                    </div>
+                            <div className={style.priceTicket}>
+                                <p className={style.ticket}>Tickets General lateral</p>
+                                <p>Precio entrada General lateral</p>
+                            </div>
+                            <div>
+                                <div className={style.inputContainer}>
+                                    <input 
+                                        name="stockGeneralLateral" 
+                                        value={stock.stockGeneralLateral} 
+                                        onChange={handleStock} 
+                                        onBlur={handleBlurStock} 
+                                        type="text"
+                                        className={activeLateralStock.stock?.length > 0 ? style.error : style.inputTicket}
+                                        placeholder={activeLateralStock.stock?.length > 0 ? activeLateralStock.stock : "Stock Lateral"} 
+                                    />  
+                                    <input 
+                                        name="generalLateralPrice" 
+                                        value={stock.generalLateralPrice} 
+                                        onChange={handleStock} 
+                                        onBlur={handleBlurStock} 
+                                        type="text"
+                                        className={activeLateralStock.price?.length > 0 ? style.error : style.inputPrice}
+                                        placeholder={activeLateralStock.price?.length > 0 ? activeLateralStock.price : "Precio Lateral"}
+                                        />
+                                </div>
+                            <div className={style.maxTickets}>
+                                <label>Tickets Lateral: máximo {foundVenue.maxStockGeneralLateral} entradas.</label>
+                            </div>
+                            </div>
+                            </div> : null }
+                        </div>
+                            
 
                     <div>{foundVenue.maxStockPalco !== 0 ? 
                         <div>
-                            <label>Maximo de {foundVenue.maxStockPalco} </label>
-                            <label>Stock entradas palco: </label> <input name="stockPalco" value={stock.stockPalco} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activePalcoStock.stock && <label className={style.error}>{activePalcoStock.stock}</label>}
-                            <label>Precio: </label> <input name="palcoPrice" value={stock.palcoPrice} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activePalcoStock.price && <label className={style.error}>{activePalcoStock.price}</label>}
+                            <div className={style.priceTicket}>
+                                <p className={style.ticket}>Tickets Palco</p>
+                                <p>Precio entrada Palco</p>
+                            </div>
+                            
+                            <div>
+                                <div className={style.inputContainer}>
+                                    <input 
+                                        name="stockPalco" 
+                                        value={stock.stockPalco} 
+                                        onChange={handleStock} 
+                                        onBlur={handleBlurStock} 
+                                        type="text"
+                                        className={activePalcoStock.stock?.length > 0 ? style.error : style.inputTicket}
+                                        placeholder={activePalcoStock.stock?.length > 0 ? activePalcoStock.stock : "Stock Palco"} 
+                                    />  
+                                    <input 
+                                        name="palcoPrice" 
+                                        value={stock.palcoPrice} 
+                                        onChange={handleStock} 
+                                        onBlur={handleBlurStock} 
+                                        type="text"
+                                        className={activePalcoStock.price?.length > 0 ? style.error : style.inputPrice}
+                                        placeholder={activePalcoStock.price?.length > 0 ? activePalcoStock.price : "Precio Palco"}
+                                        />
+                                    </div>
+                            </div>
+                            <div className={style.maxTickets}>
+                                <label >Tickets Palco: máximo {foundVenue.maxStockPalco} entradas.</label>
+                            </div>
                         </div> : null}
                     </div>
 
                     <div>{foundVenue.maxStockStreaming !== 0 ? 
                         <div>
-                            <label>Maximo de {foundVenue.maxStockStreaming} </label>
-                            <label>Stock entradas via streaming: </label> <input name="stockStreaming" value={stock.stockStreaming} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activeStreamingStock.stock && <label className={style.error}>{activeStreamingStock.stock}</label>}
-                            <label>Precio: </label> <input name="streamingPrice" value={stock.streamingPrice} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activeStreamingStock.price && <label className={style.error}>{activeStreamingStock.price}</label>}
+                            <div className={style.priceTicket}>
+                                <p className={style.ticket}>Tickets Streaming</p>
+                                <p>Precio entrada Streaming</p>
+                            </div>
+
+                            <div>
+                                <div className={style.inputContainer}>
+                                    <input 
+                                        name="stockStreaming" 
+                                        value={stock.stockStreaming} 
+                                        onChange={handleStock} 
+                                        onBlur={handleBlurStock} 
+                                        type="text"
+                                        className={activeStreamingStock.stock?.length > 0 ? style.error : style.inputTicket}
+                                        placeholder={activeStreamingStock.stock?.length > 0 ? activeStreamingStock.stock : "Stock Streaming"} 
+                                    />  
+                                    <input 
+                                        name="streamingPrice" 
+                                        value={stock.streamingPrice} 
+                                        onChange={handleStock} 
+                                        onBlur={handleBlurStock} 
+                                        type="text"
+                                        className={activeStreamingStock.price?.length > 0 ? style.error : style.inputPrice}
+                                        placeholder={activeStreamingStock.price?.length > 0 ? activeStreamingStock.price : "Precio Streaming"}
+                                        />
+                                </div>
+                            </div>
+                            <div className={style.maxTickets}>
+                                <label>Tickets Streaming: máximo {foundVenue.maxStockStreaming} entradas.</label>     
+                            </div>
                         </div> : null}
                     </div>
 
                     <div>{foundVenue.maxStockVIP !== 0 ? 
                         <div>
-                            <label>Maximo de {foundVenue.maxStockVIP} </label>
-                            <label>Stock entradas VIP: </label> <input name="stockkVIP" value={stock.stockkVIP} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activeVIPStock.stock && <label className={style.error}>{activeVIPStock.stock}</label>}
-                            <label>Precio: </label> <input name="vipPrice" value={stock.vipPrice} onChange={handleStock} onBlur={handleBlurStock} type="text" placeholder="Precio" /> {activeVIPStock.price && <label className={style.error}>{activeVIPStock.price}</label>}
+                            <div className={style.priceTicket}>
+                                <p className={style.ticket}>Tickets VIP</p>
+                                <p>Precio entrada VIP</p>
+                            </div>
+
+                            <div>
+                                <div className={style.inputContainer}>
+                                    <input 
+                                        name="stockkVIP" 
+                                        value={stock.stockkVIP} 
+                                        onChange={handleStock} 
+                                        onBlur={handleBlurStock} 
+                                        type="text"
+                                        className={activeVIPStock.stock?.length > 0 ? style.error : style.inputTicket}
+                                        placeholder={activeVIPStock.stock?.length > 0 ? activeVIPStock.stock : "Stock VIP"} 
+                                    />  
+                                    <input 
+                                        name="vipPrice" 
+                                        value={stock.vipPrice} 
+                                        onChange={handleStock} 
+                                        onBlur={handleBlurStock} 
+                                        type="text"
+                                        className={activeVIPStock.price?.length > 0 ? style.error : style.inputPrice}
+                                        placeholder={activeVIPStock.price?.length > 0 ? activeVIPStock.price : "Precio VIP"}
+                                        />
+                                </div>
+                            </div>
+                            <div className={style.maxTickets}>
+                                <label>Tickets VIP: máximo {foundVenue.maxStockVIP} entradas.</label>     
+                            </div>
                         </div> : null}
                     </div>
-
-                    {/* {errors.stockId && <label>{errors.stockId}</label>} */}
-                    {/* <button type="button" onClick={handleAddStock}>Añadir stock</button> */}
                 </div> 
             : null }</div>
-
-            <Link to='/'><button >Volver a inicio</button></Link>
-            
-            <button type="submit">Crear Evento</button>
+            <div containerBtn>
+                <Link to='/'><button className={style.btn}>Volver a inicio</button></Link>
+                <button type="submit" className={style.btn}>Crear Evento</button>
+            </div>
+ 
         </form>
 
        </div>
