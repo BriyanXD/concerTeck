@@ -23,6 +23,7 @@ const initialState = {
     isVisbleModal: false,
     eventsForCalendar: [],
   },
+  sesion:{},
   cartDB: [],
   stateAdminPanel: {
     allUsers: [],
@@ -412,6 +413,12 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         ticket: payload,
       };
+    case "SESION_DATA":
+      console.log(payload)
+      return {
+        ...state,
+        sesion: payload
+      }
     //GET_ALL_TICKETS
     case "GET_ALL_TICKETS":
       return {

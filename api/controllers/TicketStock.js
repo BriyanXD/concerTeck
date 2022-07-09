@@ -45,6 +45,20 @@ async function putTicketStock(req, res) {
   }
 }
 
+async function getTicketStockByid(req, res) {
+  const { id } = req.body;
+  try{
+    const encontrado = await TicketStock.findByPk(id);
+    if(encontrado){
+      res.json(encontrado);
+    }else{
+      res.send("no se encontro un ticket con ese id")
+    }
+  }catch(error){  
+    console.log(error.message)
+  }
+}
+
 async function postTicketStock(req, res){
   try{
     const {
@@ -108,5 +122,6 @@ module.exports = {
   chargeTicketStock,
   getTicketStock,
   putTicketStock,
+  getTicketStockByid,
   postTicketStock,
 };

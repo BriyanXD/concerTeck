@@ -96,143 +96,123 @@ async function deleteTicket(req, res) {
   }
 }
 
-async function postCreatEventAndPrice(req, res, next) {
+// async function postCreatEventAndPrice(req, res, next) {
+//   try {
+//     const findEvent = await Events.findAll();
+//     for (let i = 4; i < 8; i++) {
+//       const product = await stripe.products.create({
+//         name: findEvent[i].name,
+//         description: findEvent[i].description,
+//         images: [findEvent[i].performerImage],
+//       });
+//       if (product) {
+//         const findStock = await Events.findByPk(findEvent[i].id, {
+//           include: [{ model: TicketStock, as: "stock" }],
+//         });
+//         if (findStock) {
+//           const price1 = await stripe.prices.create({
+//             product: product.id,
+//             unit_amount: findStock.stock.streamingPrice * 100,
+//             currency: "ars",
+//           });
+//           //logica de relacion de tablas price/idprice/event
+
+//           const price2 = await stripe.prices.create({
+//             product: product.id,
+//             unit_amount: findStock.stock.vipPrice * 100,
+//             currency: "ars",
+//           });
+
+//           const price3 = await stripe.prices.create({
+//             product: product.id,
+//             unit_amount: findStock.stock.generalLateralPrice * 100,
+//             currency: "ars",
+//           });
+
+//           const price4 = await stripe.prices.create({
+//             product: product.id,
+//             unit_amount: findStock.stock.generalPrice * 100,
+//             currency: "ars",
+//           });
+
+//           const price5 = await stripe.prices.create({
+//             product: product.id,
+//             unit_amount: findStock.stock.palcoPrice * 100,
+//             currency: "ars",
+//           });
+//         } else {
+//           console.log("Evento No tiene stock relacionado");
+//         }
+//       }
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+async function postCreatEventAndPrice(event) {
   try {
-    const findEvent = await Events.findAll();
-    for (let i = 4; i < 8; i++) {
-      const product = await stripe.products.create({
-        name: findEvent[i].name,
-        description: findEvent[i].description,
-        images: [findEvent[i].performerImage],
+    // const id = event.id;
+    // const findEvent = await Events.findByPk(id, {
+    //   include: [{ model: TicketStock, as: "stock" }],
+    // });
+    const idStockEncotrado = await TicketStock.findByPk(event[0].stockId);
+    console.log("🚀 ~ file: Tickets.js ~ line 160 ~ postCreatEventAndPrice ~ idStockEncotrado", idStockEncotrado)
+    const product = await stripe.products.create({
+      name: event[0].name,
+      description: event[0].description,
+      images: [event[0].performerImage],
+    });
+    if (product) {
+      const price = await stripe.prices.create({
+        product: product.id,
+        unit_amount: idStockEncotrado.streamingPrice * 100,
+        currency: "ars",
       });
-      if (product) {
-        console.log(
-          "🚀 ~ file: Tickets.js ~ line 108 ~ getRaro ~ product",
-          product
-        );
-        const findStock = await Events.findByPk(findEvent[i].id, {
-          include: [{ model: TicketStock, as: "stock" }],
-        });
-        if (findStock) {
-          const price1 = await stripe.prices.create({
-            product: product.id,
-            unit_amount: findStock.stock.streamingPrice * 100,
-            currency: "ars",
-          });
-          //logica de relacion de tablas price/idprice/event
-
-          const price2 = await stripe.prices.create({
-            product: product.id,
-            unit_amount: findStock.stock.vipPrice * 100,
-            currency: "ars",
-          });
-
-          const price3 = await stripe.prices.create({
-            product: product.id,
-            unit_amount: findStock.stock.generalLateralPrice * 100,
-            currency: "ars",
-          });
-
-          const price4 = await stripe.prices.create({
-            product: product.id,
-            unit_amount: findStock.stock.generalPrice * 100,
-            currency: "ars",
-          });
-
-          const price5 = await stripe.prices.create({
-            product: product.id,
-            unit_amount: findStock.stock.palcoPrice * 100,
-            currency: "ars",
-          });
-        } else {
-          console.log("Evento No tiene stock relacionado");
-        }
-      }
+      await idStockEncotrado.update({idStreamingPrice: price.id})
+      const price2 = await stripe.prices.create({
+        product: product.id,
+        unit_amount: idStockEncotrado.vipPrice * 100,
+        currency: "ars",
+      });
+      await idStockEncotrado.update({idVipPrice: price2.id})
+      const price3 = await stripe.prices.create({
+        product: product.id,
+        unit_amount: idStockEncotrado.generalLateralPrice * 100,
+        currency: "ars",
+      });
+      await idStockEncotrado.update({idGeneralLateralPrice: price3.id})
+      const price4 = await stripe.prices.create({
+        product: product.id,
+        unit_amount: idStockEncotrado.generalPrice * 100,
+        currency: "ars",
+      });
+      await idStockEncotrado.update({idGeneralPrice: price4.id})
+      const price5 = await stripe.prices.create({
+        product: product.id,
+        unit_amount: idStockEncotrado.palcoPrice * 100,
+        currency: "ars",
+      });
+      await idStockEncotrado.update({idPalcoPrice: price5.id})
+      return ("Todo salio bien")
+    } else {
+      console.log("Evento No tiene stock relacionado");
     }
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
-  // const findEvent = await Events.findAll()
-  // findEvent.map(async event =>{
-  // const product = await stripe.products.create({
-  //   name: "Divididos",
-  //   description: "adscsdsfd" ,
-  //   images: []
-  // });
-  // })
-  // console.log(product)
-
-  // const session = await stripe.checkout.sessions.create({
-  //   line_items: [{
-  //     price: 'price_1LJ01eEZzNuiTFe6CHhOssWk',
-  //     quantity: 1,
-  //   },
-  // {
-  //   price: 'price_1LJ01bEZzNuiTFe6YGzxVr89',
-  //   quantity: 3
-  // }],
-  //   mode: 'payment',
-  //   success_url: 'https://localhost:3001/',
-  //   cancel_url: 'https://localhost:3001/',
-  // });
-  // console.log(session)
-
-  // res.send("se creo1")
-  // console.log(price)
 }
-
-// async function getRaro2(data, product){
-
-//   const findStock = await TicketStock.findByPk(data)
-//     const price1 = await stripe.prices.create({
-//       product: product.id,
-//       unit_amount: findStock.stock.streamingPrice,
-//       currency: 'ars',
-//     });
-//     //logica de relacion de tablas price/idprice/event
-
-//     const price2 = await stripe.prices.create({
-//       product: product.id,
-//       unit_amount: findStock.stock.vipPrice,
-//       currency: 'ars',
-//     });
-
-//     const price3 = await stripe.prices.create({
-//       product: product.id,
-//       unit_amount: findStock.stock.generalLateralPrice,
-//       currency: 'ars',
-//     });
-
-//     const price4 = await stripe.prices.create({
-//       product: product.id,
-//       unit_amount: findStock.stock.generalPrice,
-//       currency: 'ars',
-//     });
-
-//     const price5 = await stripe.prices.create({
-//       product: product.id,
-//       unit_amount: findStock.stock.palcoPrice,
-//       currency: 'ars',
-//     });
-
-//     console.log(price1)
-//     console.log(price2)
-//     console.log(price3)
-
-//     res.send("creado")
-// }
 
 async function postCheckout(req, res, next) {
   const { line_items } = req.body;
-
   const session = await stripe.checkout.sessions.create({
-    line_items,
+    line_items: line_items,
     mode: "payment",
-    success_url: "https://localhost:3001/",
-    cancel_url: "https://localhost:3001/",
+    success_url: "http://localhost:3000/success?success=true",
+    cancel_url: "http://localhost:3000/success?canceled=true",
   });
-  console.log(session);
-  res.send("se creo2");
+  console.log(session)
+  res.json(session)
 }
 
 module.exports = {

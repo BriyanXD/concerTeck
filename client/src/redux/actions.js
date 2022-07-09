@@ -572,10 +572,6 @@ export function deleteCart(id) {
   return async function (dispatch) {
     try {
       const data = await axios.delete(`${url}/api/cart?id=${id}`);
-      console.log(
-        "🚀 ~ file: actions.js ~ line 547 ~ data",
-        data.data.ShoppingSave
-      );
       return dispatch({
         type: "DELETE_CART",
         payload: data.data,
@@ -590,7 +586,6 @@ export function putCartDB(value) {
   return async function (dispatch) {
     try {
       const data = await axios.put(`${url}/api/cart`, value);
-      console.log("🚀 ~ file: actions.js ~ line 562 ~ data", data.data);
       return dispatch({
         type: "UPDATE_CART",
         payload: data.data,
@@ -798,6 +793,32 @@ export function searchEventIDEmails(eventId) {
       console.log(error, "GET_ALL_EMAILS_TICKET");
     }
   };
+}
+
+export function checkout(line_items){
+  return async function (dispatch){
+    try{
+    const data = await axios.post(`${url}/api/tickets2`,{line_items})
+    return dispatch({
+      type: "SESION_DATA",
+      payload: data.data
+    })
+    }catch(error){
+      console.log(error.message)
+    }
+  }
+}
+
+export function ActualizacionStock(descontar){
+  console.log("🚀 ~ file: actions.js ~ line 690 ~ ActualizacionStock ~ descontar", descontar)
+  return async function (dispatch){
+    try{
+      const actual = await axios.put(`${url}/api/cart/update`, {descontar})
+      console.log(actual.data, "que  trae la funcion de back")
+    }catch(error){
+      console.log(error.message)
+    }
+  }
 }
 
 /* export function getAllSolicits(allevents) {
