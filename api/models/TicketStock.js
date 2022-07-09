@@ -55,9 +55,6 @@ const TicketStock = sequelize.define(
     idPalcoPrice:{
       type: DataTypes.STRING
     },
-
-  
-
   },
   {
     timestamps: false,

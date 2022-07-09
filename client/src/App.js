@@ -10,6 +10,8 @@ import PanelAdmin from "./components/Admin/adminPanel";
 import Favorites from "./components/Favorites/Favorites";
 import TicketVoucher from "./components/TicketVoucher/TicketVoucher.jsx";
 import Streaming from "./components/Streaming/Streaming.jsx";
+import SuccessOrCancel from './components/SuccessOrCancel/SuccessOrCancel.jsx';
+import CartCheckout from './components/CartCheckout/CartCheckout.jsx';
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
           <Route path="/events" element={<RegisterEvent />} />
           <Route path="/favs" element={<Favorites />} />
           <Route path="*" element={<PageNotFound />} />
+          <Route path='/success' element={<SuccessOrCancel/>}/>
+          <Route path='/cart/checkout' element={<CartCheckout/>}/>
         </Routes>
       </div>
     </BrowserRouter>
