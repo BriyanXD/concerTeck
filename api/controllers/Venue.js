@@ -46,6 +46,7 @@ async function getVenues(req, res) {
 }
 
 async function postVenues(req, res) {
+  console.log("ENTRANDO A LA FUNCION PARA CREAR VENUES")
   try {
     const {
       id,
@@ -63,8 +64,10 @@ async function postVenues(req, res) {
     if (!name || !address || !map || !maxStockGeneral) {
       res.status(404).send("Faltan paramentros obligatorios");
     } else {
+      console.log("SE RECIVIERON LOS DATOS POR BODY")
       const venues = await Venue.findOrCreate({
         where: {
+          id: id,
           name: name,
           address: address,
           map: map,
@@ -84,9 +87,11 @@ async function postVenues(req, res) {
           isBigEvent: minStock >= 10000 ? true : false,
         },
       });
+      console.log("SE LOGRO CREAR EL NUEVO VENUE")
       return res.send(venues);
     }
   } catch (error) {
+    console.log("ALGO FALLO EN LA CREACION DEL VENUE")
     res.status(400).json({ error: error.message });
   }
 }

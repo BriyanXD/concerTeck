@@ -13,6 +13,7 @@ const initialState = {
   Events: [],
   Genres: [],
   Venues: [],
+  Stock: [],
   Basket: [],
   Likes: [],
   userValidation: "",
@@ -28,6 +29,7 @@ const initialState = {
     allUsers: [],
     tdosEvents: [],
     allBlackList: [],
+    blackListByName: [],
     userSaveBlackList: "",
     // UserByName:[],
     UserByUserName: [],
@@ -35,9 +37,15 @@ const initialState = {
     allSolicits: [],
     modalEvent: false,
     modalUser: false,
+    modalOrder: false,
     modalUserPermised: false,
     allLikesEventId: [],
     putUrlStreaming: "",
+    allTickets: [],
+    allTiketsByName: [],
+    saveFindTicket: "",
+    userBanned: "",
+    allEmails: [],
   },
   token: "",
   ticket: {},
@@ -222,7 +230,12 @@ function reducers(state = initialState, { type, payload }) {
     case "POST_VENUE":
       return {
         ...state,
-        Venues: payload,
+        Venues: [...state.Venues, payload],
+      };
+    case "POST_STOCK":
+      return {
+        ...state,
+        Stock: [...state.Stock, payload],
       };
     case "VALIDATION_LOGIN":
       return {
@@ -400,12 +413,77 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         ticket: payload,
       };
+<<<<<<< HEAD
     case "SESION_DATA":
       console.log(payload)
       return {
         ...state,
         sesion: payload
       }
+=======
+    //GET_ALL_TICKETS
+    case "GET_ALL_TICKETS":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allTickets: payload,
+        },
+      };
+    //MODAL_ORDERS_ADMIN_PANEL
+    case "MODAL_ORDERS_ADMIN_PANEL":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          modalOrder: payload,
+        },
+      };
+    //FIND_TICKET
+    case "FIND_TICKET":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          saveFindTicket: payload,
+        },
+      };
+    case "GET_NAME_BY_BLACKLIST":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          blackListByName: payload,
+        },
+      };
+    //VERIFY_USER_BANNED
+    case "VERIFY_USER_BANNED":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          userBanned: payload,
+        },
+      };
+    case "GET_NAME_BY_ORDER":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allTiketsByName: payload,
+        },
+      };
+    //GET_ALL_EMAILS_TICKET
+    case "GET_ALL_EMAILS_TICKET":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allEmails: payload,
+        },
+      };
+
+>>>>>>> 574d7c3a91d75b1e52c9c8f3bdb185c1486f2cfc
     default:
       return state;
   }

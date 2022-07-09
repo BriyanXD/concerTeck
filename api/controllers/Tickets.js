@@ -1,19 +1,48 @@
 const Ticket = require("../models/Ticket");
-require("dotenv").config()
-const { STRIPE_KEY } = process.env
-const stripe = require('stripe')(STRIPE_KEY);
+require("dotenv").config();
+const { STRIPE_KEY } = process.env;
+const stripe = require("stripe")(STRIPE_KEY);
 const Events = require("../models/Events");
 const TicketStock = require("../models/TicketStock");
-
+const User = require("../models/User");
+let priceId = "";
 
 async function getTicketByID(req, res) {
-  const { id } = req.query
+  const { name, id, eventId } = req.query;
   const { userId } = req.body;
+
   const allTickets = await Ticket.findAll();
   try {
+    if (eventId) {
+      const AllUserMatchIdEvent = await Ticket.findAll({
+        where: { eventId: eventId },
+      });
+      const emails = [];
+      AllUserMatchIdEvent.filter((e) => {
+        if (!emails.find((a) => a === e.email)) emails.push(e.email);
+      });
+      console.log(emails);
+      if (emails) {
+        return res.send(emails);
+      } else {
+        return res.status(404).json({ error: "No hay emails en este evento" });
+      }
+    }
+    if (name) {
+      const nameUserOrder = allTickets.filter((n) =>
+        n.userName.toLowerCase().includes(name.toLowerCase())
+      );
+      if (nameUserOrder.length >= 1) {
+        return res.send(nameUserOrder);
+      }
+    }
     if (id) {
-      const findTicketForID = await Ticket.findByPk(id,{include:[{ model: User, as: "user" },
-      { model: Events, as: "event" },]});
+      const findTicketForID = await Ticket.findByPk(id, {
+        include: [
+          { model: User, as: "user" },
+          { model: Events, as: "event" },
+        ],
+      });
       return res.json(findTicketForID);
     }
     if (userId) {
@@ -32,16 +61,23 @@ async function postTicket(req, res) {
   const { name, price, eventId, userId } = req.body;
   try {
     if (name && price && eventId && userId) {
+      const saveEvent = await Events.findByPk(eventId);
+      const saveUser = await User.findByPk(userId);
       const newTicket = await Ticket.create({
         name: name,
         price: price,
         eventId: eventId,
         userId: userId,
+        eventName: saveEvent.name || "undefined",
+        email: saveUser.email || "undefined",
+        userName: saveUser.name || "undefined",
       });
-      res.json(newTicket);
+      res.json({ newTicket });
+    } else {
+      res.status(401).send({ error: "Faltan datos" });
     }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(401).send({ error: error.message });
   }
 }
 
