@@ -18,6 +18,12 @@
     color: var(--color2);
 }
 
+.inputText::-webkit-outer-spin-button,
+.inputText::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .error{
     width:50%;
     background-color: #dbdada;
@@ -29,14 +35,15 @@
     height: 30px;
     font-size: 15px;
     margin-bottom: 1rem;
-    border-color: red;  
+    border-color: red; 
+    margin-top: 1rem; 
 }
 .error::placeholder{
     color: red;
 }
 
 .btnLocation{
-    background-color: #FF4C29;
+    background-color: var(--color4);
     width: 10vw;
     height: 2.5vw;
     text-align: center;
@@ -45,6 +52,7 @@
     font-size: 14px;
     margin-left: 1rem;
     border-color: transparent;
+    cursor: pointer;
 }
 
 .btnLocation:hover{
