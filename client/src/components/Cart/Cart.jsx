@@ -115,7 +115,7 @@ if(userStorage !== ""){
  }
   return (
     <div className={Style.containerGeneral}>
-      <h3>Carrito ({cantidadEventos})</h3>
+      <div>Carrito ({cantidadEventos})</div>
       <ul>
         {ambos.map((item) => (
           

@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* background: url(../src/img/bk.jpg); */
 }
 .leaflet-container {
   width: 50%;
@@ -89,4 +90,14 @@ code {
   --fc-highlight-color: rgba(188, 232, 241, 0.3);
   --fc-today-bg-color: rgba(255, 220, 40, 0.15);
   --fc-now-indicator-color: red;
+  
+  background: url(../src/img/bk.jpg);
+}
+
+[theme="light"]{
+  --color4: #222831;
+  --color2: #2D4059;
+  --color3: #FF5722;
+  --color1: #EEEEEE;
+  background: url(../src/img/wt.jpg);
 }

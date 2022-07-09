@@ -1,7 +1,7 @@
 .containerRegisterUser{
     width: 100vw;
     height: 100vh;
-    background: url("../../img/bk.jpg");
+    /* background: url("../../img/bk.jpg"); */
     display:flex;
     flex-direction: column;
     align-items: center;
