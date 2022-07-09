@@ -43,10 +43,12 @@ const {
 } = require("../controllers/Tickets");
 
 const { getVenues, postVenues } = require("../controllers/Venue");
+
 const {
   getTicketStock,
   putTicketStock,
   postTicketStock,
+  getTicketStockByid 
 } = require("../controllers/TicketStock");
 
 const { LoginUser } = require("../controllers/Login");
@@ -69,6 +71,7 @@ const {
   postShoppingCart,
   putShoppingCart,
   deleteShoppingCart,
+  restarStock
 } = require("../controllers/ShoppingCart");
 
 const { getLikes, postLikes, deleteLikes } = require("../controllers/Likes");
@@ -83,6 +86,7 @@ routes.get("/cart", getShoppingCart);
 routes.post("/cart", postShoppingCart);
 routes.put("/cart", putShoppingCart);
 routes.delete("/cart", deleteShoppingCart);
+routes.put("/cart/update", restarStock);
 
 routes.post("/user", createUser);
 routes.get("/user", getUser); // verifyToken
@@ -121,7 +125,7 @@ routes.post("/venues", postVenues); //ruta de prueba
 // routes.get("/ticketstock", verifyToken, getTicketStock); 
 routes.get("/ticketstock", getTicketStock); //ruta de prueba
 routes.post("/ticketstock", postTicketStock); //reuta de prueba
-
+routes.get("/ticketstock2", getTicketStockByid);
 
 routes.post("/login", LoginUser);
 

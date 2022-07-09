@@ -1,3 +1,5 @@
+@import url(../../index.css);
+
 .container{
     position: absolute;
     display: flex;
@@ -5,8 +7,9 @@
     justify-content: space-between;
     width: 100vw;
     align-items: center;
-    background: url(../../img/bk.jpg);
-}
+    /* background: url(../../img/bk.jpg); */
+  }
+ 
 .eventcontainer{
     display: flex;
     justify-content: space-around;

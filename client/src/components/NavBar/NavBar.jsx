@@ -12,7 +12,8 @@ import Modal2 from "../Modals/Modal/Modal2";
 import LoginAuth0  from '../LoginAuth0/LoginAuth0';
 // import PerfilYLogoutAuth0 from '../LogoutAuth0/PerfilYLogoutAuth0';
 import { useLocation } from "react-router-dom";
-import {MdOutlineShoppingCart } from 'react-icons/md';
+import {MdOutlineShoppingCart,MdOutlineWbSunny } from 'react-icons/md';
+import {FiMoon } from 'react-icons/fi';
 import Tooltip from '@mui/material/Tooltip';
 import Cart from '../Cart/Cart';
 import { useCart } from "react-use-cart";
@@ -23,6 +24,7 @@ export default function NavBar({ setCurrenPag, setCurrentPage }) {
   let path = location.pathname.split("/");
 
   const [active, setActive] = useState(false);
+  const [flag, setFlag] = useState(false);
   const { totalUniqueItems } = useCart();
   const {cartDB} = useSelector(state => state);
   console.log("🚀 ~ file: NavBar.jsx ~ line 28 ~ NavBar ~ cartDB", cartDB)
@@ -38,8 +40,26 @@ export default function NavBar({ setCurrenPag, setCurrentPage }) {
     setActive(!active);
   };
 
+  const switchButton = document.getElementById('switch');
+ 
+function handleClick() {
+if(flag){
+  document.documentElement.setAttribute('theme', 'dark');
+    switchButton.classList.toggle('active');//toggle the HTML button with the id='switch' with the class 'active'
+    setFlag(false);
+  } else { 
+    document.documentElement.setAttribute('theme', 'light');
+    setFlag(true)}
+};
+
   return (
     <div className={style.containerNav}>
+      <div>
+        <button className={style.darkModeSwitch} onClick={handleClick} id="switch">
+          <span><MdOutlineWbSunny/></span>
+          <span><FiMoon/></span>
+        </button> 
+      </div>
       {/* Logitipo que redirecciona a home */}
       <div className={style.Containerlogo}>
         <Link to="/">

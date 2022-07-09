@@ -77,8 +77,10 @@ export default function Detail() {
         schedule:Detail.schedule,
         variant: "generalPrice",
         price:Detail.stock.generalPrice,
-        performerImage: Detail.performerImage
+        performerImage: Detail.performerImage,
+        idPrice: Detail.stock.idGeneralPrice
       }
+      console.log(temp, "temp de carrito cargar asd asdasdasdasdasdas dadasdada")
       if(!userStorage){
         addItem({...temp,id:`${Detail.id}general`})
       }else{
@@ -96,7 +98,8 @@ export default function Detail() {
           schedule:Detail.schedule,
           variant: "generalLateralPrice",
           price:Detail.stock.generalLateralPrice,
-          performerImage: Detail.performerImage
+          performerImage: Detail.performerImage,
+          idPrice: Detail.stock.idGeneralLateralPrice
         } 
         if(!userStorage){
           addItem({...temp,id:`${Detail.id}generallateral`})
@@ -115,7 +118,8 @@ export default function Detail() {
           schedule:Detail.schedule,
           variant: "palcoPrice",
           price:Detail.stock.palcoPrice,
-          performerImage: Detail.performerImage
+          performerImage: Detail.performerImage,
+          idPrice: Detail.stock.idPalcoPrice
         }
         if(!userStorage){
           addItem({...temp,id:`${Detail.id}palco`})
@@ -134,7 +138,8 @@ export default function Detail() {
               schedule:Detail.schedule,
               variant: "streamingPrice",
               price:Detail.stock.streamingPrice,
-              performerImage: Detail.performerImage
+              performerImage: Detail.performerImage,
+              idPrice: Detail.stock.idStreamingPrice
             }
             if(!userStorage){
               addItem({...temp,id:`${Detail.id}streaming`})
@@ -153,7 +158,8 @@ export default function Detail() {
                   schedule:Detail.schedule,
                   variant: "vipPrice",
                   price:Detail.stock.vipPrice,
-                  performerImage: Detail.performerImage
+                  performerImage: Detail.performerImage,
+                  idPrice: Detail.stock.idVipPrice
                 }
                 if(!userStorage){
                   addItem({...temp,id:`${Detail.id}vip`})
