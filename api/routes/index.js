@@ -38,10 +38,12 @@ const {
   getTicketByID,
   postTicket,
   deleteTicket,
+  postCreatEventAndPrice,
+  postCheckout,
 } = require("../controllers/Tickets");
 
 const { getVenues, postVenues } = require("../controllers/Venue");
-const { getTicketStock } = require("../controllers/TicketStock");
+const { getTicketStock, getTicketStockByid } = require("../controllers/TicketStock");
 
 const { LoginUser } = require("../controllers/Login");
 const {
@@ -62,6 +64,7 @@ const {
   postShoppingCart,
   putShoppingCart,
   deleteShoppingCart,
+  restarStock
 } = require("../controllers/ShoppingCart");
 
 const { getLikes, postLikes, deleteLikes } = require("../controllers/Likes");
@@ -76,6 +79,7 @@ routes.get("/cart", getShoppingCart);
 routes.post("/cart", postShoppingCart);
 routes.put("/cart", putShoppingCart);
 routes.delete("/cart", deleteShoppingCart);
+routes.put("/cart/update", restarStock);
 
 routes.post("/user", createUser);
 routes.get("/user", getUser); // verifyToken
@@ -98,6 +102,9 @@ routes.put("/eventurl", verifyToken, isAdmin, putUrlStreaming);
 routes.get("/ticket", verifyToken, getTicketByID);
 routes.post("/ticket", verifyToken, adminNotAuthorization, postTicket);
 routes.delete("/ticket", verifyToken, isAdmin, deleteTicket);
+routes.post("/tickets", postCreatEventAndPrice)
+routes.post("/tickets2", postCheckout)
+// routes.post("/tickect2", getRaro2)
 
 routes.get("/genres", getAllGenres);
 routes.post("/genres", verifyToken, isAdmin, postOneGenre);
@@ -106,6 +113,7 @@ routes.get("/venues", getVenues);
 routes.post("/venues", verifyToken, isAdmin, postVenues);
 
 routes.get("/ticketstock", verifyToken, getTicketStock);
+routes.get("/ticketstock2", getTicketStockByid);
 
 routes.post("/login", LoginUser);
 

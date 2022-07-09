@@ -9,6 +9,8 @@ import ProfileUser from './components/ProfileUser/ProfileUser.jsx';
 import PanelAdmin from './components/Admin/adminPanel'
 import Favorites from './components/Favorites/Favorites';
 import TicketVoucher from './components/TicketVoucher/TicketVoucher.jsx';
+import CartCheckout from './components/CartCheckout/CartCheckout';
+import SuccessOrCancel from './components/SuccessOrCancel/SuccessOrCancel.jsx';
 
 function App() {
   return (
@@ -27,6 +29,9 @@ function App() {
             <Route path='/events' element={<RegisterEvent/>}/>
             <Route path='/favs' element={<Favorites/>}/>
             <Route path='*' element={<PageNotFound/>}/>
+            <Route path='/pageNotFound' element={<PageNotFound/>}/>
+            <Route path='/cart/checkout' element={<CartCheckout/>}/>
+            <Route path='/success' element={<SuccessOrCancel/>}/>
           </Routes>
       </div>
     </BrowserRouter>
