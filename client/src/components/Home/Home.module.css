@@ -130,7 +130,9 @@
     margin-left: 16px;
     margin-top: -2.7rem;
     cursor: pointer;
- 
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
 }
 .heartWhite{
     position: absolute;
@@ -139,7 +141,9 @@
     margin-left: 16px;
     margin-top: -2.7rem;
     cursor: pointer;
- 
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
 }
 
 
@@ -150,7 +154,9 @@
     margin-left: 15px;
     margin-top: -2rem;
     cursor: pointer;
- 
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .heart2White{
@@ -160,5 +166,31 @@
     margin-left: 15px;
     margin-top: -2rem;
     cursor: pointer;
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
  
+}
+.containerStreaming{
+  background-color: transparent;
+  color: red;
+  border: 0;
+  width: 30px;
+  height: px;
+  font-size: 20px;
+  cursor: pointer;
+  animation-name: streaming;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+@keyframes streaming {
+  0%{
+    color: red;
+  }
+  50%{
+    color:#e74c3c;
+  }
+  100%{
+    color: red;
+  }
 }
