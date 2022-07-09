@@ -36,6 +36,9 @@ const ShoppingCart = sequelize.define(
       type: DataTypes.INTEGER,
     },
     performerImage:{
+      type: DataTypes.STRING,
+    },
+    idPrice: {
       type: DataTypes.STRING
     }
   },

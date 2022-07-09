@@ -3,6 +3,7 @@ const Event = require("../models/Events");
 const Genre = require("../models/Genre");
 const Venue = require("../models/Venue");
 const TicketStock = require("../models/TicketStock");
+const {postCreatEventAndPrice} = require("./Tickets")
 const e = require("express");
 
 async function chargeEvents() {
@@ -107,6 +108,7 @@ async function loadEventsAndGetEvents(req, res) {
 }
 // Modificando eventos
 async function postEvents(req, res) {
+  console.log("ENTRANDO EN LA FUNCION DE CREACION DE EVENTO")
   try {
     const {
       name,
@@ -129,18 +131,22 @@ async function postEvents(req, res) {
       !venueId ||
       !stockId
     ) {
+      console.log("FALLO ALGUN DATO POR BODY")
       return res.status(404).send("Faltan datos obligatorios");
     } else {
-      if (!Number.isInteger(stockId))
-        return res.status(400).json({ error: "stockId debe ser un numero" });
+      // if (!Number.isInteger(stockId))
+      //   return res.status(400).json({ error: "stockId debe ser un numero" });
       await Genre.findOrCreate({
         where: { name: genreId.toLowerCase() },
       });
+      let saveVenue = await Venue.findOne({where:{id: venueId}});
+      //console.log(saveVenue)
       let saveGenre = await Genre.findOne({
         where: { name: genreId.toLowerCase() },
       });
-      if (saveGenre) {
-        await Event.findOrCreate({
+      console.log("ENTRARON LOS DATOS DEL BODY")
+      if (saveGenre && saveVenue) {
+        const eventCreated = await Event.findOrCreate({
           where: {
             name: name,
             artist: artist,
@@ -153,15 +159,20 @@ async function postEvents(req, res) {
             stockId: stockId,
           },
         })
-          .then((response) => {
+          if(eventCreated){
+            console.log("SE CREO EL EVENTO", eventCreated)
+            await postCreatEventAndPrice(eventCreated)
             return res.status(201).json({ message: "Evento creado con exito" });
-          })
-          .catch((error) => {
+          }else{
+            console.log("ALGO FALLO NO SE PUDO CREAR ELE VENTO")
             return res
-              .status(404)
-              .json({ error: "No se puedo crear el evento" });
-          });
-      } else {
+            .status(404)
+            .json({ error: "No se puedo crear el evento" });
+          }
+            //response.addVenue(saveVenue.id)
+            //console.log("algo fallo en el ADDVENUE")
+          } else {
+        //console.log("No se puedo crear el genero para el evento")
         return res
           .status(404)
           .json({ error: "No se puedo crear el genero para el evento" });

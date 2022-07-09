@@ -112,6 +112,17 @@ export function CreateVenue(value) {
   };
 }
 
+export function CreateStock(value) {
+  return async function (dispatch) {
+    try {
+      const creation = await axios.post(`${url}/api/ticketstock`, value);
+      return creation;
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+
 export function ClearDetail() {
   return function () {
     return { type: "CLEAR_DETAIL" };
@@ -561,10 +572,6 @@ export function deleteCart(id) {
   return async function (dispatch) {
     try {
       const data = await axios.delete(`${url}/api/cart?id=${id}`);
-      console.log(
-        "🚀 ~ file: actions.js ~ line 547 ~ data",
-        data.data.ShoppingSave
-      );
       return dispatch({
         type: "DELETE_CART",
         payload: data.data,
@@ -579,7 +586,6 @@ export function putCartDB(value) {
   return async function (dispatch) {
     try {
       const data = await axios.put(`${url}/api/cart`, value);
-      console.log("🚀 ~ file: actions.js ~ line 562 ~ data", data.data);
       return dispatch({
         type: "UPDATE_CART",
         payload: data.data,
@@ -650,7 +656,7 @@ export function getAllLikesEventId(idEvent) {
 export function searchBlackList(name) {
   return async function (dispatch) {
     try {
-      const allBlackList = await axios.get(`${url}/api/blackall?name=${name}`,{
+      const allBlackList = await axios.get(`${url}/api/blackall?name=${name}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -663,7 +669,7 @@ export function searchBlackList(name) {
       console.log(error);
     }
   };
-}      
+}
 
 export function putUrlStreamingEvent(urlStreaming, idEvent) {
   return async function (dispatch) {
@@ -722,6 +728,97 @@ export function getAllTickets() {
       console.log(error);
     }
   };
+}
+export function verifiUserBanned(email) {
+  return async function (dispatch) {
+    try {
+      console.log(email, "EMAIL USER BANNED");
+      const userSave = await axios.get(
+        `${url}/api/verifibaned?email=${email}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(userSave.data, "BANEADO DESDE EL ACCIONS");
+      return dispatch({
+        type: "VERIFY_USER_BANNED",
+        payload: userSave.data,
+      });
+    } catch (error) {
+      console.log(error, "VERIFY_USER_BANNED");
+    }
+  };
+}
+//verifibaned
+
+export function searchOrder(name) {
+  return async function (dispatch) {
+    try {
+      const allOrder = await axios.get(`${url}/api/ticket?name=${name}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log("ALLORDER EN ACTION", allOrder);
+      return dispatch({
+        type: "GET_NAME_BY_ORDER",
+        payload: allOrder.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function searchEventIDEmails(eventId) {
+  return async function (dispatch) {
+    try {
+      console.log(eventId, "ID DEL EVENTO A BUSCAR");
+      const allEmails = await axios.get(
+        `${url}/api/ticket?eventId=${eventId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log("ALL EMAILS", allEmails.data);
+      return dispatch({
+        type: "GET_ALL_EMAILS_TICKET",
+        payload: allEmails.data,
+      });
+    } catch (error) {
+      console.log(error, "GET_ALL_EMAILS_TICKET");
+    }
+  };
+}
+
+export function checkout(line_items){
+  return async function (dispatch){
+    try{
+    const data = await axios.post(`${url}/api/tickets2`,{line_items})
+    return dispatch({
+      type: "SESION_DATA",
+      payload: data.data
+    })
+    }catch(error){
+      console.log(error.message)
+    }
+  }
+}
+
+export function ActualizacionStock(descontar){
+  console.log("🚀 ~ file: actions.js ~ line 690 ~ ActualizacionStock ~ descontar", descontar)
+  return async function (dispatch){
+    try{
+      const actual = await axios.put(`${url}/api/cart/update`, {descontar})
+      console.log(actual.data, "que  trae la funcion de back")
+    }catch(error){
+      console.log(error.message)
+    }
+  }
 }
 
 /* export function getAllSolicits(allevents) {

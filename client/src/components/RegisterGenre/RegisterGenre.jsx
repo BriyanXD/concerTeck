@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { CreateGenre, GetGenres } from '../../redux/actions';
 //import { Link, useNavigate } from "react-router-dom";
+import swal from 'sweetalert';
+import style from './RegisterGenre.module.css'
 
 function validate(genre){
     const error = {};
@@ -10,7 +12,7 @@ function validate(genre){
         error.name = 'Campo obligatorio'
     }
     if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(genre.name)){
-        error.name = "Ingrese un nombre con caracteres validos"
+        error.name = "Ingrese un nombre con caracteres válidos"
     }
     return error
 }
@@ -41,13 +43,20 @@ export default function RegisterGenre(){
     const handeSubmitGenre = async(e) => {
         e.preventDefault();
         if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(genre.name)){
-            return alert("Ingrese un nombre con caracteres validos")
+            return swal({
+                title: 'Género no cargado',
+                text: "Ingrese un nombre con caracteres válidos",
+                icon: 'warning',
+                dangerMode:true})
         } else {
             const genreCreated = await dispatch(CreateGenre(genre));
             //console.log(genreCreated)
             if(genreCreated.data[0].name){
                 dispatch(GetGenres());
-                alert("Genero añadido a la lista");
+                swal({
+                    text: "Género añadido a la lista",
+                    icon: 'success',
+                    })
                 setGenre({
                     name: ""
                 })
@@ -59,12 +68,17 @@ export default function RegisterGenre(){
 
     return (<div>
             {activeGenre ? <div>
-                <div> <input name="name" value={genre.name}  onChange={handleGenre} type="text" placeholder="Nombrar nuevo genero" />{error.name && (<label>{error.name}</label>)} </div>
-                <button onClick={handeSubmitGenre}>Añadir</button>
+                <div>
+                    <input 
+                    name="name" 
+                    value={genre.name}  
+                    onChange={handleGenre} 
+                    type="text"
+                    className={error.name?.length > 0 ? style.error : style.inputGenre} 
+                    placeholder={error.name?.length > 0 ? error.name : "Nombrar nuevo género" }
+                    />
+                </div>
+                <button onClick={handeSubmitGenre} className={style.btnGenre}>Añadir género</button>
             </div>:null }
         </div>)
 }
-{/* <form onSubmit={handeSubmitGenre}>
-        <div> <input name="name" value={genre.name}  onChange={handleGenre} type="text" placeholder="Nombrar nuevo genero" />{error.name && (<label>{error.name}</label>)} </div>
-        <button type="submit">Añadir</button>
-</form> */}

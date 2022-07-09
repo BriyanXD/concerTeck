@@ -13,6 +13,7 @@ const initialState = {
   Events: [],
   Genres: [],
   Venues: [],
+  Stock: [],
   Basket: [],
   Likes: [],
   userValidation: "",
@@ -22,6 +23,7 @@ const initialState = {
     isVisbleModal: false,
     eventsForCalendar: [],
   },
+  sesion:{},
   cartDB: [],
   stateAdminPanel: {
     allUsers: [],
@@ -40,7 +42,10 @@ const initialState = {
     allLikesEventId: [],
     putUrlStreaming: "",
     allTickets: [],
+    allTiketsByName: [],
     saveFindTicket: "",
+    userBanned: "",
+    allEmails: [],
   },
   token: "",
   ticket: {},
@@ -225,7 +230,12 @@ function reducers(state = initialState, { type, payload }) {
     case "POST_VENUE":
       return {
         ...state,
-        Venues: payload,
+        Venues: [...state.Venues, payload],
+      };
+    case "POST_STOCK":
+      return {
+        ...state,
+        Stock: [...state.Stock, payload],
       };
     case "VALIDATION_LOGIN":
       return {
@@ -403,6 +413,12 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         ticket: payload,
       };
+    case "SESION_DATA":
+      console.log(payload)
+      return {
+        ...state,
+        sesion: payload
+      }
     //GET_ALL_TICKETS
     case "GET_ALL_TICKETS":
       return {
@@ -438,6 +454,33 @@ function reducers(state = initialState, { type, payload }) {
           blackListByName: payload,
         },
       };
+    //VERIFY_USER_BANNED
+    case "VERIFY_USER_BANNED":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          userBanned: payload,
+        },
+      };
+    case "GET_NAME_BY_ORDER":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allTiketsByName: payload,
+        },
+      };
+    //GET_ALL_EMAILS_TICKET
+    case "GET_ALL_EMAILS_TICKET":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allEmails: payload,
+        },
+      };
+
     default:
       return state;
   }
