@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useCart } from "react-use-cart";
 import { useSelector, useDispatch } from "react-redux";
-import { getEvents, getCartDB, deleteCart, putCartDB } from "../../redux/actions";
+import { getEvents, getCartDB, deleteCart, putCartDB, checkout } from "../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 import Style from "./Cart.module.css";
+// import redirectToCheckout from "stripe";
 import { style } from "@mui/system";
 
 export default function Cart() {
@@ -34,7 +35,7 @@ export default function Cart() {
     userStorage = ""
   }
 
-  const {cartDB} = useSelector(state =>state);
+  const {cartDB, sesion} = useSelector(state =>state);
 
   useEffect(() => {
     dispatch(getEvents());
@@ -99,6 +100,13 @@ export default function Cart() {
   }
 }
 
+const handleCheckout =async () => {
+  let pago = []
+  cartDB.map(e => pago.push({price: e.idPrice, quantity: e.quantity}))
+   await dispatch(checkout(pago))
+   navigate("/cart/checkout")
+}
+
 let totalTodos;
 if(userStorage !== ""){
   totalTodos = cartDB.map(item => item.itemTotal).reduce((prev, curr) => prev + curr, 0);
@@ -107,7 +115,7 @@ if(userStorage !== ""){
  }
   return (
     <div className={Style.containerGeneral}>
-      <h3>Carrito ({cantidadEventos})</h3>
+      <div>Carrito ({cantidadEventos})</div>
       <ul>
         {ambos.map((item) => (
           
@@ -118,7 +126,6 @@ if(userStorage !== ""){
             </div>
            <div className={Style.tipo}>
              
-           
               <div >
                 Tipo de entrada:{" "}
                 {item.variant === "streamingPrice"
@@ -138,7 +145,6 @@ if(userStorage !== ""){
             {item.schedule.split("T")[1].split(":")[0] + ":" + item.schedule.split("T")[1].split(":")[1]} h</div>
             <div>Precio: ${item.price} Total: ${item.itemTotal === 0 ? null : item.itemTotal}</div>
             <div>
-
            
             <button
               className={Style.btn}
@@ -170,14 +176,11 @@ if(userStorage !== ""){
         <button
           className={Style.btncomprar}
           onClick={() =>
-            !user ? loginWithPopup() : alert("Pasarela de pagos")
+            !user ? loginWithPopup() : handleCheckout()
           }
         >
           Comprar todo
         </button>
-      {/* <button className={Style.btncomprar} onClick={() => navigate("/")}>
-        Volver
-      </button> */}
     </div>
   );
 }

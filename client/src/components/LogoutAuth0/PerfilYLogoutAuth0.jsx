@@ -50,7 +50,7 @@ export default function PerfilYLogoutAuth0(){
           <Link to={`/perfil/${registro[0]?.id}`} style={{ textDecoration: "none", color: "inherit" }}>
         <div className={style.box}>
             <img src={userdates?.picture} alt={userdates.name} className={style.img}/>
-       <p className={style.p}>{userdates.name}</p>
+       <p className={style.p}>{userdates.name.split([' '],[1])}</p>
        </div> 
        </Link> 
       /*  :  registro?.isAdmin===true ?

@@ -18,7 +18,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 /* import Streaming from "../Streaming/Streaming"; */
 import Carousel2 from "../Carousel2/Carousel2";
 import notfound from '../../img/no result.png'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faVideo } from '@fortawesome/free-solid-svg-icons'
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -71,6 +72,10 @@ export default function Home() {
     view= true;
   }
 
+  function handlerClicStreaming(){
+
+  }
+
 
   return (
     <div className={style.container}>
@@ -99,8 +104,11 @@ export default function Home() {
                         id={el.id}
                         />
                     </Link>
-                      <div className={Likes.find(e => e.idEvent === el.id) ? style.heart : style.heartWhite}>
+                    <div>
+                    </div>
+                      <div className={Likes.find(e => e.idEvent === el.id) ? style.heart : style.heartWhite} title="Agregar a favoritos">
                         <BsFillHeartFill size={30} onClick={()=> user ? dispatch(postLikes(el.id, User[0].id, Likes )) : loginWithPopup()}/>
+                        <Link to={`/streaming/${el.streaming}/${el.id}`}>{el.streaming ? <button className={style.containerStreaming} title="Ir a streaming"><FontAwesomeIcon icon={faVideo} /></button> : <></> }</Link>
                       </div>
                   </div>
                 );
@@ -125,7 +133,9 @@ export default function Home() {
                         id={el.id}
                         />
                     </Link>
-                    <div className={Likes.find(e => e.idEvent === el.id) ? style.heart2 : style.heart2White}><BsFillHeartFill size={20} onClick={()=> user ? dispatch(postLikes(el.id, User[0].id, Likes)) : loginWithPopup()}/></div>
+                    <div className={Likes.find(e => e.idEvent === el.id) ? style.heart2 : style.heart2White} title="Agregar a favoritos"><BsFillHeartFill size={20} onClick={()=> user ? dispatch(postLikes(el.id, User[0].id, Likes)) : loginWithPopup()}/>
+                    <Link to={`/streaming/${el.streaming}/${el.id}`}>{el.streaming ? <button className={style.containerStreaming} title="Ir a streaming"><FontAwesomeIcon icon={faVideo} /></button> : <></> }</Link>
+                    </div>
                   </div>
                 );
               })}
