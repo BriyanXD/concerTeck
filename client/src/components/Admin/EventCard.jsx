@@ -1,6 +1,6 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux";
-import { findEvent, getEvents, deleteEvents, activeModalEventsAdminPanel } from "../../redux/actions";
+import { findEvent, getEvents, deleteEvents, activeModalEventsAdminPanel, searchEventIDEmails } from "../../redux/actions";
 import swal from 'sweetalert'
 import Style from "./EventCard.module.css"
 
@@ -15,6 +15,7 @@ export default function EventCard({id,name}){
 function filterEvent(){
     dispatch(findEvent(allevents, id))
     dispatch(activeModalEventsAdminPanel(true))
+    dispatch(searchEventIDEmails(id))
 }
 
 async function handlerDeleteEvent(){
