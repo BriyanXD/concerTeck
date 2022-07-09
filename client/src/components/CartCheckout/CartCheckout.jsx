@@ -5,7 +5,7 @@ export default function CartCheckout () {
     const url = useSelector(state => state.sesion.url);
     return(<div>
             <h1>Detalles de la compra</h1>
-            <a href={`${url}`} target="_blank">
+            <a href={`${url}`}>
             <button>Siguiente</button>
             </a> 
         </div>)

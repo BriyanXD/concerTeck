@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCartDB, ActualizacionStock } from '../../redux/actions';
+import { getCartDB, ActualizacionStock, postTicket } from '../../redux/actions';
+import { useParams } from 'react-router-dom';
 
 export default function SuccessOrCancel () {
 
@@ -9,6 +10,7 @@ export default function SuccessOrCancel () {
     const dispatch = useDispatch();
     const user = localStorage.getItem("user");
     const tempUser = JSON.parse(user)
+    const { id } = useParams();
 
     useEffect(() => {
         if(tempUser){
@@ -22,7 +24,11 @@ export default function SuccessOrCancel () {
     
         if (query.get("success")) {
           setMessage("Order placed! You will receive an email confirmation.");
-          dispatch(ActualizacionStock(cartDB))
+          async function prueba () {
+            await cartDB.map((e) =>  dispatch(postTicket(e)));
+          } 
+          prueba();
+          dispatch(ActualizacionStock(cartDB));
         }
     
         if (query.get("canceled")) {

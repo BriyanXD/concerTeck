@@ -5,6 +5,7 @@ const stripe = require("stripe")(STRIPE_KEY);
 const Events = require("../models/Events");
 const TicketStock = require("../models/TicketStock");
 const User = require("../models/User");
+const { ticketVoucher } = require("./TicketVoucher");
 let priceId = "";
 
 async function getTicketByID(req, res) {
@@ -58,21 +59,33 @@ async function getTicketByID(req, res) {
 }
 
 async function postTicket(req, res) {
-  const { name, price, eventId, userId } = req.body;
+  const { name, price, idEvent, idUser, quantity } = req.body;
+  console.log("postTicket", name, price, idEvent, idUser, quantity)
   try {
-    if (name && price && eventId && userId) {
-      const saveEvent = await Events.findByPk(eventId);
-      const saveUser = await User.findByPk(userId);
-      const newTicket = await Ticket.create({
-        name: name,
-        price: price,
-        eventId: eventId,
-        userId: userId,
-        eventName: saveEvent.name || "undefined",
-        email: saveUser.email || "undefined",
-        userName: saveUser.name || "undefined",
-      });
-      res.json({ newTicket });
+    if (name && price && idEvent && idUser) {
+      const saveEvent = await Events.findByPk(idEvent);
+      const saveUser = await User.findByPk(idUser);
+      const newTicket = []
+      // for(let i = 0; i < quantity; i++){
+      //   console.log("posicion", i)
+      let i = 0;
+      while(i !== quantity){
+        let variable = await Ticket.create({
+          name: name,
+          price: price,
+          eventId: idEvent,
+          userId: idUser,
+          eventName: saveEvent.name || "undefined",
+          email: saveUser.email || "undefined",
+          userName: saveUser.name || "undefined",
+        })
+       await ticketVoucher(variable.id)
+       newTicket.push(variable)
+        i++
+      }
+        console.log("Pasoooo D")
+      console.log(newTicket, "NewTicket!!!!!!!")
+      res.json(newTicket);
     } else {
       res.status(401).send({ error: "Faltan datos" });
     }

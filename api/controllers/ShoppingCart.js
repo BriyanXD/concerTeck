@@ -29,7 +29,8 @@ async function postShoppingCart(req, res) {
     itemTotal,
     price,
     performerImage,
-    idPrice
+    idPrice,
+    name
   } = req.body;
   try {
     if (idUser && idEvent) {
@@ -43,7 +44,8 @@ async function postShoppingCart(req, res) {
         performerImage: performerImage,
         schedule:schedule,
         variant:variant,
-        idPrice
+        idPrice,
+        name: name
       });
       return res.status(200).json(allDateShoppingCart);
     } else {
