@@ -413,14 +413,12 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         ticket: payload,
       };
-<<<<<<< HEAD
     case "SESION_DATA":
       console.log(payload)
       return {
         ...state,
         sesion: payload
       }
-=======
     //GET_ALL_TICKETS
     case "GET_ALL_TICKETS":
       return {
@@ -483,7 +481,6 @@ function reducers(state = initialState, { type, payload }) {
         },
       };
 
->>>>>>> 574d7c3a91d75b1e52c9c8f3bdb185c1486f2cfc
     default:
       return state;
   }

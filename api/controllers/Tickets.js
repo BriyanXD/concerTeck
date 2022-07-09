@@ -150,50 +150,51 @@ async function deleteTicket(req, res) {
 //   }
 // }
 
-async function postCreatEventAndPrice(req, res, next) {
+async function postCreatEventAndPrice(event) {
   try {
-    const id = req.body.id;
-    const findEvent = await Events.findByPk(id, {
-      include: [{ model: TicketStock, as: "stock" }],
-    });
-    const idStockEncotrado = await TicketStock.findByPk(findEvent.stockId);
+    // const id = event.id;
+    // const findEvent = await Events.findByPk(id, {
+    //   include: [{ model: TicketStock, as: "stock" }],
+    // });
+    const idStockEncotrado = await TicketStock.findByPk(event[0].stockId);
+    console.log("🚀 ~ file: Tickets.js ~ line 160 ~ postCreatEventAndPrice ~ idStockEncotrado", idStockEncotrado)
     const product = await stripe.products.create({
-      name: findEvent.name,
-      description: findEvent.description,
-      images: [findEvent.performerImage],
+      name: event[0].name,
+      description: event[0].description,
+      images: [event[0].performerImage],
     });
     if (product) {
       const price = await stripe.prices.create({
         product: product.id,
-        unit_amount: findEvent.stock.streamingPrice * 100,
+        unit_amount: idStockEncotrado.streamingPrice * 100,
         currency: "ars",
       });
       await idStockEncotrado.update({idStreamingPrice: price.id})
       const price2 = await stripe.prices.create({
         product: product.id,
-        unit_amount: findEvent.stock.vipPrice * 100,
+        unit_amount: idStockEncotrado.vipPrice * 100,
         currency: "ars",
       });
       await idStockEncotrado.update({idVipPrice: price2.id})
       const price3 = await stripe.prices.create({
         product: product.id,
-        unit_amount: findEvent.stock.generalLateralPrice * 100,
+        unit_amount: idStockEncotrado.generalLateralPrice * 100,
         currency: "ars",
       });
       await idStockEncotrado.update({idGeneralLateralPrice: price3.id})
       const price4 = await stripe.prices.create({
         product: product.id,
-        unit_amount: findEvent.stock.generalPrice * 100,
+        unit_amount: idStockEncotrado.generalPrice * 100,
         currency: "ars",
       });
       await idStockEncotrado.update({idGeneralPrice: price4.id})
       const price5 = await stripe.prices.create({
         product: product.id,
-        unit_amount: findEvent.stock.palcoPrice * 100,
+        unit_amount: idStockEncotrado.palcoPrice * 100,
         currency: "ars",
       });
       await idStockEncotrado.update({idPalcoPrice: price5.id})
-      res.send("Todo salio bien")
+      return ("Todo salio bien")
     } else {
       console.log("Evento No tiene stock relacionado");
     }

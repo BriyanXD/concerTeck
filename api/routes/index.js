@@ -101,7 +101,7 @@ routes.put("/producer", verifyToken, isAdmin, putProducer);
 routes.delete("/producer", verifyToken, isAdmin, deleteProducer); */
 
 routes.get("/events", loadEventsAndGetEvents);
-routes.post("/events", verifyToken, isAdmin, postEvents);
+routes.post("/events", postEvents);
 //routes.post("/events", postEvents); //ruta de prueba
 routes.put("/events", verifyToken, isAdmin, putEvents);
 routes.delete("/events", verifyToken, isAdmin, deleteEvent); //isAdmin
