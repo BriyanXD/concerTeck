@@ -1,5 +1,5 @@
 .btnGenre{
-    background-color: #FF4C29;
+    background-color: var(--color4);
     width: 7rem;
     height: 1.8rem;
     text-align: center;
@@ -9,6 +9,7 @@
     font-size: 14px;
     margin-left: 1rem;
     border-color: transparent;
+    cursor: pointer;
 }
 
 .btnGenre:hover{

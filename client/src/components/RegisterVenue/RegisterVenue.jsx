@@ -6,7 +6,8 @@ import swal from 'sweetalert';
 import style from './RegisterVenue.module.css'
 
 
-export default function RegisterVenue(){
+
+export default function RegisterVenue({handleClickNewVenue}){
     const dispatch = useDispatch();
     const [activeVenue, setActiveVenue] = useState(true)
     const [mapCord, setMapCord] = useState({
@@ -117,6 +118,7 @@ export default function RegisterVenue(){
 
     const handleAddVenue = async(e) =>{
         e.preventDefault();
+        
         await setVenue({
             ...venue,
             minStock: Math.floor((venue.maxStockGeneral + (venue.maxStockGeneralLateral || 0) + (venue.maxStockPalco || 0) + (venue.maxStockStreaming || 0) + (venue.maxStockVIP || 0)) *0.7),
@@ -182,6 +184,7 @@ export default function RegisterVenue(){
             });
             setActiveVenue(!activeVenue)
         }
+        handleClickNewVenue()
     };
 
     const handleBlurMap = (e) => {
@@ -259,20 +262,7 @@ export default function RegisterVenue(){
                 })
             }    
         }
-        //validar mapa
-        // if(e.target.name === "map"){
-        //     if(e.target.value === ""){
-        //         setError({
-        //             ...error,
-        //             [e.target.name]: "Ingrese la direccion del establecimiento"
-        //         })
-        //     } else {
-        //         setError({
-        //             ...error,
-        //             [e.target.name]: ""
-        //         })
-        //     }    
-        // }
+
         //validar stock maximo general
         if(e.target.name === "maxStockGeneral"){
             if(e.target.value === 0){
@@ -361,7 +351,6 @@ export default function RegisterVenue(){
     //console.log("SETEANDO STOCK: ", stock);
     
     return(<div> {activeVenue ? <div>
-        {/* <div>Nombre del Establecimiento</div> */}
         <div> 
             <input 
                 name="name" 
@@ -375,7 +364,6 @@ export default function RegisterVenue(){
         </div>
 
         <div> 
-            {/* <div>Ubicación</div> */}
             <input 
                 name="address" 
                 value={venue.address}  
@@ -419,7 +407,7 @@ export default function RegisterVenue(){
                 value={venue.maxStockGeneral} 
                 onChange={handleVenue} 
                 onBlur={handleBlurVenue} 
-                type="text"
+                type="number"
                 className={error.maxStockGeneral?.length > 0 ? style.error : style.inputText } 
                 placeholder={error.maxStockGeneral?.length > 0 ? error.maxStockGeneral : "Cantidad máxima general"} 
             />
@@ -431,7 +419,7 @@ export default function RegisterVenue(){
                 name="maxStockGeneralLateral" 
                 value={venue.maxStockGeneralLateral}  
                 onChange={handleVenue} 
-                type="text" 
+                type="number" 
                 className={error.maxStockGeneralLateral?.length > 0 ? style.error : style.inputText }
                 placeholder={error.maxStockGeneralLateral?.length > 0 ? error.maxStockGeneralLateral : "Cantidad máxima de laterales"} 
             />
@@ -443,7 +431,7 @@ export default function RegisterVenue(){
                 name="maxStockPalco" 
                 value={venue.maxStockPalco}  
                 onChange={handleVenue} 
-                type="text"
+                type="number"
                 className={error.maxStockPalco?.length > 0 ? style.error : style.inputText }
                 placeholder={error.maxStockPalco?.length > 0 ? error.maxStockPalco : "Cantidad máxima de palco"}  
             />
@@ -455,7 +443,7 @@ export default function RegisterVenue(){
                 name="maxStockStreaming" 
                 value={venue.maxStockStreaming}  
                 onChange={handleVenue} 
-                type="text"
+                type="number"
                 className={error.maxStockStreaming?.length > 0 ? style.error : style.inputText } 
                 placeholder={error.maxStockStreaming?.length > 0 ? error.maxStockStreaming : "Cantidad máxima de streaming"}
             />
@@ -467,7 +455,7 @@ export default function RegisterVenue(){
                 name="maxStockVIP" 
                 value={venue.maxStockVIP}  
                 onChange={handleVenue} 
-                type="text"
+                type="number"
                 className={error.maxStockVIP?.length > 0 ? style.error : style.inputText }
                 placeholder={error.maxStockVIP?.length > 0 ? error.maxStockVIP : "Cantidad máxima de VIP"} 
             />
