@@ -15,6 +15,7 @@
     height: 50px;
     margin: 1vw;
     margin-bottom: 4.5vw;
+    margin-top: 2.3vw;
 
 }
 
@@ -22,6 +23,7 @@
     color: white;
     margin: 3vh ;
     font-size: 13px;
+    margin-top: 2.5vw;
     
 }
 
@@ -34,11 +36,12 @@ text-align: center;
 border-radius: 3px;
 margin-bottom: 5vw;
 font-size: 15px;
+
 /* margin-right: 35px; */
 border: none;
 /* margin: 13px; */
 cursor: pointer;
-margin-top: 3vh;
+margin-top: 5.5vh;
 transition: box-shadow 0.25s ease 0s;
 }
 
