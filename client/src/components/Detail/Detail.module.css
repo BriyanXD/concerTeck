@@ -8,7 +8,8 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    background: url(../../img/bk.jpg);
+    background: url(../../img/felix-besombes-9qUEBg1qVKc-unsplash.jpg);
+    background-size: cover;
 }
 
 .card{

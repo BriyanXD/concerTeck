@@ -5,7 +5,8 @@
     justify-content: space-between;
     width: 100vw;
     align-items: center;
-    background: url(../../img/bk.jpg);
+    background: url(../../img/felix-besombes-9qUEBg1qVKc-unsplash.jpg);
+    background-size: cover;
 }
 .eventcontainer{
     display: flex;
