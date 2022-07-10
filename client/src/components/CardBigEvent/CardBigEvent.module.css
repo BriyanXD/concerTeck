@@ -10,7 +10,7 @@
     background-color: rgba(255, 255, 255, 0.1); 
     backdrop-filter: blur(0.3rem); 
     border: solid 0.08rem rgba(255, 255, 255, 0.3);
-    box-shadow:  0.3rem 0.3rem 0.rem rgba(0, 0, 0, 0.32);
+    box-shadow:  0.3rem 0.3rem 0.8rem rgba(0, 0, 0, 0.32);
     
     width: 21rem;
     height: 29rem;
