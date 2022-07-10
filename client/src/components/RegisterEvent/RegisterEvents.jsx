@@ -28,6 +28,10 @@ export default function RegisterEvent(){
     const[selectVenuesState, setSelectVenuesState] = useState(false)
 
     const handleClickNewVenue= (value) => {
+        setEvent({
+            ...event,
+            venueId: ''
+        })
         setSelectVenuesState(!selectVenuesState)
         setActiveVenue(value)
     }
@@ -840,7 +844,7 @@ export default function RegisterEvent(){
             </div>
             <div className={style.filter}>
                 <select name="venueId" disabled={selectVenuesState} onChange={handleChange} className={style.genreLocation}>
-                    <option>Lugares</option>
+                    <option value='lugares'>Lugares</option>
                     {venues.map(v =>(<option key={v.id} value={v.id}>{v.name}</option>))}
                 </select>
                 {errors.venueId && <label>{errors.venueId}</label>}
@@ -854,7 +858,7 @@ export default function RegisterEvent(){
             <div>{activeVenue ? <RegisterVenue handleClickNewVenue={handleClickNewVenue}/>:null}</div>
             
             {/* <div> <button type="button" onClick={()=>setActiveStock(!activeStock)}>Desplegar seleccion de stock y precios</button> </div> */}
-            <div>{event.venueId !== "" && foundVenue !== null ?
+            <div>{event.venueId === "lugares" ? "seleccione un establecimiento" : event.venueId !== "" && foundVenue !== null ?
 
             <div>
                 <h3 className={style.titlePrice}>Entradas y Precios</h3>
