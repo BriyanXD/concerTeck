@@ -823,7 +823,7 @@ export function ActualizacionStock(descontar){
 export function ticketVoucher (id){
   return async function (dispatch) {
     try {
-      const tick = axios.post(`http://localhost:3001/api/voucher?${id}`)
+      const tick = await axios.post(`http://localhost:3001/api/voucher?${id}`)
       return dispatch ({
         type: "TICKET_VOUCHER",
         payload: tick.data

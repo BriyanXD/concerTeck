@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCartDB, ActualizacionStock } from '../../redux/actions';
+import { useParams } from 'react-router-dom';
+import { getCartDB, ActualizacionStock, ticketVoucher } from '../../redux/actions';
 
 export default function SuccessOrCancel () {
-
+    const {id} = useParams();
     const [message, setMessage] = useState("")
     const { cartDB } = useSelector(state => state);
     const dispatch = useDispatch();
@@ -22,7 +23,8 @@ export default function SuccessOrCancel () {
     
         if (query.get("success")) {
           setMessage("Order placed! You will receive an email confirmation.");
-          dispatch(ActualizacionStock(cartDB))
+          dispatch(ActualizacionStock(cartDB));
+          dispatch(ticketVoucher(id));
         }
     
         if (query.get("canceled")) {
