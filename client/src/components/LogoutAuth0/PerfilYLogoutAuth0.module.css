@@ -1,3 +1,5 @@
+@import url(../../index.css);
+
 .container{
     display: flex;
     flex-direction: row;
@@ -11,32 +13,42 @@
 
 .img{
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 3vw;
+    height: 3vw;
     margin: 1vw;
     margin-bottom: 4.5vw;
+    margin-top: 2.3vw;
 
 }
 
 .p{
-    color: white;
-    margin: 3vh ;
-    font-size: 13px;
+    color: var(--color4);
+    margin: 1vw;
+    margin-top: 2.5vh ;
+    font-size: 0.9vw;
     
 }
 
 .button{
 margin-right: 2vw;
-background-color: #FF4C29;
+background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70));
 width: 7vw;
 height: 2vw;
 text-align: center;
 border-radius: 3px;
-margin-bottom: 5vw;
-font-size: 15px;
+
+font-size: 1vw;
+color: #EEEEEE;
 /* margin-right: 35px; */
-border-color: #FF4C29;
+border: none;
 /* margin: 13px; */
 cursor: pointer;
-margin-top: 3vh;
+margin-top: 5.5vh;
+transition: box-shadow 0.25s ease 0s;
+}
+
+.button:hover,
+.button:focus {
+ background: linear-gradient(117deg, rgb(248, 137, 73), rgb(248, 82, 49));
+ box-shadow: 0 0.1rem 0.8rem rgb(254, 100, 70);
 }

@@ -23,6 +23,7 @@ const initialState = {
     isVisbleModal: false,
     eventsForCalendar: [],
   },
+  sesion:{},
   cartDB: [],
   stateAdminPanel: {
     allUsers: [],
@@ -44,6 +45,7 @@ const initialState = {
     allTiketsByName: [],
     saveFindTicket: "",
     userBanned: "",
+    allEmails: [],
   },
   token: "",
   ticket: {},
@@ -411,6 +413,12 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         ticket: payload,
       };
+    case "SESION_DATA":
+      console.log(payload)
+      return {
+        ...state,
+        sesion: payload
+      }
     //GET_ALL_TICKETS
     case "GET_ALL_TICKETS":
       return {
@@ -461,6 +469,15 @@ function reducers(state = initialState, { type, payload }) {
         stateAdminPanel: {
           ...state.stateAdminPanel,
           allTiketsByName: payload,
+        },
+      };
+    //GET_ALL_EMAILS_TICKET
+    case "GET_ALL_EMAILS_TICKET":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allEmails: payload,
         },
       };
     default:

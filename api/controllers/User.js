@@ -25,6 +25,7 @@ async function createUser(req, res) {
             username: username,
             email: email,
           },
+          include: { model: Ticket },
         });
         if (newUser) {
           let token = jwt.sign({ user: newUser }, AUTH_SECRET, {
@@ -45,8 +46,8 @@ async function createUser(req, res) {
 // "No se ha logrado crear el usuario"
 async function getUser(req, res) {
   const DBusers = await User.findAll({ include: { model: Ticket } });
-   const { username, password,id } = req.query; 
-   const idUser = await User.findByPk(id);
+  const { username, password, id } = req.query;
+  const idUser = await User.findByPk(id);
   try {
     if (username) {
       const filt = DBusers.filter((user) =>
@@ -55,18 +56,18 @@ async function getUser(req, res) {
       if (filt.length > 0) {
         return res.send(filt);
       }
-    }else if(idUser){
-        return res.send(idUser)
-    //  if (username && password) {
-    //   const userFound = DBusers.find((user) => {
-    //     if (user.username === username && user.password === password)
-    //       return user;
-    //   });
-    //   return res.send(userFound);
-    // } 
-  }else{
-    return res.send(DBusers);
-  }
+    } else if (idUser) {
+      return res.send(idUser);
+      //  if (username && password) {
+      //   const userFound = DBusers.find((user) => {
+      //     if (user.username === username && user.password === password)
+      //       return user;
+      //   });
+      //   return res.send(userFound);
+      // }
+    } else {
+      return res.send(DBusers);
+    }
   } catch (error) {
     return res.status(404).send({ error: error.message });
   }

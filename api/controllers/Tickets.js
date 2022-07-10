@@ -1,26 +1,41 @@
 const Ticket = require("../models/Ticket");
-require("dotenv").config()
-const { STRIPE_KEY } = process.env
-const stripe = require('stripe')(STRIPE_KEY);
+require("dotenv").config();
+const { STRIPE_KEY } = process.env;
+const stripe = require("stripe")(STRIPE_KEY);
 const Events = require("../models/Events");
 const TicketStock = require("../models/TicketStock");
-const User = require('../models/User');
-let priceId = ""
-
+const User = require("../models/User");
+const { ticketVoucher } = require("./TicketVoucher");
+let priceId = "";
 
 async function getTicketByID(req, res) {
-  const { name } = req.query;
-  const { id } = req.query;
+  const { name, id, eventId } = req.query;
   const { userId } = req.body;
+
   const allTickets = await Ticket.findAll();
   try {
+    if (eventId) {
+      const AllUserMatchIdEvent = await Ticket.findAll({
+        where: { eventId: eventId },
+      });
+      const emails = [];
+      AllUserMatchIdEvent.filter((e) => {
+        if (!emails.find((a) => a === e.email)) emails.push(e.email);
+      });
+      console.log(emails);
+      if (emails) {
+        return res.send(emails);
+      } else {
+        return res.status(404).json({ error: "No hay emails en este evento" });
+      }
+    }
     if (name) {
       const nameUserOrder = allTickets.filter((n) =>
         n.userName.toLowerCase().includes(name.toLowerCase())
-      )      
+      );
       if (nameUserOrder.length >= 1) {
         return res.send(nameUserOrder);
-      } 
+      }
     }
     if (id) {
       const findTicketForID = await Ticket.findByPk(id, {
@@ -43,28 +58,37 @@ async function getTicketByID(req, res) {
   }
 }
 
-
 async function postTicket(req, res) {
-  const { name, price, eventId, userId } = req.body;
+  const { name, price, idEvent, idUser, quantity } = req.body;
+  console.log("postTicket", name, price, idEvent, idUser, quantity)
   try {
-    if (name && price && eventId && userId) {
-      const saveEvent = await Events.findByPk(eventId);
-      const saveUser = await User.findByPk(userId);
-      const newTicket = await Ticket.create({
-        name: name,
-        price: price,
-        eventId: eventId,
-        userId: userId,
-        eventName: saveEvent.name || "undefined",
-        userName: saveUser.name || "undefined",
-      });
+    if (name && price && idEvent && idUser) {
+      const saveEvent = await Events.findByPk(idEvent);
+      const saveUser = await User.findByPk(idUser);
+      const newTicket = []
+      let i = 0;
+      while(i !== quantity){
+        let variable = await Ticket.create({
+          name: name,
+          price: price,
+          eventId: idEvent,
+          userId: idUser,
+          eventName: saveEvent.name || "undefined",
+          email: saveUser.email || "undefined",
+          userName: saveUser.name || "undefined",
+        })
+       await ticketVoucher(variable.id)
+       newTicket.push(variable)
+        i++
+      }
+      res.json(newTicket);
+    } else {
+      res.status(401).send({ error: "Faltan datos" });
     }
-  res.json({newTicket});
+  } catch (error) {
+    res.status(401).send({ error: error.message });
   }
-  catch(error){
-    res.status(401).send({error: error.message})
-  }
-  } 
+}
 
 async function deleteTicket(req, res) {
   const { id } = req.body;
@@ -81,148 +105,118 @@ async function deleteTicket(req, res) {
   }
 }
 
-async function postCreatEventAndPrice(req, res, next){
+// async function postCreatEventAndPrice(req, res, next) {
+//   try {
+//     const findEvent = await Events.findAll();
+//     for (let i = 4; i < 8; i++) {
+//       const product = await stripe.products.create({
+//         name: findEvent[i].name,
+//         description: findEvent[i].description,
+//         images: [findEvent[i].performerImage],
+//       });
+//       if (product) {
+//         const findStock = await Events.findByPk(findEvent[i].id, {
+//           include: [{ model: TicketStock, as: "stock" }],
+//         });
+//         if (findStock) {
+//           const price1 = await stripe.prices.create({
+//             product: product.id,
+//             unit_amount: findStock.stock.streamingPrice * 100,
+//             currency: "ars",
+//           });
+//           //logica de relacion de tablas price/idprice/event
 
-  try {
-    const findEvent = await Events.findAll()
-    for (let i = 4; i < 8 ; i++ ) {
-      const product = await stripe.products.create({
-        name: findEvent[i].name,
-        description: findEvent[i].description ,
-        images: [findEvent[i].performerImage]
-      });
-      if(product){
-        console.log("🚀 ~ file: Tickets.js ~ line 108 ~ getRaro ~ product", product)
-        const findStock = await Events.findByPk(findEvent[i].id,{include:[{ model: TicketStock, as: "stock" },],});
-        if(findStock){
-          const price1 = await stripe.prices.create({
-            product: product.id,
-            unit_amount: (findStock.stock.streamingPrice)*100,
-            currency: 'ars',
-          });
-          //logica de relacion de tablas price/idprice/event
-        
-          const price2 = await stripe.prices.create({
-            product: product.id,
-            unit_amount: (findStock.stock.vipPrice)*100,
-            currency: 'ars',
-          });
-        
-          const price3 = await stripe.prices.create({
-            product: product.id,
-            unit_amount: (findStock.stock.generalLateralPrice)*100,
-            currency: 'ars',
-          });
-      
-      
-          const price4 = await stripe.prices.create({
-            product: product.id,
-            unit_amount: (findStock.stock.generalPrice)*100,
-            currency: 'ars',
-          });
-  
-          const price5 = await stripe.prices.create({
-            product: product.id,
-            unit_amount: (findStock.stock.palcoPrice)*100,
-            currency: 'ars',
-          });
-        }else{
-          console.log("Evento No tiene stock relacionado")
-        }
-      }
-    }
+//           const price2 = await stripe.prices.create({
+//             product: product.id,
+//             unit_amount: findStock.stock.vipPrice * 100,
+//             currency: "ars",
+//           });
 
-  } catch (error) {
-    console.log(error)
-  }
-  // const findEvent = await Events.findAll()
-  // findEvent.map(async event =>{
-    // const product = await stripe.products.create({
-    //   name: "Divididos",
-    //   description: "adscsdsfd" ,
-    //   images: []
-    // });
-  // })
-  // console.log(product)
+//           const price3 = await stripe.prices.create({
+//             product: product.id,
+//             unit_amount: findStock.stock.generalLateralPrice * 100,
+//             currency: "ars",
+//           });
 
+//           const price4 = await stripe.prices.create({
+//             product: product.id,
+//             unit_amount: findStock.stock.generalPrice * 100,
+//             currency: "ars",
+//           });
 
-  // const session = await stripe.checkout.sessions.create({
-  //   line_items: [{
-  //     price: 'price_1LJ01eEZzNuiTFe6CHhOssWk',
-  //     quantity: 1,
-  //   },
-  // {
-  //   price: 'price_1LJ01bEZzNuiTFe6YGzxVr89',
-  //   quantity: 3
-  // }],
-  //   mode: 'payment',
-  //   success_url: 'https://localhost:3001/',
-  //   cancel_url: 'https://localhost:3001/',
-  // });
-  // console.log(session)
- 
-  // res.send("se creo1")
-  // console.log(price)
-}
-
-// async function getRaro2(data, product){
-
-//   const findStock = await TicketStock.findByPk(data)
-//     const price1 = await stripe.prices.create({
-//       product: product.id,
-//       unit_amount: findStock.stock.streamingPrice,
-//       currency: 'ars',
-//     });
-//     //logica de relacion de tablas price/idprice/event
-  
-//     const price2 = await stripe.prices.create({
-//       product: product.id,
-//       unit_amount: findStock.stock.vipPrice,
-//       currency: 'ars',
-//     });
-  
-//     const price3 = await stripe.prices.create({
-//       product: product.id,
-//       unit_amount: findStock.stock.generalLateralPrice,
-//       currency: 'ars',
-//     });
-
-
-//     const price4 = await stripe.prices.create({
-//       product: product.id,
-//       unit_amount: findStock.stock.generalPrice,
-//       currency: 'ars',
-//     });
-
-
-  
-//     const price5 = await stripe.prices.create({
-//       product: product.id,
-//       unit_amount: findStock.stock.palcoPrice,
-//       currency: 'ars',
-//     });
-
-//     console.log(price1)
-//     console.log(price2)
-//     console.log(price3)
-
-//     res.send("creado")
+//           const price5 = await stripe.prices.create({
+//             product: product.id,
+//             unit_amount: findStock.stock.palcoPrice * 100,
+//             currency: "ars",
+//           });
+//         } else {
+//           console.log("Evento No tiene stock relacionado");
+//         }
+//       }
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
 // }
 
-async function postCheckout(req, res, next){
-  const { line_items } = req.body
-
-  const session = await stripe.checkout.sessions.create({
-    line_items,
-    mode: 'payment',
-    success_url: 'https://localhost:3001/',
-    cancel_url: 'https://localhost:3001/',
-  });
-  console.log(session)
-  res.send("se creo2")
+async function postCreatEventAndPrice(event) {
+  try {
+    const idStockEncotrado = await TicketStock.findByPk(event[0].stockId);
+    const product = await stripe.products.create({
+      name: event[0].name,
+      description: event[0].description,
+      images: [event[0].performerImage],
+    });
+    if (product) {
+      const price = await stripe.prices.create({
+        product: product.id,
+        unit_amount: idStockEncotrado.streamingPrice * 100,
+        currency: "ars",
+      });
+      await idStockEncotrado.update({idStreamingPrice: price.id})
+      const price2 = await stripe.prices.create({
+        product: product.id,
+        unit_amount: idStockEncotrado.vipPrice * 100,
+        currency: "ars",
+      });
+      await idStockEncotrado.update({idVipPrice: price2.id})
+      const price3 = await stripe.prices.create({
+        product: product.id,
+        unit_amount: idStockEncotrado.generalLateralPrice * 100,
+        currency: "ars",
+      });
+      await idStockEncotrado.update({idGeneralLateralPrice: price3.id})
+      const price4 = await stripe.prices.create({
+        product: product.id,
+        unit_amount: idStockEncotrado.generalPrice * 100,
+        currency: "ars",
+      });
+      await idStockEncotrado.update({idGeneralPrice: price4.id})
+      const price5 = await stripe.prices.create({
+        product: product.id,
+        unit_amount: idStockEncotrado.palcoPrice * 100,
+        currency: "ars",
+      });
+      await idStockEncotrado.update({idPalcoPrice: price5.id})
+      return ("Todo salio bien")
+    } else {
+      console.log("Evento No tiene stock relacionado");
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
-
+async function postCheckout(req, res, next) {
+  const { line_items } = req.body;
+  const session = await stripe.checkout.sessions.create({
+    line_items: line_items,
+    mode: "payment",
+    success_url: "http://localhost:3000/success?success=true",
+    cancel_url: "http://localhost:3000/success?canceled=true",
+  });
+  res.json(session)
+}
 
 module.exports = {
   getTicketByID,

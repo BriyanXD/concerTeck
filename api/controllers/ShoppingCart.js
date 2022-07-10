@@ -1,4 +1,6 @@
 const ShoppingCart = require("../models/ShoppingCart.js");
+const TicketStock = require("../models/TicketStock.js");
+const Events = require("../models/Events");
 
 async function getShoppingCart(req, res) {
   const { idUser } = req.query;
@@ -27,6 +29,8 @@ async function postShoppingCart(req, res) {
     itemTotal,
     price,
     performerImage,
+    idPrice,
+    name
   } = req.body;
   try {
     if (idUser && idEvent) {
@@ -39,7 +43,9 @@ async function postShoppingCart(req, res) {
         itemTotal: price,
         performerImage: performerImage,
         schedule:schedule,
-        variant:variant
+        variant:variant,
+        idPrice,
+        name: name
       });
       return res.status(200).json(allDateShoppingCart);
     } else {
@@ -106,9 +112,36 @@ async function putShoppingCart(req, res) {
   } catch (error) {}
 }
 
+
+async function restarStock(req, res) {
+  const {descontar} = req.body
+  let eliminar = [];
+  try{
+    descontar.map(async e => {
+      eliminar.push(e.id)
+      const encontrado = await Events.findByPk(e.idEvent)
+      const stock = await TicketStock.findByPk(encontrado.stockId)
+       if(e.variant === "generalLateralPrice"){
+       await stock.update({stockGeneralLateral: stock.stockGeneralLateral - e.quantity})
+       }else if (e.variant === "generalPrice"){
+       await stock.update({stockGeneral: stock.stockGeneral - e.quantity})
+       }else if (e.variant === "streamingPrice"){      
+       await stock.update({stockStreaming: stock.stockStreaming - e.quantity})
+       }else if (e.variant === "vipPrice"){
+       await stock.update({stockkVIP: stock.stockkVIP - e.quantity})
+       }else if (e.variant === "palcoPrice"){
+       await stock.update({stockPalco: stock.stockPalco - e.quantity})
+       }})
+       await ShoppingCart.destroy({where:{id:eliminar}})
+    res.send("Se restaron correctamente todos los tickets de sus respectivos eventos")
+  }catch(error){
+    console.log(error.message)
+  }
+}
 module.exports = {
   getShoppingCart,
   postShoppingCart,
   deleteShoppingCart,
   putShoppingCart,
+  restarStock
 };

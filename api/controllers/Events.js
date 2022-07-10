@@ -3,6 +3,7 @@ const Event = require("../models/Events");
 const Genre = require("../models/Genre");
 const Venue = require("../models/Venue");
 const TicketStock = require("../models/TicketStock");
+const {postCreatEventAndPrice} = require("./Tickets")
 const e = require("express");
 
 async function chargeEvents() {
@@ -158,19 +159,19 @@ async function postEvents(req, res) {
             stockId: stockId,
           },
         })
-          .then((response) => { 
-            console.log("SE CREO EL EVENTO")
-            //response.addVenue(saveVenue.id)
-            //console.log("algo fallo en el ADDVENUE")
+          if(eventCreated){
+            console.log("SE CREO EL EVENTO", eventCreated)
+            await postCreatEventAndPrice(eventCreated)
             return res.status(201).json({ message: "Evento creado con exito" });
-          })
-          .catch((error) => {
+          }else{
             console.log("ALGO FALLO NO SE PUDO CREAR ELE VENTO")
             return res
-              .status(404)
-              .json({ error: "No se puedo crear el evento" });
-          });
-      } else {
+            .status(404)
+            .json({ error: "No se puedo crear el evento" });
+          }
+            //response.addVenue(saveVenue.id)
+            //console.log("algo fallo en el ADDVENUE")
+          } else {
         //console.log("No se puedo crear el genero para el evento")
         return res
           .status(404)
