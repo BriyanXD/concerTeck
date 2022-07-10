@@ -13,6 +13,7 @@ export default function NavBarDetail(){
     function handlerLogin(){
         loginWithPopup()
       }
+      localStorage.setItem("userdates",JSON.stringify(user))
     
     return(
         <div className={style.container}>
