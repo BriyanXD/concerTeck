@@ -810,7 +810,6 @@ export function checkout(line_items){
 }
 
 export function ActualizacionStock(descontar){
-  console.log("🚀 ~ file: actions.js ~ line 690 ~ ActualizacionStock ~ descontar", descontar)
   return async function (dispatch){
     try{
       const actual = await axios.put(`${url}/api/cart/update`, {descontar})
@@ -833,6 +832,31 @@ export function ticketVoucher (id){
   }
 }
 }
+
+// export function ticketVoucher (id){
+//   return async function (dispatch) {
+//     try {
+//       const tick = await axios.post(`http://localhost:3001/api/voucher?${id}`)
+//       return dispatch ({
+//         type: "TICKET_VOUCHER",
+//         payload: tick.data
+//       })
+//     } catch (error) {
+//       console.log(error) 
+//   }
+// }
+// }
+
+export function postTicket (data){
+  return async function (dispatch) {
+    try {
+      const tick = await axios.post(`http://localhost:3001/api/ticket`, data)
+    } catch (error) {
+      console.log(error) 
+  }
+}
+}
+
 
 /* export function getAllSolicits(allevents) {
   return async function (dispatch) {

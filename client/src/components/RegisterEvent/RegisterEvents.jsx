@@ -15,17 +15,28 @@ import Footer from '../Footer/Footer';
 import RegisterGenre from '../RegisterGenre/RegisterGenre';
 import RegisterVenue from '../RegisterVenue/RegisterVenue';
 import swal from 'sweetalert';
+<<<<<<< HEAD
 // import Form from 'react-bootstrap/Form';
+=======
+
+>>>>>>> 3493c0d604a519305ac8a0b22dd9ea1675b9fca0
 
 
 export default function RegisterEvent(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const [activeGenre, setActiveGenre] = useState(false);
     const [activeVenue, setActiveVenue] = useState(false);
     //const [activeStock, setActiveStock] = useState(false);
     const [repitedEvent, setRepitedEvent] = useState("");
+    const[selectVenuesState, setSelectVenuesState] = useState(false)
+
+    const handleClickNewVenue= (value) => {
+        setSelectVenuesState(!selectVenuesState)
+        setActiveVenue(value)
+    }
+
+
 
     const [activeStockGeneral , setActiveStockGeneral] = useState({
         stock: "",
@@ -832,18 +843,19 @@ export default function RegisterEvent(){
                 <label className={style.label}>Seleccionar lugar del evento: </label>
             </div>
             <div className={style.filter}>
-                <select name="venueId" onChange={handleChange} className={style.genreLocation}>
+                <select name="venueId" disabled={selectVenuesState} onChange={handleChange} className={style.genreLocation}>
                     <option>Lugares</option>
                     {venues.map(v =>(<option key={v.id} value={v.id}>{v.name}</option>))}
                 </select>
                 {errors.venueId && <label>{errors.venueId}</label>}
                 <button 
                     type="button" 
-                    onClick={()=>setActiveVenue(!activeVenue)}
+                    onClick={()=>handleClickNewVenue(!activeVenue)}
                     className={style.btnLocation}
+                    
                     >Añadir nuevo Establecimiento</button>
             </div>
-            <div>{activeVenue ? <RegisterVenue/>:null}</div>
+            <div>{activeVenue ? <RegisterVenue handleClickNewVenue={handleClickNewVenue}/>:null}</div>
             
             {/* <div> <button type="button" onClick={()=>setActiveStock(!activeStock)}>Desplegar seleccion de stock y precios</button> </div> */}
             <div>{event.venueId !== "" && foundVenue !== null ?
@@ -862,7 +874,7 @@ export default function RegisterEvent(){
                             value={stock.stockGeneral} 
                             onChange={handleStock} 
                             onBlur={handleBlurStock} 
-                            type="text"
+                            type="number"
                             className={activeStockGeneral.stock?.length > 0 ? style.error : style.inputTicket}
                             placeholder={activeStockGeneral.stock?.length > 0 ? activeStockGeneral.stock : "Stock General"} 
                         />  
@@ -872,18 +884,18 @@ export default function RegisterEvent(){
                         value={stock.generalPrice} 
                         onChange={handleStock} 
                         onBlur={handleBlurStock} 
-                        type="text"
+                        type="number"
                         className={activeStockGeneral.price?.length > 0 ? style.error : style.inputPrice}
                         placeholder={activeStockGeneral.price?.length > 0 ? activeStockGeneral.price : "Precio General"}
                         />
                     </div>
 
                      <div className={style.maxTickets}>
-                         <label>Tickets Generales: máximo {foundVenue.maxStockGeneral} entradas.</label>     
+                         <label>Tickets Generales: máximo {foundVenue? foundVenue.maxStockGeneral : null} entradas.</label>     
                      </div>
                 </div>
 
-                    <div>{foundVenue.maxStockGeneralLateral !== 0 ? 
+                    <div>{foundVenue?.maxStockGeneralLateral !== 0 ? 
                         <div>
                             <div className={style.priceTicket}>
                                 <p className={style.ticket}>Tickets General lateral</p>
@@ -896,7 +908,7 @@ export default function RegisterEvent(){
                                         value={stock.stockGeneralLateral} 
                                         onChange={handleStock} 
                                         onBlur={handleBlurStock} 
-                                        type="text"
+                                        type="number"
                                         className={activeLateralStock.stock?.length > 0 ? style.error : style.inputTicket}
                                         placeholder={activeLateralStock.stock?.length > 0 ? activeLateralStock.stock : "Stock Lateral"} 
                                     />  
@@ -905,20 +917,20 @@ export default function RegisterEvent(){
                                         value={stock.generalLateralPrice} 
                                         onChange={handleStock} 
                                         onBlur={handleBlurStock} 
-                                        type="text"
+                                        type="number"
                                         className={activeLateralStock.price?.length > 0 ? style.error : style.inputPrice}
                                         placeholder={activeLateralStock.price?.length > 0 ? activeLateralStock.price : "Precio Lateral"}
                                         />
                                 </div>
                             <div className={style.maxTickets}>
-                                <label>Tickets Lateral: máximo {foundVenue.maxStockGeneralLateral} entradas.</label>
+                                <label>Tickets Lateral: máximo {foundVenue? foundVenue.maxStockGeneralLateral : null} entradas.</label>
                             </div>
                             </div>
                             </div> : null }
                         </div>
                             
 
-                    <div>{foundVenue.maxStockPalco !== 0 ? 
+                    <div>{foundVenue?.maxStockPalco !== 0 ? 
                         <div>
                             <div className={style.priceTicket}>
                                 <p className={style.ticket}>Tickets Palco</p>
@@ -932,7 +944,7 @@ export default function RegisterEvent(){
                                         value={stock.stockPalco} 
                                         onChange={handleStock} 
                                         onBlur={handleBlurStock} 
-                                        type="text"
+                                        type="number"
                                         className={activePalcoStock.stock?.length > 0 ? style.error : style.inputTicket}
                                         placeholder={activePalcoStock.stock?.length > 0 ? activePalcoStock.stock : "Stock Palco"} 
                                     />  
@@ -941,19 +953,19 @@ export default function RegisterEvent(){
                                         value={stock.palcoPrice} 
                                         onChange={handleStock} 
                                         onBlur={handleBlurStock} 
-                                        type="text"
+                                        type="number"
                                         className={activePalcoStock.price?.length > 0 ? style.error : style.inputPrice}
                                         placeholder={activePalcoStock.price?.length > 0 ? activePalcoStock.price : "Precio Palco"}
                                         />
                                     </div>
                             </div>
                             <div className={style.maxTickets}>
-                                <label >Tickets Palco: máximo {foundVenue.maxStockPalco} entradas.</label>
+                                <label >Tickets Palco: máximo {foundVenue? foundVenue.maxStockPalco: null} entradas.</label>
                             </div>
                         </div> : null}
                     </div>
 
-                    <div>{foundVenue.maxStockStreaming !== 0 ? 
+                    <div>{foundVenue?.maxStockStreaming !== 0 ? 
                         <div>
                             <div className={style.priceTicket}>
                                 <p className={style.ticket}>Tickets Streaming</p>
@@ -967,7 +979,7 @@ export default function RegisterEvent(){
                                         value={stock.stockStreaming} 
                                         onChange={handleStock} 
                                         onBlur={handleBlurStock} 
-                                        type="text"
+                                        type="number"
                                         className={activeStreamingStock.stock?.length > 0 ? style.error : style.inputTicket}
                                         placeholder={activeStreamingStock.stock?.length > 0 ? activeStreamingStock.stock : "Stock Streaming"} 
                                     />  
@@ -976,19 +988,19 @@ export default function RegisterEvent(){
                                         value={stock.streamingPrice} 
                                         onChange={handleStock} 
                                         onBlur={handleBlurStock} 
-                                        type="text"
+                                        type="number"
                                         className={activeStreamingStock.price?.length > 0 ? style.error : style.inputPrice}
                                         placeholder={activeStreamingStock.price?.length > 0 ? activeStreamingStock.price : "Precio Streaming"}
                                         />
                                 </div>
                             </div>
                             <div className={style.maxTickets}>
-                                <label>Tickets Streaming: máximo {foundVenue.maxStockStreaming} entradas.</label>     
+                                <label>Tickets Streaming: máximo {foundVenue? foundVenue.maxStockStreaming: null} entradas.</label>     
                             </div>
                         </div> : null}
                     </div>
 
-                    <div>{foundVenue.maxStockVIP !== 0 ? 
+                    <div>{foundVenue?.maxStockVIP !== 0 ? 
                         <div>
                             <div className={style.priceTicket}>
                                 <p className={style.ticket}>Tickets VIP</p>
@@ -1002,7 +1014,7 @@ export default function RegisterEvent(){
                                         value={stock.stockkVIP} 
                                         onChange={handleStock} 
                                         onBlur={handleBlurStock} 
-                                        type="text"
+                                        type="number"
                                         className={activeVIPStock.stock?.length > 0 ? style.error : style.inputTicket}
                                         placeholder={activeVIPStock.stock?.length > 0 ? activeVIPStock.stock : "Stock VIP"} 
                                     />  
@@ -1011,14 +1023,14 @@ export default function RegisterEvent(){
                                         value={stock.vipPrice} 
                                         onChange={handleStock} 
                                         onBlur={handleBlurStock} 
-                                        type="text"
+                                        type="number"
                                         className={activeVIPStock.price?.length > 0 ? style.error : style.inputPrice}
                                         placeholder={activeVIPStock.price?.length > 0 ? activeVIPStock.price : "Precio VIP"}
                                         />
                                 </div>
                             </div>
                             <div className={style.maxTickets}>
-                                <label>Tickets VIP: máximo {foundVenue.maxStockVIP} entradas.</label>     
+                                <label>Tickets VIP: máximo {foundVenue? foundVenue.maxStockVIP: null} entradas.</label>     
                             </div>
                         </div> : null}
                     </div>

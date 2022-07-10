@@ -5,6 +5,7 @@ const stripe = require("stripe")(STRIPE_KEY);
 const Events = require("../models/Events");
 const TicketStock = require("../models/TicketStock");
 const User = require("../models/User");
+const { ticketVoucher } = require("./TicketVoucher");
 let priceId = "";
 
 async function getTicketByID(req, res) {
@@ -58,21 +59,29 @@ async function getTicketByID(req, res) {
 }
 
 async function postTicket(req, res) {
-  const { name, price, eventId, userId } = req.body;
+  const { name, price, idEvent, idUser, quantity } = req.body;
+  console.log("postTicket", name, price, idEvent, idUser, quantity)
   try {
-    if (name && price && eventId && userId) {
-      const saveEvent = await Events.findByPk(eventId);
-      const saveUser = await User.findByPk(userId);
-      const newTicket = await Ticket.create({
-        name: name,
-        price: price,
-        eventId: eventId,
-        userId: userId,
-        eventName: saveEvent.name || "undefined",
-        email: saveUser.email || "undefined",
-        userName: saveUser.name || "undefined",
-      });
-      res.json({ newTicket });
+    if (name && price && idEvent && idUser) {
+      const saveEvent = await Events.findByPk(idEvent);
+      const saveUser = await User.findByPk(idUser);
+      const newTicket = []
+      let i = 0;
+      while(i !== quantity){
+        let variable = await Ticket.create({
+          name: name,
+          price: price,
+          eventId: idEvent,
+          userId: idUser,
+          eventName: saveEvent.name || "undefined",
+          email: saveUser.email || "undefined",
+          userName: saveUser.name || "undefined",
+        })
+       await ticketVoucher(variable.id)
+       newTicket.push(variable)
+        i++
+      }
+      res.json(newTicket);
     } else {
       res.status(401).send({ error: "Faltan datos" });
     }
@@ -152,12 +161,7 @@ async function deleteTicket(req, res) {
 
 async function postCreatEventAndPrice(event) {
   try {
-    // const id = event.id;
-    // const findEvent = await Events.findByPk(id, {
-    //   include: [{ model: TicketStock, as: "stock" }],
-    // });
     const idStockEncotrado = await TicketStock.findByPk(event[0].stockId);
-    console.log("🚀 ~ file: Tickets.js ~ line 160 ~ postCreatEventAndPrice ~ idStockEncotrado", idStockEncotrado)
     const product = await stripe.products.create({
       name: event[0].name,
       description: event[0].description,
@@ -211,7 +215,6 @@ async function postCheckout(req, res, next) {
     success_url: "http://localhost:3000/success?success=true",
     cancel_url: "http://localhost:3000/success?canceled=true",
   });
-  console.log(session)
   res.json(session)
 }
 

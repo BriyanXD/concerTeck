@@ -8,8 +8,8 @@ const qrcode = require('qrcode')
 // const QrPrueba = require('../../client/src/assets/QrPrueba.png')
 // const transport = require('../transport.json')
 
-async function ticketVoucher (req,res){
-    const {id} = req.query
+async function ticketVoucher (id){
+    // const {id} = req.query
     // const {name , username ,email } = req.body
     let url = `http://localhost:3000/api/tickets/${id}`
     // try {
@@ -17,7 +17,7 @@ async function ticketVoucher (req,res){
         { model: Events, as: "event" },]})
 
         let QR = await qrcode.toDataURL(url)
-        console.log(QR)
+        // console.log(QR)
         // console.log(Comprador)
         const contentHtml=`
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -380,7 +380,7 @@ async function ticketVoucher (req,res){
         }
     }
     sendmail()
-    .then(result => res.status(200).send(result))
+    .then(result => (result))
     .catch(error => console.log({error: error.message}))
 }
 

@@ -481,12 +481,6 @@ function reducers(state = initialState, { type, payload }) {
           allEmails: payload,
         },
       };
-    case "TICKET_VOUCHER":
-      return {
-        ...state,
-        Voucher:payload
-      }
-
     default:
       return state;
   }
