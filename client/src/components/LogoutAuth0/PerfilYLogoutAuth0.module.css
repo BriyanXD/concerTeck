@@ -1,10 +1,12 @@
+/* MEDIDAS CORREGIDAS A REM!!!!!!!!!!!*/
+
 @import url(../../index.css);
 
 .container{
     display: flex;
     flex-direction: row;
-    margin-right: 2vw;
-    margin-top: 3.5vw;
+    margin-right: 2rem;
+    margin-top: 3.5rem;
 }
 .box{
     display: flex;
@@ -13,38 +15,38 @@
 
 .img{
     border-radius: 50%;
-    width: 3vw;
-    height: 3vw;
-    margin: 1vw;
-    margin-bottom: 4.5vw;
-    margin-top: 2.3vw;
+    width: 2.9rem;
+    height: 2.9rem;
+    margin: 0.9rem;
+    margin-bottom: 4.6rem;
+    margin-top: 2.2rem;
 
 }
 
 .p{
     color: var(--color4);
-    margin: 1vw;
-    margin-top: 2.5vh ;
-    font-size: 0.9vw;
+    margin: 0.9rem;
+    margin-top: 2.9rem ;
+    font-size: 1rem;
+    margin-right: 2rem;
+    margin-left: 0.5rem;
     
 }
 
 .button{
-margin-right: 2vw;
+margin-right: 1rem;
 background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70));
-width: 7vw;
-height: 2vw;
+width: 6.8rem;
+height: 1.9rem;
 text-align: center;
-border-radius: 3px;
-
-font-size: 1vw;
+border-radius: 0.2rem;
+font-size: 1rem;
 color: #EEEEEE;
-/* margin-right: 35px; */
 border: none;
-/* margin: 13px; */
 cursor: pointer;
-margin-top: 5.5vh;
+margin-top: 2.7rem;
 transition: box-shadow 0.25s ease 0s;
+color: whitesmoke;
 }
 
 .button:hover,

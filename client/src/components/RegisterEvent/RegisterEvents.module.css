@@ -1,7 +1,7 @@
 @import url(../../index.css);
 
 .container{
-    background-image: url("../../img/bk.jpg");
+    background-image: url(../../img/felix-besombes-9qUEBg1qVKc-unsplash.jpg);
     width: 100vw;
     height: 100vh;
     background-size: cover;
@@ -138,6 +138,8 @@
     text-align: center;
     color: var(--color2);
 }
+
+
 
 .error{
     width:50%;

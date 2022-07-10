@@ -37,7 +37,6 @@ function handlerDeleteUser(){
             <p className={Style.id}>{id}</p>
             <p className={Style.name}>{userName}</p>
             <div className={Style.buttonsCard}>
-            <button className={Style.button} onClick={handlerDeleteUser}>Borrar</button>
             <button className={Style.button} onClick={filterTicket}>Detalles</button>
             </div>
         </div>
