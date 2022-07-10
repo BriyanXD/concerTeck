@@ -93,7 +93,7 @@ routes.get("/user", getUser); // verifyToken
 routes.put("/user", verifyToken, putUser);
 routes.delete("/user", verifyToken, isAdmin, deleteUser); //isAdmin
 
-routes.put("/upgrade", verifyToken, isAdmin, UpgradeRank); //isAdmin
+routes.put("/upgrade",UpgradeRank); //isAdmin
 
 /* routes.get("/producer", verifyToken, getProducer);
 routes.post("/producer", createProducer);

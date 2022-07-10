@@ -480,7 +480,6 @@ function reducers(state = initialState, { type, payload }) {
           allEmails: payload,
         },
       };
-
     default:
       return state;
   }

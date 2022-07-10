@@ -81,7 +81,8 @@ export default function Detail() {
         variant: "generalPrice",
         price:Detail.stock.generalPrice,
         performerImage: Detail.performerImage,
-        idPrice: Detail.stock.idGeneralPrice
+        idPrice: Detail.stock.idGeneralPrice,
+        name: "general"
       }
       console.log(temp, "temp de carrito cargar asd asdasdasdasdasdas dadasdada")
       if(!userStorage){
@@ -102,7 +103,8 @@ export default function Detail() {
           variant: "generalLateralPrice",
           price:Detail.stock.generalLateralPrice,
           performerImage: Detail.performerImage,
-          idPrice: Detail.stock.idGeneralLateralPrice
+          idPrice: Detail.stock.idGeneralLateralPrice,
+          name: "general lateral"
         } 
         if(!userStorage){
           addItem({...temp,id:`${Detail.id}generallateral`})
@@ -122,7 +124,8 @@ export default function Detail() {
           variant: "palcoPrice",
           price:Detail.stock.palcoPrice,
           performerImage: Detail.performerImage,
-          idPrice: Detail.stock.idPalcoPrice
+          idPrice: Detail.stock.idPalcoPrice,
+          name: "palco"
         }
         if(!userStorage){
           addItem({...temp,id:`${Detail.id}palco`})
@@ -142,7 +145,8 @@ export default function Detail() {
               variant: "streamingPrice",
               price:Detail.stock.streamingPrice,
               performerImage: Detail.performerImage,
-              idPrice: Detail.stock.idStreamingPrice
+              idPrice: Detail.stock.idStreamingPrice,
+              name: "streaming"
             }
             if(!userStorage){
               addItem({...temp,id:`${Detail.id}streaming`})
@@ -162,7 +166,8 @@ export default function Detail() {
                   variant: "vipPrice",
                   price:Detail.stock.vipPrice,
                   performerImage: Detail.performerImage,
-                  idPrice: Detail.stock.idVipPrice
+                  idPrice: Detail.stock.idVipPrice,
+                  name: "vip"
                 }
                 if(!userStorage){
                   addItem({...temp,id:`${Detail.id}vip`})
@@ -208,8 +213,8 @@ coord = prueba? prueba.map : '-34.545306 -58.449775'
           </div>
         </div>
         {/**Agregar condicional en el caso de que stock este en 0 */}
-        {console.log(Detail)}
-        {Detail.stock?<div className={style.containerCarrito}>
+        {}
+        {userStorage === "" || userStorage.isAdmin === false ? Detail.stock?<div className={style.containerCarrito}>
             {Detail.stock?.stockGeneral?<div className={style.detailTicket}>
             <div className={style.buttonadditem}>
                   <div>General ${Detail.stock.generalPrice}</div> 
@@ -246,7 +251,7 @@ coord = prueba? prueba.map : '-34.545306 -58.449775'
               </div>
                 <MdOutlineAddShoppingCart onClick={() => {handleClick("vip"); swal('Item agregado al carrito')}} className={style.addicon}/>
             </div>:null}
-        </div>:null}
+        </div>:null:null}
         
           <Leaflet  data={coord} />
         

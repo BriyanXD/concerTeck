@@ -1,3 +1,5 @@
+/*MEDIDAS CORREGIDAS A REM!!!!!!!!!!!*/
+
 .all{
     height: 100vh;
     background-image: url(../../img/felix-besombes-9qUEBg1qVKc-unsplash.jpg);
@@ -5,7 +7,7 @@
 }
 .title{
     color: rgb(202, 177, 177);
-    font-size: 20px;
+    font-size: 1.7rem;
     display: flex;
     justify-content: center;
     padding: 0.5vw;
@@ -18,14 +20,14 @@
     justify-content: space-around;
     display: flex;
     flex-direction: column;
-    width: 100vw;
+    width: 95rem;
     align-items: center;
     
 }
 .btn{
     border: 0;
-    width: 30px;
-    height: 30px;
+    width: 1.8rem;
+    height: 1.8rem;
     border-radius: 50%;
     color: white;
     background-color: #FF4C29;
@@ -33,8 +35,8 @@
     overflow: auto;
     cursor: pointer;
     position: absolute;
-    margin-block-start: 70px;
-    margin-right: 15px;
+    margin-block-start: 5rem;
+    margin-right: 0.8rem;
 }
 
 .containerClose{
@@ -44,8 +46,8 @@
 
 .btn2{
     border: 0;
-    width: 30px;
-    height: 30px;
+    width: 1.8rem;
+    height: 1.8rem;
     border-radius: 50%;
     color: white;
     background-color: #FF4C29;
@@ -53,8 +55,8 @@
     overflow: auto;
     cursor: pointer;
     position: absolute;
-    margin-block-start: 30px;
-    margin-right: 8px;
+    margin-block-start: 1.8rem;
+    margin-right: 0.5rem;
 }
 
 .containerClose2{
@@ -70,6 +72,7 @@
 }
 
 .buttonBack{
+<<<<<<< HEAD
     width: 100vw;
     margin-left: 1.5vw;
     background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70));
@@ -87,24 +90,41 @@
 .buttonBack:focus {
  background: linear-gradient(117deg, rgb(248, 137, 73), rgb(248, 82, 49));
  box-shadow: 0 0.1rem 0.8rem rgb(254, 100, 70);
+=======
+    background-color: #FF4C29;
+    width: 5rem;
+    height: 2rem;
+    border-radius: 0.3rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.buttonBack:hover{
+    box-shadow:  0px 0px 3.1rem rgba(0, 0, 0, 0.41);
+    transition: 0.2s;
+    cursor: pointer;
+>>>>>>> 903c14d1cb0ffef0cc5bffedb5639f25256deac8
 }
 
 .bigcontainer{
     display: flex;
     flex-wrap: wrap;
-    width: 50vw;
+    width: 48rem;
     box-sizing: border-box;
     justify-content: space-evenly;
 }
 .litlecontainer{
     display: flex;
     flex-wrap: wrap;
-    width: 50vw;
+    width: 48rem;
     box-sizing: border-box;
     justify-content: space-evenly;
 }
+<<<<<<< HEAD
 
 /* .footer{
     height: 4vh;
     
 } */
+=======
+>>>>>>> 903c14d1cb0ffef0cc5bffedb5639f25256deac8

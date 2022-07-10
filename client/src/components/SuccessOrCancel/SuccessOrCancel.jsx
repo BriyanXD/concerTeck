@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCartDB, ActualizacionStock } from '../../redux/actions';
+import { getCartDB, ActualizacionStock, postTicket } from '../../redux/actions';
 
 export default function SuccessOrCancel () {
 
     const [message, setMessage] = useState("")
     const { cartDB } = useSelector(state => state);
+    const [flag, setFlag] = useState(false)
     const dispatch = useDispatch();
     const user = localStorage.getItem("user");
     const tempUser = JSON.parse(user)
@@ -31,6 +32,10 @@ export default function SuccessOrCancel () {
           );
         }
       }, [cartDB]);
+
+      useEffect(() => {
+        dispatch(ActualizacionStock(cartDB))
+      },[flag])
 
     return(<div>
             {message? (<h1>{message}</h1>) : (<h1>{message}</h1>)}
