@@ -12,6 +12,9 @@ import Tooltip from '@mui/material/Tooltip';
 import { useCart } from "react-use-cart";
 import Leaflet from '../Leaflet/Leaflet';
 import swal from 'sweetalert';
+import PerfilYLogoutAuth0 from '../LogoutAuth0/PerfilYLogoutAuth0';
+import NavBarProfile from '../ProfileUser/NavBarProfile/NavBarProfile';
+import NavBarDetail from '../Detail/NavBarDetail/NavBarDetail'
 
 //resolver problema de necesitar 2 click para agregar el evento en la base de datos
 
@@ -188,8 +191,10 @@ coord = prueba? prueba.map : '-34.545306 -58.449775'
  
 
   return (
+    <div>
     <div className={style.container}>
-      <NavBar/>
+      <NavBarDetail/>
+
         <div className={style.card}>
           <br />
         
@@ -254,9 +259,9 @@ coord = prueba? prueba.map : '-34.545306 -58.449775'
          <div className={style.buttonscontainer}>
 
           <Link to='/'>
-          <Tooltip title="Volver a Inicio" arrow>
+          {/* <Tooltip title="Volver a Inicio" arrow> */}
             <button className={style.button}>Volver</button>
-            </Tooltip>
+            {/* </Tooltip> */}
           </Link>
             {/* <Tooltip title="Agregar al carrito" arrow>
               <div className={style.add}>
@@ -268,6 +273,7 @@ coord = prueba? prueba.map : '-34.545306 -58.449775'
            
         </div>
       <Footer/>    
+    </div>
     </div>
   )
 }
