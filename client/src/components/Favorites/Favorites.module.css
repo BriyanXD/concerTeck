@@ -72,15 +72,13 @@
 }
 
 .buttonBack{
-<<<<<<< HEAD
-    width: 100vw;
+    width: 5rem;
     margin-left: 1.5vw;
     background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70));
-    margin-top: 1vw;
-    /* margin-right: 30vw; */
-    width: 90px;
-    height: 40px;
-    border-radius: 3px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    height: 2rem;
+    border-radius: 0.3rem;
     border: none;
     transition: box-shadow 0.25s ease 0s;
     color: whitesmoke;
@@ -90,20 +88,7 @@
 .buttonBack:focus {
  background: linear-gradient(117deg, rgb(248, 137, 73), rgb(248, 82, 49));
  box-shadow: 0 0.1rem 0.8rem rgb(254, 100, 70);
-=======
-    background-color: #FF4C29;
-    width: 5rem;
-    height: 2rem;
-    border-radius: 0.3rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
 
-.buttonBack:hover{
-    box-shadow:  0px 0px 3.1rem rgba(0, 0, 0, 0.41);
-    transition: 0.2s;
-    cursor: pointer;
->>>>>>> 903c14d1cb0ffef0cc5bffedb5639f25256deac8
 }
 
 .bigcontainer{
@@ -120,11 +105,3 @@
     box-sizing: border-box;
     justify-content: space-evenly;
 }
-<<<<<<< HEAD
-
-/* .footer{
-    height: 4vh;
-    
-} */
-=======
->>>>>>> 903c14d1cb0ffef0cc5bffedb5639f25256deac8
