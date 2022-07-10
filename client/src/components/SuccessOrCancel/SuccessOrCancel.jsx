@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-<<<<<<< HEAD
-import { useParams } from 'react-router-dom';
-import { getCartDB, ActualizacionStock, ticketVoucher } from '../../redux/actions';
-=======
 import { getCartDB, ActualizacionStock, postTicket } from '../../redux/actions';
->>>>>>> 3493c0d604a519305ac8a0b22dd9ea1675b9fca0
+import { useParams } from 'react-router-dom';
 
 export default function SuccessOrCancel () {
     const {id} = useParams();
@@ -28,10 +24,6 @@ export default function SuccessOrCancel () {
     
         if (query.get("success")) {
           setMessage("Order placed! You will receive an email confirmation.");
-<<<<<<< HEAD
-          dispatch(ActualizacionStock(cartDB));
-          dispatch(ticketVoucher(id));
-=======
           // async function prueba () {
           //   await cartDB.map((e) =>  dispatch(postTicket(e)));
           // } 
@@ -41,7 +33,6 @@ export default function SuccessOrCancel () {
           }
           prueba();
           setFlag(!flag)
->>>>>>> 3493c0d604a519305ac8a0b22dd9ea1675b9fca0
         }
     
         if (query.get("canceled")) {
