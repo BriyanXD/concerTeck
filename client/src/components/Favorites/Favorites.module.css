@@ -1,16 +1,20 @@
 /*MEDIDAS CORREGIDAS A REM!!!!!!!!!!!*/
 
 .all{
-    height: 140vh;
-    /* background: url(../../img/bk.jpg); */
+    height: 100vh;
+    background-image: url(../../img/felix-besombes-9qUEBg1qVKc-unsplash.jpg);
+    background-size: cover;
 }
 .title{
     color: rgb(202, 177, 177);
     font-size: 1.7rem;
     display: flex;
     justify-content: center;
-    padding-top: 1%;
+    padding: 0.5vw;
+    margin-top: 2vw;
 }
+
+
 
 .container{
     justify-content: space-around;
@@ -68,18 +72,23 @@
 }
 
 .buttonBack{
-    background-color: #FF4C29;
     width: 5rem;
-    height: 2rem;
-    border-radius: 0.3rem;
+    margin-left: 1.5vw;
+    background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70));
     margin-top: 1rem;
     margin-bottom: 1rem;
+    height: 2rem;
+    border-radius: 0.3rem;
+    border: none;
+    transition: box-shadow 0.25s ease 0s;
+    color: whitesmoke;
 }
 
-.buttonBack:hover{
-    box-shadow:  0px 0px 3.1rem rgba(0, 0, 0, 0.41);
-    transition: 0.2s;
-    cursor: pointer;
+.buttonBack:hover,
+.buttonBack:focus {
+ background: linear-gradient(117deg, rgb(248, 137, 73), rgb(248, 82, 49));
+ box-shadow: 0 0.1rem 0.8rem rgb(254, 100, 70);
+
 }
 
 .bigcontainer{

@@ -9,10 +9,10 @@
     /* margin-bottom: 5px; */
     font-size: 1vw;
     /* margin-right: 35px; */
-    border-color: none;
+    border: none;
     /* margin: 13px; */
     cursor: pointer;
-    /* margin-top: 10vh; */
+    margin-top: 2.4vh;
     transition: box-shadow 0.25s ease 0s;
 }
 
