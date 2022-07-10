@@ -26,8 +26,13 @@ export default function Home() {
   const { user, loginWithPopup } = useAuth0();
   const {Likes} = useSelector((state)=> state);
   const { User, AllEvents } = useSelector((state) => state)
-  
-
+  let temporal = localStorage.getItem("user")
+  let userStorage 
+  if(temporal !== "nada"){
+    userStorage = JSON.parse(temporal)
+  }else{
+    userStorage = ""
+  }
 
   const allEventsPagination = useSelector((state) => {
     return state.BigEvents;
@@ -66,10 +71,8 @@ export default function Home() {
   }, [dispatch]);
 
   useEffect(()=>{
-    let userLoaded = localStorage.getItem("user")
-    let userLike = JSON.parse(userLoaded)
-    if(userLike){
-      dispatch(getLikes(userLike.id))
+    if(userStorage !== ""){
+      dispatch(getLikes(userStorage.id))
     }
   }, [dispatch])
   
