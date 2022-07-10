@@ -27,7 +27,6 @@ export default function NavBar({ setCurrenPag, setCurrentPage }) {
   const [flag, setFlag] = useState(false);
   const { totalUniqueItems } = useCart();
   const {cartDB} = useSelector(state => state);
-  console.log("🚀 ~ file: NavBar.jsx ~ line 28 ~ NavBar ~ cartDB", cartDB)
   let temporal = localStorage.getItem("user")
   let userStorage 
   if(temporal !== "nada"){
@@ -79,12 +78,13 @@ if(flag){
             />
             <Date setCurrenPag={setCurrenPag} setCurrentPage={setCurrentPage} />
           </div>
-          {userStorage !== ""? <div className={style.Items}>{cartDB.length}</div> : <div className={style.Items}>{totalUniqueItems}</div> }
+        {userStorage.isAdmin === false || userStorage === "" ? <div>  {userStorage !== "" ? <div className={style.Items}>{cartDB.length}</div> : <div className={style.Items}>{totalUniqueItems}</div> }
           <Tooltip title="Ver carrito" arrow>
           <div onClick={toggle} className={style.cart}>
           <MdOutlineShoppingCart className={style.cartlogo}/>
           </div>
-          </Tooltip>  
+          </Tooltip>  </div>:null}
+        
 
           <Modal2 active={active} toggle={toggle}>
             <Cart/>
