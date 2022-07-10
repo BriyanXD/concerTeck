@@ -133,15 +133,12 @@
     margin-bottom: 1rem;
 }
 
-.footer{
-   background-color: rgba(155, 155, 155, 0.3);
 .inputText::placeholder{
     font-size: 15px;
     text-align: center;
     color: var(--color2);
-    
 }
-}
+
 
 
 .error{

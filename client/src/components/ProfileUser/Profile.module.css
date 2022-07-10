@@ -1,7 +1,23 @@
+@import url(../../index.css);
+
 .containerProfileUser{
+    /* background-color: rgba(255, 255, 255, 0.1); */
+    /* background-color: red; */
     width: 100vw;
     height: 100vh;
-    /* background: url(../../img/bk.jpg); */
+    background: url(../../img/felix-besombes-9qUEBg1qVKc-unsplash.jpg);
+    background-size: cover;
+    
+}
+
+.profile{
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow:  5px 5px 5px rgba(0, 0, 0, 0.32);
+    backdrop-filter: blur(5px); 
+    border: solid 1px;
+    border-top-style: solid;
+    border-width: 1px;
 }
 
 .containerDataUser{
@@ -9,6 +25,7 @@
     justify-content: center;
     align-items: center;
     background-color: grey;
+
 }
 
 .title{

@@ -23,7 +23,7 @@ export default function LoginAuth0(){
   return(
   <div>
     {
-    !user ? <button onClick={() => handlerLogin()} className={style.button}>Log In</button> : <PerfilYLogoutAuth0/>
+    !user ? <button onClick={() => handlerLogin()} className={style.button}>Ingresá</button> : <PerfilYLogoutAuth0/>
     },
   </div>
   )
