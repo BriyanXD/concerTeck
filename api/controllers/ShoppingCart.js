@@ -1,4 +1,6 @@
 const ShoppingCart = require("../models/ShoppingCart.js");
+const TicketStock = require("../models/TicketStock.js");
+const Events = require("../models/Events");
 
 async function getShoppingCart(req, res) {
   const { idUser } = req.query;
@@ -26,6 +28,9 @@ async function postShoppingCart(req, res) {
     variant,
     itemTotal,
     price,
+    performerImage,
+    idPrice,
+    name
   } = req.body;
   try {
     if (idUser && idEvent) {
@@ -34,8 +39,13 @@ async function postShoppingCart(req, res) {
         idEvent: idEvent,
         nombre: nombre,
         quantity: 1,
-        price: 0,
-        itemTotal: 0,
+        price: price,
+        itemTotal: price,
+        performerImage: performerImage,
+        schedule:schedule,
+        variant:variant,
+        idPrice,
+        name: name
       });
       return res.status(200).json(allDateShoppingCart);
     } else {
@@ -81,6 +91,7 @@ async function putShoppingCart(req, res) {
   } = req.body;
   try {
     const ShoppingSave = await ShoppingCart.findOne({ where: { id: id } });
+    const total = ShoppingSave.price* quantity;
     if (ShoppingSave) {
       const ShoppingUpdate = await ShoppingSave.update({
         idUser: idUser,
@@ -89,14 +100,10 @@ async function putShoppingCart(req, res) {
         schedule: schedule,
         quantity: quantity,
         variant: variant,
-        itemTotal: itemTotal,
+        itemTotal: total,
         price: price,
       });
-      return res.json({
-        message: "Carrito Actualizado",
-        ShoppingSave,
-        ShoppingUpdate,
-      });
+      return res.json(ShoppingUpdate);
     } else {
       res
         .status(401)
@@ -105,9 +112,36 @@ async function putShoppingCart(req, res) {
   } catch (error) {}
 }
 
+
+async function restarStock(req, res) {
+  const {descontar} = req.body
+  let eliminar = [];
+  try{
+    descontar.map(async e => {
+      eliminar.push(e.id)
+      const encontrado = await Events.findByPk(e.idEvent)
+      const stock = await TicketStock.findByPk(encontrado.stockId)
+       if(e.variant === "generalLateralPrice"){
+       await stock.update({stockGeneralLateral: stock.stockGeneralLateral - e.quantity})
+       }else if (e.variant === "generalPrice"){
+       await stock.update({stockGeneral: stock.stockGeneral - e.quantity})
+       }else if (e.variant === "streamingPrice"){      
+       await stock.update({stockStreaming: stock.stockStreaming - e.quantity})
+       }else if (e.variant === "vipPrice"){
+       await stock.update({stockkVIP: stock.stockkVIP - e.quantity})
+       }else if (e.variant === "palcoPrice"){
+       await stock.update({stockPalco: stock.stockPalco - e.quantity})
+       }})
+       await ShoppingCart.destroy({where:{id:eliminar}})
+    res.send("Se restaron correctamente todos los tickets de sus respectivos eventos")
+  }catch(error){
+    console.log(error.message)
+  }
+}
 module.exports = {
   getShoppingCart,
   postShoppingCart,
   deleteShoppingCart,
   putShoppingCart,
+  restarStock
 };

@@ -13,6 +13,7 @@ const initialState = {
   Events: [],
   Genres: [],
   Venues: [],
+  Stock: [],
   Basket: [],
   Likes: [],
   userValidation: "",
@@ -22,19 +23,32 @@ const initialState = {
     isVisbleModal: false,
     eventsForCalendar: [],
   },
-  cartDB:[],
+  sesion:{},
+  cartDB: [],
   stateAdminPanel: {
     allUsers: [],
-    tdosEvents:[],
+    tdosEvents: [],
+    allBlackList: [],
+    blackListByName: [],
+    userSaveBlackList: "",
     // UserByName:[],
     UserByUserName: [],
     allProducers: [],
     allSolicits: [],
     modalEvent: false,
     modalUser: false,
+    modalOrder: false,
     modalUserPermised: false,
+    allLikesEventId: [],
+    putUrlStreaming: "",
+    allTickets: [],
+    allTiketsByName: [],
+    saveFindTicket: "",
+    userBanned: "",
+    allEmails: [],
   },
   token: "",
+  ticket: {},
 };
 
 function reducers(state = initialState, { type, payload }) {
@@ -70,26 +84,28 @@ function reducers(state = initialState, { type, payload }) {
         ...state,
         Basket: [...state.Basket, payload],
       };
-    case "ADD_TO_FAV":
-      if(state.Likes.find(l => l.id === payload.id)){ 
+    case "POST_LIKES":
+      if (state.Likes.find((l) => l.id === payload.id)) {
         return {
           ...state,
-          Likes:state.Likes.filter((f) => f.id !== payload.id) 
-        }
-        } else{
-          return {
-            ...state,
-            Likes: [...state.Likes, payload]
-        }
-        }
-    case "REMOVE_FAVORITE":
-      // console.log('likes:', state.Likes)
-      // console.log('payload:', payload)
+          Likes: state.Likes.filter((f) => f.id !== payload.id),
+        };
+      } else {
+        return {
+          ...state,
+          Likes: [...state.Likes, payload],
+        };
+      }
+    case "DELETE_LIKES":
       return {
         ...state,
         Likes: state.Likes.filter((f) => f.id !== payload.id),
       };
-
+    case "GET_ALL_LIKES":
+      return {
+        ...state,
+        Likes: payload,
+      };
     case "GET_EVENT_BY_NAME": {
       const bigEvents = payload.filter((e) => e.venue.isBigEvent === true);
       const smallEvents = payload.filter((e) => e.venue.isBigEvent === false);
@@ -214,7 +230,12 @@ function reducers(state = initialState, { type, payload }) {
     case "POST_VENUE":
       return {
         ...state,
-        Venues: payload,
+        Venues: [...state.Venues, payload],
+      };
+    case "POST_STOCK":
+      return {
+        ...state,
+        Stock: [...state.Stock, payload],
       };
     case "VALIDATION_LOGIN":
       return {
@@ -247,6 +268,7 @@ function reducers(state = initialState, { type, payload }) {
       return {
         ...state,
         stateAdminPanel: {
+          ...state.stateAdminPanel,
           allUsers: payload,
         },
       };
@@ -329,22 +351,135 @@ function reducers(state = initialState, { type, payload }) {
         },
       };
     case "GET_CART_EVENT":
-      return{
-        ...state,
-        cartDB: payload
-      }
-    case "DELETE_CART":
-      return{
-        ...state,
-        cartDB: state.cartDB.filter(e => e.id !== payload)
-      }
-    case  "FIND_EVENT_BY_NAME":
       return {
         ...state,
-        stateAdminPanel:{
-          tdosEvents:payload
-        }
+        cartDB: payload,
+      };
+    case "UPDATE_CART":
+      return {
+        ...state,
+        cartDB: state.cartDB.map((e) => {
+          return e.id === payload.id ? payload : e;
+        }),
+      };
+    case "DELETE_CART":
+      return {
+        ...state,
+        cartDB: state.cartDB.filter((e) => e.id !== payload.ShoppingSave.id),
+      };
+    case "FIND_EVENT_BY_NAME":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          tdosEvents: payload,
+        },
+      };
+    case "GET_ALL_BLACK_LIST":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allBlackList: payload,
+        },
+      };
+    case "DELETE_USER_BLACK_LIST":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          userSaveBlackList: payload,
+        },
+      };
+    //GET_ALL_LIKES_EVENT_ID
+    case "GET_ALL_LIKES_EVENT_ID":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allLikesEventId: payload,
+        },
+      };
+    case "PUT_URL_STREAMING_FOR_EVENT":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          putUrlStreaming: payload,
+        },
+      };
+    case "GET_TICKET_BY_ID":
+      return {
+        ...state,
+        ticket: payload,
+      };
+    case "SESION_DATA":
+      console.log(payload)
+      return {
+        ...state,
+        sesion: payload
       }
+    //GET_ALL_TICKETS
+    case "GET_ALL_TICKETS":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allTickets: payload,
+        },
+      };
+    //MODAL_ORDERS_ADMIN_PANEL
+    case "MODAL_ORDERS_ADMIN_PANEL":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          modalOrder: payload,
+        },
+      };
+    //FIND_TICKET
+    case "FIND_TICKET":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          saveFindTicket: payload,
+        },
+      };
+    case "GET_NAME_BY_BLACKLIST":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          blackListByName: payload,
+        },
+      };
+    //VERIFY_USER_BANNED
+    case "VERIFY_USER_BANNED":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          userBanned: payload,
+        },
+      };
+    case "GET_NAME_BY_ORDER":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allTiketsByName: payload,
+        },
+      };
+    //GET_ALL_EMAILS_TICKET
+    case "GET_ALL_EMAILS_TICKET":
+      return {
+        ...state,
+        stateAdminPanel: {
+          ...state.stateAdminPanel,
+          allEmails: payload,
+        },
+      };
     default:
       return state;
   }

@@ -1,9 +1,25 @@
 const Likes = require("../models/Likes");
 
 async function getLikes(req, res) {
+  const { idUser, idEvent } = req.query;
   try {
-    const allLikes = await Likes.findAll();
-    res.json(allLikes);
+    if (idUser) {
+      const allLikes = await Likes.findAll({
+        where: {
+          idUser: idUser,
+        },
+      });
+      res.json(allLikes);
+    } else if (idEvent) {
+      const allLikes = await Likes.findAll({
+        where: {
+          idEvent: idEvent,
+        },
+      });
+      res.json(allLikes);
+    } else {
+      res.json({ message: "El id no pertece a un Usuario ni a un Evento" });
+    }
   } catch (error) {
     res.status(404).json({ error: error.message });
   }

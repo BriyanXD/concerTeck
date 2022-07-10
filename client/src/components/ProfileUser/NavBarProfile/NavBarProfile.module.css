@@ -39,3 +39,18 @@
 .titleData{
     color: white;
 }
+
+.titleData2{
+    color: white;
+}
+.titleData2:hover{
+    text-decoration: underline;
+}
+.adminnav{
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgb(255, 251, 0);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

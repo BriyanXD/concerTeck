@@ -1,7 +1,7 @@
 .containerProfileUser{
     width: 100vw;
     height: 100vh;
-    background: url(../../img/bk.jpg);
+    /* background: url(../../img/bk.jpg); */
 }
 
 .containerDataUser{
@@ -13,4 +13,27 @@
 
 .title{
     margin: 0px 0px 0px 0px
+}
+
+
+.buttonBack{
+    background-color: #FF4C29;
+    /* display: flex;
+    align-items: center; */
+    width: 5rem;
+    height: 2rem;
+    border-radius: 0.3rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 46%;
+    margin-right: 50%;
+}
+
+.buttonBack:hover{
+    box-shadow:  0px 0px 3.1rem rgba(0, 0, 0, 0.41);
+    transition: 0.2s;
+    cursor: pointer;
+}
+.containerBtn{
+    width: 100%;
 }

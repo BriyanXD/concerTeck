@@ -1,33 +1,39 @@
-import './App.css';
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Home from './components/Home/Home.jsx';
-import RegisterUser from './components/RegisterUser/RegisterUser.jsx';
-import RegisterEvent from './components/RegisterEvent/RegisterEvents';
-import Detail from './components/Detail/Detail';
-import PageNotFound from './components/PageNotFound/PageNotFound';
-import Cart from './components/Cart/Cart';
-import ProfileUser from './components/ProfileUser/ProfileUser.jsx';
-import PanelAdmin from './components/Admin/adminPanel'
-
-
+import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./components/Home/Home.jsx";
+import RegisterUser from "./components/RegisterUser/RegisterUser.jsx";
+import RegisterEvent from "./components/RegisterEvent/RegisterEvents";
+import Detail from "./components/Detail/Detail";
+import PageNotFound from "./components/PageNotFound/PageNotFound";
+import ProfileUser from "./components/ProfileUser/ProfileUser.jsx";
+import PanelAdmin from "./components/Admin/adminPanel";
+import Favorites from "./components/Favorites/Favorites";
+import TicketVoucher from "./components/TicketVoucher/TicketVoucher.jsx";
+import Streaming from "./components/Streaming/Streaming.jsx";
+import SuccessOrCancel from './components/SuccessOrCancel/SuccessOrCancel.jsx';
+import CartCheckout from './components/CartCheckout/CartCheckout.jsx';
 
 function App() {
   return (
     <BrowserRouter>
       <div>
-          <Routes>
-            <Route path='/' element= {<Home/>}/>
-            <Route path= '/:id' element={<Detail/>}/>
-            <Route path='/perfil/panelAdmin' element={<PanelAdmin/>}/>
-            <Route exact path='/registrar/:usuario' element= {<RegisterUser/>}/>
-            <Route exact path='/perfil/:id' element={<ProfileUser/>}/>
-            {/* <Route exact path='' element= {<Ruta/>}/> 
-            <Route exact path='' element= {<Ruta/>}/>  */} 
-            <Route path='/cart' element={<Cart/>}/>
-            <Route exact path='/events' element={<RegisterEvent/>}/>
-            <Route path='/events' element={<RegisterEvent/>}/>
-            <Route path='*' element={<PageNotFound/>}/>
-          </Routes>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/:id" element={<Detail />} />
+          <Route path="/perfil/panelAdmin" element={<PanelAdmin />} />
+          <Route exact path="/registrar/:usuario" element={<RegisterUser />} />
+          <Route exact path="/perfil/:id" element={<ProfileUser />} />
+          <Route exact path="/ticket/:id" element={<TicketVoucher />} />
+          {/* <Route exact path='' element= {<Ruta/>}/> 
+            <Route exact path='' element= {<Ruta/>}/>  */}
+          <Route exact path="/streaming/:id/:eventId" element={<Streaming />} />
+          <Route exact path="/events" element={<RegisterEvent />} />
+          <Route path="/events" element={<RegisterEvent />} />
+          <Route path="/favs" element={<Favorites />} />
+          <Route path="*" element={<PageNotFound />} />
+          <Route path='/success' element={<SuccessOrCancel/>}/>
+          <Route path='/cart/checkout' element={<CartCheckout/>}/>
+        </Routes>
       </div>
     </BrowserRouter>
   );
