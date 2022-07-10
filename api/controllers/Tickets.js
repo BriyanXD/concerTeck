@@ -215,7 +215,6 @@ async function postCheckout(req, res, next) {
     success_url: "http://localhost:3000/success?success=true",
     cancel_url: "http://localhost:3000/success?canceled=true",
   });
-  console.log(session)
   res.json(session)
 }
 

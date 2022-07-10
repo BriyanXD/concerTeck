@@ -208,8 +208,8 @@ coord = prueba? prueba.map : '-34.545306 -58.449775'
           </div>
         </div>
         {/**Agregar condicional en el caso de que stock este en 0 */}
-        {console.log(Detail)}
-        {Detail.stock?<div className={style.containerCarrito}>
+        {}
+        {userStorage === "" || userStorage.isAdmin === false ? Detail.stock?<div className={style.containerCarrito}>
             {Detail.stock?.stockGeneral?<div className={style.detailTicket}>
             <div className={style.buttonadditem}>
                   <div>General ${Detail.stock.generalPrice}</div> 
@@ -246,7 +246,7 @@ coord = prueba? prueba.map : '-34.545306 -58.449775'
               </div>
                 <MdOutlineAddShoppingCart onClick={() => {handleClick("vip"); swal('Item agregado al carrito')}} className={style.addicon}/>
             </div>:null}
-        </div>:null}
+        </div>:null:null}
         
           <Leaflet  data={coord} />
         
