@@ -1,6 +1,7 @@
 const ShoppingCart = require("../models/ShoppingCart.js");
 const TicketStock = require("../models/TicketStock.js");
 const Events = require("../models/Events");
+const { UserRefreshClient } = require("google-auth-library");
 
 async function getShoppingCart(req, res) {
   const { idUser } = req.query;
@@ -47,6 +48,7 @@ async function postShoppingCart(req, res) {
         idPrice,
         name: name
       });
+      console.log(allDateShoppingCart, "lo que retorna")
       return res.status(200).json(allDateShoppingCart);
     } else {
       return res

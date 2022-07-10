@@ -62,7 +62,7 @@ export default function PerfilYLogoutAuth0(){
         </Link> */ : null : null
       }
        <button onClick={() => clearLocalStorageToken()} className={style.button}>
-       Log Out
+       Cerra sesión
        </button>
       </div>
     </div>

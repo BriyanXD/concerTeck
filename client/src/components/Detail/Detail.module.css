@@ -2,12 +2,13 @@
 /* @import url(../Home/Home.module.css); */
 
 .container{
- 
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    background: url(../../img/felix-besombes-9qUEBg1qVKc-unsplash.jpg);
+    background-size: cover;
     
     
 }
@@ -50,7 +51,7 @@ height: 75vh;
 }
 
 .button{
-    background-color: #FF4C29;
+    background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70));
     width: 8vw;
     height: 2vw;
     color: #ffff;
@@ -59,20 +60,18 @@ height: 75vh;
     margin-bottom: 5px;
     font-size: 15px;
     margin-right: 35px;
-    border-color: #FF4C29;
+    border: none;
     margin: 13px;
     cursor: pointer;
     margin-top: 10vh;
+    transition: box-shadow 0.25s ease 0s;
 }
 
-.button:hover{
-    transform: translate(-0.05em, -0.05em);
-    box-shadow: 0.15em 0.15em;
+.button:hover,
+.button:focus {
+ background: linear-gradient(117deg, rgb(248, 137, 73), rgb(248, 82, 49));
+ box-shadow: 0 0.1rem 0.8rem rgb(254, 100, 70);
 }
-.button:active {
-    transform: translate(0.05em, 0.05em);
-    box-shadow: 0.05em 0.05em;
-   }
 
 .img{
     width: 25vw;
@@ -159,3 +158,9 @@ width: 30vw;
  display: flex;
  flex-direction: column;
 }
+
+
+/* .profile{
+    background-color: red;
+    width: 100vw;
+} */
