@@ -17,7 +17,7 @@ async function ticketVoucher (id){
         { model: Events, as: "event" },]})
 
         let QR = await qrcode.toDataURL(url)
-        console.log(QR)
+        // console.log(QR)
         // console.log(Comprador)
         const contentHtml=`
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

@@ -810,7 +810,6 @@ export function checkout(line_items){
 }
 
 export function ActualizacionStock(descontar){
-  console.log("🚀 ~ file: actions.js ~ line 690 ~ ActualizacionStock ~ descontar", descontar)
   return async function (dispatch){
     try{
       const actual = await axios.put(`${url}/api/cart/update`, {descontar})
@@ -839,8 +838,6 @@ export function postTicket (data){
   return async function (dispatch) {
     try {
       const tick = await axios.post(`http://localhost:3001/api/ticket`, data)
-      console.log("🚀 ~ file: actions.js ~ line 842 ~ tick", tick.id)
-  
     } catch (error) {
       console.log(error) 
   }

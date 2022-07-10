@@ -66,8 +66,6 @@ async function postTicket(req, res) {
       const saveEvent = await Events.findByPk(idEvent);
       const saveUser = await User.findByPk(idUser);
       const newTicket = []
-      // for(let i = 0; i < quantity; i++){
-      //   console.log("posicion", i)
       let i = 0;
       while(i !== quantity){
         let variable = await Ticket.create({
@@ -83,8 +81,6 @@ async function postTicket(req, res) {
        newTicket.push(variable)
         i++
       }
-        console.log("Pasoooo D")
-      console.log(newTicket, "NewTicket!!!!!!!")
       res.json(newTicket);
     } else {
       res.status(401).send({ error: "Faltan datos" });
@@ -165,12 +161,7 @@ async function deleteTicket(req, res) {
 
 async function postCreatEventAndPrice(event) {
   try {
-    // const id = event.id;
-    // const findEvent = await Events.findByPk(id, {
-    //   include: [{ model: TicketStock, as: "stock" }],
-    // });
     const idStockEncotrado = await TicketStock.findByPk(event[0].stockId);
-    console.log("🚀 ~ file: Tickets.js ~ line 160 ~ postCreatEventAndPrice ~ idStockEncotrado", idStockEncotrado)
     const product = await stripe.products.create({
       name: event[0].name,
       description: event[0].description,
