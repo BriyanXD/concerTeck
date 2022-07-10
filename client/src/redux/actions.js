@@ -273,6 +273,7 @@ export function postLikes(idEvent, idUser, allLikes) {
     const findLikes = allLikes.find((el) => el.idEvent === idEvent);
     if (findLikes) {
       console.log("Ya existe");
+      dispatch(deleteLikes(findLikes.id))
       return;
     }
     try {
@@ -528,6 +529,7 @@ export function activeModalOrdersAdminPanel(booleano) {
 export function addCartDB(data) {
   return async function () {
     try {
+      console.log("ENTRANDO A POST CARD DB", data)
       await axios.post(`${url}/api/cart`, data);
     } catch (error) {
       console.log(error);
