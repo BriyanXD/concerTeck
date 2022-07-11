@@ -43,10 +43,10 @@ export default function CartCheckout () {
                 </div>
 
                 <div className={style.btn}>
-                <a href={`${url}`}>
-                <button className={style.button}>Siguiente</button>
-                </a> 
                 <div><Link to='/'><button className={style.button}>Volver a inicio</button></Link></div>
+                <a href={`${url}`}>
+                <button className={style.button}>Comprar</button>
+                </a> 
                 </div>
             </div>
         )

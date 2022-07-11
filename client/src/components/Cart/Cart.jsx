@@ -179,7 +179,7 @@ if(userStorage !== ""){
             !user ? loginWithPopup() : handleCheckout()
           }
         >
-          Comprar todo
+          Ver detalle
         </button>
     </div>
   );

@@ -1,7 +1,7 @@
 .container{
     background-image: url(../../img/felix-besombes-9qUEBg1qVKc-unsplash.jpg);
     background-size: cover;
-    height: 100vw;
+    height: 100%;
     align-items: center;
     color: var(--color4);
     display: flex;
@@ -17,7 +17,7 @@
 
 .detalle{
     color: var(--color4);
-    padding: 3vw;
+    padding: 1vw;
     margin-left: 2vw;
 }
 
@@ -29,6 +29,7 @@
     width: 50vw;
     height: auto;
     display: grid;
+    margin-left: 4vw;
     
     
     /* 
