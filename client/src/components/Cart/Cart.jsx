@@ -35,7 +35,7 @@ export default function Cart() {
   }else{
     userStorage = ""
   }
-
+  const [cartState, setCartState] = useState({})
   const {cartDB, sesion, AllEvents, Stock} = useSelector(state =>state);
 
   useEffect(() => {
@@ -76,9 +76,10 @@ export default function Cart() {
 
   // let aux =[]
   // let i = 0;
-  if(cartDB.length !== 0){
-    for(let i=0; i<cartDB.length;i++){
-      let aux2 = AllEvents.filter((e) => e.id === cartDB[i].idEvent)
+  /* if(cartDB.length !== 0){
+    console.log(cartDB,"CART DB")
+    let aux2 = AllEvents.filter((e) => e.id === cartDB[i].idEvent)
+    for(let i=0; i < cartDB.length; i++){
       console.log("ENTRO AL AUX2",aux2)
       if(cartDB[i].name === 'general' && cartDB[i].quantity > aux2[i]?.stock.stockGeneral){
         swal({
@@ -87,6 +88,7 @@ export default function Cart() {
           icon: 'error',
           dangerMode:true})
           cartDB[i].quantity = aux2[i]?.stock.stockGeneral
+          
        }else if(cartDB[i].name === 'general lateral' &&  cartDB[i].quantity > aux2[i]?.stock.stockGeneralLateral){
         swal({
           title: 'Supera Stock',
@@ -94,6 +96,7 @@ export default function Cart() {
           icon: 'error',
           dangerMode:true})
           cartDB[i].quantity = aux2[i]?.stock.stockGeneralLateral
+          
       }else if(cartDB[i].name === 'palco' && cartDB[i].quantity > aux2[i]?.stock.stockPalco){
         swal({
           title: 'Supera Stock',
@@ -108,6 +111,7 @@ export default function Cart() {
           icon: 'error',
           dangerMode:true})
           cartDB[i].quantity = aux2[i]?.stock.stockStreaming
+          
       }else if(cartDB[i].name === 'vip' && cartDB[i].quantity > aux2[i]?.stock.stockkVIP ){
           swal({
             title: 'Supera Stock',
@@ -115,11 +119,19 @@ export default function Cart() {
             icon: 'error',
             dangerMode:true})
             cartDB[i].quantity = aux2[i]?.stock.stockkVIP
+            
       }
       console.log("ENTRO A CART",cartDB)
     }
-  }
+  } */
 
+
+  cartDB.map(async (cart) => {
+    await setCartState({
+      [cart.id]:cart.quantity,
+     /*  maxStock:AllEvents.find(event =>{if(event.id === cart.idEvent) console.log(event)}) */
+    })
+  })
 
  const handleDelete = async (id) => {
   if(userStorage !== ""){
