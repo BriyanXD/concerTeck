@@ -60,14 +60,14 @@ async function getTicketByID(req, res) {
 
 async function postTicket(req, res) {
   const { name, price, idEvent, idUser, quantity } = req.body;
-  console.log("postTicket", name, price, idEvent, idUser, quantity)
+  console.log("postTicket", name, price, idEvent, idUser, quantity);
   try {
     if (name && price && idEvent && idUser) {
       const saveEvent = await Events.findByPk(idEvent);
       const saveUser = await User.findByPk(idUser);
-      const newTicket = []
+      const newTicket = [];
       let i = 0;
-      while(i !== quantity){
+      while (i !== quantity) {
         let variable = await Ticket.create({
           name: name,
           price: price,
@@ -76,17 +76,17 @@ async function postTicket(req, res) {
           eventName: saveEvent.name || "undefined",
           email: saveUser.email || "undefined",
           userName: saveUser.name || "undefined",
-        })
-       await ticketVoucher(variable.id)
-       newTicket.push(variable)
-        i++
+        });
+        await ticketVoucher(variable.id);
+        newTicket.push(variable);
+        i++;
       }
       res.json(newTicket);
     } else {
-      res.status(401).send({ error: "Faltan datos" });
+      res.status(400).send({ error: "Faltan datos" });
     }
   } catch (error) {
-    res.status(401).send({ error: error.message });
+    res.status(400).send({ error: error.message });
   }
 }
 
@@ -173,49 +173,53 @@ async function postCreatEventAndPrice(event) {
         unit_amount: idStockEncotrado.streamingPrice * 100,
         currency: "ars",
       });
-      await idStockEncotrado.update({idStreamingPrice: price.id})
+      await idStockEncotrado.update({ idStreamingPrice: price.id });
       const price2 = await stripe.prices.create({
         product: product.id,
         unit_amount: idStockEncotrado.vipPrice * 100,
         currency: "ars",
       });
-      await idStockEncotrado.update({idVipPrice: price2.id})
+      await idStockEncotrado.update({ idVipPrice: price2.id });
       const price3 = await stripe.prices.create({
         product: product.id,
         unit_amount: idStockEncotrado.generalLateralPrice * 100,
         currency: "ars",
       });
-      await idStockEncotrado.update({idGeneralLateralPrice: price3.id})
+      await idStockEncotrado.update({ idGeneralLateralPrice: price3.id });
       const price4 = await stripe.prices.create({
         product: product.id,
         unit_amount: idStockEncotrado.generalPrice * 100,
         currency: "ars",
       });
-      await idStockEncotrado.update({idGeneralPrice: price4.id})
+      await idStockEncotrado.update({ idGeneralPrice: price4.id });
       const price5 = await stripe.prices.create({
         product: product.id,
         unit_amount: idStockEncotrado.palcoPrice * 100,
         currency: "ars",
       });
-      await idStockEncotrado.update({idPalcoPrice: price5.id})
-      return ("Todo salio bien")
+      await idStockEncotrado.update({ idPalcoPrice: price5.id });
+      return "Todo salio bien";
     } else {
-      console.log("Evento No tiene stock relacionado");
+      res.status(400).json({ error: "Evento no tiene stock relacionado" });
     }
   } catch (error) {
-    console.log(error.message);
+    res.status(400).json({ error: error.message });
   }
 }
 
 async function postCheckout(req, res, next) {
   const { line_items } = req.body;
-  const session = await stripe.checkout.sessions.create({
-    line_items: line_items,
-    mode: "payment",
-    success_url: "http://localhost:3000/success?success=true",
-    cancel_url: "http://localhost:3000/success?canceled=true",
-  });
-  res.json(session)
+  try {
+    const session = await stripe.checkout.sessions.create({
+      line_items: line_items,
+      mode: "payment",
+      success_url: "http://localhost:3000/success?success=true",
+      cancel_url: "http://localhost:3000/success?canceled=true",
+    });
+    res.json(session);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 }
 
 module.exports = {

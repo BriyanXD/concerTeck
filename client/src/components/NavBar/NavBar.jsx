@@ -24,7 +24,7 @@ export default function NavBar({ setCurrenPag, setCurrentPage }) {
   let path = location.pathname.split("/");
 
   const [active, setActive] = useState(false);
-  const [flag, setFlag] = useState(false);
+ // const [flag, setFlag] = useState(false);
   const { totalUniqueItems } = useCart();
   const {cartDB} = useSelector(state => state);
   let temporal = localStorage.getItem("user")
@@ -39,26 +39,26 @@ export default function NavBar({ setCurrenPag, setCurrentPage }) {
     setActive(!active);
   };
 
-  const switchButton = document.getElementById('switch');
+//   const switchButton = document.getElementById('switch');
  
-function handleClick() {
-if(flag){
-  document.documentElement.setAttribute('theme', 'dark');
-    switchButton.classList.toggle('active');//toggle the HTML button with the id='switch' with the class 'active'
-    setFlag(false);
-  } else { 
-    document.documentElement.setAttribute('theme', 'light');
-    setFlag(true)}
-};
+// function handleClick() {
+// if(flag){
+//   document.documentElement.setAttribute('theme', 'dark');
+//     switchButton.classList.toggle('active');//toggle the HTML button with the id='switch' with the class 'active'
+//     setFlag(false);
+//   } else { 
+//     document.documentElement.setAttribute('theme', 'light');
+//     setFlag(true)}
+// };
 
   return (
     <div className={style.containerNav}>
-      <div>
+      {/* <div>
         <button className={style.darkModeSwitch} onClick={handleClick} id="switch">
           <span><MdOutlineWbSunny/></span>
           <span><FiMoon/></span>
         </button> 
-      </div>
+      </div> */}
       {/* Logitipo que redirecciona a home */}
       <div className={style.Containerlogo}>
         <Link to="/">

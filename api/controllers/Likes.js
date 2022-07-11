@@ -18,7 +18,9 @@ async function getLikes(req, res) {
       });
       res.json(allLikes);
     } else {
-      res.json({ message: "El id no pertece a un Usuario ni a un Evento" });
+      res
+        .status(404)
+        .json({ message: "El id no pertece a un Usuario ni a un Evento" });
     }
   } catch (error) {
     res.status(404).json({ error: error.message });
@@ -33,7 +35,7 @@ async function postLikes(req, res) {
     });
     res.json(createLike);
   } catch (error) {
-    res.status(404).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 }
 async function deleteLikes(req, res) {
@@ -43,7 +45,7 @@ async function deleteLikes(req, res) {
     const createLike = await userSaved.destroy();
     res.json(createLike);
   } catch (error) {
-    res.status(404).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 }
 
