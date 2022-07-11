@@ -5,13 +5,14 @@ import { getEvents, getCartDB, deleteCart, putCartDB, checkout } from "../../red
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 import Style from "./Cart.module.css";
+import swal from "sweetalert";
 // import redirectToCheckout from "stripe";
 import { style } from "@mui/system";
 
 export default function Cart() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [diseable,setDiseable] = useState(true)
   //*Auth0 datos de usuario logeado y popUp de logeo
   const { user, loginWithPopup } = useAuth0();
   // const [flag, setFlag] = useState(false);
@@ -35,7 +36,7 @@ export default function Cart() {
     userStorage = ""
   }
 
-  const {cartDB, sesion} = useSelector(state =>state);
+  const {cartDB, sesion, AllEvents, Stock} = useSelector(state =>state);
 
   useEffect(() => {
     dispatch(getEvents());
@@ -72,6 +73,53 @@ export default function Cart() {
   }else if(userStorage === "" && isEmpty){
     return <p className={Style.carritoVacio}>Sin eventos en el carrito </p>;
   }
+
+  // let aux =[]
+  // let i = 0;
+  if(cartDB.length !== 0){
+    for(let i=0; i<cartDB.length;i++){
+      let aux2 = AllEvents.filter((e) => e.id === cartDB[i].idEvent)
+      console.log("ENTRO AL AUX2",aux2)
+      if(cartDB[i].name === 'general' && cartDB[i].quantity > aux2[i]?.stock.stockGeneral){
+        swal({
+          title: 'Supera Stock',
+          text: 'La cantidad de entradas generales que intentas comprar supera el stock',
+          icon: 'error',
+          dangerMode:true})
+          cartDB[i].quantity = aux2[i]?.stock.stockGeneral
+       }else if(cartDB[i].name === 'general lateral' &&  cartDB[i].quantity > aux2[i]?.stock.stockGeneralLateral){
+        swal({
+          title: 'Supera Stock',
+          text: 'La cantidad de entradas generales laterales que intentas comprar supera el stock',
+          icon: 'error',
+          dangerMode:true})
+          cartDB[i].quantity = aux2[i]?.stock.stockGeneralLateral
+      }else if(cartDB[i].name === 'palco' && cartDB[i].quantity > aux2[i]?.stock.stockPalco){
+        swal({
+          title: 'Supera Stock',
+          text: 'La cantidad de entradas de palco que intentas comprar supera el stock',
+          icon: 'error',
+          dangerMode:true})
+          cartDB[i].quantity = aux2[i]?.stock.stockPalco
+      }else if(cartDB[i].name === 'streaming' && cartDB[i].quantity > aux2[i]?.stock.stockStreaming) {
+        swal({
+          title: 'Supera Stock',
+          text: 'La cantidad de entradas de streaming que intentas comprar supera el stock',
+          icon: 'error',
+          dangerMode:true})
+          cartDB[i].quantity = aux2[i]?.stock.stockStreaming
+      }else if(cartDB[i].name === 'vip' && cartDB[i].quantity > aux2[i]?.stock.stockkVIP ){
+          swal({
+            title: 'Supera Stock',
+            text: 'La cantidad de entradas VIP que intentas comprar supera el stock',
+            icon: 'error',
+            dangerMode:true})
+            cartDB[i].quantity = aux2[i]?.stock.stockkVIP
+      }
+      console.log("ENTRO A CART",cartDB)
+    }
+  }
+
 
  const handleDelete = async (id) => {
   if(userStorage !== ""){
@@ -174,6 +222,7 @@ if(userStorage !== ""){
         Total final: ${totalTodos} ARS.
           </div>
         <button
+          disabled={diseable}
           className={Style.btncomprar}
           onClick={() =>
             !user ? loginWithPopup() : handleCheckout()
