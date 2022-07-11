@@ -45,7 +45,6 @@
 .error{
     width:50%;
     background-color: #dbdada;
-    color: red;
     display: flex;
     margin-left: 9rem;
     justify-content: center;
@@ -53,8 +52,9 @@
     border-radius: 5px;
     height: 30px;
     font-size: 15px;
-    margin-bottom: 1rem;
+    color: red;
     border-color: red;
+    margin-top: 1rem;
 }
 .error::placeholder{
     font-size: 15px;
