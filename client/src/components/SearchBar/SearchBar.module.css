@@ -12,22 +12,28 @@
 } */
 
 .searchBar {
-    border: 2px solid #2D4059;
-    padding: 15px;
+    margin-top: 0.8vh;
+    border: none;
+    padding: 0.8vw;
     width: 22vw;
-    border-radius: 10px;
-    background-color: #222831;
+    border-radius: 5px;
+    background-color: var(--color1);
     font-size: small;
-    font-weight: bold;
+    /* font-weight: bold; */
     text-align: center;
-    color: whitesmoke;
+    color: var(--color4);
+   }
+   .searchBar:hover{
+    box-shadow: 0.1rem 0.1rem 0.2rem var(--color3);
+    transition: 0.4s;
    }
    
+   
    .searchBar:focus {
-    outline-color: #FF5722;
-    background-color: #222831;
-    color: #ffffff;
-    box-shadow: 5px 5px #f9b5a1;
+    outline-color: var(--color3);
+    background-color: var(--color1);
+    border: none;
+    box-shadow: 0 0.1rem 0.8rem rgb(254, 100, 70);
     transition: 0.4s;
    }
 
@@ -35,7 +41,7 @@
     margin-left: -30px;
     background-color: transparent;
     border-color: transparent;
-    color: whitesmoke;
+    color: var(--color4);
     
     
 }

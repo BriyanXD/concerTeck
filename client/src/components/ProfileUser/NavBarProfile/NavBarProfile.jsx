@@ -21,6 +21,9 @@ export default function NavBarProfile () {
             <span className={style.titleData2}> Favoritos </span>
         </Link> : <span className={style.adminnav}><FontAwesomeIcon icon={faCrown}/>Admin</span>}
             <span className={style.titleData}>Nombre: {userdates.name}</span>
+            <div className={style.fix}>
+
          <PerfilYLogoutAuth0/>
+            </div>
     </div>)
 }
