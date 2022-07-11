@@ -49,6 +49,7 @@ const initialState = {
   },
   token: "",
   ticket: {},
+  Voucher:{},
 };
 
 function reducers(state = initialState, { type, payload }) {
