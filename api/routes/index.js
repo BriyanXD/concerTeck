@@ -110,8 +110,8 @@ routes.put("/eventurl", verifyToken, isAdmin, putUrlStreaming);
 routes.get("/ticket", getTicketByID);
 routes.post("/ticket", postTicket); // verifyToken, adminNotAuthorization,
 routes.delete("/ticket", verifyToken, isAdmin, deleteTicket);
-routes.post("/tickets", postCreatEventAndPrice)
-routes.post("/tickets2", postCheckout)
+routes.post("/tickets", postCreatEventAndPrice);
+routes.post("/tickets2", postCheckout);
 // routes.post("/tickect2", getRaro2)
 
 routes.get("/genres", getAllGenres);

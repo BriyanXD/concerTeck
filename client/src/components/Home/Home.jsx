@@ -13,7 +13,7 @@ import PaginadoBigEvents from "../Paginado/PaginadoBigEvents";
 import PaginadoEvents from "../Paginado/PaginadoEvents";
 import ModalCalendar from "../ModalCalendar/ModalCalendar";
 import { BsFillHeartFill } from 'react-icons/bs';
-import { postLikes, getLikes } from '../../redux/actions';
+import { postLikes, getLikes, getCartDB } from '../../redux/actions';
 import { useAuth0 } from "@auth0/auth0-react";
 /* import Streaming from "../Streaming/Streaming"; */
 import Carousel2 from "../Carousel2/Carousel2";
@@ -68,6 +68,9 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getEvents());
+    if(userStorage !== ""){
+      dispatch(getCartDB(userStorage.id))
+    }
   }, [dispatch]);
 
   useEffect(()=>{

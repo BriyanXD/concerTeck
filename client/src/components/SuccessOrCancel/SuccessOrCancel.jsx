@@ -22,14 +22,13 @@ export default function SuccessOrCancel () {
         const query = new URLSearchParams(window.location.search);
     
         if (query.get("success")) {
-          setMessage("Tu compra se completó con éxtio. Gracias por confiar en nosotros! ");
+          setMessage("Tu compra se completó con éxtio. Gracias por confiar en nosotros!");
           dispatch(ActualizacionStock(cartDB))
         }
     
         if (query.get("canceled")) {
           setMessage(
-            "Compra cancelada. Por favor revisá tu pedido y volvé a intentar!"
-          );
+            "Compra cancelada. Por favor revisá tu pedido y volvé a intentar!");
         }
       }, [cartDB]);
 
@@ -37,7 +36,9 @@ export default function SuccessOrCancel () {
         dispatch(ActualizacionStock(cartDB))
       },[flag])
 
-    return(<div>
+    return(
+      <div>
             {message? (<h1>{message}</h1>) : (<h1>{message}</h1>)}
-    </div>)
+    </div>
+    )
 }
