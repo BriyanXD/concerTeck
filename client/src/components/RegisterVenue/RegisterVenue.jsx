@@ -47,20 +47,28 @@ export default function RegisterVenue({handleClickNewVenue}){
             await setMapCord({
                 ...mapCord,
                 alt: e.target.value
-            })
+            });
+            await setVenue({
+                ...venue,
+                map: mapCord.alt + " " + mapCord.lat
+            });
         }
         if(e.target.name === "lat"){
             await setMapCord({
                 ...mapCord,
                 lat: e.target.value
-            }) 
-        }
-        if(mapCord.alt !== "" && mapCord.lat !== ""){
+            });
             await setVenue({
                 ...venue,
                 map: mapCord.alt + " " + mapCord.lat
-            })
+            }); 
         }
+        //if(mapCord.alt !== "" && mapCord.lat !== ""){
+            await setVenue({
+                ...venue,
+                map: mapCord.alt + " " + mapCord.lat
+            });
+        //}
     }
 
     const handleVenue = async(e) =>{
@@ -68,6 +76,7 @@ export default function RegisterVenue({handleClickNewVenue}){
             await setVenue({
                 ...venue,
                 [e.target.name]: Number(e.target.value),
+                map: mapCord.alt + " " + mapCord.lat,
             });
             return 
         }
@@ -75,6 +84,7 @@ export default function RegisterVenue({handleClickNewVenue}){
             await setVenue({
                 ...venue,
                 [e.target.name]: Number(e.target.value),
+                map: mapCord.alt + " " + mapCord.lat,
             });
             return 
         }
@@ -82,6 +92,7 @@ export default function RegisterVenue({handleClickNewVenue}){
             setVenue({
                 ...venue,
                 [e.target.name]: Number(e.target.value),
+                map: mapCord.alt + " " + mapCord.lat,
             });
             return 
         }
@@ -89,6 +100,7 @@ export default function RegisterVenue({handleClickNewVenue}){
             setVenue({
                 ...venue,
                 [e.target.name]: Number(e.target.value),
+                map: mapCord.alt + " " + mapCord.lat,
             });
             return 
         }
@@ -96,6 +108,7 @@ export default function RegisterVenue({handleClickNewVenue}){
             setVenue({
                 ...venue,
                 [e.target.name]: Number(e.target.value),
+                map: mapCord.alt + " " + mapCord.lat,
             });
             return 
         }
@@ -104,6 +117,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                 ...venue,
                 id: e.target.value, // nameIdVenue,
                 [e.target.name]: e.target.value,
+                map: mapCord.alt + " " + mapCord.lat,
             });
             return 
         }
@@ -122,14 +136,10 @@ export default function RegisterVenue({handleClickNewVenue}){
         let minimunStock = Math.floor((venue.maxStockGeneral + (venue.maxStockGeneralLateral || 0) + (venue.maxStockPalco || 0) + (venue.maxStockStreaming || 0) + (venue.maxStockVIP || 0)) *0.7);
         await setVenue({
             ...venue,
-            map: mapCord.alt + " " + mapCord.lat,
+            //map: mapCord.alt + " " + mapCord.lat,
             minStock: minimunStock,
             isBigEvent: minimunStock >= 10000 ? true : false
         });
-        // await setVenue({
-        //     ...venue,
-        //     isBigEvent: venue.minStock >= 10000 ? true : false
-        // });
         if(error.name !== "" || 
         error.address !== "" || 
         //error.map !== "" || 
@@ -137,7 +147,9 @@ export default function RegisterVenue({handleClickNewVenue}){
         error.maxStockGeneralLateral !== "" ||
         error.maxStockPalco !== "" ||
         error.maxStockStreaming !== "" ||
-        error.maxStockVIP !== ""){
+        error.maxStockVIP !== "" ||
+        errorMap.alt !== "" ||
+        errorMap.lat !== ""){
             return swal({
                 title: 'Establecimiento no creado',
                 text: "Solucione los errores en los campos obligatorios",
@@ -145,7 +157,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                 dangerMode:true})
 
         }
-        if(venue.name === "" || venue.address === "" || venue.map === "" || venue.maxStockGeneral === 0 || venue.maxStockGeneral === ''){
+        if(venue.name === "" || venue.address === "" || venue.map === "" || venue.maxStockGeneral === 0 || venue.maxStockGeneral === '' || mapCord.alt === "" || mapCord.lat === ""){
             setError({
                 name: venue.name === "" ? "Ingrese el nombre el establecimiento" : "",
                 address: venue.address === "" ? "Ingrese la dirección del establecimiento" : "",
@@ -155,6 +167,10 @@ export default function RegisterVenue({handleClickNewVenue}){
                 maxStockPalco: "",
                 maxStockStreaming: "",
                 maxStockVIP: ""
+            });
+            setErrorMap({
+                alt: mapCord.alt === "" ? "Ingrese la coordenada de longitud" : "",
+                lat: mapCord.lat === "" ? "Ingrese la coordenada de latitud" : ""
             });
             return
         }
@@ -257,7 +273,12 @@ export default function RegisterVenue({handleClickNewVenue}){
                     ...error,
                     [e.target.name]: "Ingrese la dirección del establecimiento"
                 })
-            } else {
+            } else if((!/^[a-zA-ZÀ-ÿ\s\d]{1,40}$/.test(e.target.value))){
+                setError({
+                    ...error,
+                    [e.target.name]: "Ingrese la dirección del establecimiento"
+                })
+            } else{
                 setError({
                     ...error,
                     [e.target.name]: ""
@@ -368,9 +389,9 @@ export default function RegisterVenue({handleClickNewVenue}){
         <div> 
             <input 
                 name="address" 
-                value={venue.address}  
+                value={venue.address}
                 onChange={handleVenue} 
-                nBlur={handleBlurVenue} 
+                onBlur={handleBlurVenue} 
                 type="text" 
                 className={error.address?.length > 0 ? style.error : style.inputText }
                 placeholder={error.address?.length > 0 ? error.address : "Dirección del nuevo establecimiento"}
@@ -380,7 +401,7 @@ export default function RegisterVenue({handleClickNewVenue}){
         {/* <div> <label>Ubicacion de coordinadas del nuevo establecimiento:* </label> <input name="map" value={venue.map}  onChange={handleVenue} onBlur={handleBlurVenue} type="text" placeholder="Altitud y Latitud del nuevo establecimiento" />{error.map && (<label>{error.map}</label>)} </div> */}
         <div> 
             <input 
-                id="alt" 
+                id="map" 
                 name="alt" 
                 onChange={handleMap} 
                 onBlur={handleBlurMap} 
@@ -392,7 +413,7 @@ export default function RegisterVenue({handleClickNewVenue}){
 
         <div> 
              <input 
-                id="lat" 
+                id="map" 
                 name="lat" 
                 onChange={handleMap} 
                 onBlur={handleBlurMap} 
@@ -409,7 +430,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                 value={venue.maxStockGeneral} 
                 onChange={handleVenue} 
                 onBlur={handleBlurVenue} 
-                type="text"
+                type="number"
                 className={error.maxStockGeneral?.length > 0 ? style.error : style.inputText } 
                 placeholder={error.maxStockGeneral?.length > 0 ? error.maxStockGeneral : "Cantidad máxima general"} 
             />
@@ -421,7 +442,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                 name="maxStockGeneralLateral" 
                 value={venue.maxStockGeneralLateral}  
                 onChange={handleVenue} 
-                type="text" 
+                type="number" 
                 className={error.maxStockGeneralLateral?.length > 0 ? style.error : style.inputText }
                 placeholder={error.maxStockGeneralLateral?.length > 0 ? error.maxStockGeneralLateral : "Cantidad máxima de laterales"} 
             />
@@ -433,7 +454,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                 name="maxStockPalco" 
                 value={venue.maxStockPalco}  
                 onChange={handleVenue} 
-                type="text"
+                type="number"
                 className={error.maxStockPalco?.length > 0 ? style.error : style.inputText }
                 placeholder={error.maxStockPalco?.length > 0 ? error.maxStockPalco : "Cantidad máxima de palco"}  
             />
@@ -445,7 +466,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                 name="maxStockStreaming" 
                 value={venue.maxStockStreaming}  
                 onChange={handleVenue} 
-                type="text"
+                type="number"
                 className={error.maxStockStreaming?.length > 0 ? style.error : style.inputText } 
                 placeholder={error.maxStockStreaming?.length > 0 ? error.maxStockStreaming : "Cantidad máxima de streaming"}
             />
@@ -457,7 +478,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                 name="maxStockVIP" 
                 value={venue.maxStockVIP}  
                 onChange={handleVenue} 
-                type="text"
+                type="number"
                 className={error.maxStockVIP?.length > 0 ? style.error : style.inputText }
                 placeholder={error.maxStockVIP?.length > 0 ? error.maxStockVIP : "Cantidad máxima de VIP"} 
             />
