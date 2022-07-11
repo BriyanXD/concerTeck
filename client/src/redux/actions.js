@@ -268,15 +268,9 @@ export function getLikes(idUser) {
   };
 }
 
-export function postLikes(idEvent, idUser, allLikes) {
+export function postLikes(idEvent, idUser) {
   return async function (dispatch) {
-    const findLikes = allLikes.find((el) => el.idEvent === idEvent);
-    if (findLikes) {
-      console.log("Ya existe");
-      dispatch(deleteLikes(findLikes.id))
-      return;
-    }
-    try {
+    try{
       const getLikes = await axios.post(
         `${url}/api/like`,
         { idEvent: idEvent, idUser: idUser },
@@ -290,8 +284,8 @@ export function postLikes(idEvent, idUser, allLikes) {
         type: "POST_LIKES",
         payload: getLikes.data,
       });
-    } catch (error) {
-      console.log(error.message);
+    }catch(error){
+      console.log(error.message)
     }
   };
 }
@@ -299,14 +293,14 @@ export function postLikes(idEvent, idUser, allLikes) {
 export function deleteLikes(id) {
   return async function (dispatch) {
     try {
-      const deleteLikes = await axios.delete(`${url}/api/like?id=${id}`, {
+      await axios.delete(`${url}/api/like?id=${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
       return dispatch({
         type: "DELETE_LIKES",
-        payload: deleteLikes,
+        payload: id,
       });
     } catch (error) {
       console.log(error.message);

@@ -86,21 +86,14 @@ function reducers(state = initialState, { type, payload }) {
         Basket: [...state.Basket, payload],
       };
     case "POST_LIKES":
-      if (state.Likes.find((l) => l.id === payload.id)) {
-        return {
-          ...state,
-          Likes: state.Likes.filter((f) => f.id !== payload.id),
-        };
-      } else {
         return {
           ...state,
           Likes: [...state.Likes, payload],
         };
-      }
     case "DELETE_LIKES":
       return {
         ...state,
-        Likes: state.Likes.filter((f) => f.id !== payload.id),
+        Likes: state.Likes.filter((f) => f.id !== payload),
       };
     case "GET_ALL_LIKES":
       return {
