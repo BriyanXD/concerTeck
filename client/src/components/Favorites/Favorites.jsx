@@ -3,26 +3,35 @@ import { useSelector, useDispatch } from "react-redux";
 import s from './Favorites.module.css'
 import CardBigEvent from "../CardBigEvent/CardBigEvent";
 import CardEvent from "../CardEvent/CardEvent";
-import {  getLikes, deleteLikes } from "../../redux/actions";
+import {  getLikes, deleteLikes, getEvents } from "../../redux/actions";
 import FooterFav from "./FooterFav/FooterFav";
 import { Link } from "react-router-dom";
 
 
 export default function Favorites(){
-    const {Likes, AllEvents, User} = useSelector((state)=> state)
-
+    const { Likes, AllEvents } = useSelector((state)=> state)
     const dispatch = useDispatch()
     const bigEvents = AllEvents.filter((b)=>b.venue.isBigEvent===true)
     const events = AllEvents.filter((b)=>b.venue.isBigEvent===false)
+    let temporal = localStorage.getItem("user")
+    let userStorage 
+    if(temporal !== "nada"){
+    userStorage = JSON.parse(temporal)
+    }else{
+        userStorage = ""
+    }
 
+    useEffect(() => {
+        dispatch(getEvents())
+    },[dispatch])
 
     useEffect(()=>{
-      dispatch(getLikes(User[0].id))  
+      dispatch(getLikes(userStorage.id))  
     },[dispatch])
 
     const handleDelete = async (id) =>{
         await dispatch(deleteLikes(id))
-        await dispatch(getLikes(User[0].id))
+        await dispatch(getLikes(userStorage.id))
     }
 
     return(
@@ -34,7 +43,7 @@ export default function Favorites(){
             <div>
             <div >
                 <div className={s.bigcontainer}>
-                    {Likes.map((e)=> {
+                    {Likes?.map((e)=> {
                         return bigEvents?.map((el)=>{
                             if(e.idEvent===el.id){
                                 return (

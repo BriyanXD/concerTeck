@@ -7,7 +7,7 @@ export default function CartCheckout () {
     return(
         <div className={style.container}>
                 <h1 className={style.detalle}>Detalles de la compra</h1>
-                <a href={`${url}`} target="_blank">
+                <a href={`${url}`}>
                 <button className={style.button}>Siguiente</button>
                 </a> 
         </div>

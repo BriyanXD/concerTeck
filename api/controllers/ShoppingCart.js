@@ -1,7 +1,6 @@
 const ShoppingCart = require("../models/ShoppingCart.js");
 const TicketStock = require("../models/TicketStock.js");
 const Events = require("../models/Events");
-const { UserRefreshClient } = require("google-auth-library");
 
 async function getShoppingCart(req, res) {
   const { idUser } = req.query;
@@ -79,7 +78,8 @@ async function deleteShoppingCart(req, res) {
     res.status(400).json({ error: error.message });
   }
 }
-async function putShoppingCart(req, res) {
+
+async function putShoppingCart(req, res){
   const {
     id,
     idUser,

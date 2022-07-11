@@ -24,7 +24,12 @@ export default function SuccessOrCancel () {
     
         if (query.get("success")) {
           setMessage("Tu compra se completó con éxtio. Gracias por confiar en nosotros! ");
-          dispatch(ActualizacionStock(cartDB))
+          const prueba = async() => {
+            for(const cart of cartDB)
+            await dispatch(postTicket(cart))
+          }
+          prueba();
+          setFlag(!flag)
         }
     
         if (query.get("canceled")) {
