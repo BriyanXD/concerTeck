@@ -730,7 +730,7 @@ export default function RegisterEvent(){
       };
 
 
-    //console.log para chequear lo que se esta guardando
+    //console.log para chequear lo que se esta guardando en el formulario
     console.log("SETEANDO EVENTO", event);
     console.log("SETEANDO STOCK: ", stock);
 
