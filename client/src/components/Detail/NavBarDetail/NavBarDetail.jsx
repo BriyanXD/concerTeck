@@ -28,6 +28,7 @@ export default function NavBarDetail(){
             <PerfilYLogoutAuth0/>
         </div>
         },
+        
       </div>
       )
 }

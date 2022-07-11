@@ -34,7 +34,7 @@
 
 
 .buttonBack{
-    background-color: #FF4C29;
+    background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70));
     /* display: flex;
     align-items: center; */
     width: 5rem;
@@ -44,13 +44,18 @@
     margin-bottom: 1rem;
     margin-left: 46%;
     margin-right: 50%;
+    cursor: pointer;
+    border: none;
+    transition: box-shadow 0.25s ease 0s;
+    color: whitesmoke;
 }
 
-.buttonBack:hover{
-    box-shadow:  0px 0px 3.1rem rgba(0, 0, 0, 0.41);
-    transition: 0.2s;
-    cursor: pointer;
+.buttonBack:hover,
+.buttonBack:focus {
+ background: linear-gradient(117deg, rgb(248, 137, 73), rgb(248, 82, 49));
+ box-shadow: 0 0.1rem 0.8rem rgb(254, 100, 70);
 }
+
 .containerBtn{
     width: 100%;
 }
