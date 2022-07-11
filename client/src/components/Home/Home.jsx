@@ -25,7 +25,6 @@ export default function Home() {
   const dispatch = useDispatch();
   const { user, loginWithPopup } = useAuth0();
   const {Likes} = useSelector((state)=> state);
-  console.log("🚀 ~ file: Home.jsx ~ line 28 ~ Home ~ Likes", Likes)
   const { User, AllEvents } = useSelector((state) => state)
   let temporal = localStorage.getItem("user")
   let userStorage 
@@ -69,10 +68,12 @@ export default function Home() {
 
   useEffect(() => {
     async function asincrono (){
-      await dispatch(postAllEventsIdPrice(0,6))
-      await dispatch(postAllEventsIdPrice(6,12))
-      await dispatch(postAllEventsIdPrice(12,18))
-      await dispatch(postAllEventsIdPrice(18,24))
+      await dispatch(postAllEventsIdPrice(0,4))
+      await dispatch(postAllEventsIdPrice(4,8))
+      await dispatch(postAllEventsIdPrice(8,12))
+      await dispatch(postAllEventsIdPrice(12,16))
+      await dispatch(postAllEventsIdPrice(16,20))
+      await dispatch(postAllEventsIdPrice(20,24))
     }
     asincrono()
   },[])

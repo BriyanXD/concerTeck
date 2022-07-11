@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import style from "./NavBar.module.css";
 import Genre from "../Filters/Genre/Genre";
@@ -17,9 +17,11 @@ import {FiMoon } from 'react-icons/fi';
 import Tooltip from '@mui/material/Tooltip';
 import Cart from '../Cart/Cart';
 import { useCart } from "react-use-cart";
+import { getCartDB } from '../../redux/actions';
 
 export default function NavBar({ setCurrenPag, setCurrentPage }) {
   const user = useSelector((state) => state.User);
+  const dispatch = useDispatch();
   let location = useLocation();
   let path = location.pathname.split("/");
 
@@ -34,6 +36,12 @@ export default function NavBar({ setCurrenPag, setCurrentPage }) {
   }else{
     userStorage = ""
   }
+
+  useEffect(() => {
+    if(userStorage !== ""){
+      dispatch(getCartDB(userStorage.id))
+    }
+  },[])
 
   const toggle = () => {
     setActive(!active);
