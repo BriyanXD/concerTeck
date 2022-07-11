@@ -23,7 +23,7 @@ const initialState = {
     isVisbleModal: false,
     eventsForCalendar: [],
   },
-  sesion:{},
+  sesion: {},
   cartDB: [],
   stateAdminPanel: {
     allUsers: [],
@@ -49,7 +49,7 @@ const initialState = {
   },
   token: "",
   ticket: {},
-  Voucher:{},
+  Voucher: {},
 };
 
 function reducers(state = initialState, { type, payload }) {
@@ -397,10 +397,7 @@ function reducers(state = initialState, { type, payload }) {
     case "PUT_URL_STREAMING_FOR_EVENT":
       return {
         ...state,
-        stateAdminPanel: {
-          ...state.stateAdminPanel,
-          putUrlStreaming: payload,
-        },
+        eventSaved: payload,
       };
     case "GET_TICKET_BY_ID":
       return {
@@ -408,11 +405,11 @@ function reducers(state = initialState, { type, payload }) {
         ticket: payload,
       };
     case "SESION_DATA":
-      console.log(payload)
+      console.log(payload);
       return {
         ...state,
-        sesion: payload
-      }
+        sesion: payload,
+      };
     //GET_ALL_TICKETS
     case "GET_ALL_TICKETS":
       return {
@@ -473,6 +470,12 @@ function reducers(state = initialState, { type, payload }) {
           ...state.stateAdminPanel,
           allEmails: payload,
         },
+      };
+    //PUT_DATA_EVENT
+    case "PUT_DATA_EVENT":
+      return {
+        ...state,
+        eventSaved: payload,
       };
     default:
       return state;

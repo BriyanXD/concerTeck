@@ -49,9 +49,9 @@ export function EventById(id) {
 }
 
 export function CreateEvent(value) {
-  console.log(value);
   return async function (dispatch) {
     try {
+      console.log("ACTION POST EVENT; DATOS: ", value)
       const creation = await axios.post(`${url}/api/events`, value);
       console.log(creation.data, "creando");
       return creation;
@@ -79,6 +79,7 @@ export function GetGenres() {
 export function CreateGenre(value) {
   return async function (dispatch) {
     try {
+      console.log("ACTION POST GENRE; DATOS: ", value)
       const creation = await axios.post(`${url}/api/genres`, value);
       return creation;
     } catch (error) {
@@ -115,6 +116,7 @@ export function CreateVenue(value) {
 export function CreateStock(value) {
   return async function (dispatch) {
     try {
+      console.log("ACTION POST STOCK; DATOS: ", value)
       const creation = await axios.post(`${url}/api/ticketstock`, value);
       return creation;
     } catch (error) {
@@ -321,7 +323,6 @@ export function getAllUsers() {
       /* const encabezado = `Authorization: Bearer ${localStorage.getItem('token')}` */
 
       const adminState = await axios(config);
-      console.log(adminState.data);
       return dispatch({
         type: "GET_ALL_USERS",
         payload: adminState.data,
@@ -394,7 +395,6 @@ export function deleteUser(id) {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log("Ususario eliminado", userDeleted);
       return dispatch({
         type: "DELETE_USER",
         payload: userDeleted.data,
@@ -412,7 +412,6 @@ export function deleteEvents(id) {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(eventDeleted);
       return dispatch({
         type: "DELETE_EVENT",
         payload: eventDeleted,
@@ -425,8 +424,6 @@ export function deleteEvents(id) {
 export function upgradeRank(id, boolean) {
   return async function (dispatch) {
     try {
-      console.log(boolean, "admin estado");
-      console.log(id, "id user");
       const userRanked = await axios.put(
         `${url}/api/upgrade`,
         { isAdmin: boolean, id: id },
@@ -436,7 +433,6 @@ export function upgradeRank(id, boolean) {
           },
         }
       );
-      console.log(userRanked, "Usuario Modificado ");
       return dispatch({
         type: "USER_RANKED",
         payload: userRanked,
@@ -523,7 +519,6 @@ export function activeModalOrdersAdminPanel(booleano) {
 export function addCartDB(data) {
   return async function () {
     try {
-      console.log("ENTRANDO A POST CARD DB", data)
       await axios.post(`${url}/api/cart`, data);
     } catch (error) {
       console.log(error);
@@ -534,7 +529,6 @@ export function findEventByName(name) {
   return async function (dispatch) {
     try {
       const eventos = await axios.get(`${url}/api/events?name=${name}`);
-      console.log("ESTA PRUEBA NUEVA", eventos.data);
       return dispatch({
         type: "FIND_EVENT_BY_NAME",
         payload: eventos.data,
@@ -728,7 +722,6 @@ export function getAllTickets() {
 export function verifiUserBanned(email) {
   return async function (dispatch) {
     try {
-      console.log(email, "EMAIL USER BANNED");
       const userSave = await axios.get(
         `${url}/api/verifibaned?email=${email}`,
         {
@@ -737,7 +730,6 @@ export function verifiUserBanned(email) {
           },
         }
       );
-      console.log(userSave.data, "BANEADO DESDE EL ACCIONS");
       return dispatch({
         type: "VERIFY_USER_BANNED",
         payload: userSave.data,
@@ -771,7 +763,6 @@ export function searchOrder(name) {
 export function searchEventIDEmails(eventId) {
   return async function (dispatch) {
     try {
-      console.log(eventId, "ID DEL EVENTO A BUSCAR");
       const allEmails = await axios.get(
         `${url}/api/ticket?eventId=${eventId}`,
         {
@@ -790,43 +781,75 @@ export function searchEventIDEmails(eventId) {
     }
   };
 }
-
-export function checkout(line_items){
-  return async function (dispatch){
-    try{
-    const data = await axios.post(`${url}/api/tickets2`,{line_items})
-    return dispatch({
-      type: "SESION_DATA",
-      payload: data.data
-    })
-    }catch(error){
-      console.log(error.message)
-    }
-  }
-}
-
-export function ActualizacionStock(descontar){
-  return async function (dispatch){
-    try{
-      const actual = await axios.put(`${url}/api/cart/update`, {descontar})
-      console.log(actual.data, "que  trae la funcion de back")
-    }catch(error){
-      console.log(error.message)
-    }
-  }
-}
-export function ticketVoucher (id){
+export function putDataEvent(
+  { name, artist, description, schedule, placeImage, performerImage },
+  id
+) {
   return async function (dispatch) {
     try {
-      const tick = await axios.post(`http://localhost:3001/api/voucher?${id}`)
-      return dispatch ({
-        type: "TICKET_VOUCHER",
-        payload: tick.data
-      })
+      const eventUpdate = await axios.put(
+        `${url}/api/events`,
+        {
+          id,
+          name,
+          artist,
+          description,
+          schedule,
+          placeImage,
+          performerImage,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      return dispatch({
+        type: "PUT_DATA_EVENT",
+        payload: eventUpdate.data,
+      });
     } catch (error) {
-      console.log(error) 
-  }
+      console.log(error, "PUT_DATA_EVENT");
+    }
+  };
 }
+
+export function checkout(line_items) {
+  return async function (dispatch) {
+    try {
+      const data = await axios.post(`${url}/api/tickets2`, { line_items });
+      return dispatch({
+        type: "SESION_DATA",
+        payload: data.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+
+export function ActualizacionStock(descontar) {
+  return async function (dispatch) {
+    try {
+      const actual = await axios.put(`${url}/api/cart/update`, { descontar });
+      console.log(actual.data, "que  trae la funcion de back");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+export function ticketVoucher(id) {
+  return async function (dispatch) {
+    try {
+      const tick = await axios.post(`http://localhost:3001/api/voucher?${id}`);
+      return dispatch({
+        type: "TICKET_VOUCHER",
+        payload: tick.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
 // export function ticketVoucher (id){
@@ -838,21 +861,20 @@ export function ticketVoucher (id){
 //         payload: tick.data
 //       })
 //     } catch (error) {
-//       console.log(error) 
+//       console.log(error)
 //   }
 // }
 // }
 
-export function postTicket (data){
+export function postTicket(data) {
   return async function (dispatch) {
     try {
-      const tick = await axios.post(`http://localhost:3001/api/ticket`, data)
+      const tick = await axios.post(`http://localhost:3001/api/ticket`, data);
     } catch (error) {
-      console.log(error) 
-  }
+      console.log(error);
+    }
+  };
 }
-}
-
 
 /* export function getAllSolicits(allevents) {
   return async function (dispatch) {
