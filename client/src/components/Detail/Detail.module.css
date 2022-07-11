@@ -21,13 +21,13 @@ display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
-width: 80%;
+width: 80vw;
 background-color: rgba(255, 255, 255, 0.1); 
 backdrop-filter: blur(0.3rem); 
 border: solid 0.06rem rgba(255, 255, 255, 0.80);
 box-shadow:  0.3rem 0.3rem 0.9rem rgba(0, 0, 0, 0.32);
 border-radius: 0.9rem;
-height: 34rem;
+height: 80vh;
 }
 
 .name, .genre, .schedule, .venue, .prueba{
@@ -41,8 +41,7 @@ height: 34rem;
 .carddetail{
     display: flex;
     flex-direction: column;
-    background-color: blue;
-    width: 24rem;
+    width: 30vw;
     align-items: center;
     background-color: rgba(255, 255, 255, 0.1); 
     backdrop-filter: blur(0.3rem); 
@@ -54,7 +53,7 @@ height: 34rem;
 
 .button{
     background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70));
-    width: 7.2rem;
+    width: 12vw;
     height: 1.8rem;
     color: #ffff;
     text-align: center;
@@ -76,7 +75,7 @@ height: 34rem;
 }
 
 .img{
-    width: 24rem;
+    width: 30vw;
     height: 12.4rem;
     border-radius: 0.3rem;
     border-radius: 0.6rem;
@@ -96,7 +95,7 @@ height: 34rem;
 .midcontainer{
     
     z-index: 2;
-    width: 58rem;
+    width: 70vw;
     height: 70%;
     display: flex;
     justify-content: space-between;
@@ -140,8 +139,8 @@ height: 34rem;
     height:fit-content;
     color: var(--color4);
     background-color: var(--color1);
-    margin-right: 1.8rem;
-    margin-left: 1.8rem;
+    margin-right: 1vw;
+    margin-left: 1vw;
     border-radius: 0.5rem;
 }
 

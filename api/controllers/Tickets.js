@@ -176,7 +176,7 @@ async function postAllCartEvent(req, res){
       for(let i = cantMin; i < cantMax; i++){
         if(events[i].stock.idStreamingPrice !== null || events[i].stock.idVipPrice !== null || events[i].stock.idGeneralLateralPrice !== null ||
           events[i].stock.idGeneralPrice !== null || events[i].stock.idPalcoPrice !== null ){
-            console.log("este esta ok")
+            console.log("Evento tiene su ID_PRICE")
           }else{
             const idStockEncotrado = await TicketStock.findByPk(events[i].stockId)
             const product = await stripe.products.create({

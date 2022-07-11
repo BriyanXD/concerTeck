@@ -273,7 +273,12 @@ export default function RegisterVenue({handleClickNewVenue}){
                     ...error,
                     [e.target.name]: "Ingrese la dirección del establecimiento"
                 })
-            } else {
+            } else if((!/^[a-zA-ZÀ-ÿ\s\d]{1,40}$/.test(e.target.value))){
+                setError({
+                    ...error,
+                    [e.target.name]: "Ingrese la dirección del establecimiento"
+                })
+            } else{
                 setError({
                     ...error,
                     [e.target.name]: ""
@@ -384,7 +389,7 @@ export default function RegisterVenue({handleClickNewVenue}){
         <div> 
             <input 
                 name="address" 
-                value={venue.address}  
+                value={venue.address}
                 onChange={handleVenue} 
                 onBlur={handleBlurVenue} 
                 type="text" 
