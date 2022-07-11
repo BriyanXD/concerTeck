@@ -112,8 +112,9 @@ routes.get("/ticket", getTicketByID);
 routes.post("/ticket", verifyToken, postTicket); // verifyToken, adminNotAuthorization,
 routes.delete("/ticket", verifyToken, isAdmin, deleteTicket);
 routes.post("/tickets", verifyToken, isAdmin, postCreatEventAndPrice);
-routes.post("/tickets2", verifyToken, isAdmin, postCheckout);
+routes.post("/tickets2", postCheckout);
 // routes.post("/tickect2", getRaro2)
+//ruta que agrega a el Json de eventos id_price
 routes.post("/all", postAllCartEvent)
 
 

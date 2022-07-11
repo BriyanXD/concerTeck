@@ -47,7 +47,6 @@ async function postShoppingCart(req, res) {
         idPrice,
         name: name,
       });
-      console.log(allDateShoppingCart, "lo que retorna");
       return res.status(200).json(allDateShoppingCart);
     } else {
       return res
