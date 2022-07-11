@@ -873,3 +873,10 @@ export function postTicket (data){
 //         }
 //     }
 // }
+
+export function postAllEventsIdPrice (a,b) {
+  return async function (){
+    const creado = await axios.post(`${url}/api/all`,{cantMin: a, cantMax: b})
+    console.log("desde actions all id_price",creado.data)
+  }
+}

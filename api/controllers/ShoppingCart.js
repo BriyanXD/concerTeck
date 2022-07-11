@@ -1,7 +1,6 @@
 const ShoppingCart = require("../models/ShoppingCart.js");
 const TicketStock = require("../models/TicketStock.js");
 const Events = require("../models/Events");
-const { UserRefreshClient } = require("google-auth-library");
 
 async function getShoppingCart(req, res) {
   const { idUser } = req.query;
@@ -79,7 +78,8 @@ async function deleteShoppingCart(req, res) {
     res.status(404).json({ error: error.message });
   }
 }
-async function putShoppingCart(req, res) {
+
+async function putShoppingCart(req, res){
   const {
     id,
     idUser,
@@ -116,7 +116,7 @@ async function putShoppingCart(req, res) {
 
 
 async function restarStock(req, res) {
-  const {descontar} = req.body
+  const {descontar} = req.body;
   let eliminar = [];
   try{
     descontar.map(async e => {
@@ -145,5 +145,5 @@ module.exports = {
   postShoppingCart,
   deleteShoppingCart,
   putShoppingCart,
-  restarStock
+  restarStock,
 };
