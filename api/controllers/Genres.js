@@ -3,13 +3,17 @@ const Genre = require("../models/Genre");
 const Events = require("../models/Events");
 
 async function chargeGenres() {
-  genreFiles.genres.map(async (e) => {
-    return await Genre.findOrCreate({
-      where: {
-        name: e.name.toLowerCase(),
-      },
+  try{
+    genreFiles.genres.map(async (e) => {
+      return await Genre.findOrCreate({
+        where: {
+          name: e.name.toLowerCase(),
+        },
+      });
     });
-  });
+  }catch(error){
+    console.log(error.message)
+  }
 }
 
 async function getAllGenres(req, res) {
