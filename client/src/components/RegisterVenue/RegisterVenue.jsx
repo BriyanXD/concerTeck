@@ -68,6 +68,7 @@ export default function RegisterVenue({handleClickNewVenue}){
             await setVenue({
                 ...venue,
                 [e.target.name]: Number(e.target.value),
+                map: mapCord.alt + " " + mapCord.lat,
             });
             return 
         }
@@ -75,6 +76,7 @@ export default function RegisterVenue({handleClickNewVenue}){
             await setVenue({
                 ...venue,
                 [e.target.name]: Number(e.target.value),
+                map: mapCord.alt + " " + mapCord.lat,
             });
             return 
         }
@@ -82,6 +84,7 @@ export default function RegisterVenue({handleClickNewVenue}){
             setVenue({
                 ...venue,
                 [e.target.name]: Number(e.target.value),
+                map: mapCord.alt + " " + mapCord.lat,
             });
             return 
         }
@@ -89,6 +92,7 @@ export default function RegisterVenue({handleClickNewVenue}){
             setVenue({
                 ...venue,
                 [e.target.name]: Number(e.target.value),
+                map: mapCord.alt + " " + mapCord.lat,
             });
             return 
         }
@@ -96,6 +100,7 @@ export default function RegisterVenue({handleClickNewVenue}){
             setVenue({
                 ...venue,
                 [e.target.name]: Number(e.target.value),
+                map: mapCord.alt + " " + mapCord.lat,
             });
             return 
         }
@@ -104,6 +109,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                 ...venue,
                 id: e.target.value, // nameIdVenue,
                 [e.target.name]: e.target.value,
+                map: mapCord.alt + " " + mapCord.lat,
             });
             return 
         }
@@ -409,7 +415,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                 value={venue.maxStockGeneral} 
                 onChange={handleVenue} 
                 onBlur={handleBlurVenue} 
-                type="text"
+                type="number"
                 className={error.maxStockGeneral?.length > 0 ? style.error : style.inputText } 
                 placeholder={error.maxStockGeneral?.length > 0 ? error.maxStockGeneral : "Cantidad máxima general"} 
             />
@@ -421,7 +427,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                 name="maxStockGeneralLateral" 
                 value={venue.maxStockGeneralLateral}  
                 onChange={handleVenue} 
-                type="text" 
+                type="number" 
                 className={error.maxStockGeneralLateral?.length > 0 ? style.error : style.inputText }
                 placeholder={error.maxStockGeneralLateral?.length > 0 ? error.maxStockGeneralLateral : "Cantidad máxima de laterales"} 
             />
@@ -433,7 +439,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                 name="maxStockPalco" 
                 value={venue.maxStockPalco}  
                 onChange={handleVenue} 
-                type="text"
+                type="number"
                 className={error.maxStockPalco?.length > 0 ? style.error : style.inputText }
                 placeholder={error.maxStockPalco?.length > 0 ? error.maxStockPalco : "Cantidad máxima de palco"}  
             />
@@ -445,7 +451,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                 name="maxStockStreaming" 
                 value={venue.maxStockStreaming}  
                 onChange={handleVenue} 
-                type="text"
+                type="number"
                 className={error.maxStockStreaming?.length > 0 ? style.error : style.inputText } 
                 placeholder={error.maxStockStreaming?.length > 0 ? error.maxStockStreaming : "Cantidad máxima de streaming"}
             />
@@ -457,7 +463,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                 name="maxStockVIP" 
                 value={venue.maxStockVIP}  
                 onChange={handleVenue} 
-                type="text"
+                type="number"
                 className={error.maxStockVIP?.length > 0 ? style.error : style.inputText }
                 placeholder={error.maxStockVIP?.length > 0 ? error.maxStockVIP : "Cantidad máxima de VIP"} 
             />
