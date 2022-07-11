@@ -33,7 +33,10 @@
     <div id="root"></div>
     <div id="portal"></div>
     <a href=""></a>
-    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+
+
+  
+      <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
     <df-messenger
       intent="WELCOME"
       chat-title="ConcerTeck"
@@ -43,12 +46,31 @@
       wait-open="true"
     ></df-messenger>
     <style>
+      
       df-messenger{
+        height: 300px;
+        max-height: 90%;
+        min-height: 30%;
         --df-messenger-button-titlebar-color: #facc4e;	
         --df-messenger-chat-background-color: #2e2e2e;
-        --df-messenger-input-box-color:var(--df-messenger-chat-background-color)
+        --df-messenger-input-box-color: #2e2e2e;
+        --df-messenger-input-font-color: white;
+        --df-messenger-button-titlebar-font-color:var(--df-messenger-chat-background-color)
       }
     </style>
+    <script>
+    window.addEventListener('dfMessengerLoaded', function (event) {
+    const dfMessenger = document.querySelector('df-messenger'); 
+    const style = document.createElement('style');
+
+    const nonMobileMinWidth = 501; // Breakpoint where DF Messenger switches between mobile/non-mobile styles
+
+    style.textContent = '@media screen and (min-width: ' + nonMobileMinWidth + 'px) { .chat-wrapper { max-height: 70% } }';
+
+    dfMessenger.shadowRoot.querySelector('df-messenger-chat').shadowRoot.appendChild(style);
+    })
+    </script>
+    
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
