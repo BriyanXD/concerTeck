@@ -12,7 +12,7 @@ function validate(genre){
         error.name = 'Campo obligatorio'
     }
     if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(genre.name)){
-        error.name = "Ingrese un nombre con caracteres válidos"
+        error.name = "No ingrese números por favor"
     }
     return error
 }
