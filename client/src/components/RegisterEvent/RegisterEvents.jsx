@@ -24,7 +24,9 @@ export default function RegisterEvent(){
     const [activeVenue, setActiveVenue] = useState(false);
     //const [activeStock, setActiveStock] = useState(false);
     const [repitedEvent, setRepitedEvent] = useState("");
-    const[selectVenuesState, setSelectVenuesState] = useState(false)
+    const[selectVenuesState, setSelectVenuesState] = useState(false);
+
+    
 
     const handleClickNewVenue= (value) => {
         setEvent({
@@ -69,7 +71,6 @@ export default function RegisterEvent(){
         artist: "",
         genreId: "",
         schedule: "",
-        //duration: "",  //nueva propiedad, duracion del evento
         performerImage: "",
         placeImage: "",
         description: "",
@@ -81,7 +82,6 @@ export default function RegisterEvent(){
         artist: "",
         genreId: "",
         schedule: "",
-        //duration: "",  //nueva propiedad, duracion del evento
         performerImage: "",
         placeImage: "",
         venueId: "",
@@ -103,9 +103,19 @@ export default function RegisterEvent(){
     });
 
     useEffect(()=>{
-        dispatch(GetGenres());
-        dispatch(GetVenues());
-        dispatch(getEvents())  
+        try{
+            const admin = JSON.parse(localStorage.getItem("user"))
+            if(!admin.isAdmin){
+                navigate("/")
+            }
+            else{
+                dispatch(GetGenres());
+                dispatch(GetVenues());
+                dispatch(getEvents());
+            }
+        } catch(error){
+            navigate("/")
+        }  
     }, [dispatch])
 
     const handleChange = async(e) => {
@@ -413,19 +423,17 @@ export default function RegisterEvent(){
             }    
         }
         //validar fecha/calendario
-        if(e.target.name === "schedule"){
-            if(e.target.value === ""){
-                setErrors({
-                    ...errors,
-                    [e.target.name]: "Ingrese la fecha y hora del Evento"
-                })
-            } else {
-                setErrors({
-                    ...errors,
-                    [e.target.name]: ""
-                })
-            }
-        }
+        // if(errors.schedule === ""){
+        //     setErrors({
+        //         ...errors,
+        //         schedule: "Ingrese la fecha y hora del Evento"
+        //     })
+        // } else {
+        //     setErrors({
+        //         ...errors,
+        //         schedule: ""
+        //     })
+        // }
         //validar imagen del artista
         if(e.target.name === "performerImage"){
             if(e.target.value === ""){
@@ -872,7 +880,7 @@ export default function RegisterEvent(){
                             value={stock.stockGeneral} 
                             onChange={handleStock} 
                             onBlur={handleBlurStock} 
-                            type="text"
+                            type="number"
                             className={activeStockGeneral.stock?.length > 0 ? style.error : style.inputTicket}
                             placeholder={activeStockGeneral.stock?.length > 0 ? activeStockGeneral.stock : "Stock General"} 
                         />  
@@ -882,7 +890,7 @@ export default function RegisterEvent(){
                         value={stock.generalPrice} 
                         onChange={handleStock} 
                         onBlur={handleBlurStock} 
-                        type="text"
+                        type="number"
                         className={activeStockGeneral.price?.length > 0 ? style.error : style.inputPrice}
                         placeholder={activeStockGeneral.price?.length > 0 ? activeStockGeneral.price : "Precio General"}
                         />

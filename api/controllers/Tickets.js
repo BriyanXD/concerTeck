@@ -60,7 +60,6 @@ async function getTicketByID(req, res) {
 
 async function postTicket(req, res) {
   const { name, price, idEvent, idUser, quantity } = req.body;
-  console.log("postTicket", name, price, idEvent, idUser, quantity);
   try {
     if (name && price && idEvent && idUser) {
       const saveEvent = await Events.findByPk(idEvent);
@@ -105,62 +104,8 @@ async function deleteTicket(req, res) {
   }
 }
 
-// async function postCreatEventAndPrice(req, res, next) {
-//   try {
-//     const findEvent = await Events.findAll();
-//     for (let i = 4; i < 8; i++) {
-//       const product = await stripe.products.create({
-//         name: findEvent[i].name,
-//         description: findEvent[i].description,
-//         images: [findEvent[i].performerImage],
-//       });
-//       if (product) {
-//         const findStock = await Events.findByPk(findEvent[i].id, {
-//           include: [{ model: TicketStock, as: "stock" }],
-//         });
-//         if (findStock) {
-//           const price1 = await stripe.prices.create({
-//             product: product.id,
-//             unit_amount: findStock.stock.streamingPrice * 100,
-//             currency: "ars",
-//           });
-//           //logica de relacion de tablas price/idprice/event
-
-//           const price2 = await stripe.prices.create({
-//             product: product.id,
-//             unit_amount: findStock.stock.vipPrice * 100,
-//             currency: "ars",
-//           });
-
-//           const price3 = await stripe.prices.create({
-//             product: product.id,
-//             unit_amount: findStock.stock.generalLateralPrice * 100,
-//             currency: "ars",
-//           });
-
-//           const price4 = await stripe.prices.create({
-//             product: product.id,
-//             unit_amount: findStock.stock.generalPrice * 100,
-//             currency: "ars",
-//           });
-
-//           const price5 = await stripe.prices.create({
-//             product: product.id,
-//             unit_amount: findStock.stock.palcoPrice * 100,
-//             currency: "ars",
-//           });
-//         } else {
-//           console.log("Evento No tiene stock relacionado");
-//         }
-//       }
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
 async function postAllCartEvent(req, res){
   const {cantMin, cantMax} = req.body
-
   const all = await Events.findAll({include: { model: TicketStock, as: "stock"}});
   const events = all.sort((a,b) => {
     if(a.name < b.name){
@@ -176,7 +121,6 @@ async function postAllCartEvent(req, res){
       for(let i = cantMin; i < cantMax; i++){
         if(events[i].stock.idStreamingPrice !== null || events[i].stock.idVipPrice !== null || events[i].stock.idGeneralLateralPrice !== null ||
           events[i].stock.idGeneralPrice !== null || events[i].stock.idPalcoPrice !== null ){
-            console.log("este esta ok")
           }else{
             const idStockEncotrado = await TicketStock.findByPk(events[i].stockId)
             const product = await stripe.products.create({
@@ -215,6 +159,8 @@ async function postAllCartEvent(req, res){
                 currency: "ars",
               });
               await idStockEncotrado.update({idPalcoPrice: price5.id})
+          } else {
+            res.send("No se encontro el producto")
           }
         }
       }
@@ -225,62 +171,6 @@ async function postAllCartEvent(req, res){
     console.log(error.message)
   }
 }
-
-
-// async function postCreatEventAndPrice(req, res) {
-//   const {id} = req.body
-//     const event = await Events.findByPk(id)
-//     console.log(event.dataValues.name)
-//     console.log(event.dataValues.description)
-//     console.log(event.dataValues.performerImage)
-//   try {
-//     const idStockEncotrado = await TicketStock.findByPk(event.stockId);
-//     const product = await stripe.products.create({
-//       name: event.dataValues.name,
-//       description: event.dataValues.description,
-//       images: [event.dataValues.performerImage],
-//     });
-//     if (product) {
-//       console.log("pasa if")
-//       const price = await stripe.prices.create({
-//         product: product.id,
-//         unit_amount: idStockEncotrado.streamingPrice * 100,
-//         currency: "ars",
-//       });
-//       console.log("el primer price", price)
-//       await idStockEncotrado.update({idStreamingPrice: price.id})
-//       const price2 = await stripe.prices.create({
-//         product: product.id,
-//         unit_amount: idStockEncotrado.vipPrice * 100,
-//         currency: "ars",
-//       });
-//       await idStockEncotrado.update({idVipPrice: price2.id})
-//       const price3 = await stripe.prices.create({
-//         product: product.id,
-//         unit_amount: idStockEncotrado.generalLateralPrice * 100,
-//         currency: "ars",
-//       });
-//       await idStockEncotrado.update({idGeneralLateralPrice: price3.id})
-//       const price4 = await stripe.prices.create({
-//         product: product.id,
-//         unit_amount: idStockEncotrado.generalPrice * 100,
-//         currency: "ars",
-//       });
-//       await idStockEncotrado.update({idGeneralPrice: price4.id})
-//       const price5 = await stripe.prices.create({
-//         product: product.id,
-//         unit_amount: idStockEncotrado.palcoPrice * 100,
-//         currency: "ars",
-//       });
-//       await idStockEncotrado.update({idPalcoPrice: price5.id})
-//       console.log("Todo salio bien")
-//     } else {
-//       console.log("Evento No tiene stock relacionado");
-//     }
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// }
 
 async function postCreatEventAndPrice(event) {
   try {

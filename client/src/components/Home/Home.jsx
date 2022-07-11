@@ -13,7 +13,7 @@ import PaginadoBigEvents from "../Paginado/PaginadoBigEvents";
 import PaginadoEvents from "../Paginado/PaginadoEvents";
 import ModalCalendar from "../ModalCalendar/ModalCalendar";
 import { BsFillHeartFill } from 'react-icons/bs';
-import { postLikes, getLikes, postAllEventsIdPrice, getCartDB } from '../../redux/actions';
+import { postLikes, getLikes, postAllEventsIdPrice, deleteLikes } from '../../redux/actions';
 import { useAuth0 } from "@auth0/auth0-react";
 /* import Streaming from "../Streaming/Streaming"; */
 import Carousel2 from "../Carousel2/Carousel2";
@@ -68,10 +68,12 @@ export default function Home() {
 
   useEffect(() => {
     async function asincrono (){
-      await dispatch(postAllEventsIdPrice(0,6))
-      await dispatch(postAllEventsIdPrice(6,12))
-      await dispatch(postAllEventsIdPrice(12,18))
-      await dispatch(postAllEventsIdPrice(18,24))
+      await dispatch(postAllEventsIdPrice(0,4))
+      await dispatch(postAllEventsIdPrice(4,8))
+      await dispatch(postAllEventsIdPrice(8,12))
+      await dispatch(postAllEventsIdPrice(12,16))
+      await dispatch(postAllEventsIdPrice(16,20))
+      await dispatch(postAllEventsIdPrice(20,24))
     }
     asincrono()
   },[])
@@ -96,10 +98,14 @@ export default function Home() {
     view= true;
   }
 
-  function handlerClicStreaming(){
-
+  const handlePostAndDelete = (el) => {
+    const pasa = Likes.find(e => e.idEvent === el.id)
+    if(pasa){
+      dispatch(deleteLikes(pasa.id))
+    } else {
+      dispatch(postLikes(el.id,userStorage.id))
+    }
   }
-
 
   return (
     <div className={style.container}>
@@ -131,7 +137,7 @@ export default function Home() {
                     <div>
                     </div>
                       <div className={Likes ? Likes.find(e => e.idEvent === el.id) ? style.heart : style.heartWhite : style.heartWhite} title="Agregar a favoritos">
-                        <BsFillHeartFill size={30} onClick={()=> user ? dispatch(postLikes(el.id, User[0].id, Likes )) : loginWithPopup()}/>
+                        <BsFillHeartFill size={30} onClick={()=> user ? handlePostAndDelete(el) : loginWithPopup()}/>
                         <Link to={`/streaming/${el.streaming}/${el.id}`}>{el.streaming ? <button className={style.containerStreaming} title="Ir a streaming"><FontAwesomeIcon icon={faVideo} /></button> : <></> }</Link>
                       </div>
                   </div>
@@ -157,7 +163,7 @@ export default function Home() {
                         id={el.id}
                         />
                     </Link>
-                    <div className={Likes.find(e => e.idEvent === el.id) ? style.heart2 : style.heart2White} title="Agregar a favoritos"><BsFillHeartFill size={20} onClick={()=> user ? dispatch(postLikes(el.id, User[0].id, Likes)) : loginWithPopup()}/>
+                    <div className={Likes.find(e => e.idEvent === el.id) ? style.heart2 : style.heart2White} title="Agregar a favoritos"><BsFillHeartFill size={20} onClick={()=> user ? handlePostAndDelete(el) : loginWithPopup()}/>
                     <Link to={`/streaming/${el.streaming}/${el.id}`}>{el.streaming ? <button className={style.containerStreaming} title="Ir a streaming"><FontAwesomeIcon icon={faVideo} /></button> : <></> }</Link>
                     </div>
                   </div>

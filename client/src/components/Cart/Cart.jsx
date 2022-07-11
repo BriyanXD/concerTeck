@@ -5,13 +5,14 @@ import { getEvents, getCartDB, deleteCart, putCartDB, checkout } from "../../red
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 import Style from "./Cart.module.css";
+import swal from "sweetalert";
 // import redirectToCheckout from "stripe";
 import { style } from "@mui/system";
 
 export default function Cart() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [diseable,setDiseable] = useState(true)
   //*Auth0 datos de usuario logeado y popUp de logeo
   const { user, loginWithPopup } = useAuth0();
   // const [flag, setFlag] = useState(false);
@@ -35,7 +36,7 @@ export default function Cart() {
     userStorage = ""
   }
 
-  const {cartDB, sesion} = useSelector(state =>state);
+  const {cartDB, sesion, AllEvents, Stock} = useSelector(state =>state);
 
   useEffect(() => {
     dispatch(getEvents());
@@ -73,6 +74,9 @@ export default function Cart() {
     return <p className={Style.carritoVacio}>Sin eventos en el carrito </p>;
   }
 
+  // let aux =[]
+  // let i = 0;
+
  const handleDelete = async (id) => {
   if(userStorage !== ""){
   await dispatch(deleteCart(id))
@@ -86,11 +90,43 @@ export default function Cart() {
   if(userStorage !== ""){
     if(operador === "-"){
      await dispatch(putCartDB({id:item.id, quantity:item.quantity- 1}))
-      // setFlag(!flag)
     }else{
-      await dispatch(putCartDB({id:item.id, quantity:item.quantity+ 1}))
-      // setFlag(!flag)
-    }
+        const data = AllEvents.find(e => e.id === item.idEvent)
+        console.log(data, "Data encontro el evento compatible")
+          if(item.name === 'general' && item.quantity >=  data.stock.stockGeneral){
+           return swal({
+              title: 'Supera Stock',
+              text: 'La cantidad de entradas generales que intentas comprar supera el stock',
+              icon: 'error',
+              dangerMode:true})
+           }else if(item.name === 'general lateral' &&  item.quantity >= data.stock.stockGeneralLateral){
+           return swal({
+              title: 'Supera Stock',
+              text: 'La cantidad de entradas generales laterales que intentas comprar supera el stock',
+              icon: 'error',
+              dangerMode:true})
+          }else if(item.name === 'palco' && item.quantity >= data.stock.stockPalco){
+           return swal({
+              title: 'Supera Stock',
+              text: 'La cantidad de entradas de palco que intentas comprar supera el stock',
+              icon: 'error',
+              dangerMode:true})
+          }else if(item.name === 'streaming' && item.quantity >= data.stock.stockStreaming) {
+           return swal({
+              title: 'Supera Stock',
+              text: 'La cantidad de entradas de streaming que intentas comprar supera el stock',
+              icon: 'error',
+              dangerMode:true})
+          }else if(item.name === 'vip' && item.quantity >= data.stock.stockkVIP ){
+             return swal({
+                title: 'Supera Stock',
+                text: 'La cantidad de entradas VIP que intentas comprar supera el stock',
+                icon: 'error',
+                dangerMode:true})
+          }
+          console.log("ENTRO A CART",item, data)
+        await dispatch(putCartDB({id:item.id, quantity:item.quantity+ 1}))
+      }
   }else{
     if(operador === "-"){
       updateItemQuantity(item.id, item.quantity - 1)
@@ -101,6 +137,7 @@ export default function Cart() {
 }
 
 const handleCheckout =async () => {
+  console.log("entro al checkout")
   let pago = []
   cartDB.map(e => pago.push({price: e.idPrice, quantity: e.quantity}))
    await dispatch(checkout(pago))
@@ -174,6 +211,7 @@ if(userStorage !== ""){
         Total final: ${totalTodos} ARS.
           </div>
         <button
+          // disabled={diseable}
           className={Style.btncomprar}
           onClick={() =>
             !user ? loginWithPopup() : handleCheckout()

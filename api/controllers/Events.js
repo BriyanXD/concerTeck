@@ -7,34 +7,38 @@ const { postCreatEventAndPrice } = require("./Tickets");
 const e = require("express");
 
 async function chargeEvents() {
-  for (let typeEvent in eventsFiles) {
-    eventsFiles[typeEvent].map(async (event) => {
-      const saveGenre = await Genre.findOne({
-        where: { name: event.genre.toLowerCase() },
+  try{
+    for (let typeEvent in eventsFiles) {
+      eventsFiles[typeEvent].map(async (event) => {
+        const saveGenre = await Genre.findOne({
+          where: { name: event.genre.toLowerCase() },
+        });
+        if (saveGenre) {
+          return await Event.findOrCreate({
+            where: {
+              name: event.name,
+              artist: event.artist,
+              genreId: saveGenre.id,
+              schedule: event.schedule,
+              performerImage: event.performerImage,
+              placeImage: event.placeImage,
+              description: event.description,
+              venueId: event.venueId,
+              stockId: event.stockId,
+              /* isBigEvent: event.isBigEvent === true ? true : false, */
+            },
+          })
+            .then((response) => {})
+            .catch((error) => {
+              console.log(error.message);
+            });
+        } else {
+          console.log("id o nombre no encontrados");
+        }
       });
-      if (saveGenre) {
-        return await Event.findOrCreate({
-          where: {
-            name: event.name,
-            artist: event.artist,
-            genreId: saveGenre.id,
-            schedule: event.schedule,
-            performerImage: event.performerImage,
-            placeImage: event.placeImage,
-            description: event.description,
-            venueId: event.venueId,
-            stockId: event.stockId,
-            /* isBigEvent: event.isBigEvent === true ? true : false, */
-          },
-        })
-          .then((response) => {})
-          .catch((error) => {
-            console.log(error.message);
-          });
-      } else {
-        console.log("id o nombre no encontrados");
-      }
-    });
+    }
+  }catch(error){
+    console.log(error.message)
   }
 }
 
@@ -132,13 +136,10 @@ async function postEvents(req, res) {
     ) {
       return res.status(400).send("Faltan datos obligatorios");
     } else {
-      // if (!Number.isInteger(stockId))
-      //   return res.status(400).json({ error: "stockId debe ser un numero" });
       await Genre.findOrCreate({
         where: { name: genreId.toLowerCase() },
       });
       let saveVenue = await Venue.findOne({ where: { id: venueId } });
-      //console.log(saveVenue)
       let saveGenre = await Genre.findOne({
         where: { name: genreId.toLowerCase() },
       });
@@ -157,15 +158,13 @@ async function postEvents(req, res) {
           },
         });
         if (eventCreated) {
+          console.log(eventCreated, "paso algo")
           await postCreatEventAndPrice(eventCreated);
           return res.status(201).json({ message: "Evento creado con exito" });
         } else {
           return res.status(400).json({ error: "No se puedo crear el evento" });
         }
-        //response.addVenue(saveVenue.id)
-        //console.log("algo fallo en el ADDVENUE")
       } else {
-        //console.log("No se puedo crear el genero para el evento")
         return res
           .status(400)
           .json({ error: "No se puedo crear el genero para el evento" });

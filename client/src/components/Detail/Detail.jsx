@@ -212,7 +212,7 @@ coord = prueba? prueba.map : '-34.545306 -58.449775'
           </div>
         </div>
         {/**Agregar condicional en el caso de que stock este en 0 */}
-        {console.log(Detail)}
+        {/* {console.log(Detail)} */}
         {userStorage === "" || userStorage.isAdmin === false ? Detail.stock?<div className={style.containerCarrito}>
             {Detail.stock?.stockGeneral?<div className={style.detailTicket}>
             <div className={style.buttonadditem}>

@@ -4,7 +4,6 @@ import { getCartDB, ActualizacionStock, postTicket } from '../../redux/actions';
 import { useParams } from 'react-router-dom';
 
 export default function SuccessOrCancel () {
-    const {id} = useParams();
     const [message, setMessage] = useState("")
     const { cartDB } = useSelector(state => state);
     const [flag, setFlag] = useState(false)

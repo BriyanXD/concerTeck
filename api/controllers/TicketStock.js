@@ -3,24 +3,28 @@ const ticketStockDB = require("../db_event_genre/db_stock.json");
 const Venue = require("../models/Venue");
 
 async function chargeTicketStock() {
-  ticketStockDB.StockSale.map(async (e) => {
-    return await TicketStock.findOrCreate({
-      where: {
-        id: e.id,
-        stockStreaming: e.stockStreaming,
-        stockkVIP: e.stockVIP,
-        stockGeneral: e.stockGeneral,
-        stockGeneralLateral: e.stockGeneralLateral,
-        stockPalco: e.stockPalco,
-        streamingPrice: e.streamingPrice,
-        vipPrice: e.vipPrice,
-        generalLateralPrice: e.generalLateralPrice,
-        generalPrice: e.generalPrice,
-        palcoPrice: e.palcoPrice,
-        venueId: e.venueId,
-      },
+  try{
+    ticketStockDB.StockSale.map(async (e) => {
+      return await TicketStock.findOrCreate({
+        where: {
+          id: e.id,
+          stockStreaming: e.stockStreaming,
+          stockkVIP: e.stockVIP,
+          stockGeneral: e.stockGeneral,
+          stockGeneralLateral: e.stockGeneralLateral,
+          stockPalco: e.stockPalco,
+          streamingPrice: e.streamingPrice,
+          vipPrice: e.vipPrice,
+          generalLateralPrice: e.generalLateralPrice,
+          generalPrice: e.generalPrice,
+          palcoPrice: e.palcoPrice,
+          venueId: e.venueId,
+        },
+      });
     });
-  });
+  }catch(error){
+    console.log(error.message)
+  }
 }
 
 async function getTicketStock(req, res) {
