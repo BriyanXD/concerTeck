@@ -17,13 +17,13 @@
   
 
 .facebook{
-    color: #ffffff;
+    color: var(--color4);
     font-size: 2.5vw;
     margin-bottom: 2px    
 }
 
 .instagram{
-    color:white;
+    color: var(--color4);
     background-color: transparent;
     font-size: 2.5vw;
     margin-bottom: 1px;
@@ -47,8 +47,8 @@
 }
 
 .contact{
-    color: #dbdada;
-    font-size: 22px;
+    color: var(--color4);
+    font-size: 1.5vw;
     cursor: pointer;
 }
 
