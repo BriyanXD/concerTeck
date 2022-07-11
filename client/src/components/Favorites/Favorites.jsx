@@ -16,17 +16,14 @@ export default function Favorites(){
     let temporal = localStorage.getItem("user")
     let userStorage 
     if(temporal !== "nada"){
-    userStorage = JSON.parse(temporal)
+      userStorage = JSON.parse(temporal)
     }else{
-        userStorage = ""
+      userStorage = ""
     }
 
-    useEffect(() => {
-        dispatch(getEvents())
-    },[dispatch])
-
     useEffect(()=>{
-      dispatch(getLikes(userStorage.id))  
+        dispatch(getEvents())
+        dispatch(getLikes(userStorage.id))  
     },[dispatch])
 
     const handleDelete = async (id) =>{
