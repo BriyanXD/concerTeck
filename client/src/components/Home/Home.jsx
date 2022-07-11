@@ -13,7 +13,7 @@ import PaginadoBigEvents from "../Paginado/PaginadoBigEvents";
 import PaginadoEvents from "../Paginado/PaginadoEvents";
 import ModalCalendar from "../ModalCalendar/ModalCalendar";
 import { BsFillHeartFill } from 'react-icons/bs';
-import { postLikes, getLikes } from '../../redux/actions';
+import { postLikes, getLikes, postAllEventsIdPrice } from '../../redux/actions';
 import { useAuth0 } from "@auth0/auth0-react";
 /* import Streaming from "../Streaming/Streaming"; */
 import Carousel2 from "../Carousel2/Carousel2";
@@ -65,6 +65,16 @@ export default function Home() {
   const pagination2 = (numberPage2) => {
     setCurrentPage(numberPage2);
   };
+
+  useEffect(() => {
+    async function asincrono (){
+      await dispatch(postAllEventsIdPrice(0,6))
+      await dispatch(postAllEventsIdPrice(6,12))
+      await dispatch(postAllEventsIdPrice(12,18))
+      await dispatch(postAllEventsIdPrice(18,24))
+    }
+    asincrono()
+  },[])
 
   useEffect(() => {
     dispatch(getEvents());

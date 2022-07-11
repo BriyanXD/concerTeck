@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import CardConteiner from "./adminCardConteiner";
 import {getAllUsers, getEvents, getAllBlackList,getAllTickets} from "../../redux/actions"
 import Style from "./adminPanel.module.css"
-
+import { Link } from "react-router-dom";
 import AdminUserPanel from "./AdminUserPanel";
 import AdminEventPanel from "./AdminEventPanel";
 //import AdminSolicitPanel from "./AdminSolicitPanel";
@@ -108,7 +108,7 @@ export default function PanelAdmin({setUser}){
                     <br />
                     <button className={Style.button} onClick={handlerClickTicketReceipts}>Lista negra</button>
                     <br />
-                    <button className={Style.button} onClick={handlerClickEvents}>Crear evento</button>
+                    <Link to="/events"> <button className={Style.button}>Crear evento</button></Link>
                 </div>
         </div>
             <div className={Style.containersInfo}>

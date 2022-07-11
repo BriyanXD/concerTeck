@@ -9,8 +9,7 @@ import { Link } from "react-router-dom";
 
 
 export default function Favorites(){
-    const {Likes, AllEvents, User} = useSelector((state)=> state)
-
+    const { Likes, AllEvents } = useSelector((state)=> state)
     const dispatch = useDispatch()
     const bigEvents = AllEvents.filter((b)=>b.venue.isBigEvent===true)
     const events = AllEvents.filter((b)=>b.venue.isBigEvent===false)
@@ -41,7 +40,7 @@ export default function Favorites(){
             <div>
             <div >
                 <div className={s.bigcontainer}>
-                    {Likes.map((e)=> {
+                    {Likes?.map((e)=> {
                         return bigEvents?.map((el)=>{
                             if(e.idEvent===el.id){
                                 return (
