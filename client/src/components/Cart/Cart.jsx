@@ -76,50 +76,6 @@ export default function Cart() {
 
   // let aux =[]
   // let i = 0;
-  if(cartDB.length !== 0){
-    for(let i=0; i<cartDB.length;i++){
-      let aux2 = AllEvents.filter((e) => e.id === cartDB[i].idEvent)
-      console.log("ENTRO AL AUX2",aux2)
-      if(cartDB[i].name === 'general' && cartDB[i].quantity > aux2[i]?.stock.stockGeneral){
-        swal({
-          title: 'Supera Stock',
-          text: 'La cantidad de entradas generales que intentas comprar supera el stock',
-          icon: 'error',
-          dangerMode:true})
-          cartDB[i].quantity = aux2[i]?.stock.stockGeneral
-       }else if(cartDB[i].name === 'general lateral' &&  cartDB[i].quantity > aux2[i]?.stock.stockGeneralLateral){
-        swal({
-          title: 'Supera Stock',
-          text: 'La cantidad de entradas generales laterales que intentas comprar supera el stock',
-          icon: 'error',
-          dangerMode:true})
-          cartDB[i].quantity = aux2[i]?.stock.stockGeneralLateral
-      }else if(cartDB[i].name === 'palco' && cartDB[i].quantity > aux2[i]?.stock.stockPalco){
-        swal({
-          title: 'Supera Stock',
-          text: 'La cantidad de entradas de palco que intentas comprar supera el stock',
-          icon: 'error',
-          dangerMode:true})
-          cartDB[i].quantity = aux2[i]?.stock.stockPalco
-      }else if(cartDB[i].name === 'streaming' && cartDB[i].quantity > aux2[i]?.stock.stockStreaming) {
-        swal({
-          title: 'Supera Stock',
-          text: 'La cantidad de entradas de streaming que intentas comprar supera el stock',
-          icon: 'error',
-          dangerMode:true})
-          cartDB[i].quantity = aux2[i]?.stock.stockStreaming
-      }else if(cartDB[i].name === 'vip' && cartDB[i].quantity > aux2[i]?.stock.stockkVIP ){
-          swal({
-            title: 'Supera Stock',
-            text: 'La cantidad de entradas VIP que intentas comprar supera el stock',
-            icon: 'error',
-            dangerMode:true})
-            cartDB[i].quantity = aux2[i]?.stock.stockkVIP
-      }
-      console.log("ENTRO A CART",cartDB)
-    }
-  }
-
 
  const handleDelete = async (id) => {
   if(userStorage !== ""){
@@ -134,11 +90,43 @@ export default function Cart() {
   if(userStorage !== ""){
     if(operador === "-"){
      await dispatch(putCartDB({id:item.id, quantity:item.quantity- 1}))
-      // setFlag(!flag)
     }else{
-      await dispatch(putCartDB({id:item.id, quantity:item.quantity+ 1}))
-      // setFlag(!flag)
-    }
+        const data = AllEvents.find(e => e.id === item.idEvent)
+        console.log(data, "Data encontro el evento compatible")
+          if(item.name === 'general' && item.quantity >=  data.stock.stockGeneral){
+           return swal({
+              title: 'Supera Stock',
+              text: 'La cantidad de entradas generales que intentas comprar supera el stock',
+              icon: 'error',
+              dangerMode:true})
+           }else if(item.name === 'general lateral' &&  item.quantity >= data.stock.stockGeneralLateral){
+           return swal({
+              title: 'Supera Stock',
+              text: 'La cantidad de entradas generales laterales que intentas comprar supera el stock',
+              icon: 'error',
+              dangerMode:true})
+          }else if(item.name === 'palco' && item.quantity >= data.stock.stockPalco){
+           return swal({
+              title: 'Supera Stock',
+              text: 'La cantidad de entradas de palco que intentas comprar supera el stock',
+              icon: 'error',
+              dangerMode:true})
+          }else if(item.name === 'streaming' && item.quantity >= data.stock.stockStreaming) {
+           return swal({
+              title: 'Supera Stock',
+              text: 'La cantidad de entradas de streaming que intentas comprar supera el stock',
+              icon: 'error',
+              dangerMode:true})
+          }else if(item.name === 'vip' && item.quantity >= data.stock.stockkVIP ){
+             return swal({
+                title: 'Supera Stock',
+                text: 'La cantidad de entradas VIP que intentas comprar supera el stock',
+                icon: 'error',
+                dangerMode:true})
+          }
+          console.log("ENTRO A CART",item, data)
+        await dispatch(putCartDB({id:item.id, quantity:item.quantity+ 1}))
+      }
   }else{
     if(operador === "-"){
       updateItemQuantity(item.id, item.quantity - 1)
