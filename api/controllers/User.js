@@ -12,7 +12,7 @@ async function createUser(req, res) {
   const { name, username, email } = req.body;
   if (!username || !email || !name) {
     return res
-      .status(404)
+      .status(400)
       .json({ error: "Faltan completar Campos obligatorios" });
   } else {
     try {
@@ -33,13 +33,13 @@ async function createUser(req, res) {
           });
           return res.json(["Usuario", { user: newUser }, { token: token }]);
         } else {
-          res.status(500).json({ error: "Error al crear el Usuario" });
+          res.status(400).json({ error: "Error al crear el Usuario" });
         }
       } else {
-        return res.status(401).json({ error: "El usuario esta baneado" });
+        return res.status(403).json({ error: "El usuario esta baneado" });
       }
     } catch (error) {
-      return res.status(404).send({ error: error.message });
+      return res.status(400).send({ error: error.message });
     }
   }
 }
@@ -78,7 +78,7 @@ async function putUser(req, res) {
   try {
     if (!id && !email && !password && username) {
       return res
-        .status(404)
+        .status(400)
         .json({ error: "Faltan completar Campos obligatorios" });
     } else {
       const user = await User.findOne({ where: { id: id } });
@@ -90,11 +90,11 @@ async function putUser(req, res) {
         });
         return res.json({ message: `Usuario Actualizado con exitos`, user });
       } else {
-        res.status(404).send({ error: "El usuario no lo encontro" });
+        res.status(400).send({ error: "El usuario no lo encontro" });
       }
     }
   } catch (error) {
-    res.status(404).send({ error: error.message });
+    res.status(400).send({ error: error.message });
   }
 }
 async function deleteUser(req, res) {
@@ -104,10 +104,10 @@ async function deleteUser(req, res) {
     const user = await User.findByPk(id);
     //console.log(user)
     if (!id) {
-      return res.status(404).json({ error: "El ID solicitado no existe" });
+      return res.status(400).json({ error: "El ID solicitado no existe" });
     }
     if (!user) {
-      return res.status(404).json({
+      return res.status(400).json({
         error: "No se a encontrado un Usuario que corresponda a lo solicitado",
       });
     }
@@ -126,7 +126,7 @@ async function deleteUser(req, res) {
         .json({ message: "El Usuario a sido eliminado con exito" });
     }
   } catch (error) {
-    return res.status(404).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 }
 
@@ -135,7 +135,7 @@ async function UpgradeRank(req, res) {
   try {
     if (typeof isAdmin !== "boolean") {
       return res
-        .status(404)
+        .status(400)
         .json({ error: "isAdmin tiene que ser un booleado" });
     } else {
       await User.update(
@@ -152,7 +152,7 @@ async function UpgradeRank(req, res) {
       return res.json({ message: `Rango de usuario actualizado`, user });
     }
   } catch (error) {
-    res.status(404).send({ error: error.message });
+    res.status(400).send({ error: error.message });
   }
 }
 
@@ -172,7 +172,7 @@ async function postAdminUser(req, res) {
     });
     res.json({ admin: admin, token: token });
   } catch (error) {
-    res.status(401).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 }
 

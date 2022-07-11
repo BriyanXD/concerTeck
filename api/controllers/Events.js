@@ -3,7 +3,7 @@ const Event = require("../models/Events");
 const Genre = require("../models/Genre");
 const Venue = require("../models/Venue");
 const TicketStock = require("../models/TicketStock");
-const {postCreatEventAndPrice} = require("./Tickets")
+const { postCreatEventAndPrice } = require("./Tickets");
 const e = require("express");
 
 async function chargeEvents() {
@@ -108,7 +108,6 @@ async function loadEventsAndGetEvents(req, res) {
 }
 // Modificando eventos
 async function postEvents(req, res) {
-  console.log("ENTRANDO EN LA FUNCION DE CREACION DE EVENTO")
   try {
     const {
       name,
@@ -131,20 +130,18 @@ async function postEvents(req, res) {
       !venueId ||
       !stockId
     ) {
-      console.log("FALLO ALGUN DATO POR BODY")
-      return res.status(404).send("Faltan datos obligatorios");
+      return res.status(400).send("Faltan datos obligatorios");
     } else {
       // if (!Number.isInteger(stockId))
       //   return res.status(400).json({ error: "stockId debe ser un numero" });
       await Genre.findOrCreate({
         where: { name: genreId.toLowerCase() },
       });
-      let saveVenue = await Venue.findOne({where:{id: venueId}});
+      let saveVenue = await Venue.findOne({ where: { id: venueId } });
       //console.log(saveVenue)
       let saveGenre = await Genre.findOne({
         where: { name: genreId.toLowerCase() },
       });
-      console.log("ENTRARON LOS DATOS DEL BODY")
       if (saveGenre && saveVenue) {
         const eventCreated = await Event.findOrCreate({
           where: {
@@ -158,28 +155,24 @@ async function postEvents(req, res) {
             venueId: venueId,
             stockId: stockId,
           },
-        })
-          if(eventCreated){
-            console.log("SE CREO EL EVENTO", eventCreated)
-            await postCreatEventAndPrice(eventCreated)
-            return res.status(201).json({ message: "Evento creado con exito" });
-          }else{
-            console.log("ALGO FALLO NO SE PUDO CREAR ELE VENTO")
-            return res
-            .status(404)
-            .json({ error: "No se puedo crear el evento" });
-          }
-            //response.addVenue(saveVenue.id)
-            //console.log("algo fallo en el ADDVENUE")
-          } else {
+        });
+        if (eventCreated) {
+          await postCreatEventAndPrice(eventCreated);
+          return res.status(201).json({ message: "Evento creado con exito" });
+        } else {
+          return res.status(400).json({ error: "No se puedo crear el evento" });
+        }
+        //response.addVenue(saveVenue.id)
+        //console.log("algo fallo en el ADDVENUE")
+      } else {
         //console.log("No se puedo crear el genero para el evento")
         return res
-          .status(404)
+          .status(400)
           .json({ error: "No se puedo crear el genero para el evento" });
       }
     }
   } catch (error) {
-    return res.status(404).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 }
 
@@ -189,36 +182,44 @@ async function putEvents(req, res) {
       id,
       name,
       artist,
-      genre,
       schedule,
       performerImage,
       placeImage,
       description,
+      streaming,
+      genreId,
       venueId,
       stockId,
     } = req.body;
     const upload = await Event.findByPk(id);
     if (upload) {
-      const event = await Event.update(
+      await Event.update(
         {
-          name: name,
-          artist: artist,
-          genreId: genre,
-          schedule: schedule,
-          performerImage: performerImage,
-          placeImage: placeImage,
-          description: description,
-          venueId: venueId,
-          stockId: stockId,
+          name: name || upload.name,
+          artist: artist || upload.artist,
+          genreId: genreId || upload.genreId,
+          schedule: schedule || upload.schedule,
+          performerImage: performerImage || upload.performerImage,
+          placeImage: placeImage || upload.placeImage,
+          description: description || upload.description,
+          streaming: streaming || upload.streaming,
+          venueId: venueId || upload.venueId,
+          stockId: stockId || upload.stockId,
         },
         { where: { id: id } }
       );
-      if (event) {
-        return res.send(event);
+      const saveUpdateEvent = await Event.findByPk(id, {
+        include: [
+          { model: Venue, as: "venue" },
+          { model: TicketStock, as: "stock" },
+        ],
+      });
+      if (saveUpdateEvent) {
+        return res.send(saveUpdateEvent);
       }
     }
   } catch (error) {
-    return res.status(404).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 }
 async function deleteEvent(req, res) {
@@ -226,7 +227,7 @@ async function deleteEvent(req, res) {
     const { id } = req.query; //req.params.id
     const event = await Event.findByPk(id);
     if (!id) {
-      return res.status(404).json({ error: "El ID solicitado no existe" });
+      return res.status(400).json({ error: "El ID no es valido" });
     }
     if (!event) {
       return res.status(404).json({
@@ -240,7 +241,7 @@ async function deleteEvent(req, res) {
         .json({ message: "El evento a sido eliminado con exito", event });
     }
   } catch (error) {
-    return res.status(404).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 }
 
@@ -248,11 +249,17 @@ async function putUrlStreaming(req, res) {
   const { idEvent, urlStraming } = req.body;
   try {
     if (idEvent && urlStraming) {
-      const addUrlStreaming = await Event.update(
+      await Event.update(
         { streaming: urlStraming },
         { where: { id: idEvent } }
       );
-      return res.json(addUrlStreaming);
+      const eventSave = await Event.findByPk(idEvent, {
+        include: [
+          { model: Venue, as: "venue" },
+          { model: TicketStock, as: "stock" },
+        ],
+      });
+      return res.json(eventSave);
     } else {
       return res.status(400).json({ error: "Faltan datos" });
     }

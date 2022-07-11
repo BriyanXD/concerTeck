@@ -11,7 +11,7 @@ import style from './TicketVoucher.module.css'
 export default function TicketVoucher(){
     const { id } = useParams();
     const { ticket } = useSelector((state) => state);
-    const { Venues } = useSelector((state) => state);
+    const  Venues  = useSelector((state) => state.Venues);
     const dispatch = useDispatch();
     
     
@@ -35,10 +35,15 @@ export default function TicketVoucher(){
     
     if(ticket){
         date = ticket.event?.schedule !== undefined? ticket.event.schedule.split('T')[0] : null
+        // prueba = date? date?.split('-')[2] : null
+        // console.log(prueba,'ESTE ES EL CONSOLE.LOG')
         time = ticket.event?.schedule !== undefined ? ticket.event.schedule.split('T')[1].split(':')[0]+':'+  ticket.event?.schedule.split('T')[1].split(':')[1] :null
         artista = ticket.event?.artist !== undefined ? ticket.event.artist.split([' '], [ 2] ).join(' ') : null;
     }
-
+    // let lugar= ''
+    // if(Venues){
+    //     lugar = 
+    // }
 
 
 
