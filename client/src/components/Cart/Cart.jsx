@@ -149,6 +149,7 @@ export default function Cart() {
 }
 
 const handleCheckout =async () => {
+  console.log("entro al checkout")
   let pago = []
   cartDB.map(e => pago.push({price: e.idPrice, quantity: e.quantity}))
    await dispatch(checkout(pago))
@@ -222,7 +223,7 @@ if(userStorage !== ""){
         Total final: ${totalTodos} ARS.
           </div>
         <button
-          disabled={diseable}
+          // disabled={diseable}
           className={Style.btncomprar}
           onClick={() =>
             !user ? loginWithPopup() : handleCheckout()
