@@ -425,19 +425,17 @@ export default function RegisterEvent(){
             }    
         }
         //validar fecha/calendario
-        if(e.target.name === "schedule"){
-            if(e.target.value === ""){
-                setErrors({
-                    ...errors,
-                    [e.target.name]: "Ingrese la fecha y hora del Evento"
-                })
-            } else {
-                setErrors({
-                    ...errors,
-                    [e.target.name]: ""
-                })
-            }
-        }
+        // if(errors.schedule === ""){
+        //     setErrors({
+        //         ...errors,
+        //         schedule: "Ingrese la fecha y hora del Evento"
+        //     })
+        // } else {
+        //     setErrors({
+        //         ...errors,
+        //         schedule: ""
+        //     })
+        // }
         //validar imagen del artista
         if(e.target.name === "performerImage"){
             if(e.target.value === ""){

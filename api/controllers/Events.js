@@ -132,13 +132,10 @@ async function postEvents(req, res) {
     ) {
       return res.status(400).send("Faltan datos obligatorios");
     } else {
-      // if (!Number.isInteger(stockId))
-      //   return res.status(400).json({ error: "stockId debe ser un numero" });
       await Genre.findOrCreate({
         where: { name: genreId.toLowerCase() },
       });
       let saveVenue = await Venue.findOne({ where: { id: venueId } });
-      //console.log(saveVenue)
       let saveGenre = await Genre.findOne({
         where: { name: genreId.toLowerCase() },
       });
@@ -162,10 +159,7 @@ async function postEvents(req, res) {
         } else {
           return res.status(400).json({ error: "No se puedo crear el evento" });
         }
-        //response.addVenue(saveVenue.id)
-        //console.log("algo fallo en el ADDVENUE")
       } else {
-        //console.log("No se puedo crear el genero para el evento")
         return res
           .status(400)
           .json({ error: "No se puedo crear el genero para el evento" });
