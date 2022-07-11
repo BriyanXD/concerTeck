@@ -18,7 +18,7 @@ export default function NavBarProfile () {
           <img className={style.logo} src={logoSombra} alt="Logo not found" />
         </Link>
         {user.isAdmin === false ? <Link to='/favs' style={{ textDecoration: "none" }}>
-            <span className={style.titleData2}><BsFillStarFill size={15}/> Favoritos </span>
+            <span className={style.titleData2}> Favoritos </span>
         </Link> : <span className={style.adminnav}><FontAwesomeIcon icon={faCrown}/>Admin</span>}
             <span className={style.titleData}>Nombre: {userdates.name}</span>
          <PerfilYLogoutAuth0/>
