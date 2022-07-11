@@ -367,10 +367,10 @@ export default function RegisterEvent(){
                     ...errors,
                     [e.target.name]: "Ingrese el nombre del Evento"
                 })
-            }else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(e.target.value)){
+            }else if (!/^[a-zA-ZÀ-ÿ\s\d]{1,40}$/.test(e.target.value)){
                 setErrors({
                     ...errors,
-                    [e.target.name]: "Ingrese un nombre sin números o caracteres especiales"
+                    [e.target.name]: "Ingrese un nombre válido"
                 })
             } else {
                 setErrors({
@@ -386,10 +386,10 @@ export default function RegisterEvent(){
                     ...errors,
                     [e.target.name]: "Ingrese el nombre del artista del Evento"
                 })
-            }else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(e.target.value)){
+            }else if (!/^[a-zA-ZÀ-ÿ\s\d]{1,40}$/.test(e.target.value)){
                 setErrors({
                     ...errors,
-                    [e.target.name]: "Ingrese un nombre sin números o caracteres especiales"
+                    [e.target.name]: "Ingrese un nombre válido"
                 })
             } else {
                 setErrors({
