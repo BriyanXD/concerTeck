@@ -31,7 +31,7 @@ async function postShoppingCart(req, res) {
     price,
     performerImage,
     idPrice,
-    name
+    name,
   } = req.body;
   try {
     if (idUser && idEvent) {
@@ -43,20 +43,20 @@ async function postShoppingCart(req, res) {
         price: price,
         itemTotal: price,
         performerImage: performerImage,
-        schedule:schedule,
-        variant:variant,
+        schedule: schedule,
+        variant: variant,
         idPrice,
-        name: name
+        name: name,
       });
-      console.log(allDateShoppingCart, "lo que retorna")
+      console.log(allDateShoppingCart, "lo que retorna");
       return res.status(200).json(allDateShoppingCart);
     } else {
       return res
-        .status(401)
+        .status(400)
         .json({ error: "No se lograron guardar los datos del carrito" });
     }
   } catch (error) {
-    res.status(404).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 }
 async function deleteShoppingCart(req, res) {
@@ -72,11 +72,11 @@ async function deleteShoppingCart(req, res) {
       });
     } else {
       res
-        .status(401)
+        .status(400)
         .json({ error: "No se encontraron datos con ese ID ", id });
     }
   } catch (error) {
-    res.status(404).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 }
 async function putShoppingCart(req, res) {
@@ -93,7 +93,7 @@ async function putShoppingCart(req, res) {
   } = req.body;
   try {
     const ShoppingSave = await ShoppingCart.findOne({ where: { id: id } });
-    const total = ShoppingSave.price* quantity;
+    const total = ShoppingSave.price * quantity;
     if (ShoppingSave) {
       const ShoppingUpdate = await ShoppingSave.update({
         idUser: idUser,
@@ -108,36 +108,44 @@ async function putShoppingCart(req, res) {
       return res.json(ShoppingUpdate);
     } else {
       res
-        .status(401)
+        .status(400)
         .json({ error: "No se encontraron datos con ese ID ", id });
     }
-  } catch (error) {}
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 }
 
-
 async function restarStock(req, res) {
-  const {descontar} = req.body
+  const { descontar } = req.body;
   let eliminar = [];
-  try{
-    descontar.map(async e => {
-      eliminar.push(e.id)
-      const encontrado = await Events.findByPk(e.idEvent)
-      const stock = await TicketStock.findByPk(encontrado.stockId)
-       if(e.variant === "generalLateralPrice"){
-       await stock.update({stockGeneralLateral: stock.stockGeneralLateral - e.quantity})
-       }else if (e.variant === "generalPrice"){
-       await stock.update({stockGeneral: stock.stockGeneral - e.quantity})
-       }else if (e.variant === "streamingPrice"){      
-       await stock.update({stockStreaming: stock.stockStreaming - e.quantity})
-       }else if (e.variant === "vipPrice"){
-       await stock.update({stockkVIP: stock.stockkVIP - e.quantity})
-       }else if (e.variant === "palcoPrice"){
-       await stock.update({stockPalco: stock.stockPalco - e.quantity})
-       }})
-       await ShoppingCart.destroy({where:{id:eliminar}})
-    res.send("Se restaron correctamente todos los tickets de sus respectivos eventos")
-  }catch(error){
-    console.log(error.message)
+  try {
+    descontar.map(async (e) => {
+      eliminar.push(e.id);
+      const encontrado = await Events.findByPk(e.idEvent);
+      const stock = await TicketStock.findByPk(encontrado.stockId);
+      if (e.variant === "generalLateralPrice") {
+        await stock.update({
+          stockGeneralLateral: stock.stockGeneralLateral - e.quantity,
+        });
+      } else if (e.variant === "generalPrice") {
+        await stock.update({ stockGeneral: stock.stockGeneral - e.quantity });
+      } else if (e.variant === "streamingPrice") {
+        await stock.update({
+          stockStreaming: stock.stockStreaming - e.quantity,
+        });
+      } else if (e.variant === "vipPrice") {
+        await stock.update({ stockkVIP: stock.stockkVIP - e.quantity });
+      } else if (e.variant === "palcoPrice") {
+        await stock.update({ stockPalco: stock.stockPalco - e.quantity });
+      }
+    });
+    await ShoppingCart.destroy({ where: { id: eliminar } });
+    res.send(
+      "Se restaron correctamente todos los tickets de sus respectivos eventos"
+    );
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 }
 module.exports = {
@@ -145,5 +153,5 @@ module.exports = {
   postShoppingCart,
   deleteShoppingCart,
   putShoppingCart,
-  restarStock
+  restarStock,
 };

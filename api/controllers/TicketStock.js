@@ -41,28 +41,28 @@ async function putTicketStock(req, res) {
     });
     res.json(allTicketStock);
   } catch (error) {
-    res.status(404).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 }
 
 async function getTicketStockByid(req, res) {
   const { id } = req.body;
-  try{
+  try {
     const encontrado = await TicketStock.findByPk(id);
-    if(encontrado){
+    if (encontrado) {
       res.json(encontrado);
-    }else{
-      res.send("no se encontro un ticket con ese id")
+    } else {
+      res.send("no se encontro un ticket con ese id");
     }
-  }catch(error){  
-    console.log(error.message)
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 }
 
-async function postTicketStock(req, res){
-  try{
+async function postTicketStock(req, res) {
+  try {
     const {
-      id, 
+      id,
       stockStreaming,
       stockkVIP,
       stockGeneral,
@@ -75,7 +75,6 @@ async function postTicketStock(req, res){
       palcoPrice,
       venueId,
     } = req.body;
-    console.log("LLEGARON LOS PARAMETROS DEL STOCK")
     if (
       !id ||
       //!stockStreaming ||
@@ -90,13 +89,11 @@ async function postTicketStock(req, res){
       //!palcoPrice ||
       !venueId
     ) {
-      console.log("FALTARON DATOS DEL STOCK")
-      return res.status(404).send("Faltan datos obligatorios");
+      return res.status(400).send("Faltan datos obligatorios");
     } else {
-      console.log("ENTRO A LA CREACION DEL STOCK")
       const stock = await TicketStock.findOrCreate({
         where: {
-          id: id, 
+          id: id,
           stockStreaming: stockStreaming,
           stockkVIP: stockkVIP,
           stockGeneral: stockGeneral,
@@ -108,13 +105,12 @@ async function postTicketStock(req, res){
           generalPrice: generalPrice,
           palcoPrice: palcoPrice,
           venueId: venueId,
-        }
+        },
       });
-      console.log("SE LOGRO CREAR EL STOCK")
       return res.send(stock);
     }
-  }catch(error){
-    return res.status(404).json({ error: error.message });
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
   }
 }
 

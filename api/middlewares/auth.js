@@ -40,20 +40,8 @@ function isAdmin(req, res, next) {
   }
 }
 
-function verifyIsProducer(req, res, next) {
-  try {
-    if (UserDate.user.isProducer) {
-      next();
-    }
-  } catch (error) {
-    return res
-      .status(401)
-      .json({ error: "Acceso no autorizado no tienes permisos de productor" });
-  }
-}
-
 function adminNotAuthorization(req, res, next) {
-  if (!UserDate.user.isAdmin) {
+  if (!UserDate.user[0].isAdmin) {
     next();
   } else {
     return res
@@ -62,22 +50,8 @@ function adminNotAuthorization(req, res, next) {
   }
 }
 
-function producerNotAuthorization(req, res, next) {
-  try {
-    if (!UserDate.user.isProducer) {
-      next();
-    }
-  } catch (error) {
-    return res
-      .status(401)
-      .json({ error: "Acceso no autorizado eres productor" });
-  }
-}
-
 module.exports = {
   verifyToken,
   isAdmin,
-  verifyIsProducer,
   adminNotAuthorization,
-  producerNotAuthorization,
 };
