@@ -46,6 +46,7 @@ border: none;
 cursor: pointer;
 margin-top: 2.7rem;
 transition: box-shadow 0.25s ease 0s;
+color: whitesmoke;
 }
 
 .button:hover,

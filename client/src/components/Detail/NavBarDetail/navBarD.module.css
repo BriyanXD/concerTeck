@@ -1,0 +1,56 @@
+/* MEDIDAS CORREGIDAS A REM*/
+
+@import url(../../../index.css);
+
+.container{
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(0.3rem); 
+    justify-content: space-between;
+    align-items: center;
+    border: solid 0.06rem;
+    width: 100%;
+    height: 4rem;
+    border-top-style: solid;
+    border-width: 0.06rem;
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow:  0.3rem 0.3rem 0.3rem rgba(0, 0, 0, 0.32);
+}
+
+
+.button{
+        margin-left: 75rem;
+        margin-bottom: 2.8rem;
+        background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70));
+        width: 6rem;
+        height: 2rem;
+        text-align: center;
+        border-radius: 0.3rem;        
+        font-size: 1rem;
+        border: none;
+        cursor: pointer;
+        margin-top: 2.7rem;
+        transition: box-shadow 0.25s ease 0s;
+        color: whitesmoke;
+        }
+        
+        .button:hover,
+        .button:focus {
+         background: linear-gradient(117deg, rgb(248, 137, 73), rgb(248, 82, 49));
+         box-shadow: 0 0.1rem 0.8rem rgb(254, 100, 70);
+        }
+
+.Containerlogo{
+    margin-right: 2rem;
+}
+
+.logo{
+    position:relative;
+    width: 7.5rem;
+    margin-left: 0.9rem;
+}
+
+.perfil{
+    margin-left: 67rem;
+    margin-bottom: 1.4rem;
+}

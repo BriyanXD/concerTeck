@@ -1,6 +1,6 @@
 .selectGenre{
+    background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70));
     background-color: #FF4C29;
-    /* background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70)); */
     width: 10vw;
     height: 2.5vw;
     text-align: center;
@@ -8,7 +8,10 @@
     margin-bottom: 5px;
     font-size: 14px;
     margin-top: 0.5vw;
+    color: whitesmoke;
+    cursor: pointer;
 }
+
 
 /* .option{
     background-color: #FF4C29;
