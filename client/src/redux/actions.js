@@ -52,7 +52,11 @@ export function CreateEvent(value) {
   return async function (dispatch) {
     try {
       console.log("ACTION POST EVENT; DATOS: ", value)
-      const creation = await axios.post(`${url}/api/events`, value);
+      const creation = await axios.post(`${url}/api/events`, value, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+      });
       console.log(creation.data, "creando");
       return creation;
     } catch (error) {
@@ -80,7 +84,11 @@ export function CreateGenre(value) {
   return async function (dispatch) {
     try {
       console.log("ACTION POST GENRE; DATOS: ", value)
-      const creation = await axios.post(`${url}/api/genres`, value);
+      const creation = await axios.post(`${url}/api/genres`, value, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+      });
       return creation;
     } catch (error) {
       console.log(error.message);
@@ -105,7 +113,11 @@ export function GetVenues() {
 export function CreateVenue(value) {
   return async function (dispatch) {
     try {
-      const creation = await axios.post(`${url}/api/venues`, value);
+      const creation = await axios.post(`${url}/api/venues`, value, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+      });
       return creation;
     } catch (error) {
       console.log(error.message);
@@ -117,7 +129,11 @@ export function CreateStock(value) {
   return async function (dispatch) {
     try {
       console.log("ACTION POST STOCK; DATOS: ", value)
-      const creation = await axios.post(`${url}/api/ticketstock`, value);
+      const creation = await axios.post(`${url}/api/ticketstock`, value, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+      });
       return creation;
     } catch (error) {
       console.log(error.message);
