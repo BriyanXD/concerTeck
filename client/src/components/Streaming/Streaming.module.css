@@ -3,7 +3,7 @@
     background-color: var(--color1)
 }
 .container{
-    background-image: url("../../img/bk.jpg");
+    /* background-image: url("../../img/bk.jpg"); */
     width: 100%;
     height: 92vh;
     display: flex;
