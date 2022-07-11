@@ -15,8 +15,7 @@ import Footer from '../Footer/Footer';
 import RegisterGenre from '../RegisterGenre/RegisterGenre';
 import RegisterVenue from '../RegisterVenue/RegisterVenue';
 import swal from 'sweetalert';
-
-
+ 
 
 export default function RegisterEvent(){
     const dispatch = useDispatch();
