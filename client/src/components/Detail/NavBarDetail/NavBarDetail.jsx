@@ -39,12 +39,14 @@ export default function NavBarDetail(){
     return(
         <div className={style.container}>
             <div className={style.Containerlogo}>
-        <Link to="/">
-          <img className={style.logo} src={logoSombra} alt="Logo not found" />
-        </Link>
+              <Link to="/">
+                <img className={style.logo} src={logoSombra} alt="Logo not found" />
+              </Link>
             </div>
+            <div>
+
         {
-        !user ? <button onClick={() => handlerLogin()} className={style.button}>Ingresa</button> : 
+          !user ? <button onClick={() => handlerLogin()} className={style.button}>Ingresa</button> : 
         <div className={style.perfil}>
             <PerfilYLogoutAuth0/>
         </div>
@@ -61,6 +63,7 @@ export default function NavBarDetail(){
             <Cart/>
           </Modal2>
         
+           </div>
       </div>
       )
 }
