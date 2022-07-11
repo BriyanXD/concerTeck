@@ -71,7 +71,6 @@ export default function RegisterEvent(){
         artist: "",
         genreId: "",
         schedule: "",
-        //duration: "",  //nueva propiedad, duracion del evento
         performerImage: "",
         placeImage: "",
         description: "",
@@ -83,7 +82,6 @@ export default function RegisterEvent(){
         artist: "",
         genreId: "",
         schedule: "",
-        //duration: "",  //nueva propiedad, duracion del evento
         performerImage: "",
         placeImage: "",
         venueId: "",
