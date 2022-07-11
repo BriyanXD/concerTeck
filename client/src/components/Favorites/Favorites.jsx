@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import s from './Favorites.module.css'
 import CardBigEvent from "../CardBigEvent/CardBigEvent";
 import CardEvent from "../CardEvent/CardEvent";
-import {  getLikes, deleteLikes } from "../../redux/actions";
+import {  getLikes, deleteLikes, getEvents } from "../../redux/actions";
 import FooterFav from "./FooterFav/FooterFav";
 import { Link } from "react-router-dom";
 
@@ -14,15 +14,22 @@ export default function Favorites(){
     const dispatch = useDispatch()
     const bigEvents = AllEvents.filter((b)=>b.venue.isBigEvent===true)
     const events = AllEvents.filter((b)=>b.venue.isBigEvent===false)
-
+    let temporal = localStorage.getItem("user")
+    let userStorage 
+    if(temporal !== "nada"){
+      userStorage = JSON.parse(temporal)
+    }else{
+      userStorage = ""
+    }
 
     useEffect(()=>{
-      dispatch(getLikes(User[0].id))  
+        dispatch(getEvents())
+        dispatch(getLikes(userStorage.id))  
     },[dispatch])
 
     const handleDelete = async (id) =>{
         await dispatch(deleteLikes(id))
-        await dispatch(getLikes(User[0].id))
+        await dispatch(getLikes(userStorage.id))
     }
 
     return(
