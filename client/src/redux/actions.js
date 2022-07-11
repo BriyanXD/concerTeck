@@ -52,6 +52,7 @@ export function CreateEvent(value) {
   console.log(value);
   return async function (dispatch) {
     try {
+      console.log("ACTION POST EVENT; DATOS: ", value)
       const creation = await axios.post(`${url}/api/events`, value);
       console.log(creation.data, "creando");
       return creation;
@@ -79,6 +80,7 @@ export function GetGenres() {
 export function CreateGenre(value) {
   return async function (dispatch) {
     try {
+      console.log("ACTION POST GENRE; DATOS: ", value)
       const creation = await axios.post(`${url}/api/genres`, value);
       return creation;
     } catch (error) {
@@ -115,6 +117,7 @@ export function CreateVenue(value) {
 export function CreateStock(value) {
   return async function (dispatch) {
     try {
+      console.log("ACTION POST STOCK; DATOS: ", value)
       const creation = await axios.post(`${url}/api/ticketstock`, value);
       return creation;
     } catch (error) {

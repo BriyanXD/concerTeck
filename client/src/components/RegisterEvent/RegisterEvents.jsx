@@ -367,7 +367,7 @@ export default function RegisterEvent(){
                     ...errors,
                     [e.target.name]: "Ingrese el nombre del Evento"
                 })
-            }else if (!/^[a-zA-ZÀ-ÿ\s\d]{1,40}$/.test(e.target.value)){
+            }else if (!/^[a-zA-ZÀ-ÿ\s\d]*$/.test(e.target.value)){ //!/^[a-zA-ZÀ-ÿ\s\d]{1,40}$/.test(e.target.value)
                 setErrors({
                     ...errors,
                     [e.target.name]: "Ingrese un nombre válido"
@@ -793,7 +793,6 @@ export default function RegisterEvent(){
                     >Añadir nuevo género</button>
             </div>
             <div>{activeGenre ? <RegisterGenre/>:null}</div>
-            {/* <div> <input id="duration" name="file" onChange={(e) => handleChange(e)} onBlur={handleBlur} type="time" placeholder="Duracion del evento" /> {errors.duration && <label className={style.error}>{errors.duration}</label>}</div> */}
                 
             <div className={style.select}>
                 <label className={errors.performerImage?.length > 0 ? style.errorImg : style.img}>
@@ -873,7 +872,7 @@ export default function RegisterEvent(){
                             value={stock.stockGeneral} 
                             onChange={handleStock} 
                             onBlur={handleBlurStock} 
-                            type="number"
+                            type="text"
                             className={activeStockGeneral.stock?.length > 0 ? style.error : style.inputTicket}
                             placeholder={activeStockGeneral.stock?.length > 0 ? activeStockGeneral.stock : "Stock General"} 
                         />  
@@ -883,7 +882,7 @@ export default function RegisterEvent(){
                         value={stock.generalPrice} 
                         onChange={handleStock} 
                         onBlur={handleBlurStock} 
-                        type="number"
+                        type="text"
                         className={activeStockGeneral.price?.length > 0 ? style.error : style.inputPrice}
                         placeholder={activeStockGeneral.price?.length > 0 ? activeStockGeneral.price : "Precio General"}
                         />

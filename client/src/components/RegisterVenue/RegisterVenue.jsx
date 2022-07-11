@@ -111,6 +111,7 @@ export default function RegisterVenue({handleClickNewVenue}){
             ...venue,
             //minStock: Math.floor((maxStockGeneral + (maxStockGeneralLateral || 0) + (maxStockPalco || 0) + (maxStockStreaming || 0) + (maxStockVIP || 0)) *0.7),
             //isBigEvent: minStock >= 10000 ? true : false,
+            map: mapCord.alt + " " + mapCord.lat,
             [e.target.name]: e.target.value
         })
     };
@@ -118,16 +119,17 @@ export default function RegisterVenue({handleClickNewVenue}){
 
     const handleAddVenue = async(e) =>{
         e.preventDefault();
-        
+        let minimunStock = Math.floor((venue.maxStockGeneral + (venue.maxStockGeneralLateral || 0) + (venue.maxStockPalco || 0) + (venue.maxStockStreaming || 0) + (venue.maxStockVIP || 0)) *0.7);
         await setVenue({
             ...venue,
-            minStock: Math.floor((venue.maxStockGeneral + (venue.maxStockGeneralLateral || 0) + (venue.maxStockPalco || 0) + (venue.maxStockStreaming || 0) + (venue.maxStockVIP || 0)) *0.7),
-            //isBigEvent: venue.minStock >= 10000 ? true : false
+            map: mapCord.alt + " " + mapCord.lat,
+            minStock: minimunStock,
+            isBigEvent: minimunStock >= 10000 ? true : false
         });
-        await setVenue({
-            ...venue,
-            isBigEvent: venue.minStock >= 10000 ? true : false
-        });
+        // await setVenue({
+        //     ...venue,
+        //     isBigEvent: venue.minStock >= 10000 ? true : false
+        // });
         if(error.name !== "" || 
         error.address !== "" || 
         //error.map !== "" || 
@@ -271,7 +273,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                     [e.target.name]: "Ingrese la cantidad máxima general de espectadores"
                 })
             }
-            else if(!/^[0-9,$]*$/.test(e.target.value)){
+            else if(!/^[0-9]*$/.test(e.target.value)){
                 setError({
                     ...error,
                     [e.target.name]: "Ingrese un valor numérico"
@@ -286,7 +288,7 @@ export default function RegisterVenue({handleClickNewVenue}){
         }
         //validar stock lateral
         if(e.target.name === "maxStockGeneralLateral"){
-            if(!/^[0-9,$]*$/.test(e.target.value)){
+            if(!/^[0-9]*$/.test(e.target.value)){
                 setError({
                     ...error,
                     [e.target.name]: "Ingrese un valor numérico"
@@ -301,7 +303,7 @@ export default function RegisterVenue({handleClickNewVenue}){
         }
         //validar stock palco
         if(e.target.name === "maxStockPalco"){
-            if(!/^[0-9,$]*$/.test(e.target.value)){
+            if(!/^[0-9]*$/.test(e.target.value)){
                 setError({
                     ...error,
                     [e.target.name]: "Ingrese un valor numérico"
@@ -316,7 +318,7 @@ export default function RegisterVenue({handleClickNewVenue}){
         }
         //validar stock streaming
         if(e.target.name === "maxStockStreaming"){
-            if(!/^[0-9,$]*$/.test(e.target.value)){
+            if(!/^[0-9]*$/.test(e.target.value)){
                 setError({
                     ...error,
                     [e.target.name]: "Ingrese un valor numérico"
@@ -331,7 +333,7 @@ export default function RegisterVenue({handleClickNewVenue}){
         }
         //validar stock VIP
         if(e.target.name === "maxStockVIP"){
-            if(!/^[0-9,$]*$/.test(e.target.value)){
+            if(!/^[0-9]*$/.test(e.target.value)){
                 setError({
                     ...error,
                     [e.target.name]: "Ingrese un valor numérico"
@@ -407,7 +409,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                 value={venue.maxStockGeneral} 
                 onChange={handleVenue} 
                 onBlur={handleBlurVenue} 
-                type="number"
+                type="text"
                 className={error.maxStockGeneral?.length > 0 ? style.error : style.inputText } 
                 placeholder={error.maxStockGeneral?.length > 0 ? error.maxStockGeneral : "Cantidad máxima general"} 
             />
@@ -419,7 +421,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                 name="maxStockGeneralLateral" 
                 value={venue.maxStockGeneralLateral}  
                 onChange={handleVenue} 
-                type="number" 
+                type="text" 
                 className={error.maxStockGeneralLateral?.length > 0 ? style.error : style.inputText }
                 placeholder={error.maxStockGeneralLateral?.length > 0 ? error.maxStockGeneralLateral : "Cantidad máxima de laterales"} 
             />
@@ -431,7 +433,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                 name="maxStockPalco" 
                 value={venue.maxStockPalco}  
                 onChange={handleVenue} 
-                type="number"
+                type="text"
                 className={error.maxStockPalco?.length > 0 ? style.error : style.inputText }
                 placeholder={error.maxStockPalco?.length > 0 ? error.maxStockPalco : "Cantidad máxima de palco"}  
             />
@@ -443,7 +445,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                 name="maxStockStreaming" 
                 value={venue.maxStockStreaming}  
                 onChange={handleVenue} 
-                type="number"
+                type="text"
                 className={error.maxStockStreaming?.length > 0 ? style.error : style.inputText } 
                 placeholder={error.maxStockStreaming?.length > 0 ? error.maxStockStreaming : "Cantidad máxima de streaming"}
             />
@@ -455,7 +457,7 @@ export default function RegisterVenue({handleClickNewVenue}){
                 name="maxStockVIP" 
                 value={venue.maxStockVIP}  
                 onChange={handleVenue} 
-                type="number"
+                type="text"
                 className={error.maxStockVIP?.length > 0 ? style.error : style.inputText }
                 placeholder={error.maxStockVIP?.length > 0 ? error.maxStockVIP : "Cantidad máxima de VIP"} 
             />
