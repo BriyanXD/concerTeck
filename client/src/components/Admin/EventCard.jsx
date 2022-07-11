@@ -7,7 +7,6 @@ import Style from "./EventCard.module.css"
 export default function EventCard({id,name}){
 
     const dispatch = useDispatch()
-    /* const userDeleted = useSelector((state) => state.userDeleted) */
     const allevents = useSelector((state) => state?.AllEvents)
     const eventDeleted = useSelector((state) => state.eventDeleted)
     

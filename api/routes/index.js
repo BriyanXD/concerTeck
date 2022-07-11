@@ -40,6 +40,7 @@ const {
   deleteTicket,
   postCreatEventAndPrice,
   postCheckout,
+  postAllCartEvent
 } = require("../controllers/Tickets");
 
 const { getVenues, postVenues } = require("../controllers/Venue");
@@ -113,6 +114,8 @@ routes.delete("/ticket", verifyToken, isAdmin, deleteTicket);
 routes.post("/tickets", verifyToken, isAdmin, postCreatEventAndPrice);
 routes.post("/tickets2", verifyToken, isAdmin, postCheckout);
 // routes.post("/tickect2", getRaro2)
+routes.post("/all", postAllCartEvent)
+
 
 routes.get("/genres", getAllGenres);
 routes.post("/genres", verifyToken, isAdmin, postOneGenre);

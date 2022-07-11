@@ -182,32 +182,40 @@ async function putEvents(req, res) {
       id,
       name,
       artist,
-      genre,
       schedule,
       performerImage,
       placeImage,
       description,
+      streaming,
+      genreId,
       venueId,
       stockId,
     } = req.body;
     const upload = await Event.findByPk(id);
     if (upload) {
-      const event = await Event.update(
+      await Event.update(
         {
-          name: name,
-          artist: artist,
-          genreId: genre,
-          schedule: schedule,
-          performerImage: performerImage,
-          placeImage: placeImage,
-          description: description,
-          venueId: venueId,
-          stockId: stockId,
+          name: name || upload.name,
+          artist: artist || upload.artist,
+          genreId: genreId || upload.genreId,
+          schedule: schedule || upload.schedule,
+          performerImage: performerImage || upload.performerImage,
+          placeImage: placeImage || upload.placeImage,
+          description: description || upload.description,
+          streaming: streaming || upload.streaming,
+          venueId: venueId || upload.venueId,
+          stockId: stockId || upload.stockId,
         },
         { where: { id: id } }
       );
-      if (event) {
-        return res.send(event);
+      const saveUpdateEvent = await Event.findByPk(id, {
+        include: [
+          { model: Venue, as: "venue" },
+          { model: TicketStock, as: "stock" },
+        ],
+      });
+      if (saveUpdateEvent) {
+        return res.send(saveUpdateEvent);
       }
     }
   } catch (error) {
@@ -241,11 +249,17 @@ async function putUrlStreaming(req, res) {
   const { idEvent, urlStraming } = req.body;
   try {
     if (idEvent && urlStraming) {
-      const addUrlStreaming = await Event.update(
+      await Event.update(
         { streaming: urlStraming },
         { where: { id: idEvent } }
       );
-      return res.json(addUrlStreaming);
+      const eventSave = await Event.findByPk(idEvent, {
+        include: [
+          { model: Venue, as: "venue" },
+          { model: TicketStock, as: "stock" },
+        ],
+      });
+      return res.json(eventSave);
     } else {
       return res.status(400).json({ error: "Faltan datos" });
     }
