@@ -78,15 +78,8 @@ async function postVenues(req, res) {
           maxStockPalco: maxStockPalco || 0,
           maxStockStreaming: maxStockStreaming || 0,
           maxStockVIP: maxStockVIP || 0,
-          minStock: Math.floor(
-            (maxStockGeneral +
-              (maxStockGeneralLateral || 0) +
-              (maxStockPalco || 0) +
-              (maxStockStreaming || 0) +
-              (maxStockVIP || 0)) *
-              0.7
-          ),
-          isBigEvent: minStock >= 10000 ? true : false,
+          minStock: minStock,
+          isBigEvent: isBigEvent,
         },
       });
       return res.send(venues);
