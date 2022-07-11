@@ -79,7 +79,7 @@ const { getLikes, postLikes, deleteLikes } = require("../controllers/Likes");
 const { ticketVoucher } = require("../controllers/TicketVoucher");
 const { verifiedaccess } = require("googleapis/build/src/apis/verifiedaccess");
 
-routes.get("/like", verifyToken, getLikes);
+routes.get("/like", getLikes);
 routes.post("/like", verifyToken, postLikes);
 routes.delete("/like", verifyToken, deleteLikes);
 
