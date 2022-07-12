@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const BlackList = require("../models/BlackList");
 require("dotenv").config();
-const { AUTH_ROUNDS, AUTH_SECRET, AUTH_EXPIRES } = process.env;
+const { AUTH_SECRET, AUTH_EXPIRES } = process.env;
 require("../db.js");
 
 async function createUser(req, res) {
