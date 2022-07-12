@@ -140,35 +140,35 @@ export default function RegisterEvent(){
             //await setDateTime(e.taget.value);
             await setEvent({
                 ...event,
-                schedule: dateTime
+                schedule: dateTime,
+                stockId: stock.id,
             });
             await setStock({
                 ...stock,
                 id: event.name + event.artist + event.schedule
             });
-            return 
         }
         else if(e.target.name === "name"){
             await setEvent({
                 ...event,
-                name: e.target.value
+                name: e.target.value,
+                stockId: stock.id,
             });
             await setStock({
                 ...stock,
                 id: event.name + event.artist + event.schedule
             });
-            return 
         }
         else if(e.target.name === "artist"){
             await setEvent({
                 ...event,
-                artist: e.target.value
+                artist: e.target.value,
+                stockId: stock.id,
             });
             await setStock({
                 ...stock,
                 id: event.name + event.artist + event.schedule
             });
-            return 
         }
         else if(e.target.name === "description"){
             await setEvent({
@@ -288,9 +288,13 @@ export default function RegisterEvent(){
 
     const ControlDoNotRepeat = async(newEvent) =>{
         const sameVenue = Allevents.find(e => e.venueId === newEvent.venueId);
-        const sameTime = Allevents.find(e => e.schedule === newEvent.schedule);
+        console.log("SAME VENUE", sameVenue);
+        const sameTime = Allevents.find(e => e.schedule === new Date(newEvent.schedule));
+        console.log("LA HORA DEL EVENTO SETEADO", new Date(newEvent.schedule));
+        console.log("SAME TIME", sameTime);
         const sameArtist = Allevents.find(e => e.artist === newEvent.artist);
-        if((sameVenue && sameTime) && (sameVenue.schedule === sameTime.schedule) && (sameVenue.venueId === sameTime)){
+        console.log("SAME ARTIST", sameArtist);
+        if((sameVenue && sameTime) && (sameVenue.schedule === sameTime.schedule) && (sameVenue.venueId === sameTime.venueId)){
             //alert("Ya existe otro evento ocupando el mismo lugar a la misma fecha y hora")
             setRepitedEvent("Ya existe otro evento ocupando el mismo lugar a la misma fecha y hora")
             return 
@@ -375,7 +379,6 @@ export default function RegisterEvent(){
                 title: `${repitedEvent}`,
                 icon: 'warning',
                 dangerMode:true})
-
         }
     };
 
@@ -1058,7 +1061,7 @@ export default function RegisterEvent(){
                 </div> 
             : null }</div>
             <div containerBtn>
-                <Link to='/'><button className={style.btn}>Volver a inicio</button></Link>
+                <Link to='/perfil/panelAdmin'><button className={style.btn}>Volver al Panel</button></Link>
                 <button type="submit" className={style.btn}>Crear Evento</button>
             </div>
  
