@@ -797,9 +797,9 @@ export default function RegisterEvent(){
                     onBlur={handleBlur} 
                     type="file"
                     className={errors.performerImage?.length > 0 ? style.errorImg : style.img}/>
-                    
-            
             </div>
+            <div>{event.performerImage ? <div><img src={event.performerImage}/></div> : null}</div>
+            
             <div className={style.select}>
                  <label className={errors.placeImage?.length > 0 ? style.errorImg : style.img}>
                     {errors.placeImage?.length > 0 ? errors.placeImage : "Imagen del lugar"}
@@ -815,6 +815,7 @@ export default function RegisterEvent(){
                     className={errors.placeImage?.length > 0 ? style.errorImg : style.img}
                     /> 
             </div>
+            <div>{event.placeImage ? <div><img src={event.placeImage}/></div> : null}</div>
 
             <div className={style.containerDescription}> 
                 <textarea 
