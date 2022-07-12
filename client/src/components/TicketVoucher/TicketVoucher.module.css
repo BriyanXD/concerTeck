@@ -20,8 +20,8 @@
     background-position: top;
     background-size: 100%;
     background-image: url(https://images.unsplash.com/photo-1483101974978-cf266fdf1139?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3289&q=80);
-    width: 700px;
-    height: 43vh;
+    width: 50vw;
+    height: 47vh;
     border-radius: 15px;
     -webkit-filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
               filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3)); 
