@@ -50,7 +50,7 @@ export default function RegisterGenre(){
                     ...error,
                     [e.target.name]: "Ingrese el nombre del género"
                 })
-            }else if (!/^[a-zA-ZÀ-ÿ\s\d]{1,40}$/.test(e.target.value)){ 
+            }else if (!/^[a-zA-Z\s]{2,254}$/.test(e.target.value)){ 
                 setError({
                     ...error,
                     [e.target.name]: "Ingrese un nombre válido"
