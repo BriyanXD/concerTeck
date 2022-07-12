@@ -24,8 +24,9 @@
     color: var(--color4);
    }
    .searchBar:hover{
-    box-shadow: 0.1rem 0.1rem 0.2rem var(--color3);
-    transition: 0.4s;
+       border: solid 1px var(--color3);
+    /* box-shadow: 0.1rem 0.1rem 0.2rem var(--color3); */
+   
    }
    
    

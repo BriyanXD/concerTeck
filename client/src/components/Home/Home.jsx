@@ -122,7 +122,7 @@ export default function Home() {
             {currentBigEvents?.map((el) => {
                 return (
                   <div key={el.id}>
-                    <Link style={{ textDecoration: "none" }} to={`/${el.id}`}>
+                    <Link style={{ textDecoration: "none" }} to={`/detail/${el.id}`}>
                       <CardBigEvent
                         name={el.name}
                         genreId={el.genreId}
@@ -152,7 +152,7 @@ export default function Home() {
             {currentEvents?.map((el) => {
               return (
                 <div key={el.id}>
-                    <Link style={{ textDecoration: "none" }} to={`/${el.id}`}>
+                    <Link style={{ textDecoration: "none" }} to={`/detail/${el.id}`}>
                       <CardEvent
                         name={el.name}
                         image={el.performerImage}
