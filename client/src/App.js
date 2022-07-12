@@ -19,7 +19,7 @@ function App() {
       <div>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/:id" element={<Detail />} />
+          <Route path="/detail/:id" element={<Detail />} />
           <Route path="/perfil/panelAdmin" element={<PanelAdmin />} />
           <Route exact path="/registrar/:usuario" element={<RegisterUser />} />
           <Route exact path="/perfil/:id" element={<ProfileUser />} />
