@@ -132,6 +132,7 @@ export function CreateStock(value) {
       });
       return creation;
     } catch (error) {
+      console.log(" ENTRO POR EL CATCH DE LA ACCION DE CREAR EL STOCK ");
       console.log(error.message);
     }
   };

@@ -155,9 +155,10 @@ if(userStorage !== ""){
     <div className={Style.containerGeneral}>
       <div>Carrito ({cantidadEventos})</div>
       <ul>
-        {ambos.map((item) => (
-          
-          <li key={item.id} className={Style.items}>
+        {ambos.map((item) =>{
+          let fechActual = new Date(item.schedule);
+          fechActual = fechActual.toString().split(" ").slice(1,5).join("-");
+          return (<li key={item.id} className={Style.items}>
             <div>
             {item.quantity} x {item.nombre} 
             <img src={item.performerImage} alt={item.nombre} className={Style.image} />
@@ -179,8 +180,9 @@ if(userStorage !== ""){
                   : null}
               </div>
             
-            <div> {item.schedule.split("T")[0]} {'  '}
-            {item.schedule.split("T")[1].split(":")[0] + ":" + item.schedule.split("T")[1].split(":")[1]} h</div>
+            {/* <div> {item.schedule.split("T")[0]} {'  '}
+            {item.schedule.split("T")[1].split(":")[0] + ":" + item.schedule.split("T")[1].split(":")[1]} h</div> */}
+            <div>{fechActual}h.</div>
             <div>Precio: ${item.price} Total: ${item.itemTotal === 0 ? null : item.itemTotal}</div>
             <div>
            
@@ -206,7 +208,7 @@ if(userStorage !== ""){
             </div>
             </div>
           </li>
-        ))}
+        )} )}
       </ul>
         <div>
         Total final: ${totalTodos} ARS.

@@ -22,7 +22,7 @@ export default function RegisterEvent(){
     const navigate = useNavigate();
     const [activeGenre, setActiveGenre] = useState(false);
     const [activeVenue, setActiveVenue] = useState(false);
-    const [repitedEvent, setRepitedEvent] = useState("");
+    const [repitedEvent, setRepitedEvent] = useState(null);
     const[selectVenuesState, setSelectVenuesState] = useState(false);
 
     
@@ -82,6 +82,7 @@ export default function RegisterEvent(){
         schedule: "",
         performerImage: "",
         placeImage: "",
+        description: "",
         venueId: "",
         stockId: ""
     });
@@ -117,6 +118,9 @@ export default function RegisterEvent(){
     }, [dispatch])
 
     const handleChange = async(e) => {
+        // let fechaActual = dateTime;
+        // //fechaActual = fechaActual.toUTCString();
+        // fechaActual = fechaActual.toString();
         if(e.target.name === "venueId"){
             await setEvent({
                 ...event,
@@ -136,41 +140,52 @@ export default function RegisterEvent(){
             //await setDateTime(e.taget.value);
             await setEvent({
                 ...event,
-                schedule: dateTime
+                schedule: dateTime,
+                stockId: stock.id,
             });
             await setStock({
                 ...stock,
                 id: event.name + event.artist + event.schedule
             });
-            return 
         }
         else if(e.target.name === "name"){
             await setEvent({
                 ...event,
-                name: e.target.value
+                name: e.target.value,
+                stockId: stock.id,
             });
             await setStock({
                 ...stock,
                 id: event.name + event.artist + event.schedule
             });
-            return 
         }
         else if(e.target.name === "artist"){
             await setEvent({
                 ...event,
-                artist: e.target.value
+                artist: e.target.value,
+                stockId: stock.id,
             });
             await setStock({
                 ...stock,
                 id: event.name + event.artist + event.schedule
             });
-            return 
         }
         else if(e.target.name === "description"){
             await setEvent({
                 ...event,
                 description: e.target.value
             })
+            if(e.target.value === ""){
+                setErrors({
+                    ...errors,
+                    [e.target.name]: "Ingrese una descripción del evento"
+                })
+            } else {
+                setErrors({
+                    ...errors,
+                    [e.target.name]: ""
+                })
+            }    
             return 
         }
         await setEvent({
@@ -202,12 +217,12 @@ export default function RegisterEvent(){
             id: event.name + event.artist + event.schedule,
             [e.target.name]: Number(e.target.value)
         });
-        if(stock.id !== ""){
-            await setEvent({
-                ...event,
-                stockId: stock.id
-            });
-        }
+        //if(stock.id !== ""){
+        await setEvent({
+            ...event,
+            stockId: stock.id
+        });
+        //}
     };
 
     const handleAddStock = async(e) => {
@@ -272,22 +287,26 @@ export default function RegisterEvent(){
     };
 
     const ControlDoNotRepeat = async(newEvent) =>{
-        const sameVenue = Allevents.find(e => e.venueId === newEvent.venueId);
-        const sameTime = Allevents.find(e => e.schedule === newEvent.schedule);
-        const sameArtist = Allevents.find(e => e.artist === newEvent.artist);
-        if((sameVenue && sameTime) && (sameVenue.schedule === sameTime.schedule) && (sameVenue.venueId === sameTime)){
-            //alert("Ya existe otro evento ocupando el mismo lugar a la misma fecha y hora")
-            setRepitedEvent("Ya existe otro evento ocupando el mismo lugar a la misma fecha y hora")
-            return 
+        let fechActual = new Date(newEvent.schedule);
+        fechActual = fechActual.toISOString()
+        const sameTime = Allevents.find(e => e.schedule === fechActual);
+        if(sameTime && sameTime.venueId === newEvent.venueId){
+            swal({
+                title: "Ya existe otro evento ocupando el mismo lugar a la misma fecha y hora",
+                icon: 'warning',
+                dangerMode:true})
+            return setRepitedEvent(false)
         }
-        else if((sameTime && sameArtist) && (sameTime.artist === sameArtist.artist) && (sameTime.schedule === sameArtist.schedule) && (sameTime.venueId !== sameArtist.venueId)){
-            //alert("Ya existe otro evento en otro lugar donde el artista deba cantar en la misma fecha y hora")
-            setRepitedEvent("Ya existe otro evento en otro lugar donde el artista deba cantar en la misma fecha y hora")
-            return 
+        else if(sameTime && sameTime.artist === newEvent.artist && sameTime.venueId !== newEvent.venueId){
+            swal({
+                title: "Ya existe otro evento en otro lugar donde el artista deba cantar en la misma fecha y hora",
+                icon: 'warning',
+                dangerMode:true})
+            return setRepitedEvent(false)
         }
         else {
-            setRepitedEvent("")
-            return 
+            return setRepitedEvent(true)
+             
         }
     }
 
@@ -299,6 +318,7 @@ export default function RegisterEvent(){
         errors.schedule !== "" || event.schedule === "" ||
         errors.performerImage !== "" ||
         errors.placeImage !== "" ||
+        errors.description !== "" ||
         errors.venueId !== "" ||
         errors.stockId !== "" ){
             swal({
@@ -315,6 +335,7 @@ export default function RegisterEvent(){
         event.schedule === "" ||
         event.performerImage === "" ||
         event.placeImage === "" ||
+        event.description === "" ||
         event.venueId === "" ||
         event.stockId === "" ){
             setErrors({
@@ -324,13 +345,14 @@ export default function RegisterEvent(){
                 schedule: event.schedule === "" ? "Ingrese la fecha y hora del Evento" : "",
                 performerImage: event.performerImage === "" ? "Ingrese la imagen del artista" : "",
                 placeImage: event.placeImage === "" ? "Ingrese la imagen del lugar del Evento" : "",
+                description: event.description === "" ? "Ingrese una descripción del evento" : "",
                 venueId: event.venueId === "" ? "Ingrese el lugar del evento" : "",
                 stockId: event.stockId === "" ? "Se debe llenar el formulario de stock" : ""
             });
             return
         }
-        ControlDoNotRepeat(event);
-        if(repitedEvent === ""){
+        await ControlDoNotRepeat(event);
+        if(repitedEvent === true){
             await handleAddStock(e);
             await dispatch(CreateEvent(event));
             swal({
@@ -353,11 +375,11 @@ export default function RegisterEvent(){
             navigate("/")
         }
         else {
-            swal({
-                title: `${repitedEvent}`,
-                icon: 'warning',
-                dangerMode:true})
-
+            // swal({
+            //     title: `${repitedEvent}`,
+            //     icon: 'warning',
+            //     dangerMode:true})
+            return
         }
     };
 
@@ -458,6 +480,20 @@ export default function RegisterEvent(){
                 })
             }    
         }
+        //validar descripcion
+        // if(e.target.name === "description"){
+        //     if(e.target.value === ""){
+        //         setErrors({
+        //             ...errors,
+        //             [e.target.name]: "Ingrese una descripción del evento"
+        //         })
+        //     } else {
+        //         setErrors({
+        //             ...errors,
+        //             [e.target.name]: ""
+        //         })
+        //     }    
+        // }
     };
 
     const handleBlurStock = (e) => {
@@ -798,8 +834,8 @@ export default function RegisterEvent(){
                     type="file"
                     className={errors.performerImage?.length > 0 ? style.errorImg : style.img}/>
             </div>
-            <div>{event.performerImage ? <div><img src={event.performerImage}/></div> : null}</div>
-            
+            <div>{event.performerImage ? <div><img className={style.imageRender} src={event.performerImage}/></div> : null}</div>
+
             <div className={style.select}>
                  <label className={errors.placeImage?.length > 0 ? style.errorImg : style.img}>
                     {errors.placeImage?.length > 0 ? errors.placeImage : "Imagen del lugar"}
@@ -815,7 +851,7 @@ export default function RegisterEvent(){
                     className={errors.placeImage?.length > 0 ? style.errorImg : style.img}
                     /> 
             </div>
-            <div>{event.placeImage ? <div><img src={event.placeImage}/></div> : null}</div>
+            <div>{event.placeImage ? <div><img className={style.imageRender} src={event.placeImage}/></div> : null}</div>
 
             <div className={style.containerDescription}> 
                 <textarea 
@@ -823,8 +859,8 @@ export default function RegisterEvent(){
                     value={event.description}  
                     onChange={handleChange} 
                     type="text"
-                    className={style.description} 
-                    placeholder="Descripción del evento" 
+                    className={errors.description?.length> 0 ? style.error : style.description}  //className={style.description} 
+                    placeholder={errors.description?.length> 0 ? errors.description : "Descripción del evento"}   
                 /> 
             </div>
             
@@ -1026,7 +1062,7 @@ export default function RegisterEvent(){
                 </div> 
             : null }</div>
             <div containerBtn>
-                <Link to='/'><button className={style.btn}>Volver a inicio</button></Link>
+                <Link to='/perfil/panelAdmin'><button className={style.btn}>Volver al Panel</button></Link>
                 <button type="submit" className={style.btn}>Crear Evento</button>
             </div>
  

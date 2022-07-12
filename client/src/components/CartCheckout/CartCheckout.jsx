@@ -17,14 +17,17 @@ export default function CartCheckout () {
                 <div className={style.card}>
                     {
                     cartDetail.map((cartD)=>{
+                        let fechActual = new Date(cartD.schedule);
+                        fechActual = fechActual.toString().split(" ").slice(1,5).join("-");
                     return(
                         <div className={style.contenedor}>
                             <img src={cartD.performerImage ? cartD.performerImage : null} className={style.img}/>
                             <div className={style.cardDetail}>
                                 <div className={style.separacion}>
                             <div className={style.name}>{cartD.nombre}</div>
-                            <div className={style.schedule}> {cartD.schedule.split("T")[0]} {'  '}
-                            {cartD.schedule.split("T")[1].split(":")[0] + ":" + cartD.schedule.split("T")[1].split(":")[1]} h</div>
+                            {/* <div className={style.schedule}> {cartD.schedule.split("T")[0]} {'  '}
+                            {cartD.schedule.split("T")[1].split(":")[0] + ":" + cartD.schedule.split("T")[1].split(":")[1]} h</div> */}
+                            <div className={style.schedule}>{fechActual}h.</div>
                             <div className={style.type}><label>Tipo de entrada: {cartD.name[0].toUpperCase() + cartD.name.substring(1)} </label></div>
                             </div>
                             {/* <br /> */}
