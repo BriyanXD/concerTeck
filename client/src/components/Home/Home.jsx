@@ -25,7 +25,6 @@ export default function Home() {
   const dispatch = useDispatch();
   const { user, loginWithPopup } = useAuth0();
   const {Likes} = useSelector((state)=> state);
-  console.log("🚀 ~ file: Home.jsx ~ line 28 ~ Home ~ Likes", Likes)
   const { User, AllEvents } = useSelector((state) => state)
   let temporal = localStorage.getItem("user")
   let userStorage 

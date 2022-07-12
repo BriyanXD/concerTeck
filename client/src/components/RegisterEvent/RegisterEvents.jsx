@@ -22,7 +22,6 @@ export default function RegisterEvent(){
     const navigate = useNavigate();
     const [activeGenre, setActiveGenre] = useState(false);
     const [activeVenue, setActiveVenue] = useState(false);
-    //const [activeStock, setActiveStock] = useState(false);
     const [repitedEvent, setRepitedEvent] = useState("");
     const[selectVenuesState, setSelectVenuesState] = useState(false);
 
@@ -59,7 +58,6 @@ export default function RegisterEvent(){
         stock: "",
         price:""
     });
-    //const [stockAllOk, setStockAllOk] = useState(false);
     const [foundVenue, setFoundVenue] = useState(null);
 
     const [dateTime, setDateTime] = useState(new Date());
@@ -252,7 +250,6 @@ export default function RegisterEvent(){
         const stockCreated = await dispatch(CreateStock(stock));
         console.log("AQUI EL STOCK CREADO", stockCreated);
         if(stockCreated.data[0]){
-            //setStockAllOk(true)
             swal({
                 text: "Stock añadido con éxito",
                 icon: 'success',
@@ -271,7 +268,6 @@ export default function RegisterEvent(){
                 palcoPrice: 0,
                 venueId: "",
             });
-            //setActiveStock(!activeStock);
         }    
     };
 
@@ -300,11 +296,9 @@ export default function RegisterEvent(){
         if( errors.name !== "" ||
         errors.artist !== "" ||
         errors.genreId !== "" ||
-        errors.schedule !== "" ||
-        //errors.duration !== "" ||
+        errors.schedule !== "" || event.schedule === "" ||
         errors.performerImage !== "" ||
         errors.placeImage !== "" ||
-        //errors.description !== "" ||
         errors.venueId !== "" ||
         errors.stockId !== "" ){
             swal({
@@ -319,7 +313,6 @@ export default function RegisterEvent(){
         event.artist === "" ||
         event.genreId === "" ||
         event.schedule === "" ||
-        //event.duration === "" ||
         event.performerImage === "" ||
         event.placeImage === "" ||
         event.venueId === "" ||
@@ -329,7 +322,6 @@ export default function RegisterEvent(){
                 artist: event.artist === "" ? "Ingrese el nombre del artista del Evento" : "",
                 genreId: event.genreId === "" ? "Ingrese el género del Evento" : "",
                 schedule: event.schedule === "" ? "Ingrese la fecha y hora del Evento" : "",
-                //duration: event.duration === "" ? "Ingrese la duracion del Evento" : "",
                 performerImage: event.performerImage === "" ? "Ingrese la imagen del artista" : "",
                 placeImage: event.placeImage === "" ? "Ingrese la imagen del lugar del Evento" : "",
                 venueId: event.venueId === "" ? "Ingrese el lugar del evento" : "",
@@ -396,7 +388,7 @@ export default function RegisterEvent(){
                     ...errors,
                     [e.target.name]: "Ingrese el nombre del artista del Evento"
                 })
-            }else if (!/^[a-zA-ZÀ-ÿ\s\d]{1,40}$/.test(e.target.value)){
+            }else if (!/^[a-zA-Z\s]{2,254}$/.test(e.target.value)){
                 setErrors({
                     ...errors,
                     [e.target.name]: "Ingrese un nombre válido"
@@ -423,17 +415,7 @@ export default function RegisterEvent(){
             }    
         }
         //validar fecha/calendario
-        // if(errors.schedule === ""){
-        //     setErrors({
-        //         ...errors,
-        //         schedule: "Ingrese la fecha y hora del Evento"
-        //     })
-        // } else {
-        //     setErrors({
-        //         ...errors,
-        //         schedule: ""
-        //     })
-        // }
+
         //validar imagen del artista
         if(e.target.name === "performerImage"){
             if(e.target.value === ""){
@@ -487,7 +469,7 @@ export default function RegisterEvent(){
                     stock: "Ingrese la cantidad de entradas disponibles"
                 })
             }
-            else if (!/^[0-9,$]*$/.test(e.target.value)){
+            else if (!/^[0-9]*$/.test(e.target.value)){
                 setActiveStockGeneral({
                     ...activeStockGeneral,
                     stock: "Ingrese un valor numérico"
@@ -514,7 +496,7 @@ export default function RegisterEvent(){
                     price: "Ingrese el precio de las entradas"
                 })
             }
-            else if (!/^[0-9,$]*$/.test(e.target.value)){
+            else if (!/^[0-9]*$/.test(e.target.value)){
                 setActiveStockGeneral({
                     ...activeStockGeneral,
                     price: "Ingrese un valor numérico"
@@ -535,7 +517,7 @@ export default function RegisterEvent(){
                     stock: "Ingrese la cantidad de entradas disponibles"
                 })
             }
-            else if (!/^[0-9,$]*$/.test(e.target.value)){
+            else if (!/^[0-9]*$/.test(e.target.value)){
                 setActiveLateralStock({
                     ...activeLateralStock,
                     stock: "Ingrese un valor numérico"
@@ -562,7 +544,7 @@ export default function RegisterEvent(){
                     price: "Ingrese el precio de las entradas"
                 })
             }
-            else if (!/^[0-9,$]*$/.test(e.target.value)){
+            else if (!/^[0-9]*$/.test(e.target.value)){
                 setActiveLateralStock({
                     ...activeLateralStock,
                     price: "Ingrese un valor numérico"
@@ -583,7 +565,7 @@ export default function RegisterEvent(){
                     stock: "Ingrese la cantidad de entradas disponibles"
                 })
             }
-            else if (!/^[0-9,$]*$/.test(e.target.value)){
+            else if (!/^[0-9]*$/.test(e.target.value)){
                 setActivePalcoStock({
                     ...activePalcoStock,
                     stock: "Ingrese un valor numérico"
@@ -610,7 +592,7 @@ export default function RegisterEvent(){
                     price: "Ingrese el precio de las entradas"
                 })
             }
-            else if (!/^[0-9,$]*$/.test(e.target.value)){
+            else if (!/^[0-9]*$/.test(e.target.value)){
                 setActivePalcoStock({
                     ...activePalcoStock,
                     price: "Ingrese un valor numérico"
@@ -631,7 +613,7 @@ export default function RegisterEvent(){
                     stock: "Ingrese la cantidad de entradas disponibles"
                 })
             }
-            else if (!/^[0-9,$]*$/.test(e.target.value)){
+            else if (!/^[0-9]*$/.test(e.target.value)){
                 setActiveStreamingStock({
                     ...activeStreamingStock,
                     stock: "Ingrese un valor numérico"
@@ -658,7 +640,7 @@ export default function RegisterEvent(){
                     price: "Ingrese el precio de las entradas"
                 })
             }
-            else if (!/^[0-9,$]*$/.test(e.target.value)){
+            else if (!/^[0-9]*$/.test(e.target.value)){
                 setActiveStreamingStock({
                     ...activeStreamingStock,
                     price: "Ingrese un valor numérico"
@@ -679,7 +661,7 @@ export default function RegisterEvent(){
                     stock: "Ingrese la cantidad de entradas disponibles"
                 })
             }
-            else if (!/^[0-9,$]*$/.test(e.target.value)){
+            else if (!/^[0-9]*$/.test(e.target.value)){
                 setActiveVIPStock({
                     ...activeVIPStock,
                     stock: "Ingrese un valor numérico"
@@ -706,7 +688,7 @@ export default function RegisterEvent(){
                     price: "Ingrese el precio de las entradas"
                 })
             }
-            else if (!/^[0-9,$]*$/.test(e.target.value)){
+            else if (!/^[0-9]*$/.test(e.target.value)){
                 setActiveVIPStock({
                     ...activeVIPStock,
                     price: "Ingrese un valor numérico"
