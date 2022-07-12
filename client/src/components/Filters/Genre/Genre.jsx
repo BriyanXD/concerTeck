@@ -17,7 +17,6 @@ export default function Genre({setCurrenPag,setCurrentPage}) {
     setCurrenPag(1)
     setCurrentPage(1)
   }
-
     useEffect(()=>{
     dispatch(GetGenres())
   },[])
@@ -28,7 +27,7 @@ export default function Genre({setCurrenPag,setCurrentPage}) {
         <option value='all'  className={style.option}>Géneros</option>
         {
           Genres.map(e => {return(
-            <option value={e.id} className={style.option}>{e.name}</option>
+            <option value={e.id} className={style.option}>{e.name[0].toUpperCase() + e.name.substring(1)}</option>
           )})
         }
       </select>
