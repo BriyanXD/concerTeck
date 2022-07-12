@@ -1,8 +1,8 @@
 .button{
     margin-right: 2vw;
     background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70));
-    width: 5vw;
-    height: 2vw;
+    width: 8vw;
+    height: 2.5vw;
     text-align: center;
     border-radius: 3px;
     color: #EEEEEE;
@@ -12,7 +12,7 @@
     border: none;
     /* margin: 13px; */
     cursor: pointer;
-    margin-top: 2.4vh;
+    margin-top: 3vh;
     transition: box-shadow 0.25s ease 0s;
 }
 

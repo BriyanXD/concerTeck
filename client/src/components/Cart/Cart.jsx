@@ -94,31 +94,31 @@ export default function Cart() {
     }else{
         const data = AllEvents.find(e => e.id === item.idEvent)
         console.log(data, "Data encontro el evento compatible")
-          if(item.name === 'general' && item.quantity >=  data.stock.stockGeneral){
+          if(item.name === 'General' && item.quantity >=  data.stock.stockGeneral){
            return swal({
               title: 'Supera Stock',
               text: 'La cantidad de entradas generales que intentas comprar supera el stock',
               icon: 'error',
               dangerMode:true})
-           }else if(item.name === 'general lateral' &&  item.quantity >= data.stock.stockGeneralLateral){
+           }else if(item.name === 'General lateral' &&  item.quantity >= data.stock.stockGeneralLateral){
            return swal({
               title: 'Supera Stock',
               text: 'La cantidad de entradas generales laterales que intentas comprar supera el stock',
               icon: 'error',
               dangerMode:true})
-          }else if(item.name === 'palco' && item.quantity >= data.stock.stockPalco){
+          }else if(item.name === 'Palco' && item.quantity >= data.stock.stockPalco){
            return swal({
               title: 'Supera Stock',
               text: 'La cantidad de entradas de palco que intentas comprar supera el stock',
               icon: 'error',
               dangerMode:true})
-          }else if(item.name === 'streaming' && item.quantity >= data.stock.stockStreaming) {
+          }else if(item.name === 'Streaming' && item.quantity >= data.stock.stockStreaming) {
            return swal({
               title: 'Supera Stock',
               text: 'La cantidad de entradas de streaming que intentas comprar supera el stock',
               icon: 'error',
               dangerMode:true})
-          }else if(item.name === 'vip' && item.quantity >= data.stock.stockkVIP ){
+          }else if(item.name === 'Vip' && item.quantity >= data.stock.stockkVIP ){
              return swal({
                 title: 'Supera Stock',
                 text: 'La cantidad de entradas VIP que intentas comprar supera el stock',
@@ -218,7 +218,7 @@ if(userStorage !== ""){
             !user ? loginWithPopup() : handleCheckout()
           }
         >
-          Comprar todo
+          Ver detalle
         </button>
     </div>
   );

@@ -34,7 +34,7 @@ export default function Carousel2() {
 
 {    AllBigEvents?.map((e) => {return(
                  <SwiperSlide>
-                     <Link style={{ textDecoration: "none" }} to={`/${e.id}`}>
+                     <Link style={{ textDecoration: "none" }} to={`/detail/${e.id}`}>
                   <img  alt='' src={e.performerImage}/>
                         </Link>
                   </SwiperSlide>
