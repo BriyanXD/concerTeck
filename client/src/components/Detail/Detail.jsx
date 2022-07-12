@@ -56,11 +56,14 @@ export default function Detail() {
   const {Detail} = useSelector((state)=> state)
   const {Venues} = useSelector((state => state))
   
-  let date = ''
-  let time = ''
+  // let date = ''
+  // let time = ''
+  let fechActual = ''
   if(Detail){
-    date = Detail.schedule !== undefined? Detail.schedule.split('T')[0] : null
-    time = Detail.schedule !== undefined ? Detail.schedule.split('T')[1].split(':')[0]+':'+  Detail.schedule.split('T')[1].split(':')[1] :null
+    // date = Detail.schedule !== undefined? Detail.schedule.split('T')[0] : null
+    // time = Detail.schedule !== undefined ? Detail.schedule.split('T')[1].split(':')[0]+':'+  Detail.schedule.split('T')[1].split(':')[1] :null
+    fechActual = new Date(Detail.schedule);
+    fechActual = fechActual.toString().split(" ").slice(1,5).join("-");
   }
 
   let prueba =''
@@ -205,7 +208,8 @@ coord = prueba? prueba.map : '-34.545306 -58.449775'
         <div className={style.carddetail}>
           <div className={style.name}>{Detail.name}</div>
           <div className={style.genre}>{Detail.genre}</div>
-          <div className={style.schedule}>{date} {time}h</div>
+          {/* <div className={style.schedule}>{date} {time}h</div> */}
+          <div className={style.schedule}>{fechActual}h.</div>
           <div className={style.venue}>{Venues.id}</div>
           <div className={style.prueba}>{prueba !== undefined ? prueba.name : null}</div>
           <div className={style.description}>{Detail.description}</div>
