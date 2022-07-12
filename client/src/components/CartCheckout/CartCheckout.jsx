@@ -25,7 +25,7 @@ export default function CartCheckout () {
                             <div className={style.name}>{cartD.nombre}</div>
                             <div className={style.schedule}> {cartD.schedule.split("T")[0]} {'  '}
                             {cartD.schedule.split("T")[1].split(":")[0] + ":" + cartD.schedule.split("T")[1].split(":")[1]} h</div>
-                            <div className={style.type}><label>Tipo de entrada: {cartD.name} </label></div>
+                            <div className={style.type}><label>Tipo de entrada: {cartD.name[0].toUpperCase() + cartD.name.substring(1)} </label></div>
                             </div>
                             {/* <br /> */}
                             <div className={style.separacion}>

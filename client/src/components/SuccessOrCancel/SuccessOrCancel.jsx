@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCartDB, ActualizacionStock, postTicket } from '../../redux/actions';
-import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import style from './SuccessOrCancel.module.css'; 
+import online3 from '../../img/online3.png';
+// const online = '../../img/online'
 
 export default function SuccessOrCancel () {
     const [message, setMessage] = useState("")
@@ -22,7 +25,7 @@ export default function SuccessOrCancel () {
         const query = new URLSearchParams(window.location.search);
     
         if (query.get("success")) {
-          setMessage("Tu compra se completó con éxtio. Gracias por confiar en nosotros! ");
+          setMessage("Tu compra se completó con éxito. Gracias por confiar en nosotros! ");
           const prueba = async() => {
             for(const cart of cartDB)
             await dispatch(postTicket(cart))
@@ -41,9 +44,17 @@ export default function SuccessOrCancel () {
         dispatch(ActualizacionStock(cartDB))
       },[flag])
 
+
     return(
-      <div>
-            {message? (<h1>{message}</h1>) : (<h1>{message}</h1>)}
+      <div className={style.contenedor}>
+            {message? (
+              <div className={style.container}>
+            <h1 className={style.h1}>{message}</h1>
+            <img className={style.img} src={online3} alt="" />
+            <Link to='/'><button className={style.button}>Volver a inicio</button></Link>
+              </div>
+            ) : 
+            (<h1>{message}</h1>)}
     </div>
     )
 }
