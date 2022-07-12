@@ -142,8 +142,9 @@ export function CreateStock(value) {
 }
 
 export function ClearDetail() {
-  return function () {
-    return { type: "CLEAR_DETAIL" };
+  return function (dispatch) {
+    console.log("SE ESTA LIMPIANDO")
+    return dispatch({ type: "CLEAR_DETAIL" });
   };
 }
 

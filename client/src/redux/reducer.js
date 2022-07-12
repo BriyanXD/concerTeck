@@ -1,3 +1,5 @@
+import Detail from "../components/Detail/Detail";
+
 const initialState = {
   AllEvents: [],
   AllBigEvents: [],
@@ -118,10 +120,13 @@ function reducers(state = initialState, { type, payload }) {
       };
 
     case "CLEAR_DETAIL": {
+      let prueb = Detail.length>0? "TIENE DATOS" : "NO HAY NADA"
+      console.log("ENTRO",prueb)
       return {
         ...state,
         Detail: {},
       };
+
     }
 
     case "LOGIN_USER": {
