@@ -12,11 +12,11 @@ const Ticket = sequelize.define(
     },
     name: {
       type: DataTypes.ENUM(
-        "Streaming",
-        "Vip",
-        "General lateral",
-        "General",
-        "Palco"
+        "streaming",
+        "vip",
+        "general lateral",
+        "general",
+        "palco"
       ),
       // allowNull: false,
     },
