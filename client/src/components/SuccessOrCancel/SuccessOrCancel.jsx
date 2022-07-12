@@ -4,7 +4,7 @@ import { getCartDB, ActualizacionStock, postTicket } from '../../redux/actions';
 import { Link } from 'react-router-dom';
 import style from './SuccessOrCancel.module.css'; 
 import online3 from '../../img/online3.png';
-// const online = '../../img/online'
+import closed from '../../img/closed.png';
 
 export default function SuccessOrCancel () {
     const [message, setMessage] = useState("")
@@ -54,7 +54,12 @@ export default function SuccessOrCancel () {
             <Link to='/'><button className={style.button}>Volver a inicio</button></Link>
               </div>
             ) : 
-            (<h1>{message}</h1>)}
+            ( <div className={style.container}>
+              <h1 className={style.h1}>{message}</h1>
+              <img className={style.img} src={closed} alt="" />
+              <Link to='/'><button className={style.button}>Volver a inicio</button></Link>
+                </div>
+                )}
     </div>
     )
 }
