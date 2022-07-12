@@ -575,6 +575,7 @@ export function getCartDB(idUser) {
 }
 
 export function deleteCart(id) {
+  console.log("🚀 ~ file: actions.js ~ line 562 ~ deleteCart ~ id", id)
   return async function (dispatch) {
     try {
       const data = await axios.delete(`${url}/api/cart?id=${id}`);
@@ -885,7 +886,11 @@ export function ticketVoucher(id) {
 export function postTicket(data) {
   return async function (dispatch) {
     try {
-      const tick = await axios.post(`http://localhost:3001/api/ticket`, data);
+      const tick = await axios.post(`http://localhost:3001/api/ticket`, data ,{
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
     } catch (error) {
       console.log(error);
     }
