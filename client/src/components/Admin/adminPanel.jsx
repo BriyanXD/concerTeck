@@ -1,13 +1,13 @@
 import React from "react";
 import Login from "../Login/Login";
 import Modal from "../Modals/Modal/Modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavBarProfile from '../ProfileUser/NavBarProfile/NavBarProfile'
 import { useDispatch, useSelector } from "react-redux";
 // import CardConteiner from "./adminCardConteiner";
 import {getAllUsers, getEvents, getAllBlackList,getAllTickets} from "../../redux/actions"
 import Style from "./adminPanel.module.css"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AdminUserPanel from "./AdminUserPanel";
 import AdminEventPanel from "./AdminEventPanel";
 //import AdminSolicitPanel from "./AdminSolicitPanel";
@@ -23,12 +23,23 @@ export default function PanelAdmin({setUser}){
     const [blackList, setBlackList] = useState(false);
     const [ordersActive, setOrdersActive] = useState(false);
 
-
     const user = useSelector((state) => state.User);
-
-
-    
+    const navigate = useNavigate(); 
     const dispatch = useDispatch()
+
+    useEffect(()=>{
+        try{
+            const admin = JSON.parse(localStorage.getItem("user"))
+            if(!admin.isAdmin){
+                navigate("/")
+            }
+            else{
+                dispatch(getAllUsers()); 
+            }
+        } catch(error){
+            navigate("/")
+        }  
+    }, [dispatch])
     
     /* useEffect (()=>{
         dispatch(getAllUsers())

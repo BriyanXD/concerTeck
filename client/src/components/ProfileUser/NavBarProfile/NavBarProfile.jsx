@@ -20,7 +20,7 @@ export default function NavBarProfile () {
         {user.isAdmin === false ? <Link to='/favs' style={{ textDecoration: "none" }}>
             <span className={style.titleData2}> Favoritos </span>
         </Link> : <span className={style.adminnav}><FontAwesomeIcon icon={faCrown}/>Admin</span>}
-            <span className={style.titleData}>Nombre: {userdates.name}</span>
+            {/* <span className={style.titleData}>Nombre: {userdates.name}</span> */}
             <div className={style.fix}>
 
          <PerfilYLogoutAuth0/>

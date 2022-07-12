@@ -37,7 +37,7 @@ export default function Favorites(){
             <div className={s.title}>
                 <h3>Eventos guardados como Favoritos: </h3>
             </div>
-            <div>
+
             <div >
                 <div className={s.bigcontainer}>
                     {Likes?.map((e)=> {
@@ -86,16 +86,14 @@ export default function Favorites(){
                 })
                 }
                 </div>
+
                 </div>
-                </div>
-                <div>
                     <Link to='/perfil/:id'>
                          <button className={s.buttonBack}>Volver</button>
                     </Link>
-                </div>
-                <div className={s.footer}>
-                    <FooterFav/>
-                </div>
+                    {/* <FooterFav/> */}
+                {/* <div className={s.footer}>
+                </div> */}
             </div>
         </div>
     )

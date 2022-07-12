@@ -23,7 +23,7 @@ function App() {
           <Route path="/perfil/panelAdmin" element={<PanelAdmin />} />
           <Route exact path="/registrar/:usuario" element={<RegisterUser />} />
           <Route exact path="/perfil/:id" element={<ProfileUser />} />
-          <Route exact path="/ticket/:id" element={<TicketVoucher />} />
+          <Route exact path="/tickets/:id" element={<TicketVoucher />} />
           {/* <Route exact path='' element= {<Ruta/>}/> 
             <Route exact path='' element= {<Ruta/>}/>  */}
           <Route exact path="/streaming/:id/:eventId" element={<Streaming />} />

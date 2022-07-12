@@ -2,9 +2,7 @@ const { Router } = require("express");
 const {
   verifyToken,
   isAdmin,
-  verifyIsProducer,
   adminNotAuthorization,
-  producerNotAuthorization,
 } = require("../middlewares/auth");
 
 const {
@@ -17,12 +15,6 @@ const {
   // userSerchbar
 } = require("../controllers/User");
 const { getAllGenres, postOneGenre } = require("../controllers/Genres");
-const {
-  createProducer,
-  getProducer,
-  putProducer,
-  deleteProducer,
-} = require("../controllers/Producer");
 const routes = Router();
 
 const {
@@ -40,7 +32,7 @@ const {
   deleteTicket,
   postCreatEventAndPrice,
   postCheckout,
-  postAllCartEvent
+  postAllCartEvent,
 } = require("../controllers/Tickets");
 
 const { getVenues, postVenues } = require("../controllers/Venue");
@@ -51,13 +43,6 @@ const {
   postTicketStock,
   getTicketStockByid,
 } = require("../controllers/TicketStock");
-
-const { LoginUser } = require("../controllers/Login");
-const {
-  ValidationUser,
-  ValidationUsername,
-  ValidationEmail,
-} = require("../controllers/Validations");
 
 const {
   getAOneBlackList,
@@ -96,13 +81,8 @@ routes.delete("/user", verifyToken, isAdmin, deleteUser); //isAdmin
 
 routes.put("/upgrade", UpgradeRank); //isAdmin
 
-/* routes.get("/producer", verifyToken, getProducer);
-routes.post("/producer", createProducer);
-routes.put("/producer", verifyToken, isAdmin, putProducer);
-routes.delete("/producer", verifyToken, isAdmin, deleteProducer); */
-
 routes.get("/events", loadEventsAndGetEvents);
- routes.post("/events", verifyToken, isAdmin, postEvents);
+routes.post("/events", verifyToken, isAdmin, postEvents);
 //routes.post("/events", postEvents); //ruta de prueba
 routes.put("/events", verifyToken, isAdmin, putEvents);
 routes.delete("/events", verifyToken, isAdmin, deleteEvent); //isAdmin
@@ -111,12 +91,11 @@ routes.put("/eventurl", verifyToken, isAdmin, putUrlStreaming);
 routes.get("/ticket", getTicketByID);
 routes.post("/ticket", verifyToken, postTicket); // verifyToken, adminNotAuthorization,
 routes.delete("/ticket", verifyToken, isAdmin, deleteTicket);
-routes.post("/tickets",verifyToken, isAdmin, postCreatEventAndPrice); 
+routes.post("/tickets", verifyToken, isAdmin, postCreatEventAndPrice);
 routes.post("/tickets2", postCheckout);
 // routes.post("/tickect2", getRaro2)
 //ruta que agrega a el Json de eventos id_price
-routes.post("/all", postAllCartEvent)
-
+routes.post("/all", postAllCartEvent);
 
 routes.get("/genres", getAllGenres);
 routes.post("/genres", verifyToken, isAdmin, postOneGenre);
@@ -131,12 +110,6 @@ routes.get("/ticketstock", getTicketStock); //ruta de prueba
 routes.post("/ticketstock", verifyToken, isAdmin, postTicketStock); //reuta de prueba
 //routes.post("/ticketstock", postTicketStock); //reuta de prueba
 routes.get("/ticketstock2", getTicketStockByid);
-
-routes.post("/login", LoginUser);
-
-routes.post("/validation/login", ValidationUser);
-routes.post("/validation/username", ValidationUsername);
-routes.post("/validation/email", ValidationEmail);
 
 routes.post("/admin", postAdminUser);
 

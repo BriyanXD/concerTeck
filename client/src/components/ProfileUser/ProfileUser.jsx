@@ -14,11 +14,13 @@ export default function ProfileUser() {
       <div className={style.profile}>
       <NavBarProfile />
       </div>
-      <div>
-      <DatosUser />
-      </div>
-      <div className={style.containerDataUser}>
-      <Cart/>
+      <div className={style.cards}>
+        <div className={style.containerDataUser}>
+          <DatosUser/>
+        </div>
+        <div className={style.containerDataUser}>
+        <Cart/>
+        </div>
       </div>
       <div className={style.containerBtn}>
         <Link to='/'>

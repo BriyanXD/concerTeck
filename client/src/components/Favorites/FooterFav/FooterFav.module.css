@@ -3,10 +3,10 @@
 .conteiner{
     background-color: rgba(255, 255, 255, 0.096);
     width: 96rem;
-    height: 3.8rem;
+    height: 3.7rem;
     display: flex;
     justify-content: space-around;
-    margin-top: 33rem;
+    /* margin-top: 25rem; */
     /* position: static; */
 }
 

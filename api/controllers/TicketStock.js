@@ -65,6 +65,7 @@ async function getTicketStockByid(req, res) {
 
 async function postTicketStock(req, res) {
   try {
+    console.log(" ENTRANDO AL BACK DE POST STOCK ");
     const {
       id,
       stockStreaming,
@@ -93,6 +94,7 @@ async function postTicketStock(req, res) {
       //!palcoPrice ||
       !venueId
     ) {
+      console.log(" FALTARON DATOS OBLIGATORIOS ");
       return res.status(400).send("Faltan datos obligatorios");
     } else {
       const stock = await TicketStock.findOrCreate({
@@ -114,6 +116,7 @@ async function postTicketStock(req, res) {
       return res.send(stock);
     }
   } catch (error) {
+    console.log(" ALGO FALLO AL MOMENTO DE CREAR EL STOCK ", error.message);
     return res.status(400).json({ error: error.message });
   }
 }
