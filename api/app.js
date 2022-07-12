@@ -11,6 +11,8 @@ const { chargeEvents } = require("./controllers/Events");
 const { chargeVenue } = require("./controllers/Venue");
 const { chargeTicketStock } = require("./controllers/TicketStock");
 
+const CORS_URL = process.env.CORS_URL || "http://localhost:3000";
+
 require("./models/ShoppingCart");
 require("./models/Producer");
 require("./models/User");
@@ -26,7 +28,7 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.json({ limit: "50mb" }));
 app.use(morgan("dev"));
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Origin", CORS_URL); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",
@@ -38,11 +40,11 @@ app.use((req, res, next) => {
 
 app.use("/api", routes);
 
-let PORT = PORT_APP || 3001;
+let PORT = process.env.PORT_APP || 3001;
 
 async function main() {
   try {
-    await sequelize.sync({ force: false });
+    await sequelize.sync({ force: true });
     console.log("Conection DB succesful");
     app.listen(PORT, () => {
       console.log(`App listen http://localhost:${PORT}`);

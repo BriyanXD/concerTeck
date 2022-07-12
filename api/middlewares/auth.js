@@ -46,7 +46,10 @@ function adminNotAuthorization(req, res, next) {
   } else {
     return res
       .status(401)
-      .json({ error: "Acceso no autorizado eres administrador" });
+      .json({
+        error:
+          "Acceso no autorizado un administrador no puede realizar esta accion",
+      });
   }
 }
 
