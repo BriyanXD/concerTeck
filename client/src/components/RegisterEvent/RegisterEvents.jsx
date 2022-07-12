@@ -22,7 +22,7 @@ export default function RegisterEvent(){
     const navigate = useNavigate();
     const [activeGenre, setActiveGenre] = useState(false);
     const [activeVenue, setActiveVenue] = useState(false);
-    const [repitedEvent, setRepitedEvent] = useState("");
+    const [repitedEvent, setRepitedEvent] = useState(null);
     const[selectVenuesState, setSelectVenuesState] = useState(false);
 
     
@@ -217,12 +217,12 @@ export default function RegisterEvent(){
             id: event.name + event.artist + event.schedule,
             [e.target.name]: Number(e.target.value)
         });
-        if(stock.id !== ""){
-            await setEvent({
-                ...event,
-                stockId: stock.id
-            });
-        }
+        //if(stock.id !== ""){
+        await setEvent({
+            ...event,
+            stockId: stock.id
+        });
+        //}
     };
 
     const handleAddStock = async(e) => {
@@ -287,26 +287,26 @@ export default function RegisterEvent(){
     };
 
     const ControlDoNotRepeat = async(newEvent) =>{
-        const sameVenue = Allevents.find(e => e.venueId === newEvent.venueId);
-        console.log("SAME VENUE", sameVenue);
-        const sameTime = Allevents.find(e => e.schedule === new Date(newEvent.schedule));
-        console.log("LA HORA DEL EVENTO SETEADO", new Date(newEvent.schedule));
-        console.log("SAME TIME", sameTime);
-        const sameArtist = Allevents.find(e => e.artist === newEvent.artist);
-        console.log("SAME ARTIST", sameArtist);
-        if((sameVenue && sameTime) && (sameVenue.schedule === sameTime.schedule) && (sameVenue.venueId === sameTime.venueId)){
-            //alert("Ya existe otro evento ocupando el mismo lugar a la misma fecha y hora")
-            setRepitedEvent("Ya existe otro evento ocupando el mismo lugar a la misma fecha y hora")
-            return 
+        let fechActual = new Date(newEvent.schedule);
+        fechActual = fechActual.toISOString()
+        const sameTime = Allevents.find(e => e.schedule === fechActual);
+        if(sameTime && sameTime.venueId === newEvent.venueId){
+            swal({
+                title: "Ya existe otro evento ocupando el mismo lugar a la misma fecha y hora",
+                icon: 'warning',
+                dangerMode:true})
+            return setRepitedEvent(false)
         }
-        else if((sameTime && sameArtist) && (sameTime.artist === sameArtist.artist) && (sameTime.schedule === sameArtist.schedule) && (sameTime.venueId !== sameArtist.venueId)){
-            //alert("Ya existe otro evento en otro lugar donde el artista deba cantar en la misma fecha y hora")
-            setRepitedEvent("Ya existe otro evento en otro lugar donde el artista deba cantar en la misma fecha y hora")
-            return 
+        else if(sameTime && sameTime.artist === newEvent.artist && sameTime.venueId !== newEvent.venueId){
+            swal({
+                title: "Ya existe otro evento en otro lugar donde el artista deba cantar en la misma fecha y hora",
+                icon: 'warning',
+                dangerMode:true})
+            return setRepitedEvent(false)
         }
         else {
-            setRepitedEvent("")
-            return 
+            return setRepitedEvent(true)
+             
         }
     }
 
@@ -351,8 +351,8 @@ export default function RegisterEvent(){
             });
             return
         }
-        ControlDoNotRepeat(event);
-        if(repitedEvent === ""){
+        await ControlDoNotRepeat(event);
+        if(repitedEvent === true){
             await handleAddStock(e);
             await dispatch(CreateEvent(event));
             swal({
@@ -375,10 +375,11 @@ export default function RegisterEvent(){
             navigate("/")
         }
         else {
-            swal({
-                title: `${repitedEvent}`,
-                icon: 'warning',
-                dangerMode:true})
+            // swal({
+            //     title: `${repitedEvent}`,
+            //     icon: 'warning',
+            //     dangerMode:true})
+            return
         }
     };
 
@@ -833,7 +834,7 @@ export default function RegisterEvent(){
                     type="file"
                     className={errors.performerImage?.length > 0 ? style.errorImg : style.img}/>
             </div>
-            <div>{event.performerImage ? <div><img src={event.performerImage}/></div> : null}</div>
+            <div>{event.performerImage ? <div><img className={style.imageRender} src={event.performerImage}/></div> : null}</div>
 
             <div className={style.select}>
                  <label className={errors.placeImage?.length > 0 ? style.errorImg : style.img}>
@@ -850,7 +851,7 @@ export default function RegisterEvent(){
                     className={errors.placeImage?.length > 0 ? style.errorImg : style.img}
                     /> 
             </div>
-            <div>{event.placeImage ? <div><img src={event.placeImage}/></div> : null}</div>
+            <div>{event.placeImage ? <div><img className={style.imageRender} src={event.placeImage}/></div> : null}</div>
 
             <div className={style.containerDescription}> 
                 <textarea 
