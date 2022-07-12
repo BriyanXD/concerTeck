@@ -118,6 +118,9 @@ export default function RegisterEvent(){
     }, [dispatch])
 
     const handleChange = async(e) => {
+        // let fechaActual = dateTime;
+        // //fechaActual = fechaActual.toUTCString();
+        // fechaActual = fechaActual.toString();
         if(e.target.name === "venueId"){
             await setEvent({
                 ...event,
