@@ -13,7 +13,7 @@ export default function LoginAuth0(){
     loginWithRedirect,
     loginWithPopup
   } = useAuth0();
-
+console.log('user en loguin', user)
   function handlerLogin(){
 
     loginWithPopup()

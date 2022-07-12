@@ -51,13 +51,11 @@ export function EventById(id) {
 export function CreateEvent(value) {
   return async function (dispatch) {
     try {
-      console.log("ACTION POST EVENT; DATOS: ", value)
       const creation = await axios.post(`${url}/api/events`, value, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
-        }
+        },
       });
-      console.log(creation.data, "creando");
       return creation;
     } catch (error) {
       console.log(error.message);
@@ -83,11 +81,10 @@ export function GetGenres() {
 export function CreateGenre(value) {
   return async function (dispatch) {
     try {
-      console.log("ACTION POST GENRE; DATOS: ", value)
       const creation = await axios.post(`${url}/api/genres`, value, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
-        }
+        },
       });
       return creation;
     } catch (error) {
@@ -116,7 +113,7 @@ export function CreateVenue(value) {
       const creation = await axios.post(`${url}/api/venues`, value, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
-        }
+        },
       });
       return creation;
     } catch (error) {
@@ -128,11 +125,10 @@ export function CreateVenue(value) {
 export function CreateStock(value) {
   return async function (dispatch) {
     try {
-      console.log("ACTION POST STOCK; DATOS: ", value)
       const creation = await axios.post(`${url}/api/ticketstock`, value, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
-        }
+        },
       });
       return creation;
     } catch (error) {
@@ -144,7 +140,6 @@ export function CreateStock(value) {
 
 export function ClearDetail() {
   return function (dispatch) {
-    console.log("SE ESTA LIMPIANDO")
     return dispatch({ type: "CLEAR_DETAIL" });
   };
 }
@@ -238,7 +233,6 @@ export function ValidationUsername(value) {
 }
 
 export function filterByGenres(payload) {
-  console.log(payload);
   return {
     type: "FILTER_GENRES",
     payload,
@@ -246,7 +240,6 @@ export function filterByGenres(payload) {
 }
 
 export function OrderByDate(payload) {
-  console.log(payload);
   return {
     type: "ORDER_BY_DATE",
     payload,
@@ -290,7 +283,7 @@ export function getLikes(idUser) {
 
 export function postLikes(idEvent, idUser) {
   return async function (dispatch) {
-    try{
+    try {
       const getLikes = await axios.post(
         `${url}/api/like`,
         { idEvent: idEvent, idUser: idUser },
@@ -304,8 +297,8 @@ export function postLikes(idEvent, idUser) {
         type: "POST_LIKES",
         payload: getLikes.data,
       });
-    }catch(error){
-      console.log(error.message)
+    } catch (error) {
+      console.log(error.message);
     }
   };
 }
@@ -336,7 +329,6 @@ export function getAllUsers() {
         url: `${url}/api/user`,
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       };
-      let token = localStorage.getItem("token");
       /* console.log(token); */
       /* const encabezado = `Authorization: Bearer ${localStorage.getItem('token')}` */
 
@@ -489,13 +481,12 @@ export function searchUserByUserName(username) {
           },
         }
       );
-      console.log(userByUserName.data, "ESTOY RE LCOO");
       return dispatch({
         type: "SEARCH_USER_BY_USERNAME",
         payload: userByUserName.data,
       });
     } catch (error) {
-      console.log(error, "SOY YO");
+      console.log(error, "SEARCH_USER_BY_USERNAME");
     }
   };
 }
@@ -577,7 +568,6 @@ export function getCartDB(idUser) {
 }
 
 export function deleteCart(id) {
-  console.log("🚀 ~ file: actions.js ~ line 562 ~ deleteCart ~ id", id)
   return async function (dispatch) {
     try {
       const data = await axios.delete(`${url}/api/cart?id=${id}`);
@@ -631,7 +621,6 @@ export function deleteUserBlackList(idUser) {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(dataUser.data, "USUARIO PERDONADO");
       return dispatch({
         type: "DELETE_USER_BLACK_LIST",
         payload: dataUser.data,
@@ -768,7 +757,6 @@ export function searchOrder(name) {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log("ALLORDER EN ACTION", allOrder);
       return dispatch({
         type: "GET_NAME_BY_ORDER",
         payload: allOrder.data,
@@ -790,7 +778,6 @@ export function searchEventIDEmails(eventId) {
           },
         }
       );
-      console.log("ALL EMAILS", allEmails.data);
       return dispatch({
         type: "GET_ALL_EMAILS_TICKET",
         payload: allEmails.data,
@@ -850,8 +837,7 @@ export function checkout(line_items) {
 export function ActualizacionStock(descontar) {
   return async function (dispatch) {
     try {
-      const actual = await axios.put(`${url}/api/cart/update`, { descontar });
-      console.log(actual.data, "que  trae la funcion de back");
+      await axios.put(`${url}/api/cart/update`, { descontar });
     } catch (error) {
       console.log(error.message);
     }
@@ -888,7 +874,7 @@ export function ticketVoucher(id) {
 export function postTicket(data) {
   return async function (dispatch) {
     try {
-      const tick = await axios.post(`http://localhost:3001/api/ticket`, data ,{
+      await axios.post(`http://localhost:3001/api/ticket`, data, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -926,9 +912,8 @@ export function postTicket(data) {
 //     }
 // }
 
-export function postAllEventsIdPrice (a,b) {
-  return async function (){
-    const creado = await axios.post(`${url}/api/all`,{cantMin: a, cantMax: b})
-    console.log("desde actions all id_price",creado.data)
-  }
+export function postAllEventsIdPrice(a, b) {
+  return async function () {
+    axios.post(`${url}/api/all`, { cantMin: a, cantMax: b });
+  };
 }

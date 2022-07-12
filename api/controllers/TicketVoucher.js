@@ -11,7 +11,7 @@ const qrcode = require('qrcode')
 async function ticketVoucher (id){
     // const {id} = req.query
     // const {name , username ,email } = req.body
-    let url = `http://localhost:3000/api/tickets/${id}`
+    let url = `http://localhost:3000/tickets/${id}`
     // try {
         let Comprador = await Ticket.findByPk(id,{include:[{ model: User, as: "user" },
         { model: Events, as: "event" },]})

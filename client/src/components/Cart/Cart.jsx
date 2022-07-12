@@ -35,7 +35,7 @@ export default function Cart() {
   }else{
     userStorage = ""
   }
-
+  const [cartState, setCartState] = useState({})
   const {cartDB, sesion, AllEvents, Stock} = useSelector(state =>state);
 
   useEffect(() => {
@@ -76,6 +76,7 @@ export default function Cart() {
 
   // let aux =[]
   // let i = 0;
+
 
  const handleDelete = async (id) => {
   if(userStorage !== ""){
