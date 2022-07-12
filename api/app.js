@@ -1,5 +1,4 @@
 require("dotenv").config();
-const { PORT_APP } = process.env;
 const express = require("express");
 const routes = require("./routes/index");
 const sequelize = require("./db");
@@ -40,7 +39,7 @@ app.use((req, res, next) => {
 
 app.use("/api", routes);
 
-let PORT = process.env.PORT_APP || 3001;
+let PORT = process.env.PORT || 3001;
 
 async function main() {
   try {
