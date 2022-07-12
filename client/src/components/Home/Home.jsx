@@ -6,14 +6,13 @@ import CardEvent from "../CardEvent/CardEvent";
 import CardBigEvent from "../CardBigEvent/CardBigEvent";
 //import Carrousel from "../Carousel/Carousel";
 import { useDispatch, useSelector } from "react-redux";
-import { getEvents } from "../../redux/actions";
 import { Link } from "react-router-dom";
 import Calendar from "../Calendar/Calendar";
 import PaginadoBigEvents from "../Paginado/PaginadoBigEvents";
 import PaginadoEvents from "../Paginado/PaginadoEvents";
 import ModalCalendar from "../ModalCalendar/ModalCalendar";
 import { BsFillHeartFill } from 'react-icons/bs';
-import { postLikes, getLikes, postAllEventsIdPrice, deleteLikes } from '../../redux/actions';
+import { getEvents, postLikes, getLikes, postAllEventsIdPrice, deleteLikes, getCartDB } from '../../redux/actions';
 import { useAuth0 } from "@auth0/auth0-react";
 /* import Streaming from "../Streaming/Streaming"; */
 import Carousel2 from "../Carousel2/Carousel2";
@@ -80,6 +79,9 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getEvents());
+    if(userStorage !== ""){
+      dispatch(getCartDB(userStorage.id))
+    }
   }, [dispatch]);
 
   useEffect(()=>{
@@ -122,7 +124,7 @@ export default function Home() {
             {currentBigEvents?.map((el) => {
                 return (
                   <div key={el.id}>
-                    <Link style={{ textDecoration: "none" }} to={`/${el.id}`}>
+                    <Link style={{ textDecoration: "none" }} to={`/detail/${el.id}`}>
                       <CardBigEvent
                         name={el.name}
                         genreId={el.genreId}
@@ -152,7 +154,7 @@ export default function Home() {
             {currentEvents?.map((el) => {
               return (
                 <div key={el.id}>
-                    <Link style={{ textDecoration: "none" }} to={`/${el.id}`}>
+                    <Link style={{ textDecoration: "none" }} to={`/detail/${el.id}`}>
                       <CardEvent
                         name={el.name}
                         image={el.performerImage}

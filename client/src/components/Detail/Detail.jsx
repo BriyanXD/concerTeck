@@ -34,9 +34,9 @@ export default function Detail() {
   
   const dispatch =  useDispatch()
   useEffect(()=>{
-     dispatch(EventById(id))
+      dispatch(EventById(id))
     
-    return ()=>{
+      return ()=>{
       dispatch(ClearDetail())
   }
   },[dispatch, id])
