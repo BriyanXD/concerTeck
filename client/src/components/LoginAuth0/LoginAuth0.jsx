@@ -14,6 +14,8 @@ export default function LoginAuth0(){
     loginWithPopup
   } = useAuth0();
 
+  
+
   function handlerLogin(){
 
     loginWithPopup()
@@ -23,7 +25,7 @@ export default function LoginAuth0(){
   return(
   <div>
     {
-    !user ? <button onClick={() => handlerLogin()} className={style.button}>Ingresá</button> : <PerfilYLogoutAuth0/>
+    !user ? <button onClick={() => handlerLogin()} className={style.button}>Ingresar</button> : <PerfilYLogoutAuth0/>
     },
   </div>
   )
