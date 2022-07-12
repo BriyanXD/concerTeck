@@ -3,6 +3,7 @@ import style from "./Profile.module.css";
 import NavBarProfile from "./NavBarProfile/NavBarProfile";
 import Cart from '../Cart/Cart';
 import { Link } from "react-router-dom";
+import DatosUser from "./DatosUser/DatosUser";
 
 
 
@@ -13,8 +14,13 @@ export default function ProfileUser() {
       <div className={style.profile}>
       <NavBarProfile />
       </div>
-      <div className={style.containerDataUser}>
-      <Cart/>
+      <div className={style.cards}>
+        <div className={style.containerDataUser}>
+          <DatosUser/>
+        </div>
+        <div className={style.containerDataUser}>
+        <Cart/>
+        </div>
       </div>
       <div className={style.containerBtn}>
         <Link to='/'>

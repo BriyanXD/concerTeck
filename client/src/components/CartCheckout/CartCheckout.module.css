@@ -19,7 +19,7 @@
     color: var(--color4);
     padding: 1vw;
     margin-left: 2vw;
-    
+    font-size: 2vw;
 }
 
 .card{
@@ -27,7 +27,7 @@
     backdrop-filter: blur(5px); 
     border: solid 1px rgba(255, 255, 255, 0.3);
     box-shadow:  5px 5px 14px rgba(0, 0, 0, 0.32);
-    width: 55vw;
+    width: 60vw;
     height: auto;
     display: grid;
     margin-left: 4vw;
@@ -84,12 +84,13 @@
     /* margin-top: 0.2vw; */
     white-space: pre ;
     color: #dcdbdb;
+    font-size: 1vw;
 }
 
 .total{
     font-weight: 750;
     color: #EEEEEE;
-    
+    font-size: 1vw;
 }
 
 .img{
