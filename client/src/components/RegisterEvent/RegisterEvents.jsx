@@ -82,6 +82,7 @@ export default function RegisterEvent(){
         schedule: "",
         performerImage: "",
         placeImage: "",
+        description: "",
         venueId: "",
         stockId: ""
     });
@@ -171,6 +172,17 @@ export default function RegisterEvent(){
                 ...event,
                 description: e.target.value
             })
+            if(e.target.value === ""){
+                setErrors({
+                    ...errors,
+                    [e.target.name]: "Ingrese una descripción del evento"
+                })
+            } else {
+                setErrors({
+                    ...errors,
+                    [e.target.name]: ""
+                })
+            }    
             return 
         }
         await setEvent({
@@ -299,6 +311,7 @@ export default function RegisterEvent(){
         errors.schedule !== "" || event.schedule === "" ||
         errors.performerImage !== "" ||
         errors.placeImage !== "" ||
+        errors.description !== "" ||
         errors.venueId !== "" ||
         errors.stockId !== "" ){
             swal({
@@ -315,6 +328,7 @@ export default function RegisterEvent(){
         event.schedule === "" ||
         event.performerImage === "" ||
         event.placeImage === "" ||
+        event.description === "" ||
         event.venueId === "" ||
         event.stockId === "" ){
             setErrors({
@@ -324,6 +338,7 @@ export default function RegisterEvent(){
                 schedule: event.schedule === "" ? "Ingrese la fecha y hora del Evento" : "",
                 performerImage: event.performerImage === "" ? "Ingrese la imagen del artista" : "",
                 placeImage: event.placeImage === "" ? "Ingrese la imagen del lugar del Evento" : "",
+                description: event.description === "" ? "Ingrese una descripción del evento" : "",
                 venueId: event.venueId === "" ? "Ingrese el lugar del evento" : "",
                 stockId: event.stockId === "" ? "Se debe llenar el formulario de stock" : ""
             });
@@ -458,6 +473,20 @@ export default function RegisterEvent(){
                 })
             }    
         }
+        //validar descripcion
+        // if(e.target.name === "description"){
+        //     if(e.target.value === ""){
+        //         setErrors({
+        //             ...errors,
+        //             [e.target.name]: "Ingrese una descripción del evento"
+        //         })
+        //     } else {
+        //         setErrors({
+        //             ...errors,
+        //             [e.target.name]: ""
+        //         })
+        //     }    
+        // }
     };
 
     const handleBlurStock = (e) => {
@@ -799,7 +828,7 @@ export default function RegisterEvent(){
                     className={errors.performerImage?.length > 0 ? style.errorImg : style.img}/>
             </div>
             <div>{event.performerImage ? <div><img src={event.performerImage}/></div> : null}</div>
-            
+
             <div className={style.select}>
                  <label className={errors.placeImage?.length > 0 ? style.errorImg : style.img}>
                     {errors.placeImage?.length > 0 ? errors.placeImage : "Imagen del lugar"}
@@ -823,8 +852,8 @@ export default function RegisterEvent(){
                     value={event.description}  
                     onChange={handleChange} 
                     type="text"
-                    className={style.description} 
-                    placeholder="Descripción del evento" 
+                    className={errors.description?.length> 0 ? style.error : style.description}  //className={style.description} 
+                    placeholder={errors.description?.length> 0 ? errors.description : "Descripción del evento"}   
                 /> 
             </div>
             

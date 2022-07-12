@@ -74,7 +74,7 @@ const Events = sequelize.define(
     },
     description: {
       type: DataTypes.TEXT,
-      defaultValue: "",
+      allowNull: false,
     },
     isAprobe: {
       type: DataTypes.BOOLEAN,

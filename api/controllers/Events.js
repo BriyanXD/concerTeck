@@ -130,6 +130,7 @@ async function postEvents(req, res) {
       !schedule ||
       !performerImage ||
       !placeImage ||
+      !description ||
       !artist ||
       !venueId ||
       !stockId
@@ -158,7 +159,7 @@ async function postEvents(req, res) {
           },
         });
         if (eventCreated) {
-          console.log(eventCreated, "paso algo")
+          //console.log(eventCreated, "paso algo")
           await postCreatEventAndPrice(eventCreated);
           return res.status(201).json({ message: "Evento creado con exito" });
         } else {
