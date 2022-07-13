@@ -69,10 +69,10 @@ routes.post("/like", verifyToken, postLikes);
 routes.delete("/like", verifyToken, deleteLikes);
 
 routes.get("/cart", getShoppingCart);
-routes.post("/cart", postShoppingCart);
-routes.put("/cart", putShoppingCart);
-routes.delete("/cart", deleteShoppingCart);
-routes.put("/cart/update", restarStock);
+routes.post("/cart", verifyToken, postShoppingCart);
+routes.put("/cart", verifyToken, putShoppingCart);
+routes.delete("/cart", verifyToken, deleteShoppingCart);
+routes.put("/cart/update", verifyToken, restarStock);
 
 routes.post("/user", createUser);
 routes.get("/user", getUser); // verifyToken
@@ -89,7 +89,7 @@ routes.delete("/events", verifyToken, isAdmin, deleteEvent); //isAdmin
 routes.put("/eventurl", verifyToken, isAdmin, putUrlStreaming);
 
 routes.get("/ticket", getTicketByID);
-routes.post("/ticket", verifyToken, postTicket); // verifyToken, adminNotAuthorization,
+routes.post("/ticket", verifyToken, adminNotAuthorization, postTicket); // verifyToken, adminNotAuthorization,
 routes.delete("/ticket", verifyToken, isAdmin, deleteTicket);
 routes.post("/tickets", verifyToken, isAdmin, postCreatEventAndPrice);
 routes.post("/tickets2", postCheckout);
