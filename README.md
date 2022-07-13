@@ -1,6 +1,6 @@
 # ConcerTeck
 
-![Holis2](../concerTeck/client/src/assets/logo_chiquito.png)
+![Home](/client/src/img/logo_chiquito.png)
 
 Proyecto de e-commerce desarrollado para la instancia de proyecto final del bootcamp SoyHenry. El mismo trata sobre una página para la compra/venta de entradas de eventos. En ella vas a encontrar varios que podrás comprar para que puedas disfrutar de la experiencia.
 
