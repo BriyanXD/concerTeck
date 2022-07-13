@@ -810,7 +810,7 @@ export default function RegisterEvent(){
             <div className={style.filter}>
                 <select name="genreId" onChange={handleChange} className={style.genreLocation}>
                     <option>Géneros</option>
-                    {genres.map(g =>(<option key={g.id} value={g.name}>{g.name}</option>))}
+                    {genres.map(g =>(<option className={style.optionGenreLoc} key={g.id} value={g.name}>{g.name[0].toUpperCase() + g.name.substring(1)}</option>))}
                 </select>
                 <button 
                     type="button" 
@@ -870,7 +870,7 @@ export default function RegisterEvent(){
             <div className={style.filter}>
                 <select name="venueId" disabled={selectVenuesState} onChange={handleChange} className={style.genreLocation}>
                     <option value='lugares'>Lugares</option>
-                    {venues.map(v =>(<option key={v.id} value={v.id}>{v.name}</option>))}
+                    {venues.map(v =>(<option className={style.optionLugares} key={v.id} value={v.id}>{v.name}</option>))}
                 </select>
                 {errors.venueId && <label>{errors.venueId}</label>}
                 <button 
@@ -878,7 +878,7 @@ export default function RegisterEvent(){
                     onClick={()=>handleClickNewVenue(!activeVenue)}
                     className={style.btnLocation}
                     
-                    >Añadir nuevo Establecimiento</button>
+                    >Añadir nuevo establecimiento</button>
             </div>
             <div>{activeVenue ? <RegisterVenue handleClickNewVenue={handleClickNewVenue}/>:null}</div>
             

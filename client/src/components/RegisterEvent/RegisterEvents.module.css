@@ -166,8 +166,8 @@
     justify-content: center;
 }
 .genreLocation{
-    /* background-color: #FF4C29; */
-    background-color: var(--color4);
+    background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70));
+    color: #EEEEEE;
     width: 10vw;
     height: 2.5vw;
     text-align: center;
@@ -176,24 +176,43 @@
     font-size: 14px;
 }
 
+.optionGenreLoc{
+    background-color: var(--color3);
+}
 
 
-.btnGenre, .btnLocation{
-    background-color: var(--color4);
-    width: 10vw;
+.btnGenre{
+    background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70));
+    width: 12.5vw;
     height: 2.5vw;
     text-align: center;
     border-radius: 3px;
     margin-bottom: 5px;
-    font-size: 14px;
+    font-size: 1.1vw;
     margin-left: 1rem;
-    border-color: transparent;
+    border: none;
+    transition: box-shadow 0.25s ease 0s;
+    color: #EEEEEE;
 }
+
+.btnLocation{
+    background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70));
+    width: 10vw;
+    height: 3vw;
+    text-align: center;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    font-size: 1.1vw;
+    margin-left: 1rem;
+    border: none;
+    transition: box-shadow 0.25s ease 0s;
+    color: #EEEEEE;
+}
+
 
 .btnGenre:hover, .btnLocation:hover{
-    background-color: #ff3f18;
-    transform: translate(-0.05em, -0.05em);
-    box-shadow: 0.15em 0.15em;
+    background: linear-gradient(117deg, rgb(248, 137, 73), rgb(248, 82, 49));
+    box-shadow: 0 0.1rem 0.8rem rgb(254, 100, 70);
     cursor: pointer;
 }
 .btnGenre:active, .btnLocation:active{
@@ -202,14 +221,14 @@
    }
 
 .btn{
-    background-color: #FF4C29;
-    color: #dbdada;
-    transition: 0.3s;
+    background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70));
+    color: #EEEEEE;
+    transition: box-shadow 0.25s ease 0s;
     text-align: center;
     cursor: pointer;
-    font-weight: bold;
-    font-size: 15px;
-    border: 0;
+    font-weight: 550;
+    font-size: 1.1vw;
+    border: none;
     margin-top: 1rem;
     width: 10vw;
     height: 2vw;
@@ -217,14 +236,13 @@
     margin-right: 0.5rem;
 }
 .btn:hover{
-    background-color: #ff3f18;
-    transform: translate(-0.05em, -0.05em);
-    box-shadow: 0.15em 0.15em;
+    background: linear-gradient(117deg, rgb(248, 137, 73), rgb(248, 82, 49));
+    box-shadow: 0 0.1rem 0.8rem rgb(254, 100, 70);
 }
-.btn:active{
+/* .btn:active{
     transform: translate(0.05em, 0.05em);
     box-shadow: 0.05em 0.05em;
-   }
+   } */
 
 
 .containerBtn{
@@ -244,4 +262,8 @@
     width: 15vw;
     height: 15vh;
     object-fit: contain;
+}
+
+.optionLugares{
+    background-color: #FF5722;
 }

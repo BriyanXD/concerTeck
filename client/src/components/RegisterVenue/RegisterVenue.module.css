@@ -43,24 +43,21 @@
 }
 
 .btnLocation{
-    background-color: var(--color4);
+    background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70));
     width: 10vw;
     height: 2.5vw;
     text-align: center;
     border-radius: 3px;
-    margin-bottom: 5px;
-    font-size: 14px;
+    margin-bottom: 0.5vw;
+    font-size: 1vw;
     margin-left: 1rem;
-    border-color: transparent;
     cursor: pointer;
+    border: none;
+    transition: box-shadow 0.25s ease 0s;
+    color: #EEEEEE;
 }
 
 .btnLocation:hover{
-    background-color: #ff3f18;
-    transform: translate(-0.05em, -0.05em);
-    box-shadow: 0.15em 0.15em;
+    background: linear-gradient(117deg, rgb(248, 137, 73), rgb(248, 82, 49));
+    box-shadow: 0 0.1rem 0.8rem rgb(254, 100, 70);
 }
-.btnLocation:active{
-    transform: translate(0.05em, 0.05em);
-    box-shadow: 0.05em 0.05em;
-   }
