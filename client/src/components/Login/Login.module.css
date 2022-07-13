@@ -5,18 +5,23 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    background-color: gray;
+    background: url(../../img/bk.jpg);
 }
 
 .containerPassword{
     display:flex;
+    /* background-color: blue; */
+    width:25vw;
+    height: 20vh;
     flex-direction: column;
+    justify-content: space-around;
     align-items: center; 
 }
 
 .contenedorForm{
+    /* background-color: red; */
     width: 20vw;
-    height: 10vh;
+    height: 15vh;
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -26,8 +31,9 @@
 .contenedorGoogleFacebook{
     height: 5vh;
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    flex-direction: row;
+    /* padding-right: 2vw; */
+    /* justify-content: space-around; */
 }
 
 .contenedorCrearCuenta{
@@ -38,14 +44,44 @@
 }
 
 .etiquetaA{
-    text-decoration: none
+    text-decoration: none;
+    color: white
 }
 
 .title{
     margin-bottom: 0px;
     margin-top: 0px;
+    color: white
 }
 
 .btn{
     border-radius: 4px;
+    background-color: #FF4C29;
+    width: 8vw;
+    height: 4vh;
+    text-align: center;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.redes{
+    margin-right: 1vw;
+    color: white;
+    
+    
+}
+
+.spanText{
+    color: white
+}
+
+.errors{
+    color:red
+}
+
+h3{
+    color: white;
+    margin-top: 0vw;
 }

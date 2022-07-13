@@ -1,46 +1,104 @@
 # ConcerTeck
 
-![Texto alternativo](/concerteck.jpeg)
+![Home](/client/src/img/logo_chiquito.png)
 
-PASOS DE GIT CADA DIA:
+Proyecto de e-commerce desarrollado para la instancia de proyecto final del bootcamp SoyHenry. El mismo trata sobre una página para la compra/venta de entradas de eventos. En ella vas a encontrar varios que podrás comprar para que puedas disfrutar de la experiencia.
 
-1) Al arrancar hacer "git pull orgin develop" en la rama "develop"
+https://concer-teck-front-end.vercel.app/
 
-2) Crear la rama "feature" diaria
+En este proyecto se usaron las siguientes tecnologías:
 
-3) Trabajar sobre la rama "feature" propia diariamente
+- React para la renderización de todo el frontend.
+- Redux para generar estados que nos ayuden a manejar el frontend.
+- Axios para desarrollar las peticiones a las API's generadas manualmente.
+- Javascript para realizar la lógica del backend.
+- Express para conectar las API's con el backend.
+- Sequelize para el manejo de base de datos.
+- Stripe para efectuar los checkout.
+- Se produjeron los middlewares adecuados para hacer las autenticaciones.
 
-4) Si todo esta OK en la rama "feature": Hacer "git checkout develop" para pararse en la rama "develop" propia
+### ¿Querés echarle un vistazo?
 
-5) (EN CASO DE NO HABER TERMINADO DE TRABAJAR LO DEL DIA ANTERIOR):
-    Hacer "git merge develop" estando en la rama "feature" para subir los cambios a esa rama una vez estando funcionales
+Nada más tenés que clonar el repositorio, y verás que el mismo cuenta con dos carpetas: api y client. Dentro de las mismas deberás hacer npm install. Una vez finalizada la instalación, para correr la página tendrás que ejecutar el comando npm start en ambas carpetas, y esperar a que google levante ambas partes.
 
-6) Realizar los respectivos comandos: 
-    - "git add ."
-    - "git commit -m "(mensaje)" "
-    - "git push orgin feature"
-        (en caso de no poder hacer un push y salte una alerta de cartel rojo o amarillo:
-         hacer un "git pull origin develop" para trar los ultimos cambios y poder realizar el push)
-    - "git status" (para chequear que todo este OK)
-    (siempre recordando que todo este andando OK)
+### ¿Querés simular una compra?
 
-7) Estando en el GitHub hacer un pull request marcando el "origen:develop" "compare: feature_diaria"
+Necesitas las siguientes credenciales:
 
-8) Borrar la rama "feature_diaria" con "git brunch -D "(feature_diaria)" "
+- Número de tarjeta: 4242 4242 4242 4242
+- Código de seguridad: 123
+- Fecha de vencimiento: 11/26
 
-LINKS DE INTERES Y REFERENCIA:
+### ¿Querés simular ser un administrador?
 
--GitHub de origen de Briyan: https://github.com/BriyanXD/concerTeck
+Debes hacer correr el backend y desde las siguientes aplicaciones que simulan llamadas o peticiones a las API's:
 
--Map JavaScrip API: https://developers.google.com/maps/documentation/javascript
+1.  Thunder Client (provisto por Visual Studio Code).
+2.  Postman.
+3.  Insomnia.
 
--Direcciones API: https://developers.google.com/maps/documentation/directions
+Pasos:
 
--Trello: https://trello.com/b/rqCCNqNV/user-stories
+- Realizar una funcion POST en la ruta `http://localhost:3001/api/admin`
+- Por body ejecuctar el siguiente código: `{ "username": "tu username", "name": "tu name", "email": "tu email" }`
+- En la página loguearte con la cuenta recientemente creada.
 
--Figma: https://www.figma.com/file/TVbo4KrVCbzv2OvCorZXDU/Untitled?node-id=0%3A1
+Esperemos que te guste nuestra página, aquí te dejaramos unas imágenes para que eches un vistazos:
 
+![Home](/client/src/img/Home.png)
 
-### Hiper mega red
+<!-- <img height="250" width="400" src="/client/src/img/Home.png"> -->
 
-#### holas desde feature
+![Detail](/client/src/img/Detail.png)
+
+<!-- <img height="250" width="400" src="/client/src/img/Detail.png"> -->
+
+Si deseas, podés contactarte con nosotros a través de los siguientes canales:
+
+### Ariel Ivan Chauca:
+
+- https://github.com/arielchauca
+- https://www.linkedin.com/in/ivan-chauca/
+- ariel_chauca@hotmail.com
+- ivan.arielchauca@gmail.com
+
+### Agustin Trossero:
+
+- https://www.linkedin.com/in/Agustin-trossero
+- https://github.com/TrosseroAgustin01
+- trosseroagustin01@gmail.com
+
+### Briyan Bohtelo:
+
+- https://github.com/BriyanXD
+- https://www.linkedin.com/in/briyan-angel-bohtelo-gomez-00a724231/
+- briyana1997@gmail.com
+
+### Diego Bullor:
+
+- https://www.linkedin.com/in/dbullor
+- https://github.com/dbullor
+- dbullor@gmail.com
+
+### Lionel Orbe:
+
+- https://www.linkedin.com/in/lionel-orbe/
+- https://github.com/LionelOrbe
+- lionel05@gmail.com
+
+### Lucas Gabriel Acuña Ortiz:
+
+- https://github.com/ToaLukas01
+- lucasacua@gmail.com
+
+### Noelia Ingala:
+
+- https://www.linkedin.com/in/Noelia-Ingala
+- https://github.com/Noeingala
+- ingalanoelia@gmail.com
+
+### Solana Romero:
+
+- https://github.com/solanamr
+- https://www.linkedin.com/in/solana-romero/
+- romerosolana@gmail.com

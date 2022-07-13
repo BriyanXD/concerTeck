@@ -1,0 +1,25 @@
+.containerUser{
+    display:flex;
+    width: 28rem;
+    height: 15rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: solid 0.08rem rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.1); 
+    border-radius: 10% 2% 10% 2%;
+}
+
+.userData{
+    display:flex;
+    justify-content: center;
+    width: 85%;
+    color: white;
+}
+
+.image{
+    margin-top: 1rem;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+}

@@ -3,6 +3,7 @@
     display: flex;
     align-items: center;
     right: 12px;
+    
 }
 
 .userList{
@@ -21,9 +22,10 @@
 
 .image{
     margin-left: 22px;
-    width: 40px;
-    height: 40px;
-    padding: 3px;
+    width: 45px;
+    height: 45px;
+    margin: 0px 0px 0px 0px;
+    /* padding: 3px; */
 }
 
 .list{

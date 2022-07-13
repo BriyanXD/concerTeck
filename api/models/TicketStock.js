@@ -7,8 +7,7 @@ const TicketStock = sequelize.define(
   "ticketstock",
   {
     id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
+      type: DataTypes.STRING,
       primaryKey: true,
     },
     stockStreaming: {
@@ -41,13 +40,28 @@ const TicketStock = sequelize.define(
     palcoPrice: {
       type: DataTypes.FLOAT,
     },
+    idStreamingPrice:{
+      type: DataTypes.STRING
+    },
+    idVipPrice:{
+      type: DataTypes.STRING
+    },
+    idGeneralLateralPrice:{
+      type: DataTypes.STRING
+    },
+    idGeneralPrice:{
+      type: DataTypes.STRING
+    },
+    idPalcoPrice:{
+      type: DataTypes.STRING
+    },
   },
   {
     timestamps: false,
   }
 );
-TicketStock.hasOne(Events, { as: "stock" });
-Events.belongsTo(TicketStock, { as: "stock" });
+TicketStock.hasOne(Events, { as: "stock", foreignKey: "stockId" });
+Events.belongsTo(TicketStock, { as: "stock", foreignKey: "stockId" });
 
 Venue.hasMany(TicketStock);
 TicketStock.belongsTo(Venue);

@@ -4,17 +4,22 @@ import { useNavigate } from "react-router-dom";
 import { LoginUser, ValidationUser } from "../../redux/actions";
 import style from "./Login.module.css";
 import { Link } from "react-router-dom";
+// import LoginAuth0  from '../LoginAuth0/LoginAuth0';
+// import LogoutAuth0 from '../LogoutAuth0/LogoutAuth0';
 
-export default function Login() {
+
+export default function Login({toggle}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userValidation = useSelector((state) => state.userValidation);
-  
+  const nuevo = useSelector((state) => state.User);
+
+  // console.log(userValidation, "validation user")
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
-  console.log(user);
+ 
+  
 
   const [errors, setErrors] = useState({
     username: "",
@@ -69,86 +74,97 @@ export default function Login() {
     }
   };
 
-  const handleSubmit =(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(ValidationUser(user))
-
-      if (errors.username !== "" || errors.password !== "") {
+    const prueba= await dispatch(ValidationUser(user))
+    console.log("🚀 ~ file: Login.jsx ~ line 74 ~ handleSubmit ~ prueba", prueba)
+      if (errors.username !== "" || errors.password !== "" ) {
         alert("Para poder registrarse debe solucionar los errores");
+        return
       }
   
-      if (user.username === "" || user.password === "") {
-        setErrors({
+      if (user.username === "" || user.password === "" || prueba.payload === false) {
+       return setErrors({
           username:
             user.username === "" ? "Por favor ingrese un nombre de usuario" : "",
           password:
             user.password === "" ? "Por favor ingrese una contraseña" : "",
+          validation:
+            prueba.payload === false ? "La cuenta no coincide": ""
         });
-        return;
+      
       }
-        if (userValidation){
+
+      
+      if (prueba.payload){
+        console.log("ingreso acaaaaaaaaaaaaaaa")
             dispatch(LoginUser(user));
             alert("Se registro correctamente");
             setUser({
               username: "",
               password: "",
-              validation: ""
             });
-            navigate("/");
-          }else{
-            setErrors({
-              ...errors,
-              validation: "Revise los datos ingresados e intente nuevamente"
-            }) 
-            return
+            toggle()
           }
   };
 
   return (
-    <div className={style.containerLogin}>
-      <h1 className={style.title}>Iniciar Sesión</h1>
-      <div className={style.containerPassword}>
-        <form onSubmit={handleSubmit} className={style.contenedorForm}>
-          <input
-            type="text"
-            name="username"
-            onBlur={handleBlur}
-            value={user.username}
-            onChange={handleChange}
-            placeholder="Nombre de usuario"
-          />
-          {errors.username && <label>{errors.username}</label>}
-          <input
-            type="password"
-            name="password"
-            value={user.password}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            placeholder="Contraseña"
-          />
-          {errors.password && <label>{errors.password}</label>}
-          {errors.validation && <label>{errors.validation}</label>}
-          <button className={style.btn}>Iniciar sesión</button>
-        </form>
-        <a className={style.etiquetaA} href="#">
-          ¿Olvidaste tu contraseña?
-        </a>
-      </div>
-
-      <div className={style.contenedorGoogleFacebook}>
-        <button className={style.btn}>Iniciar sesion con Google</button>
-        <button className={style.btn}>Iniciar sesion con Facebook</button>
-      </div>
-
+      <div>
       <div className={style.contenedorCrearCuenta}>
         <Link to={`/registrar/user`}>
           <button className={style.btn}>Crear cuenta</button>
         </Link>
-        <span>
-          <Link to={`/registrar/producer`}>Crear cuenta</Link> para productores
-        </span>
+        {/* <span className={style.spanText}>
+          <Link to={`/registrar/producer`} style={{color: "white"}}>Crear cuenta</Link> para productores
+        </span> */}
+      <button className={style.btn} onClick={() => navigate('/')}>Volver</button>
       </div>
-      <button onClick={() => navigate('/')}>Volver</button>
     </div>
+    
+    // <div className={style.containerLogin}>
+    //   <h1 className={style.title}>Iniciar Sesión</h1>
+    //   <div className={style.containerPassword}>
+    //     <form onSubmit={handleSubmit} className={style.contenedorForm}>
+    //       <input
+    //         type="text"
+    //         name="username"
+    //         onBlur={handleBlur}
+    //         value={user.username}
+    //         onChange={handleChange}
+    //         placeholder="Nombre de usuario"
+    //       />
+    //       {errors.username && <label className={style.errors}>{errors.username}</label>}
+    //       <input
+    //         type="password"
+    //         name="password"
+    //         value={user.password}
+    //         onBlur={handleBlur}
+    //         onChange={handleChange}
+    //         placeholder="Contraseña"
+    //       />
+    //       {errors.password && <label className={style.errors}>{errors.password}</label>}
+    //       {errors.validation && <label className={style.errors}>{errors.validation}</label>}
+    //       <button className={style.btn}>Iniciar sesión</button>
+    //     </form>
+    //     <a className={style.etiquetaA} href="#">
+    //       ¿Olvidaste tu contraseña?
+    //     </a>
+    //   </div>
+
+    //   <div className={style.contenedorGoogleFacebook}>
+    //     <button className={style.btn}>Iniciar sesion con Google</button>
+    //     <button className={style.btn}>Iniciar sesion con Facebook</button>
+    //   </div>
+
+    //   <div className={style.contenedorCrearCuenta}>
+    //     <Link to={`/registrar/user`}>
+    //       <button className={style.btn}>Crear cuenta</button>
+    //     </Link>
+    //     <span className={style.spanText}>
+    //       <Link to={`/registrar/producer`} style={{color: "white"}}>Crear cuenta</Link> para productores
+    //     </span>
+    //   </div>
+    //   <button className={style.btn} onClick={() => navigate('/')}>Volver</button>
+    // </div>
   );
 }

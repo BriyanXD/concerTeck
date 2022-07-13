@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../db");
 const Ticket = require("./Ticket");
+const Events = require("./Events");
 
 const User = sequelize.define(
   "user",
@@ -17,7 +18,15 @@ const User = sequelize.define(
         notNull: {
           msg: "Por favor ingrese un nombre de usuario",
         },
+        len: {
+          args: [4, 255],
+          msg: "username debe tener entre 4 y 255 caracteres",
+        },
       },
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     isAdmin: {
       type: DataTypes.BOOLEAN,
@@ -30,19 +39,10 @@ const User = sequelize.define(
       validate: {
         isEmail: {
           args: true,
-          msg: "Ingrese un correo valido",
+          msg: "Por favor Ingrese un email valido",
         },
         notNull: {
-          msg: "Por favor ingrese un emial",
-        },
-      },
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Por favor ingrese una contrasena valida",
+          msg: "Por favor ingrese un email",
         },
       },
     },
@@ -51,7 +51,17 @@ const User = sequelize.define(
 );
 
 //Relacion db
+User.belongsToMany(Events, {
+  through: "likes",
+  foreignKey: "keyEvent",
+  timestamps: false,
+});
+Events.belongsToMany(User, {
+  through: "likes",
+  foreignKey: "keyUser",
+  timestamps: false,
+});
+
 User.hasMany(Ticket);
 Ticket.belongsTo(User);
-
 module.exports = User;

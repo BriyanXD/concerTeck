@@ -1,0 +1,56 @@
+/* MEDIDAS CORREGIDAS A REM!!!!!!!!!!!*/
+
+@import url(../../index.css);
+
+.container{
+    display: flex;
+    flex-direction: row;
+    margin-right: 2rem;
+    margin-top: 3.5rem;
+}
+.box{
+    display: flex;
+    flex-direction: row;
+}
+
+.img{
+    border-radius: 50%;
+    width: 3vw;
+    height: 3vw;
+    margin: 1vw;
+    margin-bottom: 7vh;
+    
+
+}
+
+.p{
+    color: var(--color4);
+    margin:0.5vw;
+    margin-top: 3.5vh ;
+    font-size: 1vw;
+    margin-right: 1.5vw;
+    margin-left: 1vw;
+    
+}
+
+.button{
+margin-right: 1vw;
+background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70));
+width: 8vw;
+height: 2.5vw;
+text-align: center;
+border-radius: 0.2rem;
+font-size: 1vw;
+color: #EEEEEE;
+border: none;
+cursor: pointer;
+margin-top: 2.5vh;
+transition: box-shadow 0.25s ease 0s;
+color: whitesmoke;
+}
+
+.button:hover,
+.button:focus {
+ background: linear-gradient(117deg, rgb(248, 137, 73), rgb(248, 82, 49));
+ box-shadow: 0 0.1rem 0.8rem rgb(254, 100, 70);
+}

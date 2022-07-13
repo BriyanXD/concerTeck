@@ -1,0 +1,108 @@
+/*MEDIDAS CORREGIDAS A REM!!!!!!!!!!!*/
+
+.all{
+    height: 100vw;
+    background-image: url(../../img/felix-besombes-9qUEBg1qVKc-unsplash.jpg);
+    background-size: cover;
+}
+.title{
+    color: rgb(202, 177, 177);
+    font-size: 1.7rem;
+    display: flex;
+    justify-content: center;
+    padding: 0.5vw;
+    margin-top: 2vw;
+    
+}
+
+
+
+.container{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    align-items: center;
+    /* height: 100vh; */
+}
+.btn{
+    border: 0;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    color: white;
+    background-color: #FF4C29;
+    transition: 0.4s;
+    overflow: auto;
+    cursor: pointer;
+    position: absolute;
+    margin-block-start: 5rem;
+    margin-right: 0.8rem;
+}
+
+.containerClose{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn2{
+    border: 0;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    color: white;
+    background-color: #FF4C29;
+    transition: 0.4s;
+    overflow: auto;
+    cursor: pointer;
+    position: absolute;
+    margin-block-start: 1.8rem;
+    margin-right: 0.5rem;
+}
+
+.containerClose2{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn:hover{
+    background-color: #f80303;
+}
+.btn2:hover{
+    background-color: #f80303;
+}
+
+.buttonBack{
+    width: 5rem;
+    margin-left: 1.5vw;
+    background: linear-gradient(117deg, rgb(254, 145, 80), rgb(254, 100, 70));
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    height: 2rem;
+    border-radius: 0.3rem;
+    border: none;
+    transition: box-shadow 0.25s ease 0s;
+    color: whitesmoke;
+}
+
+.buttonBack:hover,
+.buttonBack:focus {
+ background: linear-gradient(117deg, rgb(248, 137, 73), rgb(248, 82, 49));
+ box-shadow: 0 0.1rem 0.8rem rgb(254, 100, 70);
+
+}
+
+.bigcontainer{
+    display: flex;
+    flex-wrap: wrap;
+    width: 48rem;
+    box-sizing: border-box;
+    justify-content: space-evenly;
+}
+.litlecontainer{
+    display: flex;
+    flex-wrap: wrap;
+    width: 48rem;
+    box-sizing: border-box;
+    justify-content: space-evenly;
+}
