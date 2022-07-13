@@ -23,7 +23,7 @@ console.log('user en loguin', user)
   return(
   <div>
     {
-    !user ? <button onClick={() => handlerLogin()} className={style.button}>Ingresá</button> : <PerfilYLogoutAuth0/>
+    !user ? <button onClick={() => handlerLogin()} className={style.button}>Ingresar</button> : <PerfilYLogoutAuth0/>
     },
   </div>
   )

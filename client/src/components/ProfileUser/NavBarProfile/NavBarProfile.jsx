@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import logoSombra from '../../../assets/Logo-png.png';
 import PerfilYLogoutAuth0 from '../../LogoutAuth0/PerfilYLogoutAuth0';
 import { BsFillStarFill } from 'react-icons/bs';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCrown } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCrown } from '@fortawesome/free-solid-svg-icons';
 
 export default function NavBarProfile () {
 

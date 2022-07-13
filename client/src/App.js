@@ -12,6 +12,7 @@ import TicketVoucher from "./components/TicketVoucher/TicketVoucher.jsx";
 import Streaming from "./components/Streaming/Streaming.jsx";
 import SuccessOrCancel from './components/SuccessOrCancel/SuccessOrCancel.jsx';
 import CartCheckout from './components/CartCheckout/CartCheckout.jsx';
+import AboutUs from './components/AboutUs/AboutUs'
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="*" element={<PageNotFound />} />
           <Route path='/success' element={<SuccessOrCancel/>}/>
           <Route path='/cart/checkout' element={<CartCheckout/>}/>
+          <Route path="/aboutUs" element={<AboutUs/>}/>
         </Routes>
       </div>
     </BrowserRouter>
