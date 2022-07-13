@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "http://localhost:3001";
+const url = "https://concerteck.herokuapp.com";
 
 export function getEvents() {
   return async function (dispatch) {
@@ -846,7 +846,7 @@ export function ActualizacionStock(descontar) {
 export function ticketVoucher(id) {
   return async function (dispatch) {
     try {
-      const tick = await axios.post(`http://localhost:3001/api/voucher?${id}`);
+      const tick = await axios.post(`${url}/api/voucher?${id}`);
       return dispatch({
         type: "TICKET_VOUCHER",
         payload: tick.data,
@@ -874,7 +874,7 @@ export function ticketVoucher(id) {
 export function postTicket(data) {
   return async function (dispatch) {
     try {
-      await axios.post(`http://localhost:3001/api/ticket`, data, {
+      await axios.post(`${url}/api/ticket`, data, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
